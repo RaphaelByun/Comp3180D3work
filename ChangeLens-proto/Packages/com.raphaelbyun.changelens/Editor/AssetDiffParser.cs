@@ -1,0 +1,300 @@
+// AssetDiffParser.cs
+// ---------------------------------------------------------------------------
+// The committed tier's "object naming" step. Reads the patch text produced by:
+//
+//     git log -p --no-merges --date=iso -- "*.prefab" "*.unity"
+//
+// and works out, for every scene or prefab a commit touched, WHAT inside it
+// changed: which objects (GameObject names), which component types (Transform,
+// AudioSource, a script...), and which components were added or removed.
+//
+// Why this works: Unity saves scenes and prefabs as text (YAML). Every object
+// in the file starts with a block header and a type line:
+//
+//     --- !u!82 &4210036883970617636
+//     AudioSource:
+//       m_GameObject: {fileID: 8824907131049981641}
+//       m_Volume: 0.25
+//
+// and git's hunk header repeats the nearest unindented line above a change:
+//
+//     @@ -163,7 +163,7 @@ AudioSource:
+//
+// So a changed line can be attributed to the component type it sits in
+// without opening Unity. GameObject names appear as "m_Name: Airlock" and a
+// script component carries "m_Script: {fileID: 11500000, guid: <32 hex>}";
+// the guid is resolved to a script name later (see GuidIndex).
+//
+// Pure C#, no UnityEditor dependency, so it is unit-tested like the parser.
+// ---------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+
+namespace ChangeLens.Editor
+{
+    /// <summary>
+    /// What changed inside ONE scene or prefab in ONE commit.
+    /// </summary>
+    public class AssetChange
+    {
+        public string CommitHash = "";
+        public string Path = "";
+
+        /// <summary>Component/object types that had at least one changed line.</summary>
+        public List<string> TypesTouched = new List<string>();
+
+        /// <summary>Non-empty GameObject names seen in the changed text or its context.</summary>
+        public List<string> ObjectNames = new List<string>();
+
+        /// <summary>Whole blocks added ("--- !u!" header on a + line), by type.</summary>
+        public List<string> AddedTypes = new List<string>();
+
+        /// <summary>Whole blocks removed ("--- !u!" header on a - line), by type.</summary>
+        public List<string> RemovedTypes = new List<string>();
+
+        /// <summary>Script guids of MonoBehaviour blocks that were added.</summary>
+        public List<string> AddedScriptGuids = new List<string>();
+
+        /// <summary>Script guids of MonoBehaviour blocks that were removed.</summary>
+        public List<string> RemovedScriptGuids = new List<string>();
+
+        /// <summary>Script guids seen anywhere in a changed MonoBehaviour hunk.</summary>
+        public List<string> TouchedScriptGuids = new List<string>();
+
+        public int LinesAdded;
+        public int LinesRemoved;
+
+        /// <summary>True when git reported the file as new or deleted outright.</summary>
+        public bool FileAdded;
+        public bool FileDeleted;
+
+        /// <summary>The asset's own name: file name without folder or extension.</summary>
+        public string AssetName
+        {
+            get { return AssetDiffParser.AssetNameOf(Path); }
+        }
+
+        public bool IsScene
+        {
+            get { return Path.EndsWith(".unity", StringComparison.OrdinalIgnoreCase); }
+        }
+    }
+
+    public static class AssetDiffParser
+    {
+        /// <summary>
+        /// Reads a whole "git log -p" export and returns one AssetChange per
+        /// (commit, scene/prefab file) pair, in file order. Non-scene, non-prefab
+        /// diffs are skipped, so the export may safely contain other files.
+        /// </summary>
+        public static List<AssetChange> Parse(string patchText)
+        {
+            var result = new List<AssetChange>();
+            if (string.IsNullOrEmpty(patchText)) return result;
+
+            string[] lines = patchText.Replace("\r\n", "\n").Replace('\r', '\n').Split('\n');
+
+            string commitHash = "";
+            AssetChange current = null;   // null while outside a scene/prefab diff
+            bool inHunk = false;
+            string currentType = "";      // the YAML block type the cursor is inside
+            char pendingHeaderSign = ' '; // '+'/'-' when the previous line opened a block
+            bool lastWasNameOverride = false;
+
+            foreach (string line in lines)
+            {
+                if (line.StartsWith("commit ", StringComparison.Ordinal))
+                {
+                    commitHash = FirstToken(line.Substring("commit ".Length).Trim());
+                    current = null;
+                    inHunk = false;
+                    continue;
+                }
+
+                if (line.StartsWith("diff --git ", StringComparison.Ordinal))
+                {
+                    string path = PathFromDiffHeader(line);
+                    current = null;
+                    inHunk = false;
+                    currentType = "";
+                    pendingHeaderSign = ' ';
+                    if (IsSceneOrPrefab(path))
+                    {
+                        current = new AssetChange { CommitHash = commitHash, Path = path };
+                        result.Add(current);
+                    }
+                    continue;
+                }
+
+                if (current == null) continue;
+
+                if (!inHunk)
+                {
+                    if (line.StartsWith("new file mode", StringComparison.Ordinal)) current.FileAdded = true;
+                    else if (line.StartsWith("deleted file mode", StringComparison.Ordinal)) current.FileDeleted = true;
+                }
+
+                if (line.StartsWith("@@", StringComparison.Ordinal))
+                {
+                    inHunk = true;
+                    pendingHeaderSign = ' ';
+                    // "@@ -163,7 +163,7 @@ AudioSource:" -> "AudioSource"
+                    int close = line.IndexOf("@@", 2, StringComparison.Ordinal);
+                    string context = close >= 0 ? line.Substring(close + 2).Trim() : "";
+                    currentType = TypeFromKeyLine(context) ?? "";
+                    continue;
+                }
+
+                if (!inHunk || line.Length == 0) continue;
+                if (line.StartsWith("--- a/", StringComparison.Ordinal) ||
+                    line.StartsWith("+++ b/", StringComparison.Ordinal)) continue;
+
+                char sign = line[0];
+                if (sign != '+' && sign != '-' && sign != ' ') continue; // "\ No newline..." etc.
+                string body = line.Substring(1);
+
+                // A block header: "--- !u!114 &-809169823751194735".
+                if (body.StartsWith("--- !u!", StringComparison.Ordinal))
+                {
+                    pendingHeaderSign = sign;
+                    currentType = "";
+                    CountLine(current, sign);
+                    continue;
+                }
+
+                // An unindented "TypeName:" line starts the block body.
+                string keyType = TypeFromKeyLine(body);
+                if (keyType != null)
+                {
+                    currentType = keyType;
+                    if (pendingHeaderSign == '+') AddUnique(current.AddedTypes, keyType);
+                    else if (pendingHeaderSign == '-') AddUnique(current.RemovedTypes, keyType);
+                    if (sign != ' ') AddUnique(current.TypesTouched, keyType);
+                    CountLine(current, sign);
+                    pendingHeaderSign = sign == ' ' ? ' ' : pendingHeaderSign;
+                    continue;
+                }
+
+                string trimmed = body.Trim();
+
+                if (trimmed.StartsWith("m_Name:", StringComparison.Ordinal))
+                {
+                    string name = trimmed.Substring("m_Name:".Length).Trim();
+                    if (name.Length > 0) AddUnique(current.ObjectNames, name);
+                }
+
+                // Prefab instances in scenes rename objects through overrides:
+                //   - target: {...}
+                //     propertyPath: m_Name
+                //     value: Airlock (3)
+                if (lastWasNameOverride && trimmed.StartsWith("value:", StringComparison.Ordinal))
+                {
+                    string name = trimmed.Substring("value:".Length).Trim();
+                    if (name.Length > 0) AddUnique(current.ObjectNames, name);
+                }
+                lastWasNameOverride = trimmed == "propertyPath: m_Name" ||
+                                      (lastWasNameOverride && trimmed.StartsWith("value:", StringComparison.Ordinal));
+
+                if (trimmed.StartsWith("m_Script:", StringComparison.Ordinal))
+                {
+                    string guid = GuidIn(trimmed);
+                    if (guid != null)
+                    {
+                        bool blockAdded = sign == '+' && current.AddedTypes.Contains("MonoBehaviour") && pendingHeaderSign == '+';
+                        bool blockRemoved = sign == '-' && current.RemovedTypes.Contains("MonoBehaviour") && pendingHeaderSign == '-';
+                        if (blockAdded) AddUnique(current.AddedScriptGuids, guid);
+                        else if (blockRemoved) AddUnique(current.RemovedScriptGuids, guid);
+                        else if (currentType == "MonoBehaviour") AddUnique(current.TouchedScriptGuids, guid);
+                    }
+                }
+
+                if (sign != ' ')
+                {
+                    if (currentType.Length > 0) AddUnique(current.TypesTouched, currentType);
+                    CountLine(current, sign);
+                }
+            }
+
+            return result;
+        }
+
+        // -------------------------------------------------------------------
+        // HELPERS (public where the tests check them directly)
+        // -------------------------------------------------------------------
+
+        /// <summary>True for paths ending in .prefab or .unity.</summary>
+        public static bool IsSceneOrPrefab(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return false;
+            return path.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase) ||
+                   path.EndsWith(".unity", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>"Assets/Doors/Airlock Classic.prefab" -> "Airlock Classic".</summary>
+        public static string AssetNameOf(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return "";
+            int slash = path.LastIndexOfAny(new[] { '/', '\\' });
+            string file = slash >= 0 ? path.Substring(slash + 1) : path;
+            int dot = file.LastIndexOf('.');
+            return dot > 0 ? file.Substring(0, dot) : file;
+        }
+
+        /// <summary>
+        /// "diff --git a/X b/X" -> "X". Paths may contain spaces, so the new path
+        /// is everything after the last " b/".
+        /// </summary>
+        public static string PathFromDiffHeader(string line)
+        {
+            int b = line.LastIndexOf(" b/", StringComparison.Ordinal);
+            return b >= 0 ? line.Substring(b + 3).Trim() : "";
+        }
+
+        /// <summary>
+        /// "AudioSource:" -> "AudioSource"; anything indented, empty, or not a
+        /// bare identifier followed by a colon -> null.
+        /// </summary>
+        public static string TypeFromKeyLine(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return null;
+            if (text[0] == ' ' || text[0] == '\t' || text[0] == '-') return null;
+            string t = text.TrimEnd();
+            if (t.Length < 2 || t[t.Length - 1] != ':') return null;
+            string name = t.Substring(0, t.Length - 1);
+            foreach (char c in name)
+            {
+                if (!char.IsLetterOrDigit(c) && c != '_') return null;
+            }
+            return char.IsLetter(name[0]) ? name : null;
+        }
+
+        /// <summary>Pulls the 32-hex guid out of "{fileID: ..., guid: abc..., type: 3}".</summary>
+        public static string GuidIn(string text)
+        {
+            int g = text.IndexOf("guid:", StringComparison.Ordinal);
+            if (g < 0) return null;
+            string rest = text.Substring(g + "guid:".Length).TrimStart();
+            int end = 0;
+            while (end < rest.Length && Uri.IsHexDigit(rest[end])) end++;
+            return end == 32 ? rest.Substring(0, 32).ToLowerInvariant() : null;
+        }
+
+        private static void CountLine(AssetChange change, char sign)
+        {
+            if (sign == '+') change.LinesAdded++;
+            else if (sign == '-') change.LinesRemoved++;
+        }
+
+        private static void AddUnique(List<string> list, string value)
+        {
+            if (!list.Contains(value)) list.Add(value);
+        }
+
+        private static string FirstToken(string text)
+        {
+            int space = text.IndexOf(' ');
+            return space < 0 ? text : text.Substring(0, space);
+        }
+    }
+}

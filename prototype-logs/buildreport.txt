@@ -1,0 +1,46 @@
+Unity BuildReport read by ChangeLens BatchTools.BuildAndReport, 2026-09-18 20:09
+Editor: 6000.4.10f1 | target: StandaloneWindows64 | result: Succeeded
+Total time: 25 s | total size: 86.8 MB | errors: 0 | warnings: 0
+
+Build steps (name, duration):
+  Build player - 25.34 s
+    Preprocess Player - 0.01 s
+    Prepare For Build - 0.01 s
+    ProducePlayerScriptAssemblies - 2.97 s
+      Prebuild Cleanup and Recompile - 2.26 s
+        Compile scripts - 2.25 s
+        Generate and validate platform script types - 0.00 s
+    Verify Build setup - 0.02 s
+      GetUnityAssemblies - 0.00 s
+      GetPlayerAssemblies - 0.00 s
+      Check old data build - 0.00 s
+    Prepare assets for target platform - 0.01 s
+    Prepare splash screen - 0.03 s
+    Build scripts DLLs - 0.03 s
+      GetSystemAssemblies - 0.00 s
+    Building scenes - 0.05 s
+      Building scene Assets/Scenes/BuildReportProbe.unity - 0.05 s
+    Build GlobalGameManagers file - 0.12 s
+    Writing asset files - 0.54 s
+      Packaging assets - globalgamemanagers.assets - 0.01 s
+      Packaging assets - sharedassets0.assets = additional assets for scene 0: Assets/Scenes/BuildReportProbe.unity - 0.52 s
+    Building Resources/unity_builtin_extra - 1.40 s
+    Write data build dirty tracking information - 0.01 s
+    Postprocess built player - 20.04 s
+      Setup incremental player build - 0.05 s
+      Incremental player build - 19.92 s
+      Report output files - 0.03 s
+
+Largest packed assets (source path, packed size):
+  Built-in Texture2D: Splash Screen Unity Logo - 2730.7 KB
+  Resources/unity_builtin_extra - 512.0 KB
+  Resources/unity_builtin_extra - 48.3 KB
+  Resources/unity_builtin_extra - 6.8 KB
+  Resources/unity_builtin_extra - 1.0 KB
+  Built-in Sprite:  - 0.4 KB
+  (built-in PreloadData) - 0.4 KB
+  Resources/unity_builtin_extra - 0.3 KB
+  Resources/unity_builtin_extra - 0.3 KB
+  Resources/unity_builtin_extra - 0.2 KB
+
+Packed asset files: 4 | packed entries: 17

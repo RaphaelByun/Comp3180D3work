@@ -1,0 +1,1 @@
+"""Round 10 trim (19 Sep 2026): seven cuts, 12 words, applied inline after Word read 2,475 (Bertram remedy clause; recruitment fallback wording; "the week's work"; Pascarella clause; "if it holds"; "of those"; "since every report is" -> "every report being")."""

@@ -1,0 +1,10 @@
+{
+  "name": "com.raphaelbyun.changelens",
+  "displayName": "ChangeLens",
+  "version": "0.1.0",
+  "unity": "6000.0",
+  "description": "Reads a git log --name-status export and renders a grouped change report with add/modify/delete counts and the code-file percentage.",
+  "author": {
+    "name": "Raphael Byun"
+  }
+}

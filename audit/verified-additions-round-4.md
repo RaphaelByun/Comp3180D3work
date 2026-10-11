@@ -1,0 +1,19 @@
+# Verified additions — loop round 4 (18 Sep 2026)
+
+New facts established this round, in SAFE / DO-NOT-WRITE form. Own measurements are reproducible with the scripts named.
+
+## SAFE TO WRITE
+
+- **Endsley (1995) three levels** — the National Academies' open chapter on situation awareness quotes Endsley (1995) verbatim: "Situation awareness is the perception of the elements in the environment within a volume of time and space, the comprehension of their meaning, and the projection of their status in the near future." (https://www.nationalacademies.org/read/6173/chapter/9, fetched by the round-4 web scout, confidence high). The draft's "what changed, what it means, what happens next" is a faithful paraphrase. The Sage abstract page itself still returns 403 to automated fetch.
+- **Anchorpoint** (https://www.anchorpoint.app/, fetched 18 Sep 2026) — Git-based version control for Unity, Unreal and Godot projects with large binary support; produces thumbnails, visual review, file locks and tagging for artists, developers and art leads. The page does not mention any automatic change report or summary for non-technical team members. Added to the Appendix A sweep and the reference list as Anchorpoint (n.d.).
+- **Novelty recheck (web scout, September 2026)** — no publicly documented tool found that reads Unity scene/prefab/.meta history from version control and produces a change report for non-technical producers; Unity Production Pipeline (closed beta, public availability November 2026) and Perforce P4 MCP provide adjacent building blocks only. Confidence medium (absence of evidence).
+- **Corpus, .meta excluded** (`corpus/results.json`, computed 18 Sep 2026 as code_count / (changed_file_entries − meta_count)): SS3D 32.9%, open-brush 39.5%, VRTK 57.1%, jynew 12.3%, Unity Experiment Framework 22.7%. With .meta counted as non-code the shares are 17.5, 23.6, 36.4, 7.4 and 19.2%. Code is under half of the entries in four of the five repositories on either basis; VRTK (a code toolkit) is the exception once .meta is excluded.
+- **SS3D demonstration week 8–14 February 2021** (`corpus/export-week.py 2021-02-08 2021-02-15`, export saved as `Samples~/ss3d-week-2021-02-08.txt`): 8 commits, 104 changed-file entries; ChangeLens reports Code 25 (24.0%), ScenePrefab 35, Art 8, Audio 2, DataConfig 4, Meta 30, Other 0 (Figure 2 capture, `prototype-logs/screenshot4.log`). Commit subjects include "Add sound fall off to airlocks (#611)", "Add emergency light and light interactions (#610)", "Make floor sign openable/closeable (#609)".
+- **Naming presence in that week** (same script): 26 prefab/scene files changed; 23 carry an object name (an `m_Name:` line) in their changed text or its context. The three without are two-line changes (Cigarette Vendor, PauseMenu, Item Grid Item/Slot, Field of View Source have tiny hunks; exact list in the script output). This is a measurement of the versioned text, not of the (unbuilt) naming tier; the proposal says exactly that ("carry an object name in their changed text").
+- **Week scan** (`corpus/scan-weeks.py`, `--no-renames`): weeks ranked by asset share; the 2021-02-08 week was chosen because every category is non-zero at a readable size (104 entries).
+
+## DO NOT WRITE
+
+- Any claim that ChangeLens resolves names at a measured rate — the naming tier is not built; only the presence of names in the versioned text was measured.
+- "Most of what changes in a game project is not code" as a corpus finding — the corpus measures changed-file entries and Pascarella measures file categories; the Introduction now attributes the "most files are not code" claim to Pascarella et al. (2018) and the LR calls the corpus comparison indicative only.
+- The Endsley quotation as if fetched from the Sage abstract — it was read on the National Academies page quoting Endsley.

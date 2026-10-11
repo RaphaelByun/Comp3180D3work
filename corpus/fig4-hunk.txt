@@ -1,0 +1,23 @@
+Commit: 2fcc16b617e4b7aba89e39b509146f8e813614e6
+Path: Assets/Content/WorldObjects/Structures/Walls/SteelWall.prefab
+
+@@ -100,7 +100,7 @@ GameObject:
+   m_Component:
+   - component: {fileID: 4770819067178016503}
+   - component: {fileID: 3843643310579965483}
+-  m_Layer: 8
++  m_Layer: 16
+   m_Name: LeftViewObstacle
+   m_TagString: Untagged
+   m_Icon: {fileID: 0}
+@@ -255,6 +255,12 @@ MonoBehaviour:
+   m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+   m_Name: 
+   m_EditorClassIdentifier: 
++  NetworkObserver: {fileID: 0}
++  <PrefabId>k__BackingField: 139
++  <SpawnableCollectionId>k__BackingField: 0
++  _scenePathHash: 0
++  <SceneId>k__BackingField: 0
++  <AssetPathHash>k__BackingField: 11535764229462028423
+   <IsNested>k__BackingField: 0

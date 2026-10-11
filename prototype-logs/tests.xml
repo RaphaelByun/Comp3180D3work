@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="27" result="Passed" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.055166">
+  <test-suite type="TestSuite" id="1000" name="ChangeLens-proto" fullname="ChangeLens-proto" runstate="Runnable" testcasecount="27" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.055166" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1031" name="ChangeLens.Editor.Tests.dll" fullname="C:/Users/rapha/Documents/School/Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/ChangeLens-proto/Library/ScriptAssemblies/ChangeLens.Editor.Tests.dll" runstate="Runnable" testcasecount="27" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.047315" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="37792" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1032" name="ChangeLens" fullname="ChangeLens" runstate="Runnable" testcasecount="27" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.046838" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1033" name="Editor" fullname="ChangeLens.Editor" runstate="Runnable" testcasecount="27" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.046766" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1034" name="Tests" fullname="ChangeLens.Editor.Tests" runstate="Runnable" testcasecount="27" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.046652" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="ChangeReportTests" fullname="ChangeLens.Editor.Tests.ChangeReportTests" classname="ChangeLens.Editor.Tests.ChangeReportTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.036181" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="Build_CountsCommitsAndFileEntries" fullname="ChangeLens.Editor.Tests.ChangeReportTests.Build_CountsCommitsAndFileEntries" methodname="Build_CountsCommitsAndFileEntries" classname="ChangeLens.Editor.Tests.ChangeReportTests" runstate="Runnable" seed="1701799956" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.017050" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1003" name="Build_FindsTheDateRange" fullname="ChangeLens.Editor.Tests.ChangeReportTests.Build_FindsTheDateRange" methodname="Build_FindsTheDateRange" classname="ChangeLens.Editor.Tests.ChangeReportTests" runstate="Runnable" seed="1488682575" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000588" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1005" name="CategoryTable_HasTheRightAddModifyDeleteRenameCounts" fullname="ChangeLens.Editor.Tests.ChangeReportTests.CategoryTable_HasTheRightAddModifyDeleteRenameCounts" methodname="CategoryTable_HasTheRightAddModifyDeleteRenameCounts" classname="ChangeLens.Editor.Tests.ChangeReportTests" runstate="Runnable" seed="1646502783" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000465" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1004" name="CodeFilePercentage_TreatsMetaAsNonCode" fullname="ChangeLens.Editor.Tests.ChangeReportTests.CodeFilePercentage_TreatsMetaAsNonCode" methodname="CodeFilePercentage_TreatsMetaAsNonCode" classname="ChangeLens.Editor.Tests.ChangeReportTests" runstate="Runnable" seed="1778227616" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.002533" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1008" name="EmptyInput_ProducesAnEmptyButUsableReport" fullname="ChangeLens.Editor.Tests.ChangeReportTests.EmptyInput_ProducesAnEmptyButUsableReport" methodname="EmptyInput_ProducesAnEmptyButUsableReport" classname="ChangeLens.Editor.Tests.ChangeReportTests" runstate="Runnable" seed="329358586" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000177" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1007" name="FoldersTouched_ListsAssetsOnly" fullname="ChangeLens.Editor.Tests.ChangeReportTests.FoldersTouched_ListsAssetsOnly" methodname="FoldersTouched_ListsAssetsOnly" classname="ChangeLens.Editor.Tests.ChangeReportTests" runstate="Runnable" seed="1485943762" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000227" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1006" name="MetaSidecars_AreAttributedToTheirSiblingAsset" fullname="ChangeLens.Editor.Tests.ChangeReportTests.MetaSidecars_AreAttributedToTheirSiblingAsset" methodname="MetaSidecars_AreAttributedToTheirSiblingAsset" classname="ChangeLens.Editor.Tests.ChangeReportTests" runstate="Runnable" seed="1603891478" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000432" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1009" name="ToMarkdown_ContainsTheHeadlineNumbers" fullname="ChangeLens.Editor.Tests.ChangeReportTests.ToMarkdown_ContainsTheHeadlineNumbers" methodname="ToMarkdown_ContainsTheHeadlineNumbers" classname="ChangeLens.Editor.Tests.ChangeReportTests" runstate="Runnable" seed="555321136" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.003661" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1010" name="GitLogParserTests" fullname="ChangeLens.Editor.Tests.GitLogParserTests" classname="ChangeLens.Editor.Tests.GitLogParserTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.005007" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1019" name="Parse_AcceptsWindowsLineEndings" fullname="ChangeLens.Editor.Tests.GitLogParserTests.Parse_AcceptsWindowsLineEndings" methodname="Parse_AcceptsWindowsLineEndings" classname="ChangeLens.Editor.Tests.GitLogParserTests" runstate="Runnable" seed="110934498" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000375" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1011" name="Parse_FindsBothCommits" fullname="ChangeLens.Editor.Tests.GitLogParserTests.Parse_FindsBothCommits" methodname="Parse_FindsBothCommits" classname="ChangeLens.Editor.Tests.GitLogParserTests" runstate="Runnable" seed="1503639652" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000134" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1016" name="Parse_HandlesADeletion" fullname="ChangeLens.Editor.Tests.GitLogParserTests.Parse_HandlesADeletion" methodname="Parse_HandlesADeletion" classname="ChangeLens.Editor.Tests.GitLogParserTests" runstate="Runnable" seed="1890467618" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.001125" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1015" name="Parse_HandlesARename" fullname="ChangeLens.Editor.Tests.GitLogParserTests.Parse_HandlesARename" methodname="Parse_HandlesARename" classname="ChangeLens.Editor.Tests.GitLogParserTests" runstate="Runnable" seed="1296767429" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000164" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1013" name="Parse_IgnoresTheCommitBody" fullname="ChangeLens.Editor.Tests.GitLogParserTests.Parse_IgnoresTheCommitBody" methodname="Parse_IgnoresTheCommitBody" classname="ChangeLens.Editor.Tests.GitLogParserTests" runstate="Runnable" seed="2126861214" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000120" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1018" name="Parse_OnEmptyInput_ReturnsAnEmptyListNotNull" fullname="ChangeLens.Editor.Tests.GitLogParserTests.Parse_OnEmptyInput_ReturnsAnEmptyListNotNull" methodname="Parse_OnEmptyInput_ReturnsAnEmptyListNotNull" classname="ChangeLens.Editor.Tests.GitLogParserTests" runstate="Runnable" seed="1865566285" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.001219" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1014" name="Parse_ReadsEveryFileOfTheFirstCommit" fullname="ChangeLens.Editor.Tests.GitLogParserTests.Parse_ReadsEveryFileOfTheFirstCommit" methodname="Parse_ReadsEveryFileOfTheFirstCommit" classname="ChangeLens.Editor.Tests.GitLogParserTests" runstate="Runnable" seed="1410874931" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000156" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1012" name="Parse_ReadsHashAuthorDateAndSubject" fullname="ChangeLens.Editor.Tests.GitLogParserTests.Parse_ReadsHashAuthorDateAndSubject" methodname="Parse_ReadsHashAuthorDateAndSubject" classname="ChangeLens.Editor.Tests.GitLogParserTests" runstate="Runnable" seed="1844034624" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000122" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1017" name="ParseStatusLine_RejectsLinesThatAreNotStatusLines" fullname="ChangeLens.Editor.Tests.GitLogParserTests.ParseStatusLine_RejectsLinesThatAreNotStatusLines" methodname="ParseStatusLine_RejectsLinesThatAreNotStatusLines" classname="ChangeLens.Editor.Tests.GitLogParserTests" runstate="Runnable" seed="502414537" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000111" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1020" name="ShortHash_IsSevenCharacters" fullname="ChangeLens.Editor.Tests.GitLogParserTests.ShortHash_IsSevenCharacters" methodname="ShortHash_IsSevenCharacters" classname="ChangeLens.Editor.Tests.GitLogParserTests" runstate="Runnable" seed="446336111" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000084" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1021" name="PathClassifierTests" fullname="ChangeLens.Editor.Tests.PathClassifierTests" classname="ChangeLens.Editor.Tests.PathClassifierTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.002349" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1024" name="Art_Audio_AndData_AreSortedByExtension" fullname="ChangeLens.Editor.Tests.PathClassifierTests.Art_Audio_AndData_AreSortedByExtension" methodname="Art_Audio_AndData_AreSortedByExtension" classname="ChangeLens.Editor.Tests.PathClassifierTests" runstate="Runnable" seed="132165781" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000293" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1022" name="Code_FilesLandInTheCodeCategory" fullname="ChangeLens.Editor.Tests.PathClassifierTests.Code_FilesLandInTheCodeCategory" methodname="Code_FilesLandInTheCodeCategory" classname="ChangeLens.Editor.Tests.PathClassifierTests" runstate="Runnable" seed="1835400537" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000099" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1030" name="DisplayOrder_CoversEveryCategoryExactlyOnce" fullname="ChangeLens.Editor.Tests.PathClassifierTests.DisplayOrder_CoversEveryCategoryExactlyOnce" methodname="DisplayOrder_CoversEveryCategoryExactlyOnce" classname="ChangeLens.Editor.Tests.PathClassifierTests" runstate="Runnable" seed="707018364" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000284" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1028" name="ExtensionOf_ReadsOnlyTheLastPathSegment" fullname="ChangeLens.Editor.Tests.PathClassifierTests.ExtensionOf_ReadsOnlyTheLastPathSegment" methodname="ExtensionOf_ReadsOnlyTheLastPathSegment" classname="ChangeLens.Editor.Tests.PathClassifierTests" runstate="Runnable" seed="856311057" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000123" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1026" name="Meta_IsItsOwnCategoryButRemembersItsSibling" fullname="ChangeLens.Editor.Tests.PathClassifierTests.Meta_IsItsOwnCategoryButRemembersItsSibling" methodname="Meta_IsItsOwnCategoryButRemembersItsSibling" classname="ChangeLens.Editor.Tests.PathClassifierTests" runstate="Runnable" seed="565264576" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000278" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1023" name="ScenesAndPrefabs_AreTheirOwnCategory" fullname="ChangeLens.Editor.Tests.PathClassifierTests.ScenesAndPrefabs_AreTheirOwnCategory" methodname="ScenesAndPrefabs_AreTheirOwnCategory" classname="ChangeLens.Editor.Tests.PathClassifierTests" runstate="Runnable" seed="1521595028" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000100" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="SiblingPathOfMeta_ChopsOffTheSuffix" fullname="ChangeLens.Editor.Tests.PathClassifierTests.SiblingPathOfMeta_ChopsOffTheSuffix" methodname="SiblingPathOfMeta_ChopsOffTheSuffix" classname="ChangeLens.Editor.Tests.PathClassifierTests" runstate="Runnable" seed="2137991815" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000089" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1029" name="TopLevelFolder_IsTheFirstSegment" fullname="ChangeLens.Editor.Tests.PathClassifierTests.TopLevelFolder_IsTheFirstSegment" methodname="TopLevelFolder_IsTheFirstSegment" classname="ChangeLens.Editor.Tests.PathClassifierTests" runstate="Runnable" seed="1915679185" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000091" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1025" name="UnknownExtensions_FallBackToOther" fullname="ChangeLens.Editor.Tests.PathClassifierTests.UnknownExtensions_FallBackToOther" methodname="UnknownExtensions_FallBackToOther" classname="ChangeLens.Editor.Tests.PathClassifierTests" runstate="Runnable" seed="1905472574" result="Passed" start-time="2026-09-17 11:52:39Z" end-time="2026-09-17 11:52:39Z" duration="0.000103" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/rapha/Documents/School/Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/prototype-logs/tests.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,1 @@
+"""Round 9 trim (19 Sep 2026): three cuts, 14 words, applied inline after Word read 2,475: the four-study sentence shortened; Stray's closing sentence shortened; Dourish & Bellotti's "so it survives git" clause dropped."""

@@ -1,0 +1,512 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.4/staging' branch; Version is '6000.4.10f1 (feeafc12a938) revision 16706300'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-rapha" at "2026-09-17T11:54:08.0259547Z"
+OS: 'Windows 11  (10.0.26200) Core' Language: 'en' Physical Memory: 32058 MB
+BatchMode: 0, IsHumanControllingUs: 1, StartBugReporterOnCrash: 1, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-09-17T11:54:08Z
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.4.10f1\Editor\Unity.exe
+-projectPath
+C:/Users/rapha/Documents/School/Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/ChangeLens-proto
+-executeMethod
+ChangeLens.Editor.ScreenshotBootstrap.Run
+-logFile
+C:/Users/rapha/Documents/School/Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/prototype-logs/screenshot2.log
+Successfully changed project path to: C:/Users/rapha/Documents/School/Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/ChangeLens-proto
+C:/Users/rapha/Documents/School/Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/ChangeLens-proto
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+Player connection [12824]  Target information:
+
+Player connection [12824]  * "[IP] 192.168.0.105 [Port] 55504 [Flags] 2 [Guid] 3170547 [EditorId] 3170547 [Version] 1048832 [Id] WindowsEditor(7,Raphaels_Study) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [12824] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [12824] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-39584" after 0.2 seconds.
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.18.1'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-rapha"
+[Licensing::IpcConnector] LicenseClient-rapha channel disconnected successfully.
+[Licensing::IpcConnector] Channel LicenseClient-rapha-6000.4.10 doesn't exist
+[Licensing::Module] Successfully launched the LicensingClient (PId: 35684)
+Starting IPC server.
+Waiting for clients to connect on \\.\pipe\Unity-LicenseClient-rapha-6000.4.10, press Ctrl-C to exit.
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-rapha-6000.4.10" at "2026-09-17T11:54:09.8577034Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 35684, path: "C:/Program Files/Unity/Hub/Editor/6000.4.10f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.1+9fbee8e
+  Session Id:              bda57ae1925442d9a2c540b80e399b46
+  Correlation Id:          2f8758fa84b6bd5092f5afd9f5b3477e
+  External correlation Id: 2517119518457478520
+  Machine Id:              FfLnvGxwuwoj6EHGleTU669XFFY=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-rapha-6000.4.10" (connect: 0.25s, validation: 0.09s, handshake: 0.01s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-rapha-6000.4.10-notifications" at "2026-09-17T11:54:09.9526859Z"
+[Licensing::Module] Connected to LicensingClient (PId: 35684, launch time: 0.00, total connection time: 0.34s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 16767915346750-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.01
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 1.96s
+[Licensing::Module] Licensing is initialized (took 1.53s).
+[Licensing::Client] Successfully resolved entitlement details
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Initialize engine version: 6000.4.10f1 (feeafc12a938)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.4.10f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/rapha/Documents/School/Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/ChangeLens-proto/Assets
+[D3D12 Device Filter] Vendor Name: NVIDIA
+[D3D12 Device Filter] Device Name: NVIDIA GeForce RTX 4060 Laptop GPU
+[D3D12 Device Filter] Driver Version: 32.0.15.7702
+[D3D12 Device Filter] Feature Level: 12.2
+[D3D12 Device Filter] Graphics Memory: 7957 MB
+[D3D12 Device Filter] Processor Count: 16
+[D3D12 Device Filter] Device Type: Discrete
+GfxDevice: creating device client; kGfxThreadingModeSplitJobs
+d3d12: failed to query info queue interface (0x80004002).
+Direct3D:
+    Version:         Direct3D 12 [level 12.2]
+    Renderer:        NVIDIA GeForce RTX 4060 Laptop GPU (ID=0x28e0)
+    Vendor:          NVIDIA
+    VRAM:            7957 MB
+    App VRAM Budget: 7189 MB
+    Driver:          32.0.15.7702
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.4.10f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.4.10f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.4.10f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56584
+CodeReloadManager initialized
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.4.10f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001568 seconds.
+Native extension for WindowsStandalone target not found
+Package Manager log level set to [2]
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.374 seconds
+Domain Reload Profiling: 735ms
+	BeginReloadAssembly (118ms)
+		CreateAndSetChildDomain (15ms)
+	RebuildCommonClasses (29ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (47ms)
+	LoadAllAssembliesAndSetupDomain (155ms)
+		LoadAssemblies (101ms)
+		AnalyzeDomain (147ms)
+			TypeCache.Refresh (146ms)
+				TypeCache.ScanAssembly (136ms)
+	FinalizeReload (376ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (35ms)
+			BeforeProcessingInitializeOnLoad (70ms)
+			ProcessInitializeOnLoadAttributes (92ms)
+			ProcessInitializeOnLoadMethodAttributes (120ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 40 packages:
+  Built-in packages:
+    com.unity.test-framework@1.6.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.test-framework@996f223345ba)
+    com.unity.multiplayer.center@1.0.1 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.multiplayer.center@f01f4ba8d00a)
+    com.unity.modules.accessibility@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.accessibility)
+    com.unity.modules.adaptiveperformance@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.adaptiveperformance)
+    com.unity.modules.ai@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.physics2d)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vectorgraphics@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.vectorgraphics)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.video)
+    com.unity.modules.vr@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.vr)
+    com.unity.modules.wind@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.modules.hierarchycore)
+    com.unity.ext.nunit@2.0.5 (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Library\PackageCache\com.unity.ext.nunit@d8c07649098d)
+  Embedded packages:
+    com.raphaelbyun.changelens@file:C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Packages\com.raphaelbyun.changelens (location: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Packages\com.raphaelbyun.changelens)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.01 seconds
+[ScriptCompilation] Requested script compilation because: AssetDatabase observed changes in script compilation related files
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:80
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping - application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping - 200 - application/grpc 28.4823ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.4.10f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/rapha/Documents/School/Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/ChangeLens-proto
+ExitCode: 0 Duration: 0s356ms
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/ChangeLens.Editor.dll (+2 others) [CacheMiss ea4914c7ed6443e1042f41af13acf29d00000000000000000000000000000006]
+[187/193    0s] Csc Library/Bee/artifacts/1900b0aE.dag/ChangeLens.Editor.dll (+2 others)
+[           0s] Csc Library/Bee/artifacts/1900b0aE.dag/ChangeLens.Editor.dll (+2 others) [CacheWrite ea4914c7ed6443e1042f41af13acf29d00000000000000000000000000000006]
+[191/193    0s] CopyFiles Library/ScriptAssemblies/ChangeLens.Editor.pdb
+[192/193    0s] CopyFiles Library/ScriptAssemblies/ChangeLens.Editor.dll
+*** Tundra build success (0.33 seconds), 3 items updated, 193 evaluated
+AssetDatabase: script compilation time: 0.669961s
+Begin MonoManager ReloadAssembly
+Assembly Assembly-CSharp-Editor-firstpass.dll at Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.dll not valid. Loading of assembly skipped.
+Assembly Assembly-CSharp-Editor.dll at Library/ScriptAssemblies/Assembly-CSharp-Editor.dll not valid. Loading of assembly skipped.
+Assembly Assembly-CSharp-firstpass.dll at Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll not valid. Loading of assembly skipped.
+Assembly Assembly-CSharp.dll at Library/ScriptAssemblies/Assembly-CSharp.dll not valid. Loading of assembly skipped.
+Assembly TestNewCustomAssembly.dll at Library/ScriptAssemblies/TestNewCustomAssembly.dll not valid. Loading of assembly skipped.
+Assembly Unity.Multiplayer.Center.Editor.Tests.dll at Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Multiplayer.Center.Tests.dll at Library/ScriptAssemblies/Unity.Multiplayer.Center.Tests.dll not valid. Loading of assembly skipped.
+Native extension for WindowsStandalone target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.403 seconds
+Domain Reload Profiling: 934ms
+	BeginReloadAssembly (295ms)
+		DisableScriptedObjects (20ms)
+		CreateAndSetChildDomain (151ms)
+	RebuildCommonClasses (31ms)
+	RebuildNativeTypeToScriptingClass (11ms)
+	initialDomainReloadingComplete (93ms)
+	LoadAllAssembliesAndSetupDomain (101ms)
+		LoadAssemblies (168ms)
+		AnalyzeDomain (18ms)
+			TypeCache.Refresh (10ms)
+				TypeCache.ScanAssembly (7ms)
+			BuildScriptInfoCaches (6ms)
+	FinalizeReload (404ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (18ms)
+			BeforeProcessingInitializeOnLoad (110ms)
+			ProcessInitializeOnLoadAttributes (102ms)
+			ProcessInitializeOnLoadMethodAttributes (42ms)
+			AfterProcessingInitializeOnLoad (5ms)
+		AwakeInstancesAfterBackupRestoration (17ms)
+(Values over 0.050ms)
+Asset Pipeline Refresh (id=306a7a5a7138e2c4b8d7664239e32dc3): Total: 1.827 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=540 ms
+		Asset DB Callback time: managed=53 ms, native=18 ms
+		Scripting: domain reloads=1, domain reload time=533 ms, compile time=673 ms, other=8 ms
+		Project Asset Count: scripts=174, non-scripts=90
+		Asset File Changes: new=0, changed=1, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 17.348ms
+	ApplyChangesToAssetFolders: 0.929ms
+	Scan: 51.235ms
+	OnSourceAssetsModified: 0.883ms
+	CategorizeScriptCompilationAssets: 4.368ms
+	ProcessAssetsWithTransientArtifactChanges: 4.888ms
+	CategorizeAssets: 1.433ms
+	CompileScripts: 672.509ms
+	ImportOutOfDateAssets: 405.042ms (404.765ms without children)
+		UnloadImportedAssets: 0.137ms
+		OnDemandSchedulerStart: 0.104ms
+	PostProcessAllAssets: 53.737ms
+		VCAutoAddAssetPostprocess 0.826ms
+		MonoPostProcessAllAssets: 52.555ms
+			AssetPostprocessor.OnPostprocessAllAssets 12.113ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 9.336ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 7.455ms
+			AssetChangedListener.OnPostprocessAllAssets 5.339ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 4.487ms
+			SyncVS.PostprocessSyncProject 1.530ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 1.378ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 0.792ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 0.674ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 0.567ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.319ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.282ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.252ms
+			AssetEvents.OnPostprocessAllAssets 0.188ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.160ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.140ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.111ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.103ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.103ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.077ms
+	PostAssetChangesProfiler: 2.525ms
+	UnloadStreamsBegin: 1.256ms
+	GenerateScriptTypeHashes: 0.186ms
+	GenerateScriptTypeSerializationHashes: 0.403ms
+	Untracked: 605.287ms
+
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Scanning for USB devices : 3.609ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-ChangeLens-proto
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 472 unused Assets / (0.7 MB). Loaded Objects now: 1118.
+Memory consumption went from 112.3 MB to 111.6 MB.
+Total: 4.345800 ms (FindLiveObjects: 0.102400 ms CreateObjectMapping: 0.020700 ms MarkObjects: 3.873500 ms  DeleteObjects: 0.345700 ms)
+
+[LAYOUT] About to load UserSettings\Layouts\default-6000.dwlt, keepMainWindow=False
+[LAYOUT] About to save layout C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\UserSettings\Layouts\default-6000.dwlt
+[LAYOUT] About to save layout C:/Users/rapha/AppData/Roaming/Unity/Editor-5.x/Preferences\Layouts\current\default-6000.dwlt
+[MODES] ModeService[default].InitializeCurrentMode
+[MODES] ModeService[default].RaiseModeChanged(default, default)
+This project uses Input Manager, which is marked for deprecation. To manage input in your project, use the <a href="https://docs.unity3d.com/Packages/com.unity.inputsystem@latest">Input System package</a> instead.
+[ChangeLens screenshots] starting
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+ChangeLens.Editor.ScreenshotBootstrap:Log (string) (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:228)
+ChangeLens.Editor.ScreenshotBootstrap:Run () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:52)
+
+(Filename: ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs Line: 228)
+
+[ChangeLens screenshots] starting
+<RI> Initializing input.
+XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
+<RI> Input initialized.
+[Project] Loading completed in 7.048 seconds
+	Project init time: 				5.504 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		1.742 seconds
+		Asset Database init time: 		0.509 seconds
+		Global illumination init time: 	0.002 seconds
+		Assemblies load time: 			0.770 seconds
+		Unity extensions init time: 	0.001 seconds
+		Asset Database refresh time: 	1.828 seconds
+	Scene opening time: 			1.315 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1789646055067,"processId":39584,"projectLoad":7.0478776000000009,"projectInit":5.5042028,"templateInit":0.0,"packageManagerInit":1.7416637,"assetDatabaseInit":0.5088701,"globalIlluminationInit":0.0020389,"assembliesLoad":0.7698471,"unityExtensionsInit":0.000739,"assetDatabaseRefresh":1.8279733,"sceneOpening":1.3154894}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1789646055067,"processId":39584,"editorVersion":"6000.4.10f1 (feeafc12a938)","branch":"6000.4/staging","buildType":"Release","platform":"Windows"}
+Asset Pipeline Refresh (id=d70298774a89dee45b53df3d5b6776d3): Total: 0.022 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Start Indexing on Editor startup
+[Indexing] Starting Initial Indexing for Assets
+Created GICache directory at C:/Users/rapha/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.010s, timestamps: [8.139 - 8.149]
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Client] Successfully resolved entitlement details
+[ChangeLens screenshots] window opened at (x:0.00, y:0.00, width:900.00, height:700.00)
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+ChangeLens.Editor.ScreenshotBootstrap:Log (string) (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:228)
+ChangeLens.Editor.ScreenshotBootstrap:StepOpenWindow () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:106)
+ChangeLens.Editor.ScreenshotBootstrap:Tick () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:73)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs Line: 228)
+
+[ChangeLens screenshots] window opened at (x:0.00, y:0.00, width:900.00, height:700.00)
+[Licensing::Client] Successfully updated the access token
+[Licensing::Module] Successfully updated access token: "91vP8dsT"... (expires: 2026-09-17T13:54:16Z)
+[ChangeLens screenshots] sample loaded from C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Packages\com.raphaelbyun.changelens\Samples~\ss3d-week.txt
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+ChangeLens.Editor.ScreenshotBootstrap:Log (string) (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:228)
+ChangeLens.Editor.ScreenshotBootstrap:StepLoadSample () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:123)
+ChangeLens.Editor.ScreenshotBootstrap:Tick () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:74)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs Line: 228)
+
+[ChangeLens screenshots] sample loaded from C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\Packages\com.raphaelbyun.changelens\Samples~\ss3d-week.txt
+[ChangeLens screenshots] wrote C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\figures\fig1-changelens-window.png (900x700)
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+ChangeLens.Editor.ScreenshotBootstrap:Log (string) (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:228)
+ChangeLens.Editor.ScreenshotBootstrap:Capture (UnityEngine.Rect,string) (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:223)
+ChangeLens.Editor.ScreenshotBootstrap:StepCaptureWindow () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:129)
+ChangeLens.Editor.ScreenshotBootstrap:Tick () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:75)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs Line: 228)
+
+[ChangeLens screenshots] wrote C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\figures\fig1-changelens-window.png (900x700)
+[ChangeLens screenshots] package pinged in the Project window
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+ChangeLens.Editor.ScreenshotBootstrap:Log (string) (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:228)
+ChangeLens.Editor.ScreenshotBootstrap:StepRevealPackage () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:143)
+ChangeLens.Editor.ScreenshotBootstrap:Tick () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:76)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs Line: 228)
+
+[ChangeLens screenshots] package pinged in the Project window
+[ChangeLens screenshots] selected ChangeLensWindow.cs inside the package
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+ChangeLens.Editor.ScreenshotBootstrap:Log (string) (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:228)
+ChangeLens.Editor.ScreenshotBootstrap:StepRevealPackage () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:159)
+ChangeLens.Editor.ScreenshotBootstrap:Tick () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:76)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs Line: 228)
+
+[ChangeLens screenshots] selected ChangeLensWindow.cs inside the package
+Starting new worker id: 0 with log in C:/Users/rapha/Documents/School/Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/ChangeLens-proto/Logs/AssetImportWorker0.log
+Starting new worker id: 1 with log in C:/Users/rapha/Documents/School/Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/ChangeLens-proto/Logs/AssetImportWorker1.log
+[Licensing::Client] Successfully updated the access token
+[Licensing::Module] Successfully updated access token: "91vP8dsT"... (expires: 2026-09-17T13:54:17Z)
+[ChangeLens screenshots] wrote C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\figures\fig2-package-in-project.png (1707x1024)
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+ChangeLens.Editor.ScreenshotBootstrap:Log (string) (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:228)
+ChangeLens.Editor.ScreenshotBootstrap:Capture (UnityEngine.Rect,string) (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:223)
+ChangeLens.Editor.ScreenshotBootstrap:StepCaptureEditor () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:183)
+ChangeLens.Editor.ScreenshotBootstrap:Tick () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:77)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs Line: 228)
+
+[ChangeLens screenshots] wrote C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\figures\fig2-package-in-project.png (1707x1024)
+[ChangeLens screenshots] done; quitting
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+ChangeLens.Editor.ScreenshotBootstrap:Log (string) (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:228)
+ChangeLens.Editor.ScreenshotBootstrap:StepQuit () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:189)
+ChangeLens.Editor.ScreenshotBootstrap:Tick () (at ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs:78)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: ./Packages/com.raphaelbyun.changelens/Editor/ScreenshotBootstrap.cs Line: 228)
+
+[ChangeLens screenshots] done; quitting
+[LAYOUT] About to save layout C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\ChangeLens-proto\UserSettings\Layouts\default-6000.dwlt
+[LAYOUT] About to save layout C:/Users/rapha/AppData/Roaming/Unity/Editor-5.x/Preferences\Layouts\current\default-6000.dwlt
+Worker ready: AssetImportWorker0 0
+Worker ready: AssetImportWorker1 1
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input Polling Thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-rapha-6000.4.10-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-rapha-6000.4.10 channel disconnected successfully.
+Shut down.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+CodeReloadManager destroyed
+abort_threads: Failed aborting id: 0000000000006BF4, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 0000000000008274, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 0000000000006BF4, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 0000000000008274, mono_thread_manage will ignore it
+
+debugger-agent: Unable to listen on 5104
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1789646059327,"processId":39584,"allocatedMemory":11660575,"memoryLabels":[{"Default":162769},{"Permanent":15276},{"NewDelete":67245},{"Thread":4237552},{"Manager":34224},{"VertexData":8},{"Geometry":816},{"Texture":24},{"Shader":846562},{"Material":24},{"GfxDevice":57360},{"Animation":392},{"Audio":3008},{"FreeType":8},{"FontEngine":736},{"Physics":2090},{"Physics2D":16},{"Serialization":150464},{"Input":9880},{"JobScheduler":33024},{"TextLib":25176},{"Mono":32},{"ScriptingNativeRuntime":155052},{"BaseObject":1620432},{"Resource":1184},{"Renderer":3008},{"Transform":4685},{"File":12840},{"WebCam":616},{"Culling":32},{"Terrain":11394},{"Wind":24},{"STL":40},{"String":9519},{"StaticString":6718},{"Utility":2673506},{"Curl":48},{"PoolAlloc":2072},{"AI":80},{"TypeTree":11341},{"ScriptManager":448},{"RuntimeInitializeOnLoadManager":64},{"SpriteAtlas":120},{"GI":7792},{"Director":8320},{"CloudService":6848},{"WebRequest":16475},{"VR":48050},{"SceneManager":504},{"Video":208},{"LazyScriptCache":32},{"Camera":89},{"Secure":2377},{"SerializationCache":1576},{"APIUpdating":10320},{"Subsystems":336},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":472},{"Hierarchy":608},{"CoreStats":13112},{"Identifiers":12960},{"Gui":267608},{"EditorUtility":259027},{"VersionControl":4},{"Undo":931},{"AssetDatabase":456095},{"EditorGi":328},{"UnityConnect":34194},{"Upm":1912},{"UpmDiagnostics":8},{"AssetCompliance":64},{"DrivenProperties":72},{"LocalIPC":211},{"ProfilerEditor":9746},{"CoreBusinessMetrics":2891},{"Windowing":456},{"Licensing":664},{"AssetReference":32},{"IPCStream":32}]}

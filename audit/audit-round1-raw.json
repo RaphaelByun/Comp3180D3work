@@ -1,0 +1,585 @@
+{
+  "marker_malcolm": {
+    "persona": "Malcolm Ryan, COMP3180 convenor, marking A2 against the published Research Proposal rubric (Literature Review 45% / Project Proposal 40% / Communication 15%), calibrated on the real A1 result (65 Content / 55 Presentation against an AI prediction of 88/82, marker comment: density and no plain overview).",
+    "criteria": [
+      {
+        "criterion": "Literature Review",
+        "weight": 45,
+        "band": "D",
+        "mark": 82,
+        "descriptor_quote": "At least five distinct and high-quality sources with a common theme relating to the project topic. Sources are very well summarised and evaluated in terms of their relevance, lessons for and usefulness to the outlined project. Review synthesises and abstracts key patterns and relationships from the literature to motivate the project.",
+        "why_not_higher": "The count and the calibre are HD-eligible: six distinct peer-reviewed sources (Bertram 2010, Ko 2007, Pascarella 2018, Dourish & Bellotti 1992, Whitson 2018, Maddila 2023) on one theme, and every entry answers my pet-peeve question — it says what was learnt, not what the source is about (P05's quote at p. 296; 21 information types with 61% unsatisfied; 80% vs 30% Development-category files; 86 of 119 notifications ignoring recent activity). The synthesis genuinely adjudicates rather than lists, setting Dourish & Bellotti's structural mechanism against Whitson's opacity-plus-blame and using Stray and Washburn to bound both. What blocks HD is 'expertly summarised': an expert summary is one I take in on one pass, and this review is written in a compressed, colon-fragment register that repeatedly stops me. The section's own opening sentence — 'Which producer needs a team's artefacts can answer depends on why the shared record under-reports the work' — is a garden path; I read 'producer needs' as a verb phrase and had to restart. Three entries also forward-reference machinery that has not been introduced yet (the fidelity check, 'the rival mechanism the synthesis adjudicates', 'my challenge tier'), so the reader carries undefined terms through the review. Whitson's usefulness sentence describes a rhetorical role in the essay, not a lesson for the project, which is the one place the required 'usefulness to the outlined project' statement thins out. Given the A1 evidence that density costs this marker real marks, I report the lower band.",
+        "single_change_to_next_band": "Rewrite the review's opening sentence and the first sentence of each of the six entries as a plain claim stated before its technical detail — e.g. replace the opening with 'Why is a team's shared record thinner than its work? These six sources give three competing answers, compared at the end.' — paying for it by deleting the Whitson boundary-object sentence's second half and the redundant 'in three camps compared at the end' tail."
+      },
+      {
+        "criterion": "Project Proposal",
+        "weight": 40,
+        "band": "D",
+        "mark": 79,
+        "descriptor_quote": "Outlines a sensible plan with clear and specific learning goals for developing industry-relevant skills. Identifies a considered research question with an appropriate and achievable mixed methodology for evaluation. Overview of scoping work undertaken provides a strongly convincing argument for the feasibility of the project. Includes a description of specific and measurable project deliverables clearly demonstrating these goals and satisfying unit requirements.",
+        "why_not_higher": "Almost everything I asked for in the walkthrough is here and done properly. Four learning goals spanning understand to create, each with a measure, each framed as a CV line with the career motivation named ('I was the producer on my COMP3151 team and aim for producer or technical-producer roles'). Genuine mixed method: a within-subjects comprehension test scored against fixed answers with a guess-catching unanswerable item, plus think-alouds coded against Ko's categories with a second coder and reported agreement, plus a fidelity check with a stated pass threshold. Kickstarter tiering is exact — committed 11 h, stretch 3 h, challenge 2 h, with a stated rule that overrun eats the outer tiers first — and the hours sum to 65 with 15 in-prac, and the internal arithmetic (14 = 6+3+2+3; 20 = 4+3+13) checks out. Scoping is real: a working Editor window on actual SS3D history (Figure 2), a measured five-repository corpus (Figure 1) and a screening pass that honestly reports finding no repository meeting both thresholds. HD is blocked by three things. First, the scoping argument is delivered in blocks the marker must decompress — one paragraph carries recruitment, target n, floor, fallback design, ethics and consent; another carries screening thresholds, the split, two raw repository slugs and two percentage ranges. Advanced work argued opaquely does not read as advanced. Second, the primary research question is not restated in Scoping Evidence where the template puts it; the section opens with a pointer back to the Introduction, so a marker ticking boxes finds a cross-reference. Third, feasibility rests on a participant pool that has not committed: 'I will recruit at the first COMP3151 prac of Week 9' is a plan, and the Create goal's measure — 'at least four of the six think-aloud participants (floor five)' — leaves the actual success threshold ambiguous. 'Strongly convincing' holds; 'advanced' does not quite.",
+        "single_change_to_next_band": "Open Scoping Evidence with the research question itself in one line and split the recruitment paragraph into two sentences that lead with how many participants are already secured, paying for it by cutting 'of the research question stated in the Introduction' and compressing the screening thresholds parenthetical to '(asset volume and issue-linking rate)'."
+      },
+      {
+        "criterion": "Communication",
+        "weight": 15,
+        "band": "CR",
+        "mark": 71,
+        "descriptor_quote": "The report is easy to read and uses appropriate language and structure. It meets the word count, referencing and other submission requirements. It may contain a few minor spelling, grammatical or referencing errors.",
+        "why_not_higher": "The mechanics are clean and that is the only reason this is not lower: headings follow the template, three relevant figures are integrated where they earn their place, APA referencing is consistent with DOIs throughout, the body is inside the limit, and I found no spelling or grammatical errors. But D requires 'very easy to read' and this is not. I counted at least seven sentences I had to read twice. 'it tests the engine leg' appears in the Introduction with 'leg' never defined anywhere in the document — the tripod metaphor it belongs to was left behind in earlier work, so the reader hits an undecodable term inside the first 200 words. 'at least four of the six think-aloud participants (floor five)' is arithmetically ambiguous. 'the committed tier adds object naming (Figure 3), where Unity earns its place because the AssetDatabase resolves identifiers to asset and script names without a hand-written parser, and the build report exists nowhere else' packs three claims and an unqualified novelty assertion into one sentence. The register is relentlessly telegraphic — 'What I learnt is where the record fails: at entry.', 'The contrast I took is the file mix:', 'The finding that fixed my unit of analysis:' — and the competitor paragraph fires five product names in two sentences. Raw repository slugs ('RE-SS3D/SS3D', 'immersivecognition/unity-experiment-framework') sit in prose unexplained. This is precisely the failure the A1 marker named — 'So much information in each slide... It was hard to know what the presentation was about' — reproduced in prose. P does not fit, because P's failures are structural problems and repeated errors and this document has neither, so CR is correct, but it sits at the bottom of CR.",
+        "single_change_to_next_band": "Do one pass converting the compressed colon-fragment constructions and the undefined 'engine leg' metaphor into plain full sentences that state the point before the evidence, budgeted at roughly twenty words net by deleting the Whitson boundary-object clause and the 'in three camps compared at the end' tail from the review's opening."
+      }
+    ],
+    "predicted_task_mark": 79,
+    "top_changes": [
+      {
+        "priority": 1,
+        "location": "Introduction — \"The project delivers that package and an evaluation in which...\"",
+        "problem": "'it tests the engine leg' uses a tripod metaphor that is never introduced in this document. The reader hits an undecodable term inside the first 200 words, which is exactly the A1 failure the real marker punished ('jumped straight into very technical details without providing context'). The same sentence also fuses the deliverable, the study design, the sample size and a scoping justification into one clause chain.",
+        "fix": "Split it: 'The project delivers that tool plus an evaluation in which eight student producers read two versions of the report. The evaluation isolates the Unity asset layer, because connecting a team's own tracker would need their private history.' Pay for it by deleting the trailing clause 'since fusing a team's own tracker needs their linked history', which the replacement absorbs, and by cutting 'and what it means' from the first sentence of the paragraph where it is restated two sentences later.",
+        "mark_impact": "Communication +2 to +3; removes the single highest-risk comprehension failure in the document and protects Literature Review and Proposal from the halo of an opaque opening."
+      },
+      {
+        "priority": 2,
+        "location": "Literature Review — \"Which producer needs a team's artefacts can answer depends...\"",
+        "problem": "Garden-path opening sentence for the 45% criterion. 'Which producer needs a team's artefacts can answer' parses first as 'which producer needs...', forcing a restart. The section that carries nearly half the mark begins by defeating the reader.",
+        "fix": "Replace with: 'Why is a team's shared record thinner than the work it is meant to describe? These six sources give three competing answers, compared at the end.' Net saving of roughly eight words, which funds change 3.",
+        "mark_impact": "Literature Review +2; Communication +2. This is the cheapest single sentence in the document to fix."
+      },
+      {
+        "priority": 3,
+        "location": "Learning Goals — \"**Create:** design a technical artefact for a reader...\"",
+        "problem": "'at least four of the six think-aloud participants (floor five)' states a threshold against a denominator that the same parenthesis says may be five. The success criterion for the Create goal — the goal Malcolm said sits above the expected bar — is therefore ambiguous, and an ambiguous measure invites the charge that the goal is not measurable.",
+        "fix": "Replace with 'at least two-thirds of think-aloud participants answer the assigned status question from the report alone.' Saves four words on its own.",
+        "mark_impact": "Project Proposal +1 to +2 against the 'specific and measurable' descriptor."
+      },
+      {
+        "priority": 4,
+        "location": "Scoping Evidence — \"Two sub-questions structure the evaluation of the research question...\"",
+        "problem": "The template requires the primary research question to be identified in Scoping Evidence. The section opens with a pointer back to the Introduction instead of the question. A marker working the template section by section finds a cross-reference where a question should be.",
+        "fix": "Open the section with the question in its own line — 'Which of a producer's information needs can be answered automatically from the artefacts a team already produces, and which cannot? Two sub-questions structure the evaluation.' Pay by deleting 'of the research question stated in the Introduction' and trimming 'Sub-question 1 is answered by mapping needs to artefacts, so a result exists whether or not the experiment finds an effect' to 'Sub-question 1 yields a result whether or not the experiment finds an effect.'",
+        "mark_impact": "Project Proposal +1; removes a template-compliance box-tick risk that costs nothing to close."
+      },
+      {
+        "priority": 5,
+        "location": "Scoping Evidence — \"Every COMP3151 team has a student producer, and teammates...\"",
+        "problem": "One paragraph carries recruitment venue, briefing method, target n, floor, degradation plan, session length, pilot, consent and de-identification. It is the densest block in the document and it is the block that has to convince me the study will actually happen. It also contains no commitment from any participant.",
+        "fix": "Split into three short sentences leading with numbers already secured, then the fallback, then ethics in one clause. Pay by cutting 'with my COMP3180 prac as a second pool' and folding 'after an excluded pilot' into the Deliverable 3 row, where the pilot is already listed.",
+        "mark_impact": "Project Proposal +1 to +2 on 'strongly convincing argument for the feasibility'; Communication +1."
+      },
+      {
+        "priority": 6,
+        "location": "Scoping Evidence — \"I screened public Unity repositories on two thresholds (one megabyte...\"",
+        "problem": "Raw repository slugs ('RE-SS3D/SS3D', 'immersivecognition/unity-experiment-framework') and two numeric screening thresholds land in prose with no plain-language gloss, immediately before two percentage ranges and a forward figure reference. The screening result — a negative finding honestly reported — is strong scoping work that the prose hides.",
+        "fix": "Name them in words: 'SS3D, an open-source multiplayer station game' and 'the Unity Experiment Framework'. Compress the threshold parenthetical to '(asset volume and issue-linking rate)'. Roughly word-neutral.",
+        "mark_impact": "Communication +1 to +2; Project Proposal +1, because the negative screening result becomes legible as evidence rather than noise."
+      },
+      {
+        "priority": 7,
+        "location": "Scoping Evidence — \"ChangeLens is a Unity Editor package (Unity 6000.4) turning...\"",
+        "problem": "The trailing clause 'and the build report exists nowhere else' is an unqualified novelty claim buried in a subordinate clause about a different tier, and it contradicts the careful hedging used for the same class of claim in the Introduction ('September 2026 vendor sweep; studio-internal tools are not observable'). One sentence carries the classification mechanism, the tier boundary, a tooling justification and a novelty assertion.",
+        "fix": "End the sentence at 'without a hand-written parser', and move the build-report point into the stretch-tier sentence with the same hedge already used in the Introduction: 'no tool in the September 2026 sweep reads it'. Word-neutral.",
+        "mark_impact": "Project Proposal +1 (removes an overclaim a knowledgeable marker will test); Communication +1."
+      },
+      {
+        "priority": 8,
+        "location": "Deliverables table, row 5 — \"Eight 45-minute sessions, two conditions each (6 h)\"",
+        "problem": "Eight 45-minute sessions is exactly 6.0 hours, leaving zero minutes for setup, briefing, consent, scheduling slippage or no-shows across eight appointments. I told the cohort that everything takes longer than you expect even after you account for everything taking longer than you expect; an estimate with no slack is the one row here that reads as optimistic, and the hour table is a commitment to explain variance later.",
+        "fix": "Reallocate one hour from row 1 (14 to 13; the tool sample is already fixed at four, so the heuristic-evaluation estimate has the most give) into row 5 (13 to 14) and state it as '8 x 45-minute sessions plus scheduling and setup (7 h)'. Total stays 65.",
+        "mark_impact": "Project Proposal +1; pre-empts the obvious estimating question in the A3 reflection."
+      },
+      {
+        "priority": 9,
+        "location": "Literature Review — \"The mechanism is narrower than a general failure to articulate...\"",
+        "problem": "Whitson's required 'usefulness to the project' sentence says what the source does inside the essay ('the rival mechanism the synthesis adjudicates'), not what it changes about what gets built or measured. It is the only one of the six entries where the usefulness statement is rhetorical rather than practical.",
+        "fix": "Replace the last sentence with a concrete consequence — e.g. 'If opacity rather than structure is the mechanism, passive extraction will name what changed but not why, so the think-aloud follow-up asks readers what the page leaves unexplained.' Pay by deleting 'the word in the paper's title' and shortening the boundary-object sentence to 'Unity also worked as a boundary object: one shared tool that art, design, code and production each read differently.'",
+        "mark_impact": "Literature Review +1 to +2 on 'usefulness to the outlined project'."
+      },
+      {
+        "priority": 10,
+        "location": "Literature Review — \"What I learnt is where the record fails: at entry.\" (and three sibling constructions)",
+        "problem": "A repeated telegraphic register — 'The contrast I took is the file mix:', 'The finding that fixed my unit of analysis:', 'Their point is that...' — compresses each entry's headline claim into a fragment. Individually survivable; across six entries it is the texture the A1 marker described as too much information with no overview.",
+        "fix": "Convert three of the four into full sentences that state the finding before its label, e.g. 'Bugs go unfiled because the record fails at the point of entry, not afterwards.' Pay from the roughly fifteen words freed by changes 2 and 9.",
+        "mark_impact": "Communication +2; reduces the density halo on Literature Review."
+      },
+      {
+        "priority": 11,
+        "location": "Cover fields and end of Statement on Generative AI use — \"%ID: [STUDENT ID]\" / \"[CONFIRM BEFORE SUBMISSION: which of the six...\"",
+        "problem": "Two placeholders remain live. The unfilled Student ID is a cover-page requirement the markers check, and the bracketed CONFIRM line sits in the submitted document after the GenAI statement. Leaving either in is a self-inflicted mechanical hit that no amount of content quality offsets.",
+        "fix": "Fill the ID; resolve the read-in-full question and delete the bracketed line entirely rather than converting it to prose. Deletion frees words.",
+        "mark_impact": "No band movement if fixed; Communication drops a band and the submission looks unproofed if either survives."
+      }
+    ],
+    "evidence_needed": [
+      {
+        "item": "Participant recruitment commitment. The proposal says 'I will recruit at the first COMP3151 prac of Week 9 and again in Week 10' and targets eight readers with a floor of five, but nobody has said yes.",
+        "what_would_settle_it": "A dated written agreement from the COMP3151 convenor or tutor permitting a five-minute recruitment pitch in the Week 9 prac, plus two or three named producers who have agreed in writing. One sentence in Scoping Evidence — 'Three producers have already agreed; the tutor has approved a pitch in the Week 9 prac' — converts a plan into evidence and is the largest single gain available on the feasibility descriptor."
+      },
+      {
+        "item": "Ethics basis. 'Participation is voluntary under the unit's general clearance for student studies' is asserted without a citable source.",
+        "what_would_settle_it": "The unit guide clause, iLearn post or staff email naming the general clearance for student-run studies under the student code of conduct, so the sentence can cite it rather than assert it."
+      },
+      {
+        "item": "The novelty claim's audit trail. 'No publicly documented tool fuses tracker, repository and engine signals for a non-technical producer (September 2026 vendor sweep; studio-internal tools are not observable).'",
+        "what_would_settle_it": "An appendix table listing every tool checked, the date checked and the leg each one covers, referenced from that sentence. Without it the reader has a parenthetical date and no trace; with it, the hedge becomes documented method. Appendices are uncounted, so this costs no words."
+      },
+      {
+        "item": "Goal 1's measure refers to 'five held-out breakdowns from my notes' with no named source for the notes.",
+        "what_would_settle_it": "Naming the artefact and its size — e.g. 'five held-out incidents from the two producer interviews and the 25-review corpus' — so the assessor can see the measure draws on something that exists."
+      },
+      {
+        "item": "Whitson (2018) fieldwork parameters: 'ten weeks of ethnographic observation with 10 intern developers at a Montreal studio'.",
+        "what_would_settle_it": "Confirmation that those three numbers appear in the 2018 New Media & Society article itself and not only in an earlier draft of the work, with a page number. If the published article does not state them, the sentence must be reworded to what it does state."
+      },
+      {
+        "item": "Maddila et al. checkable figures: '86 of 119 negatively resolved notifications ignored recent activity', and the three stated limits bounding the novelty claim (pull-request-only signals, unhandled dependencies, no composition across items).",
+        "what_would_settle_it": "Section or page numbers for the 86/119 figure and for each of the three limits. The Bertram entry already models this with 'P05, p. 296' and 'p. 297'; the Nudge entry carries the heaviest load in the review (it bounds the challenge tier) and cites nothing locatable."
+      },
+      {
+        "item": "Bertram et al. Team B attribution: 'described in the paper as a product development team within a large gaming company (p. 297)'.",
+        "what_would_settle_it": "Verification that p. 297 carries that description, since this is the one place a games-specific claim is drawn from a general software-engineering paper and a marker who knows the paper may check it."
+      },
+      {
+        "item": "The committed tier's '60% of changed prefabs and scenes must be named' threshold.",
+        "what_would_settle_it": "A measured number from the existing prototype on the SS3D sample showing what naming rate is currently achieved, so 60% reads as a calibrated floor rather than a round number."
+      },
+      {
+        "item": "Editor version consistency: the text says 'Unity 6000.4' while the prototype project is on a specific patch release.",
+        "what_would_settle_it": "The exact version string from the prototype's ProjectVersion.txt, stated once so the scoping claim matches the artefact the figures come from."
+      },
+      {
+        "item": "Ko et al.'s 'seven categories' used as the think-aloud coding frame.",
+        "what_would_settle_it": "Confirmation that the paper's seven kinds of work are a usable coding scheme in their own right (and their names), since the qualitative arm's rigour and the reported inter-rater agreement both depend on the frame being the paper's rather than a paraphrase of it."
+      }
+    ],
+    "notes": "Weighted arithmetic: 0.45x82 + 0.40x79 + 0.15x71 = 36.9 + 31.6 + 10.65 = 79.15, reported as 79.\n\nCalibration statement. The A1 delta (AI 88/82 against real 65/55) came from one cause the marker named twice: too much information at once, and no plain overview before the technical detail. I have applied that discount three times here rather than once. The Literature Review is HD-eligible on count, calibre and synthesis and I still placed it at 82 rather than 86, because compressed prose weakens the criterion it sits in. The Project Proposal is HD-eligible on mixed method, tiering, hour arithmetic and a genuinely working prototype and I still placed it at 79, below the D anchor, because the two paragraphs that must carry feasibility are the two densest in the document. Communication sits at the bottom of CR. Realistic outcome range from a human marker: 72 to 80, with Communication the volatile term. The downside case is not Communication collapsing to P (that costs only about one mark overall at 15% weight) — it is the reader's frustration bleeding into the other two criteria, which is what happened at A1.\n\nWhat is genuinely strong and must not be edited away in any rewrite. Six peer-reviewed sources on one theme, each entry answering what was learnt rather than what the source is about, with page-anchored specifics. A synthesis that adjudicates between two named rival mechanisms instead of listing agreement. Four learning goals spanning understand to create, each measured, each framed as a CV line with the career motivation stated. Hours that sum to 65 with 15 in-prac, and internal sub-totals that reconcile (14 = 6+3+2+3; 20 = 4+3+13; 65 across nine rows). Kickstarter tiering with an explicit overrun rule. A negative screening result reported honestly rather than buried. A working Editor window on real history in Figure 2 — that is the hello world of the tool with an image, and it is the strongest single feasibility asset in the document.\n\nFigures, checked against the files. Figure 1 (fig4-code-file-percentage.png) is a five-repository bar chart, 7.4% to 36.4%, with a labelled 30% Pascarella reference line explicitly marked 'indicative only' and a footer stating the method and date. It supports the 7–36% claim exactly. Figure 2 (fig1-changelens-window.png) shows the Editor window loaded with five SS3D commits, 86 changed-file entries, code-file percentage 41.9% and a per-category table — this matches the '41.9%' claim in the text precisely. Figure 3 (fig3-prefab-yaml-hunk.png) is an annotated SS3D prefab diff showing m_Name as plain text and a script GUID, which is the exact evidence the object-naming tier needs. All three are relevant, legible and load-bearing rather than decorative, which is what the Communication descriptor asks for. Minor: Figure 2 is referenced in the corpus paragraph two paragraphs before it appears.\n\nWord budget. Every change above is specified with its own funding, and the net across changes 1-11 is close to zero or slightly negative. Changes 2, 3, 7, 9 and 11 free words; changes 1, 4, 5 and 10 spend them. Nothing here requires new prose paid for out of headroom that does not exist.\n\nTwo things the walkthrough asked for that are present but could be read as thin. Named rejected alternatives appear three times (Bertram's simplified filing interface, explicitly declined with a reason; the live tracker connection; the language-model prose layer, positioned as the baseline rather than the build) — that is enough to satisfy 'name the paths you did not take', though only the first carries a source. And the argument graph does hold end to end: the record under-reports, so a producer cannot see the week, so extract passively from artefacts, so build in the engine where the unoccupied layer is, so evaluate whether that layer changes what a reader can say. That chain is the document's real strength and it survives every edit proposed above."
+  },
+  "marker_mitchell": {
+    "persona": "Mitchell McEwan — COMP3180 lecturer (source-quality/CARS lecture; usability-research background). Marking A2 Research Proposal, Draft v2 (17 Sep 2026), strictly, calibrated against the real A1 mark (65/55 against an AI prediction of 88/82) where density and a missing plain overview were punished hardest.",
+    "criteria": [
+      {
+        "criterion": "Literature Review",
+        "weight": 45,
+        "band": "D",
+        "mark": 80,
+        "descriptor_quote": "At least five distinct and high-quality sources with a common theme relating to the project topic. Sources are very well summarised and evaluated in terms of their relevance, lessons for and usefulness to the outlined project. Review synthesises and abstracts key patterns and relationships from the literature to motivate the project.",
+        "why_not_higher": "The source base clears the HD count on paper — six distinct, peer-reviewed articles (CSCW 2010, ICSE 2007, MSR 2018, CSCW 1992, New Media & Society 2018, TOSEM 2023), no author overlap, one common theme — and the evaluation is genuinely evaluative: Bertram's simplified filing interface is named and rejected with a reason, Dourish & Bellotti's evidence base is bounded ('four groups, one 90-minute session... so extending it to week-long work is mine to defend'), and Maddila's three limits are used to bound the novelty claim rather than decorate it. That is not what stops HD. Three things do. (1) The synthesis stages a contest and never settles it: it names structural (Dourish & Bellotti), opacity-plus-blame (Whitson) and audience mismatch (Stray et al.) as rival mechanisms, says 'why it fails is contested', and then closes on a method statement ('the study must find it in artefacts, not in what teams say') rather than an adjudication. HD asks the review to 'expertly synthesise and abstract' — abstracting means telling me which pattern wins and what would prove it wrong. (2) The closing 150 words introduce two sources (Stray et al., 2016; Washburn et al., 2016) that are cited but never reviewed, at the exact point where the reader is carrying the most load — eight surnames in one paragraph. (3) The section opens with the hardest sentence in the document ('Which producer needs a team's artefacts can answer depends on why the shared record under-reports the work; that is the question these six sources answer, in three camps compared at the end'), and the promised 'three camps' are never labelled in the six entries, so the structure is asserted rather than delivered. Two entries also stop short of the template's third part: Pascarella ends on a limitation and Raphael's own measurement rather than a usefulness statement, and Whitson's usefulness sentence ('It is the rival mechanism the synthesis adjudicates') says what the review does with the source, not what the project does. Torn between D and HD on evaluation quality; reporting D because the synthesis does not close and the opening paragraph is unreadable at first pass.",
+        "single_change_to_next_band": "Rewrite the final three sentences of the synthesis so it names the mechanism the project bets on, says what the artefacts would have to show for it to be wrong, and labels the three camps used in the entries — paying for it by cutting Washburn's 'coded 155 game postmortems into 22 categories with no communication category (pp. 280–289)' down to a half-sentence and deleting 'in three camps compared at the end' from the opening."
+      },
+      {
+        "criterion": "Project Proposal",
+        "weight": 40,
+        "band": "D",
+        "mark": 80,
+        "descriptor_quote": "Outlines a sensible plan with clear and specific learning goals for developing industry-relevant skills. Identifies a considered research question with an appropriate and achievable mixed methodology for evaluation.",
+        "why_not_higher": "The methodology is the strongest part of the submission and I would defend it as achievable for one student: a within-subjects A/B on the same one-page template with the asset layer as the only varied factor, six Endsley-anchored ground-truth items with one deliberately unanswerable item as a guessing check, a Wilcoxon signed-rank whose power limits are stated honestly ('at eight readers... detects large effects only'), and a qualitative arm with a second coder and reported agreement. The fidelity check (two team-weeks scored supported/unsupported/contradicted, 90% threshold, repair window) is a validity arm most students do not think to include. Scoping is advanced: a running Unity 6000.4 package (Figure 2), a five-repository measurement with the method stated in the figure footer (Figure 1), and a corpus screen on two named thresholds that failed and is reported as failing ('None met both, so the corpus is split'). Hours sum correctly to 65 and in-prac to 15; the committed/stretch/challenge tiering with a stated consumption order is exactly the structure the unit endorses; every one of the nine deliverables carries a success measure. What keeps it off HD is that the HD band wants 'a strongly convincing argument for the feasibility' and the entire evaluation rests on eight people turning up in Week 12 who have not agreed to anything. 'Every COMP3151 team has a student producer, and teammates can be briefed into the role' is an argument that participants exist, not evidence that any are coming; the floor-of-five contingency is good risk management but it also concedes the risk is live. Second, the deliverables' originality claim is load-bearing and unverifiable: 'No publicly documented tool fuses tracker, repository and engine signals' is supported only by '(September 2026 vendor sweep; studio-internal tools are not observable)' — no appendix, no list, nothing I can check. Third, one measure is internally broken: the Create goal's 'at least four of the six think-aloud participants (floor five)' is undefined if five participants show, and the coding frame contradicts itself — the Ko entry and Deliverable 1 make the 21 information types the frame, while Scoping Evidence codes comments against 'Ko et al.'s (2007) seven categories'. Reporting D, not HD, because feasibility of the human arm is asserted rather than evidenced.",
+        "single_change_to_next_band": "Replace the recruitment sentence with a commitment statement naming how many COMP3151 students have already agreed and the date of the completed pilot — paying for it by cutting 'Every COMP3151 team has a student producer, and teammates can be briefed into the role with a one-page scenario' (19 words), which is the weaker version of the same claim."
+      },
+      {
+        "criterion": "Communication",
+        "weight": 15,
+        "band": "CR",
+        "mark": 72,
+        "descriptor_quote": "The report is easy to read and uses appropriate language and structure. It meets the word count, referencing and other submission requirements. It may contain a few minor spelling, grammatical or referencing errors.",
+        "why_not_higher": "Everything mechanical is D-or-better and I want that on the record: 2,457 words inside the 2,499 limit, APA 7 applied consistently with DOIs on every article and retrieval dates on the four n.d. web sources, seventeen reference entries all cited in text and no orphans, template section order followed, instruction text removed, Topic Category present, GenAI statement present and unusually candid ('three AI-introduced errors were caught and corrected'). The three figures are better than most: Figure 1's chart carries its computation method and dates its own footer, Figure 3 is annotated so a non-Unity reader can follow why prefab YAML is readable, and each figure is referenced from the body rather than dropped in. What holds this at CR is readability, and it is the same defect the A1 marker wrote up. The first paragraph gives the solution before the problem and ends on 'it tests the engine leg, since fusing a team's own tracker needs their linked history' — 'the engine leg' has no antecedent anywhere in the document, so sentence four of the proposal is jargon the reader cannot resolve. The Literature Review then opens on a 34-word sentence carrying a dependent clause, a colon and a forward promise. 'A fidelity check over two team-weeks (one calendar week of one team's history each)' needs a second pass. 'At least four of the six think-aloud participants (floor five)' needs a third. The reader reaches the end of Scoping Evidence without ever being told what is actually on the one-page report. Add the 21-types-versus-seven-categories inconsistency, which is a referencing-level error inside the argument, and this is 'easy to read' with effort, not 'very easy to read'. Nothing is misspelled and the grammar is sound — the problem is compression, and on the A1 evidence this marker prices compression at a full band.",
+        "single_change_to_next_band": "Rewrite the Introduction's first four sentences so a reader who has never seen the project knows, in plain words and before any mechanism, what ChangeLens produces and who reads it — paying for it by deleting 'it tests the engine leg, since fusing a team's own tracker needs their linked history' (16 words) and compressing the Literature Review's opening sentence to two short ones."
+      }
+    ],
+    "predicted_task_mark": 79,
+    "top_changes": [
+      {
+        "priority": 1,
+        "location": "Introduction — \"Each week a game producer needs to know\"",
+        "problem": "The paragraph gives the solution before the problem and reaches unexplained jargon by sentence four: 'it tests the engine leg' has no antecedent in the document (the tripod framing lives in the working notes, not here). This is the A1 marker's written complaint reproduced in the opening paragraph — 'you jumped straight into very technical details without providing context.' A marker forms a band impression in the first hundred words.",
+        "fix": "Reorder to problem → who suffers → what the artefact is → what the study does. State plainly what a change report contains (e.g. 'a page listing what changed this week, grouped by whether it was code, art, audio or scene content, with named objects'). Pay for it by deleting 'it tests the engine leg, since fusing a team's own tracker needs their linked history' (16 words) and trimming '(September 2026 vendor sweep; studio-internal tools are not observable)' to '(Appendix A)' (7 words freed).",
+        "mark_impact": "Communication 72 → 77; Project Proposal +1. Largest single-move effect in the document because it is the first thing read."
+      },
+      {
+        "priority": 2,
+        "location": "Literature Review — \"Which producer needs a team's artefacts can answer\"",
+        "problem": "The section's first sentence is its hardest: 34 words, a nominalised subject, a semicolon, and a forward promise ('three camps compared at the end') that the six entries never label. The reader has to reconstruct the structure the sentence claims to have given them.",
+        "fix": "Split into two short sentences ('Six sources explain why the shared record under-reports the work. They disagree about the cause, and the disagreement is what my project tests.'), and label each camp inline at its first entry. Pay for it by cutting Whitson's 'Underneath both, engines such as Unity worked as boundary objects: one shared tool that art, design, code and production each use and understand differently' to a single clause (~18 words freed).",
+        "mark_impact": "Literature Review 80 → 82; Communication +2."
+      },
+      {
+        "priority": 3,
+        "location": "Literature Review synthesis — \"All six show the same seam: the record\"",
+        "problem": "The synthesis names three rival mechanisms and then declines to adjudicate between them, closing on a method statement instead. It also introduces two never-reviewed sources (Stray et al., Washburn et al.) at peak reader load. HD requires abstraction of patterns, not a catalogue of positions.",
+        "fix": "State which mechanism the project bets on and what artefact evidence would falsify it (one sentence each). Pay for it by compressing Washburn's clause 'coded 155 game postmortems into 22 categories with no communication category (pp. 280–289)' to 'found no communication category among 155 game postmortems' (~12 words freed) and deleting 'in three camps compared at the end' from the opening sentence.",
+        "mark_impact": "Literature Review 80 → 83. This is the single change that reaches the HD band on the 45% criterion."
+      },
+      {
+        "priority": 4,
+        "location": "Scoping Evidence — \"Comments are coded against Ko et al.'s (2007) seven\"",
+        "problem": "Contradicts two other places in the document. The Ko entry says 'Those 21 types... give my think-aloud sessions their coding frame' and Deliverable 1's measure says 'a spec classifying 25 needs against Ko's 21 types'. A marker who is tracking your unit of analysis will circle this.",
+        "fix": "Make it the 21 information types in all three places (or state explicitly that the 21 types classify needs and the seven work categories classify comments, in six words). Pay for it with '(a briefed COMP3151 classmate)' (4 words), since the recruitment paragraph already establishes who is available.",
+        "mark_impact": "Project Proposal +1; Communication +1. Removes a visible internal inconsistency."
+      },
+      {
+        "priority": 5,
+        "location": "Learning Goals — \"**Create:** design a technical artefact for a reader\"",
+        "problem": "The measure 'at least four of the six think-aloud participants (floor five)' is undefined if five participants turn up, and the parenthetical forces a cross-reference to Scoping Evidence to interpret. A measure the marker has to decode is not a measure.",
+        "fix": "State it as a proportion: 'at least two-thirds of think-aloud participants answer the assigned status question from the report alone.' Pay for it with the parenthetical itself (2 words) — the floor is already stated once in Scoping Evidence, which is the right place for it.",
+        "mark_impact": "Project Proposal +1; Communication +1."
+      },
+      {
+        "priority": 6,
+        "location": "Scoping Evidence — \"Both report conditions use the same one-page template.\"",
+        "problem": "By the end of Scoping Evidence the reader still does not know what is on the page being tested. The experiment's whole logic ('they differ only in whether the asset layer is included') depends on the reader picturing the shared baseline, and the baseline is never described.",
+        "fix": "Add one sentence naming the report's sections (e.g. 'Both list commit count, date range, changed files grouped by category, and the three largest changes; the treatment condition adds named scenes and prefabs'). Pay for it by halving 'A developer runs one Editor command and authors nothing; the producer only reads the page' to 'The producer only reads it; a developer runs one command' (~8 words freed).",
+        "mark_impact": "Project Proposal +1; Communication +1."
+      },
+      {
+        "priority": 7,
+        "location": "Introduction — \"No publicly documented tool fuses tracker, repository and engine\"",
+        "problem": "The novelty claim carries the motivation for the entire project and its only support is an unattributable parenthetical. Appendices are permitted and uncounted, so there is no reason for this to be unverifiable — and a source-quality marker will treat an unsupported sweeping claim as a CARS 'Support' failure.",
+        "fix": "Point to an appendix table listing the tools swept, what each does and what each lacks (zero body-word cost — the parenthetical shortens from 10 words to '(Appendix A)').",
+        "mark_impact": "Project Proposal +1; Literature Review +1. Also converts an examinable weakness into evidence of method."
+      },
+      {
+        "priority": 8,
+        "location": "Literature Review, Pascarella entry — \"The contrast I took is the file mix\"",
+        "problem": "The entry ends on a limitation plus Raphael's own countermeasure and never states usefulness to the project in the template's terms. It is the only entry where the third required part is genuinely absent rather than thin.",
+        "fix": "Add a six-to-eight-word usefulness clause ('so the report categorises by file type, not by code alone'). Pay for it with 'all in C, C++ or Objective-C' (6 words), which does no work for this argument.",
+        "mark_impact": "Literature Review +1. Makes the template's three parts visible in all six entries, which is what the marker checks entry by entry."
+      },
+      {
+        "priority": 9,
+        "location": "Literature Review, Whitson entry — \"It is the rival mechanism the synthesis adjudicates.\"",
+        "problem": "The usefulness sentence describes what the literature review does with the source, not what the project does with it. Every other entry names a design consequence (the fidelity check, the coding frame, the aggregation layer, the challenge tier); this one names a rhetorical one.",
+        "fix": "Name the design consequence: if opacity is the mechanism, the report must mark what it cannot explain as well as what changed. Pay for it with 'the word in the paper's title' (6 words).",
+        "mark_impact": "Literature Review +1."
+      },
+      {
+        "priority": 10,
+        "location": "Deliverables — \"The biggest risk is hand-authoring ground truth: the corpus's\"",
+        "problem": "The project's stated biggest risk is raised in the last paragraph and left without a mitigation, immediately beside the schedule, where it reads as an afterthought. The fidelity check already is the mitigation but the two are never connected.",
+        "fix": "Connect them in one clause ('the fidelity check is the control: a week whose ground truth cannot be scored is replaced, not repaired'). Pay for it by compressing 'Out of scope are a live tracker connection and a language-model prose layer: an AI summary over the repository is the baseline, not the build' — the second half already implies the exclusion (~10 words freed).",
+        "mark_impact": "Project Proposal +1."
+      }
+    ],
+    "evidence_needed": [
+      {
+        "item": "Recruitment commitment for the eight readers / six think-aloud participants",
+        "what_would_settle_it": "A number of COMP3151 students who have actually said yes, with the date they were asked, plus a named completed or scheduled pilot session. 'Every COMP3151 team has a student producer' is an availability argument; the rubric's 'strongly convincing argument for the feasibility' needs the commitment. This is the single piece of new evidence worth most marks (Project Proposal 80 → 83)."
+      },
+      {
+        "item": "The September 2026 vendor sweep behind 'No publicly documented tool fuses tracker, repository and engine signals'",
+        "what_would_settle_it": "A dated appendix table: tool name, what it ingests, what it emits, who it addresses, and the specific thing it does not do. Appendices are uncounted, so this costs nothing in the body. Without it the claim that motivates the whole project is unsupported by CARS's Support criterion."
+      },
+      {
+        "item": "Whether the six counted sources have been read in full (the draft's own bracketed CONFIRM line)",
+        "what_would_settle_it": "Raphael stating, source by source, which he has read end to end versus read in part. The marker's stated pet peeve is source comprehension that evaporates under questioning; any entry resting on a secondary reading should be re-read before submission rather than reworded. Nothing goes in the document — this settles whether the entries survive a viva-style follow-up."
+      },
+      {
+        "item": "Page or section locators for the five load-bearing figures taken from sources",
+        "what_would_settle_it": "Locators for Ko's 61% and the 21-types/seven-categories taxonomy, Pascarella's 80%/30% file-mix figures and the >75% ownership threshold, Dourish & Bellotti's 'four groups, one 90-minute session', and Maddila's '86 of 119 negatively resolved notifications'. Bertram already carries p. 296 and p. 297, which shows the standard the rest should meet; a source-quality marker will spot-check exactly the numbers that carry argumentative weight."
+      },
+      {
+        "item": "Ethics status of the eight-participant study",
+        "what_would_settle_it": "Written confirmation from Malcolm or Mitchell that the unit's general clearance covers verbal consent plus de-identified reporting for this design with no form required, and a one-clause statement of that in the text. The draft asserts the clearance; a marker with a usability-research background will want to know it was checked, not assumed."
+      },
+      {
+        "item": "Feasibility of the 60% object-naming target in the committed tier",
+        "what_would_settle_it": "A prototype result on one sampled SS3D week showing what share of changed prefabs and scenes AssetDatabase actually resolves to names — including the case where the asset was deleted in that week and the GUID no longer resolves. One number from an existing run would convert a stated target into demonstrated scoping, and it is the only success measure in the deliverables table that has not already been demonstrated by the prototype."
+      }
+    ],
+    "notes": "Weighted arithmetic: 0.45×80 + 0.40×80 + 0.15×72 = 36.0 + 32.0 + 10.8 = 78.8, reported as 79 (band D).\n\nCalibration note: the mark is deliberately held at the bottom of D on the two heavy criteria and at CR on Communication. On the A1 evidence the real marker's single written complaint was density plus a missing plain overview, and that complaint applies verbatim to this draft's Introduction and to the Literature Review's opening sentence. If the real marker prices compression the way he did in August, Communication lands at 65 rather than 72 and the task mark falls to about 78; if the Introduction is rewritten plainly, Communication goes to 77 and the task mark is about 80. The Introduction rewrite (priority 1) is therefore both the cheapest change and the one with the widest variance attached.\n\nFigures verified by opening the files. Figure 1 (fig4-code-file-percentage.png) is a five-repository bar chart, 7.4%–36.4%, with a 30% Pascarella reference line explicitly labelled 'indicative only' and a footer naming the method and date — this is honest and checkable, and the body's '7–36%' matches it exactly. Figure 2 (fig1-changelens-window.png) is the running Editor window showing 5 commits, 86 changed-file entries, 41.9% code — matching the body's '41.9%' and the caption's 'code-heavy reorganisation week'. Figure 3 (fig3-prefab-yaml-hunk.png) is an annotated SS3D prefab diff showing m_Name as plain text and a script GUID, which is the exact evidence the object-naming tier needs. All three earn their place; none is decorative. Figure 2's screenshot text is small at w=14 — worth checking it survives print, but it is legible on screen.\n\nMechanical checks passed: word count 2,457 body (limit 2,499); hours 14+16+4+3+13+7+4+2+2 = 65 and in-prac 2+5+1+1+4+1+1+0+0 = 15, both exact; committed 11 + stretch 3 + challenge 2 = 16 matches row 2; study 14 and evaluation 4+3+13 = 20 both reconcile; all 17 reference entries are cited in text with no orphans and no uncited in-text citations; APA 7 consistent including retrieval dates on the four n.d. sources; template section order and Topic Category present; instruction text removed; GenAI statement present and specific. Two pending items must clear before submission: the %ID field and the bracketed CONFIRM line at the end of the GenAI statement.\n\nNot raised as findings because they are defensible as written: n=8 with a stated large-effects-only limitation (honest, and Sub-question 1 is designed to survive a null); the split corpus (documented screening failure, reported rather than hidden); the absence of a live tracker connection (explicitly scoped out with a reason)."
+  },
+  "proof": {
+    "clean": false,
+    "corrections": [
+      {
+        "original": "Participation is voluntary under the unit's general clearance for student studies, with verbal consent and the right to stop at any time; only de-identified data is reported.",
+        "corrected": "Participation is voluntary under the unit's general clearance for student studies, with verbal consent and the right to stop at any time; only de-identified data are reported.",
+        "reason": "Subject-verb agreement: 'data' is the plural of 'datum' and takes a plural verb in formal academic (APA) usage, so 'is' should be 'are'."
+      },
+      {
+        "original": "Over full histories, code is 7–36% of changed-file entries (Figure 1); one week can run higher, as the reorganisation week in Figure 2 shows at 41.9%, so the report is built per week.",
+        "corrected": "Over full histories, code is 7–36% of changed-file entries (Figure 1); one week can run higher, as the reorganisation week in Figure 2 shows, at 41.9%, so the report is built per week.",
+        "reason": "'Shows at 41.9%' fuses two constructions ('shows [something]' and 'runs at 41.9%') into a non-standard collocation; inserting a comma after 'shows' makes 'at 41.9%' a clear appositive giving the figure, fixing the preposition/punctuation slip without changing the wording."
+      }
+    ]
+  },
+  "facts": {
+    "safe_to_write": [
+      {
+        "source": "Bertram et al. (2010)",
+        "claim": "P05 quote — critical bugs fixed faster than they can be filed",
+        "exact_text": "often bugs that are that critical don't even get filed because by the time that you would go to file it, the bug is already resolved —P05",
+        "page_or_section": "p. 296 (PDF/printed pagination identical; author-hosted PDF page index 5), section \"Full-fledged Bugs and Almost Bugs\""
+      },
+      {
+        "source": "Bertram et al. (2010)",
+        "claim": "P02 quote — non-technical filers skip fields",
+        "exact_text": "These stakeholders would 'tend to skip over a lot of these fields' (P02) because they were more interested in simply getting an issue recorded in the first place, and returning later to fill in the rest of the details or leaving them for others to finish.",
+        "page_or_section": "p. 297, section \"A 'Flurry of Fields' vs. Ease of Entry\""
+      },
+      {
+        "source": "Bertram et al. (2010)",
+        "claim": "Team B description and the simplified filing interface quote (P05)",
+        "exact_text": "Team B was a product development team within a large gaming company. [...] The need to minimize the number of fields presented to issue filers was well recognized and even resulted in Team B going so far as to write their own custom abstraction that sat on top of their issue tracker for creating bugs: \"...we wrote a very simple interface to encourage non-experts to file bugs. ... We found that when we put this in, people in other departments who have never filed a bug before ever, were filing bugs.\" —P05",
+        "page_or_section": "Team B description: p. 293 (Participants section, Table 1 gloss); simplified-interface quote: p. 297"
+      },
+      {
+        "source": "Bertram et al. (2010)",
+        "claim": "Sample: 15 participants, 4 teams",
+        "exact_text": "Our participants consisted of 15 individuals from 4 different software development teams",
+        "page_or_section": "p. 293"
+      },
+      {
+        "source": "Ko et al. (2007)",
+        "claim": "21 information types abstracted from 334 instances",
+        "exact_text": "During our observations, there were 334 instances of information seeking, which we abstracted from the particulars of the work context into 21 general information needs.",
+        "page_or_section": "printed p. 346 (opening of §5)"
+      },
+      {
+        "source": "Ko et al. (2007)",
+        "claim": "Seven category headers (§5.1–5.7)",
+        "exact_text": "5.1 Writing Code · 5.2 Submitting a Change · 5.3 Triaging Bugs · 5.4 Reproducing a Failure · 5.5 Understanding Execution Behavior · 5.6 Reasoning about Design · 5.7 Maintaining Awareness",
+        "page_or_section": "printed pp. 347–349"
+      },
+      {
+        "source": "Ko et al. (2007)",
+        "claim": "The u3 causal question, verbatim, as listed under §5.5",
+        "exact_text": "(u3) What code caused this program state?",
+        "page_or_section": "printed p. 348, §5.5 \"Understanding Execution Behavior\""
+      },
+      {
+        "source": "Ko et al. (2007)",
+        "claim": "61% unsatisfied, 21 min max search time, for u3",
+        "exact_text": "1  What code caused this program state?  61%  21 min",
+        "page_or_section": "printed p. 351, §6.3 \"Unsatisfied Information Needs\" (defined there as \"percentage of unsatisfied queries and maximum observed search times\")"
+      },
+      {
+        "source": "Ko et al. (2007)",
+        "claim": "u3 sources are overwhelmingly tool-based, not colleagues (Figure 3 row)",
+        "exact_text": "u3 What code caused this program state? — sources: dbug 16, br 3, intuition 3, log 3, tools 3, code 2, coworker 1",
+        "page_or_section": "printed p. 350, Figure 3"
+      },
+      {
+        "source": "Ko et al. (2007)",
+        "claim": "17 observed, 42 of 550 surveyed",
+        "exact_text": "we observed seventeen developers at a large software company [...] The percentages in the middle of [Figure 3] come from a survey of 42 different developers (of 550 contacted)",
+        "page_or_section": "Abstract / printed p. 344; survey figure printed p. 351, §6.1"
+      },
+      {
+        "source": "Pascarella et al. (2018)",
+        "claim": "80%/30% Development-category file-mix contrast, verbatim",
+        "exact_text": "On average non-game projects have 80% of files related to the Development category, while a lower percentage (15%) of files related to the Other category and an even lower percentage (less than 5%) related to Multimedia. Conversely, game projects have only 30% of files on average belonging to Development category.",
+        "page_or_section": "§3.2 \"RQ1 - Results\", subsection \"Distribution of files across categories\" (no printed page number in this preprint; ACM version of record pp. 392–402 per Crossref)"
+      },
+      {
+        "source": "Pascarella et al. (2018)",
+        "claim": ">75% ownership threshold, verbatim",
+        "exact_text": "The cutting threshold is experimentally defined to consider only files in which an author contributes more than 75%.",
+        "page_or_section": "§3.1 \"RQ1 - Research Method\""
+      },
+      {
+        "source": "Pascarella et al. (2018)",
+        "claim": "Ownership specialisation contrast: games form non-dev sub-teams, non-games only code sub-teams",
+        "exact_text": "in games, we could identify specific sub-teams working on different files belonging to non-development categories. For example, in Battle for Wesnoth four developers mainly focused their activities on Multimedia. [...] Instead, when analyzing the non-games, we clearly identify only sub-team specialized on categories related to code files.",
+        "page_or_section": "§3.2 \"RQ1 - Results\", subsection \"Specialization of authors and owners\""
+      },
+      {
+        "source": "Dourish & Bellotti (1992)",
+        "claim": "Section headings, full list",
+        "exact_text": "1 Introduction; 2 Awareness in Collaborative Writing Systems (2.1 Quilt, 2.2 PREP, 2.3 GROVE); 3 Mechanisms for Awareness Information (3.1 Problems with Informational and Role-Restrictive Approaches to Awareness); 4 Shared Feedback (4.1 A Case Study—ShrEdit, 4.2 Description of Study, 4.3 Some Observations on Use); 5 Discussion (5.1 Shared Feedback: An Alternative Approach, 5.2 Semi-Synchronous Systems); 6 Conclusions",
+        "page_or_section": "postprint pp. 1–9 (no ACM page mapping exists — see notes)"
+      },
+      {
+        "source": "Dourish & Bellotti (1992)",
+        "claim": "Three-part diagnosis: cost/benefit",
+        "exact_text": "In informational systems supporting awareness, the individual is required to supply the information; again, this cost is repaid to the group rather than the individual, and adds an extra work load in the case of computer support over natural collaborative work.",
+        "page_or_section": "§3.1, postprint p. 3"
+      },
+      {
+        "source": "Dourish & Bellotti (1992)",
+        "claim": "Three-part diagnosis: sender-determined relevance",
+        "exact_text": "Individuals will receive what the initiator of the information deems to be appropriate. However, appropriateness can only be determined in the context of the other individuals' activities. So, information provided in this way may not be at the appropriate level of specificity for the receiving individuals, or it may not be relevant to their particular activities at the time...",
+        "page_or_section": "§3.1, postprint pp. 3–4"
+      },
+      {
+        "source": "Dourish & Bellotti (1992)",
+        "claim": "Three-part diagnosis: sender-controlled timing",
+        "exact_text": "The final problem concerns the way in which the information is made available by informational mechanisms such that delivery is controlled more by the sender than by the recipient. However, the sender cannot predict what information will be needed and when.",
+        "page_or_section": "§3.1, postprint p. 4"
+      },
+      {
+        "source": "Dourish & Bellotti (1992)",
+        "claim": "Shared-feedback / passive by-product definition",
+        "exact_text": "Shared feedback makes information about individual activities apparent to other participants by presenting feedback on operations within the shared, rather than the private, workspace.",
+        "page_or_section": "§4, postprint p. 4"
+      },
+      {
+        "source": "Dourish & Bellotti (1992)",
+        "claim": "Shared feedback reduces cost by collecting passively (Conclusion 1)",
+        "exact_text": "1. Shared feedback reduces the costs to individuals of information production by collecting information passively and avoiding restrictions on activities.",
+        "page_or_section": "§6 Conclusions, postprint p. 8"
+      },
+      {
+        "source": "Dourish & Bellotti (1992)",
+        "claim": "ShrEdit study scope: groups of three, four groups analysed, 90-min problem, remote/separate locations",
+        "exact_text": "Groups of three designers (all with previous experience of working together) tackled open-ended design problems using ShrEdit. [...] we placed them in separate locations, linked via video and/or audio. [...] each group was given two 20 minute practice problems and finally a 90 minute design problem [...] We base our report on analysis of video-tapes of four groups of users",
+        "page_or_section": "§4.1–4.3, postprint pp. 4–5"
+      },
+      {
+        "source": "Maddila et al. (2023)",
+        "claim": "86 of 119 stat, and the term used",
+        "exact_text": "We found, through manual inspection, that 86 out of 119 Nudge comments that are resolved negatively were due to the fact that Nudge did not honor the recent pull request activity.",
+        "page_or_section": "§6.1 \"Activity detection\" (no printed page number in the arXiv/ar5iv render used)"
+      },
+      {
+        "source": "Maddila et al. (2023)",
+        "claim": "24-hour activity-detection gate description (workflow level)",
+        "exact_text": "Once a pull request's actual lifetime crosses the estimated lifetime (using the effort estimation models), the next module, Activity Detection, is run which checks for any activity in the pull request environment. If there is an activity observed in the last 24 hours, the workflow is terminated.",
+        "page_or_section": "§4.1 \"Design Overview\" (\"Nudge Workflow\")"
+      },
+      {
+        "source": "Maddila et al. (2023)",
+        "claim": "24-hour gate, second statement + state-change detection mechanism (\"voted\" string match)",
+        "exact_text": "Comments whose content property contains the word \"voted\" indicates that a state change has happened. [...] Nudge sends a notification once the lifetime of a pull request crosses the predicted lifetime (Section 5). However, it waits at least 24 hours before sending a notification, if there has been any activity observed.",
+        "page_or_section": "§7.3 \"Activity detection\""
+      },
+      {
+        "source": "Maddila et al. (2023)",
+        "claim": "\"At most one notification per pull request\", verbatim",
+        "exact_text": "By design, Nudge sends at most one notification per pull request.",
+        "page_or_section": "§4.1 \"Design Overview\""
+      },
+      {
+        "source": "Maddila et al. (2023)",
+        "claim": "Paper DOES state who receives a notification: the identified blocking actor (author or reviewer)",
+        "exact_text": "It then notifies the identified actor... [Actor Identification] determine the blocker of the change (the author or a reviewer) and engage them in the notification, by explicitly mentioning them. [...] Nudge infers the actor, the pull request author or its reviewer(s), who is [blocking the PR]",
+        "page_or_section": "§4.1 Design Overview; §7.4/7.5 Actor identification; §9 Discussion"
+      },
+      {
+        "source": "Maddila et al. (2023)",
+        "claim": "Inter-PR dependencies unhandled, verbatim",
+        "exact_text": "First, a pull request may be blocked by the progress on another pull request. Presently we do not take such inter-pull-request dependencies into account.",
+        "page_or_section": "§9.5 \"Addressing Nudge Limitations\""
+      },
+      {
+        "source": "Maddila et al. (2023)",
+        "claim": "§7.2 describes what Azure DevOps offers generally (including build/release APIs) but never states which of these Nudge itself does not use",
+        "exact_text": "APIs: Azure DevOps exposes a rich set of REST APIs [1] that helps third-party services to access information about various artifacts... (id, title, author, reviewer information, comments, labels, status, commits...), commits (title, files changed in a commit), build and release (status, test outcomes, deployment outcomes).",
+        "page_or_section": "§7.2 \"Azure DevOps\" — confirms this is a description of the platform's general capabilities, not an enumeration of what Nudge itself does not use"
+      },
+      {
+        "source": "Stray, Sjøberg & Dybå (2016)",
+        "claim": "Stated method: grounded theory, and why",
+        "exact_text": "We chose grounded theory as our research method because it is considered suitable for pursuing a general understanding of a phenomenon; that is, when a researcher asks \"What is going on here?\" (Glaser, 1978).",
+        "page_or_section": "§3 \"Research Method\", postprint (accepted-version) p. 6"
+      },
+      {
+        "source": "Stray, Sjøberg & Dybå (2016)",
+        "claim": "Sample, aggregate",
+        "exact_text": "A grounded theory study of the daily stand-up meeting was conducted with twelve software teams in three companies in Malaysia, Norway, Poland and the United Kingdom. We interviewed 60 people, observed 79 daily stand-up meetings and collected supplementary data.",
+        "page_or_section": "Abstract, postprint p. 1"
+      },
+      {
+        "source": "Stray, Sjøberg & Dybå (2016)",
+        "claim": "Sample, company-level detail (Alpha/Beta/Gamma)",
+        "exact_text": "Alpha is a company with 350 employees. [...] Beta has 700 employees in 20 countries. We studied two Scrum teams in Norway and five Scrum teams in Malaysia. [...] Gamma has 150 employees in four organizational units. We observed one team in Norway and two in the United Kingdom.",
+        "page_or_section": "§3.1 \"Research sites\", postprint p. 7"
+      },
+      {
+        "source": "Stray, Sjøberg & Dybå (2016)",
+        "claim": "Stand-up degenerating into status reporting to the manager — ranking statement",
+        "exact_text": "As stated by Sutherland and Schwaber (2013b), the DSM is too often seen as a status event. This statement is also confirmed in our study: Reporting progress was the greatest pitfall of DSMs because it often resulted in disengaged or uncomfortable participants.",
+        "page_or_section": "§5.2 \"Potential pitfalls\", postprint p. 35"
+      },
+      {
+        "source": "Stray, Sjøberg & Dybå (2016)",
+        "claim": "Mechanism: low self-management lets managers use the meeting for status extraction",
+        "exact_text": "A low level of self-management makes it easy for authoritative managers to use the meeting to obtain status information, mainly useful to themselves.",
+        "page_or_section": "Table 8, Explanation E1, postprint p. 20"
+      },
+      {
+        "source": "Stray, Sjøberg & Dybå (2016)",
+        "claim": "\"Reporting status to the manager\" as a named negative-opinion code, with statement count",
+        "exact_text": "Reporting status to the manager (7)",
+        "page_or_section": "Table 9, postprint p. 21"
+      },
+      {
+        "source": "Stray, Sjøberg & Dybå (2016)",
+        "claim": "Conclusion's ranked restatement of the two negative factors",
+        "exact_text": "The two most prominent negative factors were as follows. First, reporting status progress in the meeting caused disengagement because the information was not relevant for the whole team, and many of the team members were uncomfortable about reporting such progress. Second, the DSMs were often considered to occupy too much time relative to the gains from the meetings.",
+        "page_or_section": "§6 \"Conclusion\", postprint p. 40"
+      }
+    ],
+    "discrepancies": [
+      {
+        "draft_sentence": "Bertram et al. (2010): \"Team B, described in the paper as a product development team within a large gaming company, wrote a simplified filing interface before non-experts would file at all (p. 297).\"",
+        "what_source_says": "The \"product development team within a large gaming company\" description of Team B is on p. 293 (Table 1 / Participants section); only the simplified-filing-interface action (\"wrote a simplified filing interface\") is on p. 297. The draft's single trailing citation (p. 297) is only exactly right for the second half of the sentence.",
+        "fix": "Low severity — acceptable under normal citation convention (trailing page cite covers the newest/most specific claim). If precision matters to a marker, split it: \"Team B, described in the paper as a product development team within a large gaming company (p. 293), wrote a simplified filing interface before non-experts would file at all (p. 297).\""
+      },
+      {
+        "draft_sentence": "Dourish and Bellotti (1992): \"Their evidence is narrow (four groups, one 90-minute session, participants in separate locations linked by video and audio), so extending it to week-long work is mine to defend.\"",
+        "what_source_says": "The paper's own wording is \"linked via video and/or audio\" (§4.2) — i.e., some groups may have used only one channel, not necessarily both together.",
+        "fix": "Minor precision fix: change \"linked by video and audio\" to \"linked by video and/or audio\" to track the source's disjunctive phrasing exactly."
+      }
+    ],
+    "could_not_find": [
+      "Whitson (2018) — not verifiable in this pass: no PDF exists on disk for it (the reading/ folder holds only bertram2010.pdf, dourish1992.pdf, ko2007.pdf, maddila2023.pdf, pascarella2018.pdf, stray2016.pdf, matching the task's explicit scope), so its paragraph in the draft's Literature Review was left unchecked here. Per Working folder/a2-draft-2-sep-2026 records, it was independently verified against the 2013 pre-publication draft only (not the published 2018 Sage version) in an earlier session.",
+      "Ko et al. (2007) — a raw numeric denominator for the 61% figure: the paper defines 61% as \"percentage of unsatisfied queries\" (an observational rate, §6.3 heading text) but never prints an explicit \"X of Y\" fraction for the u3 need specifically (unlike Maddila's 86/119, which is printed as a fraction). Figure 3's tally marks for u3 are visually present but not resolvable to an exact integer count from the rendered image with confidence.",
+      "Dourish & Bellotti (1992), Pascarella et al. (2018), Stray et al. (2016), and Maddila et al. (2023) — none of these four source PDFs carry the publisher-assigned page numbers (107–114 / 392–402 / 101–124 / TOSEM 32(2) Art. 35 respectively) anywhere on the page images/text; all four are preprints/postprints/accepted-manuscripts with either no page numbers (Pascarella, Maddila) or their own independent internal pagination (Dourish & Bellotti: 1–9; Stray: 1–48) that does not map onto the published pagination. Page numbers reported above for these four are the source document's own printed numbers (or \"no page number, cite by section\"), not the publisher's page numbers, exactly as the project's prior verify files already flag."
+    ],
+    "notes": "Methodology: read the six PDFs directly with PyMuPDF text extraction for Bertram, Pascarella, Dourish & Bellotti, Maddila and Stray (all have clean text layers); for Ko et al. (2007), per the known digit-dropping bug, rendered PDF pages 346–351 (printed pagination = PDF index + 344) to PNG at 150 dpi and read them visually with the Read tool — files saved to \".../a2-final-sprint-17-sep-2026/reading/pages/\". Cross-checked every finding against the existing verification records in \".../a2-draft-2-sep-2026/verify/\" (bertram2010.md, dourish1992.md, ko2007.md, maddila2023.md, pascarella2018.md, reserve.md) before treating anything as newly confirmed; no conflicts were found between this pass's direct reads and those records — this pass independently reproduces them with exact quotes and, for Ko, page-anchored evidence read straight off the rendered images (61% figure, u3 question, 21-types/7-categories headers, 42-of-550 survey line).\n\nOverall verdict on the draft: all six Literature Review paragraphs that could be checked (Bertram, Ko, Pascarella, Dourish & Bellotti, Maddila; Whitson excluded, see could_not_find) are faithful to their sources — every load-bearing number, quote, and page citation the draft uses for these five sources checks out exactly against the primary text. Only two very minor precision points surfaced (both listed under discrepancies): the Bertram Team-B page-citation split, and Dourish & Bellotti's \"video and/or audio\" vs. the draft's \"video and audio.\" Neither is a factual error; both are optional tightening.\n\nOne structural note worth flagging to Raphael directly: Stray et al. (2016) is NOT one of the draft's six counted Literature Review entries (those are Bertram, Ko, Pascarella, Dourish & Bellotti, Whitson, Maddila) — it appears only in the cross-source synthesis paragraph at the end of the Literature Review, alongside Washburn et al. (2016). The task's six source PDFs on disk substitute Stray for Whitson, which is why Whitson could not be checked this pass but Stray could.\n\nNo files were modified except the six new PNG pages written to reading/pages/ (ko2007_idx2_p346.png through ko2007_idx7_p351.png)."
+  },
+  "web": {
+    "findings": [
+      {
+        "question": "Endsley (1995) three-level definition (perception, comprehension, projection) — exact wording",
+        "answer": "Could not get a direct fetch of the primary abstract text (SAGE returned 403/blank, ResearchGate 403, PsycNet loaded blank, Scribd returned no extractable text, CORE.ac.uk 403). The consistently reproduced wording across many independent secondary sources (Semantic Scholar summary, ResearchGate listing, multiple index/summary snippets) is: 'Situation awareness is the perception of the elements in the environment within a volume of time and space, the comprehension of their meaning, and the projection of their status in the near future.' A directly fetched Wikipedia page ('Situation awareness'), citing Endsley (1995), gives the equivalent three-level gloss: '(1) Perception of the elements in the environment, (2) Comprehension or understanding of the situation, and (3) Projection of future status.' The draft's own use ('what changed, what it means, what happens next') is a faithful paraphrase of this structure.",
+        "url": "https://en.wikipedia.org/wiki/Situation_awareness",
+        "confidence": "medium — the three-level structure is well corroborated across many secondary sources and a fetched tertiary source (Wikipedia), but no primary abstract page could actually be fetched; treat the exact wording as [uncertain] until a primary source loads"
+      },
+      {
+        "question": "Whitson (2018) 'voodoo software' definition and fieldwork description (ten weeks, ten interns, Montreal) with page numbers",
+        "answer": "Fetched the open-access PMC copy of the published article (New Media & Society 20(7), 2315–2332). It defines voodoo software: '\"Voodoo\" is generally applied when a developer's input results in unanticipated output, and the cause-and-effect result of interacting with the software boundary object is not predictable' (p. 2324), and earlier: 'software seemingly exhibiting a mind of its own, operating in a manner counter to users' input and goals' (p. 2320). Fieldwork description (p. 2319): 'The vignettes that comprised this article were collected during the summer of 2012 while working on the GAMEDEV fieldwork project... Introduced to a game prototype created by two PlayHouse employees, 10 interns were instructed to remake the multiplayer cooperative game. At the end of the 10 weeks, the final game was presented to PlayHouse employees and posted online as a free download.' IMPORTANT: the word 'Montreal' does NOT appear anywhere in the published PMC text — the site is anonymized as 'a large Canadian city.' I then found and downloaded Whitson's own 2013 unpublished draft (jenniferwhitson.files.wordpress.com), which does name it explicitly on its page 3: 'The GAMEDEV project was hosted by a large MMO studio in Montreal (which I will refer to using the pseudonym Play House).' That draft also gives the voodoo definition and the ten-week/ten-intern fieldwork description on its own pages 10–11 and 3 respectively (draft is unpaginated in the published sense — these are its own page numbers).",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6256721/",
+        "confidence": "high for the published paper's wording, page numbers, and the absence of 'Montreal'; high for the 2013 draft's text (fetched directly via downloaded PDF, saved to reading/whitson2013-draft01.pdf)"
+      },
+      {
+        "question": "Status of Unity's own production-tooling / producer-reporting product today (17–18 Sep 2026); does anything fuse tracker+repo+asset signals into a producer-facing report?",
+        "answer": "Unity has a real, named product: 'Unity Production Pipeline' — a cloud service connecting artists, producers, QA and partners via a web dashboard, REST API and CLI so work doesn't have to happen inside the Editor. As of the fetch: it is in closed beta with 'Limited spots in Phase 1'; 'Public availability begins in November 2026.' It supports version-control integrations (GitHub and Unity Version Control) but its documented feature set is centered on real-time visual review/collaboration ('Review real game renders on the web or on device... Share a link and feedback lands in live game context') and asset/build automation APIs — nothing in its public documentation describes synthesising git/tracker history plus Unity asset-layer changes into a producer-facing narrative change report. This is consistent with, and strengthens, the draft's claim that no publicly documented tool performs that fusion.",
+        "url": "https://unity.com/features/unity-production-pipeline",
+        "confidence": "high — directly fetched"
+      },
+      {
+        "question": "Public product name Unity uses for engine version 6000.4",
+        "answer": "Unity's own documentation names it 'Unity 6.4 (6000.4)'. Directly fetched page: 'Unity - Manual: New in Unity 6.4' begins 'Unity 6.4 (6000.4) introduces several new features and improvements.' A separate release-notes page for a specific build (6000.4.6f1) uses the raw build number 'Unity 6000.4.6f1' with no marketing alias on that particular page, but the Manual page is the authoritative naming convention.",
+        "url": "https://docs.unity3d.com/6000.5/Documentation/Manual/WhatsNewUnity64.html",
+        "confidence": "high — directly fetched"
+      },
+      {
+        "question": "Linear's project-update agent: feature name and launch date",
+        "answer": "The feature is called 'Agent assisted project updates', published 18 June 2026. Description: clicking 'Write with Agent' has Linear's agent review recent changes to issues/documents plus messages in the linked Slack channel and draft a project/initiative update for the user to refine.",
+        "url": "https://linear.app/changelog/2026-06-18-agent-assisted-project-updates",
+        "confidence": "high — directly fetched"
+      },
+      {
+        "question": "Stray, Sjøberg & Dybå (2016): does the published abstract say stand-ups became status reporting to the manager?",
+        "answer": "The publisher-indexed abstract (via SINTEF's publication page, directly fetched) states: 'The factors that contributed the most to a negative attitude were status reporting to the manager and that the frequency of the meeting was perceived to be too high and the duration too long.' This confirms status-reporting-to-the-manager is named in the abstract as one of the drivers of a negative attitude toward the daily stand-up — consistent with, and supporting, the draft's synthesis sentence that a stand-up 'turned status report serves the manager, not the team.'",
+        "url": "https://www.sintef.no/en/publications/publication/1343436/",
+        "confidence": "high — directly fetched"
+      }
+    ],
+    "files_saved": [
+      "C:/Users/rapha/Documents/School/Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/reading/whitson2013-draft01.pdf"
+    ],
+    "suggested_edits": [
+      {
+        "draft_sentence": "Whitson (2018) describes her fieldwork: 10 weeks of ethnographic observation with 10 intern developers at a Montreal studio, on how game engines and art tools shape work across disciplines.",
+        "new_sentence": "Whitson (2018) describes her fieldwork: 10 weeks of ethnographic observation with 10 intern developers at a large Canadian game studio (an earlier, unpublished draft of the same project names it as Montreal), on how game engines and art tools shape work across disciplines.",
+        "basis": "The published 2018 New Media & Society text (fetched via open-access PMC copy, PMC6256721) anonymizes the site as 'a large Canadian city' and never names Montreal anywhere in the article. 'Montreal' only appears in Whitson's own 2013 unpublished draft of the same project (downloaded to reading/whitson2013-draft01.pdf, p. 3). Citing the 2018 published source for the specific city name is not accurate as written; the sentence should either drop the city name or attribute it to the earlier draft rather than the 2018 publication."
+      },
+      {
+        "draft_sentence": "No publicly documented tool fuses tracker, repository and engine signals for a non-technical producer (September 2026 vendor sweep; studio-internal tools are not observable). ZeroStandup (n.d.) and Linear (n.d.) turn tracker and repository activity into team-readable updates, HacknPlan (n.d.) tracks non-code work by manual entry, and Perforce's P4 MCP narrates repository history, including binary assets, for developers (Perforce Software, n.d.); McShaffry (2013) showed producers doing that log-mining by hand.",
+        "new_sentence": "No publicly documented tool fuses tracker, repository and engine signals for a non-technical producer (September 2026 vendor sweep; studio-internal tools are not observable). ZeroStandup (n.d.) and Linear (n.d.) turn tracker and repository activity into team-readable updates, HacknPlan (n.d.) tracks non-code work by manual entry, Perforce's P4 MCP narrates repository history, including binary assets, for developers (Perforce Software, n.d.), and Unity's own Unity Production Pipeline — in closed beta as of this sweep, with general availability slated for November 2026 — connects producers, artists and QA to project data via a web dashboard and REST API but documents only real-time asset review and version-control hookup, not a change report synthesising tracker, repository and asset history; McShaffry (2013) showed producers doing that log-mining by hand.",
+        "basis": "Directly fetched unity.com/features/unity-production-pipeline (17 Sep 2026): confirms closed beta ('Limited spots in Phase 1... Public availability begins in November 2026'), GitHub/Unity Version Control integration, and a feature set centered on real-time visual review rather than any tracker+repo+asset fusion report. This is Unity's own most relevant 2026 production-tooling entrant and strengthens the novelty claim by naming the closest miss from the engine vendor itself."
+      }
+    ]
+  }
+}

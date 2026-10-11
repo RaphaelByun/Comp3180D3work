@@ -1,0 +1,1 @@
+"""Final proofreader fix (20 Sep 2026, 15:05): Appendix A names the three study-week candidates (above 85% naming presence, at least three commits) instead of the ambiguous "three multi-commit weeks"."""

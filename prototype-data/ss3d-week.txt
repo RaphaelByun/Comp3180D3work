@@ -1,0 +1,141 @@
+commit 5a8c35b59cc7969cf2b0c0c19c4f1f880b9be8f9
+Author: withwater <60080920+withwater@users.noreply.github.com>
+Date:   2024-02-25 05:08:27 -0700
+
+    Changed folders to PascalCase (#1275) (#1430)
+
+R100	Assets/Scripts/Tests/Asset Audit.meta	Assets/Scripts/Tests/AssetAudit.meta
+R100	Assets/Scripts/Tests/Asset Audit/AssetAuditUtilities.cs	Assets/Scripts/Tests/AssetAudit/AssetAuditUtilities.cs
+R100	Assets/Scripts/Tests/Asset Audit/AssetAuditUtilities.cs.meta	Assets/Scripts/Tests/AssetAudit/AssetAuditUtilities.cs.meta
+R100	Assets/Scripts/Tests/Asset Audit/AssetDataTests.cs	Assets/Scripts/Tests/AssetAudit/AssetDataTests.cs
+R100	Assets/Scripts/Tests/Asset Audit/AssetDataTests.cs.meta	Assets/Scripts/Tests/AssetAudit/AssetDataTests.cs.meta
+R100	Assets/Scripts/Tests/Asset Audit/PrefabTests.cs	Assets/Scripts/Tests/AssetAudit/PrefabTests.cs
+R100	Assets/Scripts/Tests/Asset Audit/PrefabTests.cs.meta	Assets/Scripts/Tests/AssetAudit/PrefabTests.cs.meta
+R100	Assets/Scripts/Tests/Asset Audit/SS3D.Tests.EditMode.asmdef	Assets/Scripts/Tests/AssetAudit/SS3D.Tests.EditMode.asmdef
+R100	Assets/Scripts/Tests/Asset Audit/SS3D.Tests.EditMode.asmdef.meta	Assets/Scripts/Tests/AssetAudit/SS3D.Tests.EditMode.asmdef.meta
+R100	Assets/Scripts/Tests/Asset Audit/SceneTests.cs	Assets/Scripts/Tests/AssetAudit/SceneTests.cs
+R100	Assets/Scripts/Tests/Asset Audit/SceneTests.cs.meta	Assets/Scripts/Tests/AssetAudit/SceneTests.cs.meta
+R100	Assets/Scripts/Tests/Asset Audit/TileMapTests.cs	Assets/Scripts/Tests/AssetAudit/TileMapTests.cs
+R100	Assets/Scripts/Tests/Asset Audit/TileMapTests.cs.meta	Assets/Scripts/Tests/AssetAudit/TileMapTests.cs.meta
+R100	Assets/Scripts/Tests/Edit Mode.meta	Assets/Scripts/Tests/EditMode.meta
+R100	Assets/Scripts/Tests/Edit Mode/ContainerTests.cs	Assets/Scripts/Tests/EditMode/ContainerTests.cs
+R100	Assets/Scripts/Tests/Edit Mode/ContainerTests.cs.meta	Assets/Scripts/Tests/EditMode/ContainerTests.cs.meta
+R100	Assets/Scripts/Tests/Edit Mode/ElectricityTests.meta	Assets/Scripts/Tests/EditMode/ElectricityTests.meta
+R100	Assets/Scripts/Tests/Edit Mode/ElectricityTests/CircuitTests.cs	Assets/Scripts/Tests/EditMode/ElectricityTests/CircuitTests.cs
+R100	Assets/Scripts/Tests/Edit Mode/ElectricityTests/CircuitTests.cs.meta	Assets/Scripts/Tests/EditMode/ElectricityTests/CircuitTests.cs.meta
+R100	Assets/Scripts/Tests/Edit Mode/GamemodeTests.cs	Assets/Scripts/Tests/EditMode/GamemodeTests.cs
+R100	Assets/Scripts/Tests/Edit Mode/GamemodeTests.cs.meta	Assets/Scripts/Tests/EditMode/GamemodeTests.cs.meta
+R100	Assets/Scripts/Tests/Edit Mode/HealthTests.cs	Assets/Scripts/Tests/EditMode/HealthTests.cs
+R100	Assets/Scripts/Tests/Edit Mode/HealthTests.cs.meta	Assets/Scripts/Tests/EditMode/HealthTests.cs.meta
+R100	Assets/Scripts/Tests/Edit Mode/ItemTests.cs	Assets/Scripts/Tests/EditMode/ItemTests.cs
+R100	Assets/Scripts/Tests/Edit Mode/ItemTests.cs.meta	Assets/Scripts/Tests/EditMode/ItemTests.cs.meta
+R100	Assets/Scripts/Tests/Edit Mode/LogTests.cs	Assets/Scripts/Tests/EditMode/LogTests.cs
+R100	Assets/Scripts/Tests/Edit Mode/LogTests.cs.meta	Assets/Scripts/Tests/EditMode/LogTests.cs.meta
+R100	Assets/Scripts/Tests/Edit Mode/SS3D.Tests.EditMode.asmdef	Assets/Scripts/Tests/EditMode/SS3D.Tests.EditMode.asmdef
+R100	Assets/Scripts/Tests/Edit Mode/SS3D.Tests.EditMode.asmdef.meta	Assets/Scripts/Tests/EditMode/SS3D.Tests.EditMode.asmdef.meta
+R100	Assets/Scripts/Tests/Edit Mode/SelectionTests.cs	Assets/Scripts/Tests/EditMode/SelectionTests.cs
+R100	Assets/Scripts/Tests/Edit Mode/SelectionTests.cs.meta	Assets/Scripts/Tests/EditMode/SelectionTests.cs.meta
+R100	Assets/Scripts/Tests/Edit Mode/SetUpTest.cs	Assets/Scripts/Tests/EditMode/SetUpTest.cs
+R100	Assets/Scripts/Tests/Edit Mode/SetUpTest.cs.meta	Assets/Scripts/Tests/EditMode/SetUpTest.cs.meta
+R100	Assets/Scripts/Tests/Edit Mode/SubstanceContainerTests.cs	Assets/Scripts/Tests/EditMode/SubstanceContainerTests.cs
+R100	Assets/Scripts/Tests/Edit Mode/SubstanceContainerTests.cs.meta	Assets/Scripts/Tests/EditMode/SubstanceContainerTests.cs.meta
+R100	Assets/Scripts/Tests/Edit Mode/TileMapTests.cs	Assets/Scripts/Tests/EditMode/TileMapTests.cs
+R100	Assets/Scripts/Tests/Edit Mode/TileMapTests.cs.meta	Assets/Scripts/Tests/EditMode/TileMapTests.cs.meta
+R100	Assets/Scripts/Tests/Known Issue Reproduction.meta	Assets/Scripts/Tests/KnownIssueReproduction.meta
+R100	Assets/Scripts/Tests/Known Issue Reproduction/Issue0990_PropagatingPocketProblem_ClientPerspective.cs	Assets/Scripts/Tests/KnownIssueReproduction/Issue0990_PropagatingPocketProblem_ClientPerspective.cs
+R100	Assets/Scripts/Tests/Known Issue Reproduction/Issue0990_PropagatingPocketProblem_ClientPerspective.cs.meta	Assets/Scripts/Tests/KnownIssueReproduction/Issue0990_PropagatingPocketProblem_ClientPerspective.cs.meta
+R100	Assets/Scripts/Tests/Known Issue Reproduction/Issue0990_PropagatingPocketProblem_HostPerspective.cs	Assets/Scripts/Tests/KnownIssueReproduction/Issue0990_PropagatingPocketProblem_HostPerspective.cs
+R100	Assets/Scripts/Tests/Known Issue Reproduction/Issue0990_PropagatingPocketProblem_HostPerspective.cs.meta	Assets/Scripts/Tests/KnownIssueReproduction/Issue0990_PropagatingPocketProblem_HostPerspective.cs.meta
+R100	Assets/Scripts/Tests/Known Issue Reproduction/Issue1002_LateJoinFails_HostPerspective.cs	Assets/Scripts/Tests/KnownIssueReproduction/Issue1002_LateJoinFails_HostPerspective.cs
+R100	Assets/Scripts/Tests/Known Issue Reproduction/Issue1002_LateJoinFails_HostPerspective.cs.meta	Assets/Scripts/Tests/KnownIssueReproduction/Issue1002_LateJoinFails_HostPerspective.cs.meta
+R100	Assets/Scripts/Tests/Known Issue Reproduction/SS3D.Tests.PlayMode.asmdef	Assets/Scripts/Tests/KnownIssueReproduction/SS3D.Tests.PlayMode.asmdef
+R100	Assets/Scripts/Tests/Known Issue Reproduction/SS3D.Tests.PlayMode.asmdef.meta	Assets/Scripts/Tests/KnownIssueReproduction/SS3D.Tests.PlayMode.asmdef.meta
+R100	Assets/Scripts/Tests/Play Mode.meta	Assets/Scripts/Tests/PlayMode.meta
+R100	Assets/Scripts/Tests/Play Mode/Framework.meta	Assets/Scripts/Tests/PlayMode/Framework.meta
+R100	Assets/Scripts/Tests/Play Mode/Framework/Abstract Tests.meta	Assets/Scripts/Tests/PlayMode/Framework/AbstractTests.meta
+R100	Assets/Scripts/Tests/Play Mode/Framework/Abstract Tests/PlayModeTest.cs	Assets/Scripts/Tests/PlayMode/Framework/AbstractTests/PlayModeTest.cs
+R100	Assets/Scripts/Tests/Play Mode/Framework/Abstract Tests/PlayModeTest.cs.meta	Assets/Scripts/Tests/PlayMode/Framework/AbstractTests/PlayModeTest.cs.meta
+R100	Assets/Scripts/Tests/Play Mode/Framework/Helpers.meta	Assets/Scripts/Tests/PlayMode/Framework/Helpers.meta
+R100	Assets/Scripts/Tests/Play Mode/Framework/Helpers/LoadFileHelpers.cs	Assets/Scripts/Tests/PlayMode/Framework/Helpers/LoadFileHelpers.cs
+R100	Assets/Scripts/Tests/Play Mode/Framework/Helpers/LoadFileHelpers.cs.meta	Assets/Scripts/Tests/PlayMode/Framework/Helpers/LoadFileHelpers.cs.meta
+R100	Assets/Scripts/Tests/Play Mode/Framework/Helpers/ServerHelpers.cs	Assets/Scripts/Tests/PlayMode/Framework/Helpers/ServerHelpers.cs
+R100	Assets/Scripts/Tests/Play Mode/Framework/Helpers/ServerHelpers.cs.meta	Assets/Scripts/Tests/PlayMode/Framework/Helpers/ServerHelpers.cs.meta
+R100	Assets/Scripts/Tests/Play Mode/Framework/Helpers/TestHelpers.cs	Assets/Scripts/Tests/PlayMode/Framework/Helpers/TestHelpers.cs
+R100	Assets/Scripts/Tests/Play Mode/Framework/Helpers/TestHelpers.cs.meta	Assets/Scripts/Tests/PlayMode/Framework/Helpers/TestHelpers.cs.meta
+R100	Assets/Scripts/Tests/Play Mode/Framework/Template Tests.meta	Assets/Scripts/Tests/PlayMode/Framework/TemplateTests.meta
+R100	Assets/Scripts/Tests/Play Mode/Framework/Template Tests/IssueReproduction.cs	Assets/Scripts/Tests/PlayMode/Framework/TemplateTests/IssueReproduction.cs
+R100	Assets/Scripts/Tests/Play Mode/Framework/Template Tests/IssueReproduction.cs.meta	Assets/Scripts/Tests/PlayMode/Framework/TemplateTests/IssueReproduction.cs.meta
+R100	Assets/Scripts/Tests/Play Mode/Framework/Template Tests/PlaymodeTestRepository.cs	Assets/Scripts/Tests/PlayMode/Framework/TemplateTests/PlaymodeTestRepository.cs
+R100	Assets/Scripts/Tests/Play Mode/Framework/Template Tests/PlaymodeTestRepository.cs.meta	Assets/Scripts/Tests/PlayMode/Framework/TemplateTests/PlaymodeTestRepository.cs.meta
+R100	Assets/Scripts/Tests/Play Mode/General Tests.meta	Assets/Scripts/Tests/PlayMode/GeneralTests.meta
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Client.meta	Assets/Scripts/Tests/PlayMode/GeneralTests/Client.meta
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Client/ClientGameActions.cs	Assets/Scripts/Tests/PlayMode/GeneralTests/Client/ClientGameActions.cs
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Client/ClientGameActions.cs.meta	Assets/Scripts/Tests/PlayMode/GeneralTests/Client/ClientGameActions.cs.meta
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Client/ClientLateJoinActions.cs	Assets/Scripts/Tests/PlayMode/GeneralTests/Client/ClientLateJoinActions.cs
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Client/ClientLateJoinActions.cs.meta	Assets/Scripts/Tests/PlayMode/GeneralTests/Client/ClientLateJoinActions.cs.meta
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Client/ClientLobbyActions.cs	Assets/Scripts/Tests/PlayMode/GeneralTests/Client/ClientLobbyActions.cs
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Client/ClientLobbyActions.cs.meta	Assets/Scripts/Tests/PlayMode/GeneralTests/Client/ClientLobbyActions.cs.meta
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Host.meta	Assets/Scripts/Tests/PlayMode/GeneralTests/Host.meta
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Host/HostGameActions.cs	Assets/Scripts/Tests/PlayMode/GeneralTests/Host/HostGameActions.cs
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Host/HostGameActions.cs.meta	Assets/Scripts/Tests/PlayMode/GeneralTests/Host/HostGameActions.cs.meta
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Server.meta	Assets/Scripts/Tests/PlayMode/GeneralTests/Server.meta
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Server/ServerGameActions.cs	Assets/Scripts/Tests/PlayMode/GeneralTests/Server/ServerGameActions.cs
+R100	Assets/Scripts/Tests/Play Mode/General Tests/Server/ServerGameActions.cs.meta	Assets/Scripts/Tests/PlayMode/GeneralTests/Server/ServerGameActions.cs.meta
+R100	Assets/Scripts/Tests/Play Mode/SS3D.Tests.PlayMode.asmdef	Assets/Scripts/Tests/PlayMode/SS3D.Tests.PlayMode.asmdef
+R100	Assets/Scripts/Tests/Play Mode/SS3D.Tests.PlayMode.asmdef.meta	Assets/Scripts/Tests/PlayMode/SS3D.Tests.PlayMode.asmdef.meta
+M	Builds/Game/Config/permissions.txt
+M	Packages/manifest.json
+M	Packages/packages-lock.json
+
+commit 677019478b5824caf967045d52efb560d0d7e6d1
+Author: Iamteapot <77565416+iamteapot422@users.noreply.github.com>
+Date:   2024-02-25 18:41:01 +0700
+
+    Fix item collider (#1417)
+    
+    * Fix item colliders
+    
+    * Fix everything
+    
+    * Fish fears me
+    
+    * Sausages
+    
+    * Move stuff to Freeze/Unfreeze
+    
+    * add comment
+    
+    * Fix wrong component
+    
+    * Add a comment to _container and Container
+    
+    ---------
+    
+    Co-authored-by: Mechar418 <77565416+Mechar418@users.noreply.github.com>
+    Co-authored-by: stilnat <nathan.raynal.castang@gmail.com>
+
+M	Assets/Scripts/SS3D/Systems/Inventory/Items/Item.cs
+
+commit 6d75c2f40ed91e03e95b7e0e03f0e5239f764801
+Author: Sjerty <56740136+Sjerty@users.noreply.github.com>
+Date:   2024-02-23 19:40:28 +0300
+
+    Change Start() to Awake() (#1427)
+
+M	Assets/Scripts/SS3D/Systems/Inventory/Containers/ContainerItemDisplay.cs
+
+commit 17356a94bd7402ee27e241020331dfb0e09649b4
+Author: stilnat <nathan.raynal.castang@gmail.com>
+Date:   2024-02-21 11:55:14 +0100
+
+    fix exception (#1423)
+
+M	Assets/Scripts/SS3D/Systems/Selection/SelectionCamera.cs
+
+commit 42dc8898f332cf989a09320ccbcf7d15f44dcf6d
+Author: stilnat <nathan.raynal.castang@gmail.com>
+Date:   2024-02-21 01:12:43 +0100
+
+    fix disappearing clothes (#1422)
+
+M	Assets/Content/WorldObjects/Entities/Humanoids/Human/Human.prefab

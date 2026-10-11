@@ -1,0 +1,201 @@
+// ChangeLensGit.cs
+// ---------------------------------------------------------------------------
+// The Editor-side plumbing for the committed tier:
+//
+//   * WeekExport - runs git against a repository for a date range and keeps the
+//     three texts ChangeLens needs (name-status log, scene/prefab patch, script
+//     guid table). Saved to a folder, an export is FROZEN: the study reads the
+//     same bytes in every session, and the fidelity check reads them too.
+//   * AssetDatabaseGuidResolver - resolves guids through Unity itself when the
+//     repository being reported on is the open project.
+//   * StudyExport - writes Version A (baseline), Version B (treatment) and a
+//     fidelity checklist for each, from one frozen export.
+// ---------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
+using UnityEditor;
+
+namespace ChangeLens.Editor
+{
+    public class WeekExport
+    {
+        public const string LogFile = "log.txt";
+        public const string PatchFile = "assets.patch";
+        public const string GuidFile = "guids.txt";
+
+        public string LogText = "";
+        public string PatchText = "";
+        public string GuidText = "";
+
+        /// <summary>Runs git for [since, until) in <paramref name="repoPath"/>.</summary>
+        public static WeekExport FromGit(string repoPath, string since, string until)
+        {
+            var export = new WeekExport();
+            string range = "--since=" + since + " --until=" + until;
+            export.LogText = RunGit(repoPath, "log --name-status --date=iso --no-merges " + range);
+            export.PatchText = RunGit(repoPath, "log -p --no-merges --date=iso " + range +
+                                                " -- \"*.prefab\" \"*.unity\"");
+
+            List<CommitRecord> commits = GitLogParser.Parse(export.LogText);
+            if (commits.Count > 0)
+            {
+                // Script guids as they stood at the week's newest commit.
+                export.GuidText = RunGit(repoPath, "grep -I -e \"^guid:\" " + commits[0].Hash + " -- \"*.cs.meta\"");
+            }
+            return export;
+        }
+
+        public static WeekExport FromFolder(string folder)
+        {
+            return new WeekExport
+            {
+                LogText = ReadIfExists(Path.Combine(folder, LogFile)),
+                PatchText = ReadIfExists(Path.Combine(folder, PatchFile)),
+                GuidText = ReadIfExists(Path.Combine(folder, GuidFile))
+            };
+        }
+
+        public void SaveTo(string folder)
+        {
+            Directory.CreateDirectory(folder);
+            File.WriteAllText(Path.Combine(folder, LogFile), LogText);
+            File.WriteAllText(Path.Combine(folder, PatchFile), PatchText);
+            File.WriteAllText(Path.Combine(folder, GuidFile), GuidText);
+        }
+
+        public ProducerReport BuildReport(ReportCondition condition, string title, IGuidResolver extraResolver = null)
+        {
+            ChangeReport counts = ChangeReport.Build(GitLogParser.Parse(LogText), title);
+            List<AssetChange> assets = AssetDiffParser.Parse(PatchText);
+            GuidIndex index = GuidIndex.Parse(GuidText);
+            IGuidResolver resolver = extraResolver == null
+                ? (IGuidResolver)index
+                : new FirstMatchResolver(index, extraResolver);
+            return ProducerReport.Build(counts, assets, resolver, condition, title);
+        }
+
+        public static string RunGit(string repoPath, string args)
+        {
+            var psi = new ProcessStartInfo("git", "-c core.quotepath=false " + args)
+            {
+                WorkingDirectory = repoPath,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                StandardOutputEncoding = Encoding.UTF8
+            };
+            using (Process p = Process.Start(psi))
+            {
+                // Read stderr asynchronously so a full stderr pipe cannot deadlock stdout.
+                var err = new StringBuilder();
+                p.ErrorDataReceived += (s, e) => { if (e.Data != null) err.AppendLine(e.Data); };
+                p.BeginErrorReadLine();
+                string output = p.StandardOutput.ReadToEnd();
+                p.WaitForExit();
+                // git grep exits 1 when nothing matches; that is not an error here.
+                if (p.ExitCode > 1)
+                    throw new InvalidOperationException("git " + args + " failed: " + err);
+                return output;
+            }
+        }
+
+        private static string ReadIfExists(string path)
+        {
+            return File.Exists(path) ? File.ReadAllText(path) : "";
+        }
+    }
+
+    /// <summary>Asks each resolver in turn; the first non-null answer wins.</summary>
+    public class FirstMatchResolver : IGuidResolver
+    {
+        private readonly IGuidResolver[] _resolvers;
+        public FirstMatchResolver(params IGuidResolver[] resolvers) { _resolvers = resolvers; }
+
+        public string PathFor(string guid)
+        {
+            foreach (IGuidResolver r in _resolvers)
+            {
+                string p = r == null ? null : r.PathFor(guid);
+                if (!string.IsNullOrEmpty(p)) return p;
+            }
+            return null;
+        }
+    }
+
+    /// <summary>Resolves guids in the open Unity project.</summary>
+    public class AssetDatabaseGuidResolver : IGuidResolver
+    {
+        public string PathFor(string guid)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            return string.IsNullOrEmpty(path) ? null : path;
+        }
+    }
+
+    public static class StudyExport
+    {
+        /// <summary>
+        /// Writes the study materials for one frozen week into
+        /// <paramref name="folder"/>: report-A-baseline.md, report-B-treatment.md
+        /// and a fidelity checklist for each. Returns a one-line summary.
+        /// </summary>
+        public static string WriteStudyFiles(WeekExport export, string folder, string title)
+        {
+            Directory.CreateDirectory(folder);
+            ProducerReport a = export.BuildReport(ReportCondition.Baseline, title);
+            ProducerReport b = export.BuildReport(ReportCondition.Treatment, title);
+            File.WriteAllText(Path.Combine(folder, "report-A-baseline.md"), a.ToMarkdown());
+            File.WriteAllText(Path.Combine(folder, "report-B-treatment.md"), b.ToMarkdown());
+            File.WriteAllText(Path.Combine(folder, "fidelity-A.md"), a.FidelityChecklistMarkdown());
+            File.WriteAllText(Path.Combine(folder, "fidelity-B.md"), b.FidelityChecklistMarkdown());
+            File.WriteAllText(Path.Combine(folder, "naming.md"), NamingSummary(b));
+            return title + ": " + a.Counts.CommitCount + " commits, " + a.Counts.TotalFileEntries +
+                   " file changes, claims A " + a.Claims.Count + " / B " + b.Claims.Count;
+        }
+
+        /// <summary>
+        /// The Deliverable 2 measures for one week: categorised share and the
+        /// share of changed scenes/prefabs the treatment page names something inside.
+        /// </summary>
+        public static string NamingSummary(ProducerReport b)
+        {
+            int total = b.Counts.TotalFileEntries;
+            int other = b.Counts.CountsFor(PathCategory.Other).Total;
+            // Two measures, reported side by side so neither flatters the other:
+            //   strict  - an object name (m_Name) appears in the changed text or its
+            //             context: the measure export-week.py used for the A2 scoping.
+            //   broad   - the page says anything about the inside: an object name,
+            //             a component type, or the file being added/deleted.
+            var strict = new Dictionary<string, bool>();
+            var broad = new Dictionary<string, bool>();
+            foreach (AssetChange a in b.AssetChanges)
+            {
+                bool s = a.ObjectNames.Count > 0;
+                bool w = s || a.TypesTouched.Count > 0 || a.AddedTypes.Count > 0 ||
+                         a.RemovedTypes.Count > 0 || a.FileAdded || a.FileDeleted;
+                bool prior;
+                strict[a.Path] = (strict.TryGetValue(a.Path, out prior) && prior) || s;
+                broad[a.Path] = (broad.TryGetValue(a.Path, out prior) && prior) || w;
+            }
+            int strictCount = 0, broadCount = 0;
+            foreach (bool v in strict.Values) if (v) strictCount++;
+            foreach (bool v in broad.Values) if (v) broadCount++;
+
+            var sb = new StringBuilder();
+            sb.AppendLine("# Deliverable 2 measures: " + b.Title);
+            sb.AppendLine();
+            sb.AppendLine("- Changed-file entries categorised (not Other): " + (total - other) + " of " + total +
+                          (total > 0 ? " (" + Math.Round(100.0 * (total - other) / total) + "%)" : "") + " — target 90%");
+            sb.AppendLine("- Changed scenes/prefabs with an object name in the change (strict, A2 measure): " +
+                          strictCount + " of " + strict.Count + " — target 60%");
+            sb.AppendLine("- Changed scenes/prefabs the page describes inside (object, component or add/delete): " +
+                          broadCount + " of " + broad.Count);
+            return sb.ToString();
+        }
+    }
+}

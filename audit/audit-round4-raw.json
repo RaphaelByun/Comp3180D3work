@@ -1,0 +1,376 @@
+{
+  "marker_malcolm": {
+    "persona": "Malcolm Ryan, COMP3180 convenor — marking A2 (Research Proposal, 30%) against the published rubric, calibrated on the real A1 result (65 Content / 55 Presentation, sole comment: density, no plain overview, straight into technical detail). Torn calls reported as the lower band.",
+    "criteria": [
+      {
+        "criterion": "Literature Review",
+        "weight": 45,
+        "band": "D",
+        "mark": 81,
+        "descriptor_quote": "At least five distinct and high-quality sources with a common theme relating to the project topic. Sources are very well summarised and evaluated in terms of their relevance, lessons for and usefulness to the outlined project. Review synthesises and abstracts key patterns and relationships from the literature to motivate the project.",
+        "why_not_higher": "Six distinct peer-reviewed sources are present with one genuine common theme (the record is thinner than the work), and the pet peeve is beaten — every entry says what was specifically learnt, with page numbers, quotes and figures (61% unsatisfied; 80% vs 30% file mix; 86 of 119 notifications), and most entries name a rejected alternative (Bertram's simplified filing interface, explicitly not taken). The closing synthesis genuinely adjudicates three competing mechanisms and states a falsifiable bet, which is the abstracting move the HD band asks for. It is not HD for two reasons. First, it is materially under-written: the review runs 890 words against the 1350 allowance, with entries at 105–145 words each against the template's ~200 (of which ~150 should be what was learnt). The compression is a choice, not a budget constraint — the Project Proposal is 364 words over its ~900 guide — and it costs exactly the 'expertly summarised and insightfully evaluated' depth the HD band wants. Second, the load-bearing transfer is never argued: Ko et al.'s 21 information types are a taxonomy of *developer* needs, yet they are the coding frame for the think-alouds, the classification target in Deliverable 1, and the object of the Evaluate goal — for an audience defined as 'someone who never opens the codebase'. A marker who knows Ko asks that in the first minute and the text has no answer. Third, smaller: Stray and Washburn are introduced only inside the synthesis, so two of the eight cited works do the reader no summarising work.",
+        "single_change_to_next_band": "Spend the 460 unused Literature Review words: bring each of the six entries to ~150 words of specific learning, and inside the Ko entry add two sentences defending why a developer information-need taxonomy transfers to a non-technical producer (name what carries over and what does not). Pay for it by cutting Scoping Evidence from 608 words to ~420 — the restated research question, the version-order sentence and the Wilcoxon sentence are the cheapest 60 words there."
+      },
+      {
+        "criterion": "Project Proposal",
+        "weight": 40,
+        "band": "D",
+        "mark": 78,
+        "descriptor_quote": "Outlines a sensible plan with clear and specific learning goals for developing industry-relevant skills. Identifies a considered research question with an appropriate and achievable mixed methodology for evaluation. Overview of scoping work undertaken provides a strongly convincing argument for the feasibility of the project.",
+        "why_not_higher": "Everything I asked for in the walkthrough is mechanically present and largely well done: four goals spanning understand to create, each with a measure; a clear primary research question; genuine mixed method (six scored comprehension items on Endsley's three levels with a Wilcoxon test and a planted unanswerable item, plus think-alouds coded against Ko with a second coder on a quarter); real scoping evidence — a working Editor package shown docked in Unity 6.4 on live SS3D history, a prefab YAML hunk proving the naming plan, and a five-repository corpus measurement; Kickstarter tiers (committed 11 h, stretch 3 h, challenge 2 h) reconciling exactly to Deliverable 2's 16 h; hours summing to 65 with 15 in-prac; named out-of-scope alternatives (live tracker connection, LLM prose layer) with reasons; a fidelity check with a pass threshold; a named risk. That is a strongly convincing feasibility case. It is not HD because the pieces do not all fit. Sub-question 1 — which needs can be derived from tracker, repository *and* asset layer — is given no method, no instrument and no row in the deliverables table; the Unity Experiment Framework is said to 'serve Sub-question 1' with no statement of what is done to it. Half the stated research question is therefore unevaluated, which is the opposite of the HD band's 'clear and insightful research question with a highly appropriate ... methodology'. Deliverable 1 takes 13 of 65 hours — a UX study with heuristic evaluation, job ads, reviews and two interviews — and is joined to the rest of the argument by a single 17-word sentence. And the committed build is modest: eleven hours of extension-based classification plus AssetDatabase name resolution, which does not read as the HD band's 'ambitious plan ... high level of creativity or originality' to a marker who has just assessed a room of VR prototypes. The Learning Goals subsection, at 213 words, is the thinnest part of the strongest thing in this draft, with the career motivation compressed to one sentence that offloads the industry-relevance claim onto the project's own job-ad scan.",
+        "single_change_to_next_band": "Give Sub-question 1 a method and an owner: state in one sentence in Scoping Evidence how it is answered (desk classification of surfaced needs against named artefacts in the Unity Experiment Framework repository, not a build), and add the word 'Sub-question 1' to Deliverable 1's success measure so a row in the table visibly produces it. Pay for it by cutting the verbatim restatement of the primary research question at the top of Scoping Evidence (~25 words), which already appears in the Introduction."
+      },
+      {
+        "criterion": "Communication",
+        "weight": 15,
+        "band": "CR",
+        "mark": 72,
+        "descriptor_quote": "The report is easy to read and uses appropriate language and structure. It meets the word count, referencing and other submission requirements. It may contain a few minor spelling, grammatical or referencing errors.",
+        "why_not_higher": "Structure follows the template exactly, the three figures are relevant and well captioned, APA is consistent, the word count is inside the limit, there are no spelling errors, and the Introduction now opens plainly and audience-first ('Each week a game producer needs to know what changed') — which repairs the specific A1 complaint about having no general overview. But the D band requires 'very easy to read', and this is not. The prose is compressed to the point where a marker re-reads: two- and three-proposition sentences chained with semicolons, em-dashes and mid-sentence parentheticals run through every section ('Fusing all three signals for a non-technical producer is the wider gap (no publicly documented tool does it; studio-internal tools are not observable) and is future work here'; 'Over full histories, code is 7–36% of changed-file entries (Figure 1); one week can run higher, as the reorganisation week in Figure 2 shows at 41.9%, so the report is built per week'; 'Deliverable 1 runs first and surfaces the needs; its specification is what the Evaluate goal classifies'). Technical terms are used before they are defined: 'the committed tier' appears twice — in the Create learning goal and in Scoping Evidence — before the tier system is explained two pages later in Deliverables, and 'the asset layer' is used in the Introduction one paragraph before its gloss. That is precisely the A1 failure mode, moved from slides to prose. There is also a referencing slip: the Appendix A row 'Atlassian Rovo, GitHub Copilot' makes product claims with no citation anywhere in the document, which is a 'few minor referencing errors' under this band. Credit where due — the inline glosses for think-aloud and pull request are exactly right and should be the model for the rest.",
+        "single_change_to_next_band": "Do a one-idea-per-sentence pass over the ten densest sentences (listed in top_changes) — split each chained sentence at its semicolon or em-dash and drop the mid-sentence parentheticals — and write 'the committed (minimum) tier' at its first appearance in the Create goal. This is close to word-neutral: splitting adds roughly 10 words, paid for by deleting the parenthetical '(no publicly documented tool does it; studio-internal tools are not observable)' from the Introduction, which the Appendix already evidences."
+      }
+    ],
+    "predicted_task_mark": 78,
+    "top_changes": [
+      {
+        "priority": 1,
+        "location": "Scoping Evidence — \"The primary research question is *Which of a producer's...*\" and \"I screened public Unity repositories on asset volume...\"",
+        "problem": "Sub-question 1 (which needs can be derived from the tracker export, the repository history and the Unity asset layer) has no method, no instrument and no deliverable. The text says the Unity Experiment Framework 'serves Sub-question 1' but never says what is done to it. Sub-question 2 gets a full protocol; half the research question gets a repository name. Since the primary RQ is the spine of the whole document, the marker's 'do all the pieces fit together?' test fails at the most visible joint.",
+        "fix": "Add one sentence after the corpus-screening sentence naming the method: that Sub-question 1 is answered by desk classification — each need from the Deliverable 1 spec is marked derivable, partly derivable or not derivable against a named artefact in the Unity Experiment Framework repository, with the think-aloud follow-up supplying the disagreements. Then extend Deliverable 1's success measure to end '...classifying 25 needs against Ko's 21 types and against the three artefact sources (Sub-question 1)'. Pay for it by deleting the verbatim restatement of the primary research question that opens Scoping Evidence (~25 words; it is already in the Introduction and the reader has had it once).",
+        "mark_impact": "Project Proposal +3 to +4 (78 → 81–82, the strongest single move toward HD on this criterion); Communication +1. Task mark +1.5."
+      },
+      {
+        "priority": 2,
+        "location": "Literature Review — all six entries; and Scoping Evidence, 608 words",
+        "problem": "The section carrying 45% of the mark is 460 words under its allowance (890 of 1350), with entries at 105–145 words against the template's ~200. The section carrying 40% is 364 words over its ~900 guide, almost all of it in Scoping Evidence. Marks are being moved out of the heaviest criterion into the lighter one, and the resulting compression in the review is what makes the prose hard to read.",
+        "fix": "Rebalance: cut Scoping Evidence to ~420 words (the restated RQ, the version-order sentence, the Wilcoxon sentence and the 41.9% explanation are ~90 words of the cheapest material there) and spend the recovered words returning each of the six entries to ~150 words of specific learning — most usefully on Dourish and Bellotti (106 w) and Ko (105 w), the two doing the most theoretical work on the thinnest budget.",
+        "mark_impact": "Literature Review +3 to +5 (81 → 84–86); Communication +1 (less compression). Task mark +1.5 to +2.5."
+      },
+      {
+        "priority": 3,
+        "location": "Literature Review — \"Ko et al. (2007) watched 17 developers at a large software company...\"",
+        "problem": "Ko's 21 information types are a developer taxonomy, and the draft makes them load-bearing three times over: the think-aloud coding frame, the classification target in Deliverable 1, and the object of the Evaluate learning goal. The project's audience is defined as 'someone who never opens the codebase'. The transfer from developer needs to producer needs is asserted and never argued — the first question any marker who knows the paper will ask, and it lands on the RQ, the method and a goal simultaneously.",
+        "fix": "Add two sentences to the Ko entry: name which of the seven kinds of work plausibly transfer to a producer and which do not (debugging-state needs do not; 'what have my co-workers been doing' and 'what caused this change' do), and say that the Deliverable 1 spec is what tests the transfer rather than assuming it. Pay from the Scoping Evidence cut in change 2.",
+        "mark_impact": "Literature Review +2 (removes the most obvious Q&A-style objection); Project Proposal +1. Task mark +1."
+      },
+      {
+        "priority": 4,
+        "location": "Scoping Evidence — figure caption \"Figure 2. ChangeLens docked in the Unity 6.4 Editor, reading one week of SS3D history (a code-heavy reorganisation week).\"",
+        "problem": "This is the one image the marker stares at, and its category table reads Code 36, Meta 46, ScenePrefab 1, Art 0, Audio 0. On the page that argues most change in a game project is not code and that the asset layer is where the gap sits, the demonstration shows a week with no art, no audio and one scene/prefab, and 46 of 86 entries as .meta bookkeeping. The surrounding sentence explains the anomaly away rather than showing the tool succeeding — which reads as the tool being demonstrated on the only week available, not the right week.",
+        "fix": "Reword-only mitigation if the capture cannot be redone: move the explanation before the figure rather than after, and recaption to make the point deliberate — 'Figure 2. ChangeLens docked in the Unity 6.4 Editor. This week is deliberately the hard case: a code-and-rename-heavy reorganisation at 41.9% code, where 46 of 86 entries are .meta bookkeeping the report must not report as work.' Then delete the now-redundant trailing clause 'so the report is built per week' (the recapture fix is listed under evidence_needed and is strictly better).",
+        "mark_impact": "Project Proposal +1 with recaption alone, +2 to +3 with a re-captured asset-heavy week; Communication +1. Task mark +0.5 to +1.5."
+      },
+      {
+        "priority": 5,
+        "location": "Scoping Evidence — \"Deliverable 1 runs first and surfaces the needs; its specification is what the Evaluate goal classifies.\"",
+        "problem": "Deliverable 1 consumes 13 of 65 hours — 20% of the entire project budget — on heuristic evaluation of four tools, 10 job ads, 25 reviews, two interviews and a spec. It is attached to the rest of the argument by this one 17-word sentence, which is also close to opaque on a first read. A marker costing the plan will ask what 20% of the budget buys and will not find an answer.",
+        "fix": "Replace with two plain sentences: what Deliverable 1 produces (the list of producer information needs that the research question is asked *about*, since the needs cannot come from the tool), and why the four method strands are needed (interviews and reviews surface needs, job ads test whether industry asks for them, heuristic evaluation establishes what existing tools already answer). Roughly +25 words; pay from the Scoping Evidence cut in change 2.",
+        "mark_impact": "Project Proposal +1 to +2; Communication +1. Task mark +0.6."
+      },
+      {
+        "priority": 6,
+        "location": "Learning Goals — \"the committed tier ships with 60% of changed prefabs...\"; Scoping Evidence — \"The prototype classifies files only; the committed tier adds...\"",
+        "problem": "'The committed tier' is used twice as if defined, two pages before the tier system is introduced in Deliverables. The reader meets a technical term of art before any context — the exact defect the A1 marker penalised ('You jumped straight into very technical details without providing context').",
+        "fix": "At the first appearance write 'the committed (minimum) tier'. Two words. Same treatment for 'the asset layer' in the Introduction: 'the Unity asset layer (scenes, prefabs and their .meta files)' at first use, and delete the later gloss in paragraph three, which is word-neutral.",
+        "mark_impact": "Communication +1 to +2 (72 → 73–74, the cheapest movement available on this criterion). Task mark +0.2."
+      },
+      {
+        "priority": 7,
+        "location": "Whole document — the ten densest sentences, e.g. Introduction \"A two-day refactor can leave no ticket while...\" and \"Fusing all three signals for a non-technical producer...\"",
+        "problem": "Sustained two- and three-proposition sentences with semicolons, em-dashes and mid-sentence parentheticals. The specific offenders: (a) 'A two-day refactor can leave no ticket while a three-line tweak looks like a day's work, and today a technical lead translates by hand' — three ideas, and 'looks like a day's work' is ambiguous as to whom and whether that is good; (b) 'Fusing all three signals ... (no publicly documented tool does it; studio-internal tools are not observable) and is future work here'; (c) 'Over full histories, code is 7–36% ... so the report is built per week'; (d) 'The prototype classifies files only; the committed tier adds object naming (Figure 3), where Unity earns its place because...'; (e) 'Below the floor, the think-alouds run first and the quantitative arm is reported descriptively' — the reader must reconstruct the missing 'if fewer than five participants are recruited'; (f) the Create goal's measure, 39 words across three clauses; (g) 'Its sources were the debugger and logs, not a colleague, so the obstacle is the tool'; (h) 'The check can falsify naming and activity claims, not mechanical file counts'; (i) 'Three limits bound my novelty claim: ...'; (j) 'The six items are scored against fixed answers at three levels after Endsley's (1995) model of situation awareness: what changed, what it means, what happens next.'",
+        "fix": "Split each at its semicolon or em-dash into two sentences and delete the mid-sentence parentheticals — for (b) drop '(no publicly documented tool does it; studio-internal tools are not observable)' entirely, since Appendix A is the evidence for it; for (e) restore the conditional: 'If fewer than five readers are recruited, the think-alouds run first and the quantitative arm is reported descriptively.' Net cost is about +10 words, paid for by (b)'s deletion (-11).",
+        "mark_impact": "Communication +2 to +3 (72 → 74–75; combined with change 6 this is the realistic path to a D on this criterion). Task mark +0.4."
+      },
+      {
+        "priority": 8,
+        "location": "Appendix A — vendor sweep table row \"Atlassian Rovo, GitHub Copilot\"",
+        "problem": "The only row in the table with no citation, while every other row carries one. It makes dated product claims ('AI sprint summaries; pull-request summaries') with no source, in a document whose unit teaches CARS source evaluation. It is a small hit but it is the kind of referencing inconsistency the Communication band names explicitly.",
+        "fix": "Either add retrieval-dated APA entries for both product pages to the References (no body word cost — References are uncounted), or delete the row: it is the least load-bearing of the seven and its content is covered by the ZeroStandup and Linear rows.",
+        "mark_impact": "Communication +1 (removes the 'may contain a few minor referencing errors' trigger). Task mark +0.15."
+      },
+      {
+        "priority": 9,
+        "location": "Learning Goals — \"I was the producer on my COMP3151 team and aim for producer or...\"",
+        "problem": "The section the A1 marker singled out for praise ('Good learning goals') is the thinnest subsection in the proposal at 213 words, and the required industry-relevance-and-career-motivation element is one sentence that ends by outsourcing the claim to the project's own job-ad scan — 'Deliverable 1's job-ad scan tests whether advertisements ask for it'. That reads as though the industry relevance is not yet established, on a criterion where the marker wants it asserted and evidenced.",
+        "fix": "Rewrite the closing sentence to assert the relevance and use the scan as corroboration rather than proof: name the concrete producer task (writing the weekly status a non-technical stakeholder acts on) and say the job-ad scan will quantify how often it is listed. About +15 words; pay from the Scoping Evidence cut in change 2.",
+        "mark_impact": "Project Proposal +1. Task mark +0.4."
+      },
+      {
+        "priority": 10,
+        "location": "Cover fields and Statement on Generative AI use — \"%ID: [STUDENT ID]\" and \"[CONFIRM BEFORE SUBMISSION: which of the six counted sources...]\"",
+        "problem": "Mechanical. Both are pending placeholders. The template mandates Name, Student ID and Topic Category on the cover; a bracketed editorial instruction left inside the submitted GenAI statement would be the single most damaging visible error in an otherwise clean document, and this one advertises uncertainty about whether the counted sources were read.",
+        "fix": "Fill the Student ID. Resolve the CONFIRM line into a positive declaration naming the sources read in full and the form the verification took, with no brackets. Zero net words in the body — both sit outside the counted text.",
+        "mark_impact": "Neutral if fixed; Communication -5 to -8 and a credibility hit across Literature Review if either is left in. Task mark protection of roughly 2 marks."
+      }
+    ],
+    "evidence_needed": [
+      {
+        "item": "Figure 2 is captured on an SS3D week where the asset categories are effectively empty (Art 0, Audio 0, ScenePrefab 1, Meta 46, Code 36), so the flagship scoping image contradicts the document's central premise that the asset layer is where the missing information lives.",
+        "what_would_settle_it": "Re-run the existing corpus script over SS3D's full history, pick a week whose category mix is genuinely asset-heavy (art or audio non-zero and scene/prefab counts in double figures), load that export into the prototype and re-capture the docked Editor screenshot. The tooling to do this already exists in corpus/ and ChangeLens-proto/, so this is a capture task, not a build task. Keep the 41.9% week as a one-sentence contrast in the text rather than as the image."
+      },
+      {
+        "item": "The 60% naming target is unevidenced. It appears twice as a commitment — as the Create goal's measure and as the committed tier's success criterion — but Figure 3 only demonstrates that object names exist in prefab YAML, not that the tool resolves them at any rate.",
+        "what_would_settle_it": "Run the object-naming path over one SS3D week and report the achieved figure in Scoping Evidence — 'on the sampled week, N of M changed prefabs and scenes resolved to object names'. One measured number converts the target from an aspiration into scoping evidence and directly serves the 'strongly convincing argument for feasibility' descriptor."
+      },
+      {
+        "item": "Recruitment of eight student producers plus six think-aloud participants is asserted from the structure of COMP3151 ('Every COMP3151 team has a student producer') rather than from anything secured. With a five-participant floor already named, the marker is being asked to accept the study's feasibility on a structural argument.",
+        "what_would_settle_it": "A count of COMP3151 teams currently running, plus either the prac tutor's agreement to allow recruitment at the Week 9 and Week 10 pracs or a handful of expressions of interest already obtained. One sentence naming the number of teams and the tutor's agreement would do it."
+      },
+      {
+        "item": "The two interviews inside Deliverable 1 (2 h) have no named population or recruitment route, unlike the eight readers.",
+        "what_would_settle_it": "Name who the interviewees are drawn from (student producers, industry producers, or the same COMP3151 pool) and whether that is the same pool as the reader study — the answer matters because reusing the reader pool would contaminate the evaluation arm."
+      },
+      {
+        "item": "The qualitative arm promises a second coder on a quarter of the think-aloud data with agreement reported, but no second coder exists and no hours are allocated to one anywhere in the 65-hour table.",
+        "what_would_settle_it": "Either name a person who has agreed to double-code and show their time inside Deliverable 5's 14 hours, or replace the claim with intra-rater agreement (re-coding a quarter after a delay) and say so. As written it is a commitment the budget cannot honour."
+      },
+      {
+        "item": "The Statement on Generative AI use carries an open bracketed question about which of the six counted sources have been read in full. Given how heavily this document leans on specific page-level claims (p. 296, p. 348, 61%, pp. 280–289), an unresolved reading claim is a live academic-integrity exposure, not a formatting nit.",
+        "what_would_settle_it": "Raphael confirming, source by source, which of the six he has read in full himself, and the statement declaring it plainly. Where a source has not been read in full, either read it before submission or do not count it toward the six — five fully read sources still hold the D band on source count."
+      }
+    ],
+    "notes": "Weighted calculation: 0.45 x 81 + 0.40 x 78 + 0.15 x 72 = 36.45 + 31.20 + 10.80 = 78.45, reported as 78 (band D).\n\nVerified mechanically, all passing: deliverable hours sum to exactly 65; in-prac hours sum to exactly 15; the three tiers (11 + 3 + 2) reconcile exactly to Deliverable 2's 16 hours; participant numbers are internally consistent across the Introduction, Scoping Evidence and Deliverable 5 (eight readers, six think-alouds, floor of five); every in-text citation resolves to a References entry and every References entry is cited somewhere (McShaffry and Unity Technologies only in Appendix A, which is acceptable); APA style is consistent; no spelling errors found. The template's required structure is followed and its instruction text is removed. Topic Category is present on the cover as %CATEGORY.\n\nSection budgets measured on the body between the body markers (my count 2,413 words; Word's 2,450 differs by tokenisation, which does not change the ratios): Introduction 257 against ~200; Literature Review 890 against up to 1350; Project Proposal 1,264 against ~900, of which Learning Goals 213, Scoping Evidence 608, Deliverables 443. This imbalance is the single most mark-relevant structural fact in the document — 460 unused words in the 45% criterion, 364 surplus words in the 40% criterion — and it is what makes the recommended fixes affordable inside the ~20 words of headroom. Every change above names its payment.\n\nCalibration note. The A1 marker's complaint was density plus a missing plain overview. Half of it is genuinely fixed: the Introduction now opens in plain language about a producer's weekly problem before naming any tool, and the blockquoted research question gives the reader an anchor. The other half is not: the prose is compressed to the point of requiring re-reading, and terms of art ('the committed tier', 'the asset layer') appear before their definitions. That is why Communication is reported at CR rather than D despite an otherwise clean document — the descriptor gap between 'easy to read' and 'very easy to read' is exactly where this draft sits, and the instruction to report the lower band when torn applies.\n\nRealistic floor. If the marker reads the compression the way the A1 marker read the slides, Communication could land at P (60) and Project Proposal at the bottom of D, putting the task in the low 70s. A ceiling of 82–84 is reachable if changes 1 through 3 are made and Figure 2 is re-captured. The draft's real strengths, which should survive any edit: six peer-reviewed sources that genuinely talk to each other and are adjudicated rather than listed; a working Editor prototype on live data; a documented negative scoping result (no public repository links issues densely enough) that was allowed to narrow the scope rather than being hidden; hours that add up; and named rejected alternatives in both the literature and the deliverables."
+  },
+  "marker_mitchell": {
+    "persona": "Mitchell McEwan — COMP3180 lecturer (source-quality/CARS lecture, usability-research background), marking A2 Research Proposal hard on Literature Review, calibrated on Raphael's real A1 mark (65/55 against an AI mock of 88/82; marker's whole comment was about density and a missing plain overview).",
+    "criteria": [
+      {
+        "criterion": "Literature Review",
+        "weight": 45,
+        "band": "D",
+        "mark": 80,
+        "descriptor_quote": "At least five distinct and high-quality sources with a common theme relating to the project topic. Sources are very well summarised and evaluated in terms of their relevance, lessons for and usefulness to the outlined project. Review synthesises and abstracts key patterns and relationships from the literature to motivate the project.",
+        "why_not_higher": "Six distinct peer-reviewed sources (Bertram 2010, Ko 2007, Pascarella 2018, Dourish & Bellotti 1992, Whitson 2018, Maddila 2023) with a common theme and genuine evaluation — each entry carries a lessons/usefulness sentence, and rejected paths are named (Bertram's simplified filing interface is explicitly declined; Nudge's three limits bound the novelty claim). That clears D comfortably. It is not HD on two counts. First, the summaries are not 'expertly summarised': the whole review is 887 words against the template's 1,350, so the six entries run ~123 words each against the template's ~200, and the compression shows — 'Team B ... wrote a simplified filing interface before non-experts would file at all' and 'Without it, 86 of 119 negatively resolved notifications ignored recent activity' both have to be read twice, which under this unit's calibration damages the criterion they sit in. Second, the review's own framing is inaccurate: it opens 'These six sources give three competing answers' but only two of the six (Dourish & Bellotti, Whitson) supply a mechanism, and the third answer — audience mismatch — arrives in the closing synthesis from Stray et al. (2016), a seventh source. A reader trying to hold the promised three-way map cannot build it from the six entries as ordered.",
+        "single_change_to_next_band": "Spend the 460 unused Literature Review words: move ~250 words out of Scoping Evidence (606 w, the most over-allocated subsection) into the six entries and the synthesis, and rewrite the opening two sentences as an explicit map — name the three mechanisms (structural, opacity-plus-blame, audience mismatch), say which source carries each, and say what the other three sources contribute (unit of analysis, the games file-mix, the absence-detection bar). The promise then matches the delivery and every entry gets room to breathe."
+      },
+      {
+        "criterion": "Project Proposal",
+        "weight": 40,
+        "band": "D",
+        "mark": 79,
+        "descriptor_quote": "Outlines a sensible plan with clear and specific learning goals for developing industry-relevant skills. Identifies a considered research question with an appropriate and achievable mixed methodology for evaluation. Overview of scoping work undertaken provides a strongly convincing argument for the feasibility of the project. Includes a description of specific and measurable project deliverables clearly demonstrating these goals and satisfying unit requirements.",
+        "why_not_higher": "The scoping evidence is genuinely advanced — a working Unity 6.4 Editor package shown docked and loaded with real SS3D history (Figure 2), a prefab-layer demonstration (Figure 3) and an own-measured five-repository corpus (Figure 1) — and the methodology is honestly mixed (six scored situation-awareness items with a Wilcoxon test, plus think-alouds coded against Ko's 21 types with a second coder on a quarter). Nine deliverables, each with a success measure, summing to 65 h with 15 in-prac, tiered committed/stretch/challenge as the unit endorses. Three things block HD. (1) The quantitative arm carries a carryover confound the proposal does not address: 'eight student producers each read two versions of one week's report and answer six questions' — the same week, twice, with (apparently) the same six items, so the second reading is contaminated by the first; alternating order counterbalances sequence, not learning. For a marker with a usability-research background this is the first thing checked, and 'highly appropriate' methodology is not available while it stands. (2) Feasibility of Deliverable 1 is thin at the margins: 13 h to code four tools heuristically, code 10 job ads and 25 reviews, run two interviews and write a needs spec — with 2 h covering recruitment, running and analysing both interviews — and it runs first, in front of the main study. (3) The proposal overruns its own allowance (1,268 words against ~900) while the heaviest criterion starves, which reads as scope pressure rather than control.",
+        "single_change_to_next_band": "Kill the carryover confound in one sentence: give each participant a different team-week per condition (baseline on week A, treatment on week B, week and order both counterbalanced), and say the six items are matched across the two weeks. Pay for the ~25 words by deleting the verbatim restatement of the research question at the top of Scoping Evidence — it is already block-quoted in the Introduction."
+      },
+      {
+        "criterion": "Communication",
+        "weight": 15,
+        "band": "CR",
+        "mark": 74,
+        "descriptor_quote": "The report is easy to read and uses appropriate language and structure. It meets the word count, referencing and other submission requirements. It may contain a few minor spelling, grammatical or referencing errors.",
+        "why_not_higher": "Word count is met (2,450 body + 27 cover, inside 2,499), the template's structure is followed exactly, APA referencing is near-flawless, and all three figures are relevant, captioned and called out in the text — Figure 3 in particular does real explanatory work. There are essentially no spelling errors. What it is not is 'very easy to read'. The prose is telegraphic throughout: 'Deliverable 1 runs first and surfaces the needs; its specification is what the Evaluate goal classifies' and 'Without it, 86 of 119 negatively resolved notifications ignored recent activity' each need a second pass; the Introduction's closing paragraph stacks a colon list, three parenthetical citations and a parenthetical inside a parenthetical; the learning-goal Measures are sentence fragments; Deliverable 1's table cell is a 40-word run-on holding four measures and four hour-splits. This is precisely the defect the real A1 marker punished ('so much information in each slide ... you jumped straight into very technical details'). Two smaller referencing/submission points sit with it: the Appendix A row 'Atlassian Rovo, GitHub Copilot' cites nothing and neither appears in References, and load-bearing evidence (the competitor comparison and the corpus thresholds) lives only in Appendix A, which the convenor has said on the record may not be read.",
+        "single_change_to_next_band": "Do one de-densifying pass over the eight or so sentences that require a second reading (listed in top_changes) and convert the four learning-goal 'Measure:' fragments into full sentences — same facts, plainer syntax, no net word growth because plain sentences replace compressed ones one for one."
+      }
+    ],
+    "predicted_task_mark": 78,
+    "top_changes": [
+      {
+        "priority": 1,
+        "location": "Scoping Evidence — \"The study is one 45-minute session per participant, after an excluded pilot:\"",
+        "problem": "Within-subjects design on a single week: each reader sees baseline and treatment versions of the SAME week's report and answers the same six items twice. Order alternation counterbalances sequence but not learning — by the second version the reader already knows the week. The proposal's central comparison is confounded and does not read as 'highly appropriate' methodology.",
+        "fix": "Rewrite to two weeks: \"Each participant reads a baseline report for one team-week and a treatment report for another; week and order are both counterbalanced, and the six items are matched across the two weeks.\" Pay for the ~25 words by deleting the restated research question at the head of Scoping Evidence (\"The primary research question is *Which of a producer's ... and which can't?*\"), which is already block-quoted in the Introduction.",
+        "mark_impact": "Project Proposal 79 → 83-85; removes the largest single HD blocker on 40% of the task."
+      },
+      {
+        "priority": 2,
+        "location": "Literature Review — \"Why is a team's shared record thinner than the work it describes?\"",
+        "problem": "The opener promises that the six sources give three competing answers. Only two of the six carry a mechanism (Dourish & Bellotti: structural; Whitson: opacity plus blame); the third — audience mismatch — appears only in the closing synthesis and comes from Stray et al. (2016), a seventh source. Ko, Pascarella and Maddila answer different questions entirely. The reader cannot build the promised map, and the review's own claim is inaccurate — a bad look in the criterion Mitchell marks hardest.",
+        "fix": "Replace the two opening sentences with an explicit map (~45 words): name the three mechanisms and which source carries each, then say what the remaining three sources contribute (Ko: the unit of analysis; Pascarella: the games file-mix; Maddila: the bar for absence detection). Pay from the 460 words the Literature Review is currently leaving unused against its 1,350 allowance.",
+        "mark_impact": "Literature Review 80 → 83; fixes both the framing error and the reader's entry into the section."
+      },
+      {
+        "priority": 3,
+        "location": "Literature Review (whole section) — \"Bertram et al. (2010) interviewed and surveyed 15 people\" onwards",
+        "problem": "Allocation is inverted against the rubric weights. Literature Review = 887 words against the template's 1,350 (six entries at ~123 words each against the prescribed ~200), while Project Proposal = 1,268 against ~900 and Introduction = 258 against ~200. The 45% criterion is starved by ~460 words so that the 40% criterion can overrun by ~370.",
+        "fix": "Move ~250 words from Scoping Evidence (606 w — the corpus-screen paragraph and the two arm descriptions can each lose a third without losing a fact) into the six source entries and the ~150-word synthesis. Spend them on the compressed entries: Bertram, Dourish & Bellotti and Maddila are the three that most need a plain sentence saying what the study actually did before the lesson is drawn.",
+        "mark_impact": "Literature Review +2-3 and Communication +2; costs nothing against the 2,499 cap because the words come from inside the body."
+      },
+      {
+        "priority": 4,
+        "location": "Scoping Evidence — \"Over full histories, code is 7-36% of changed-file entries (Figure 1);\"",
+        "problem": "Measurement validity. The corpus figure counts .meta files as non-code, and .meta files are auto-generated siblings of code files, not content work. Figure 2 makes this visible on the showcase week: of 86 entries, 46 are Meta, 36 Code, 1 ScenePrefab, 0 Art, 0 Audio — strip .meta and that week is ~90% code. Pascarella's 30% figure is a snapshot of file categories, not churn entries, so the two numbers are not comparable in the way the sentence implies. The premise 'most of what changes in a game project is not code' is doing heavy work on a denominator that inflates the non-code share.",
+        "fix": "Add one clause and one honest qualifier: \"...code is 7-36% of changed-file entries (Figure 1; .meta siblings are counted as non-code, so the code share is a lower bound and the comparison with Pascarella's file-category figure is indicative only).\" Pay with the ~18 words freed by cutting \"both report versions come from SS3D, an open-source multiplayer station game, and\" down to \"both report versions come from SS3D, and\".",
+        "mark_impact": "Project Proposal +1-2 (scoping credibility) and removes a question the marker would otherwise ask in defence; also protects Literature Review, since the Pascarella entry rests on the same comparison."
+      },
+      {
+        "priority": 5,
+        "location": "Literature Review, Maddila entry — \"Without it, 86 of 119 negatively resolved notifications ignored recent activity.\"",
+        "problem": "Unreadable without the paper in hand: 'without it' has no clear antecedent, 'negatively resolved notifications' is unexplained jargon, and 'ignored recent activity' attributes agency to a number. A sentence the marker has to read twice, in the criterion worth 45%.",
+        "fix": "\"Without that check, 86 of 119 alerts that developers rejected had fired even though the pull request had moved in the previous day.\" Pay the ~7 words by trimming \"Three limits bound my novelty claim\" to \"Three limits bound my claim\" and \"It is the closest work to absence detection (reporting what has stopped moving)\" to \"It is the closest work to absence detection\".",
+        "mark_impact": "Communication +1; Literature Review +1."
+      },
+      {
+        "priority": 6,
+        "location": "Scoping Evidence — \"Deliverable 1 runs first and surfaces the needs; its specification is what the Evaluate goal classifies.\"",
+        "problem": "The second clause inverts subject and object and forces a re-read to work out that the goal classifies the needs, not the specification. It is also the only place the reader is told how D1 connects to the learning goals, so the one load-bearing link is the hardest sentence in the paragraph.",
+        "fix": "\"Deliverable 1 runs first: it surfaces the producer needs that the Evaluate goal then classifies against named artefacts.\" Net +1 word.",
+        "mark_impact": "Communication +1."
+      },
+      {
+        "priority": 7,
+        "location": "Deliverables table, row 1 — \"Four free-tier tools coded against Nielsen and Molich's (1990) and Nielsen's (1994)\"",
+        "problem": "A single table cell carrying four separate success measures and four hour-splits in one 40-word run-on — the densest object in the document, in a table a marker skims. It also hides the feasibility problem below.",
+        "fix": "Break the cell into four short lines (one per sub-measure, each with its hours) using line breaks inside the cell; no word change. Same treatment for row 5.",
+        "mark_impact": "Communication +1-2; makes the hour arithmetic checkable at a glance."
+      },
+      {
+        "priority": 8,
+        "location": "Deliverables table, row 1 — \"Production-tool UX study and design spec ... two interviews (2 h)\"",
+        "problem": "Feasibility. 2 h to recruit, schedule, run and analyse two semi-structured interviews is not credible, and the whole of D1 (four heuristic evaluations, 10 job ads, 25 reviews, two interviews, a 25-need spec) at 13 h sits in front of the main study in a five-week window. The rubric asks the scoping overview to be 'strongly convincing'.",
+        "fix": "Either drop the interviews from D1 and say so (\"interviews are out of scope; the job-ad and review corpora carry the needs elicitation\"), or raise them to 4 h and take 2 h from D5's 7 h of think-aloud coding by coding four sessions in full and two by exception. State the choice in one clause in the Deliverables paragraph.",
+        "mark_impact": "Project Proposal +1-2 on feasibility."
+      },
+      {
+        "priority": 9,
+        "location": "Introduction — \"Existing tools each cover one part: tracker-and-repository summarisers stop at engineers\"",
+        "problem": "Three parenthetical citation groups, a colon list and a parenthetical-within-a-parenthetical in two sentences, ending by pushing the reader to Appendix A for the actual comparison. The convenor has stated on the record that appendices may not be read, so the gap claim — the load-bearing claim of the whole proposal — is evidenced somewhere he may never open.",
+        "fix": "Split into two sentences and pull the single decisive competitor finding into the body: \"...and repository narrators address developers (Perforce Software, n.d.). The closest, Perforce P4 MCP, does read binary asset history — but it answers developers, not producers. No public tool reads the Unity asset layer to name what changed; Appendix A gives the full sweep.\" Pay the ~20 words from the research-question restatement already being cut in change 1 and from \"and is future work here\" → \"and remains future work\".",
+        "mark_impact": "Communication +1; Project Proposal +1 (the novelty claim becomes readable without the appendix)."
+      },
+      {
+        "priority": 10,
+        "location": "Learning Goals — \"**Understand:** explain three competing mechanisms for why a shared production artefact under-reports. *Measure:* unaided, state each mechanism\"",
+        "problem": "All four Measures are sentence fragments, and the section reads as notes rather than prose. The 'Apply → Analyse' label also merges two Bloom levels into one goal, which reads as a fudge to claim coverage rather than a designed goal. Two of the four measures are self-assessed ('unaided, state each mechanism') with no artefact to point at in A3.",
+        "fix": "Make each Measure a full sentence and anchor two of them to an artefact: \"Measured by a one-page written account in the reflection report, produced without notes, naming each mechanism, its source and one breakdown it predicts.\" Split the merged goal only if words allow; otherwise relabel it plainly as 'Apply and analyse'. Pay from the 250 words being freed in change 3 — do not grow the section past ~230 words.",
+        "mark_impact": "Project Proposal +1; Communication +1."
+      },
+      {
+        "priority": 11,
+        "location": "Appendix A, vendor sweep — \"| Atlassian Rovo, GitHub Copilot | Tickets; pull requests and diffs |\"",
+        "problem": "Two products are used as evidence in the competitor sweep with no citation and no entry in the References list, while every other row is cited. Under Communication this is a referencing inconsistency; under CARS it is an unsupported claim about a competitor.",
+        "fix": "Either add the two product-documentation references (no word-count cost — References are uncounted) or delete the row, since the Perforce and Linear rows already carry the 'general AI summarisers stop at engineers' point.",
+        "mark_impact": "Communication +1; prevents the 'a few minor referencing errors' CR descriptor being quoted back."
+      },
+      {
+        "priority": 12,
+        "location": "Deliverables table, row 7 — \"Three to four minutes showing the tool and both conditions; a newcomer can state its purpose after one viewing\"",
+        "problem": "The success measure is not measurable as written — no stated tester, number or criterion, so it cannot be evaluated in the A3 reflection. The rubric's HD line is 'specific and measurable project deliverables'.",
+        "fix": "\"...; two viewers from outside the unit, asked once each after a single viewing, can each state the tool's purpose and its intended reader in one sentence.\" Pay the ~12 words from row 6's \"claims traceable to appendix files\" → \"claims traceable to appendices\" and row 9's \"each hour's variance explained\" → \"hour variances explained\".",
+        "mark_impact": "Project Proposal +1."
+      },
+      {
+        "priority": 13,
+        "location": "Introduction — \"Games are harder, because most of what changes in a game project is not code\"",
+        "problem": "Harder than what is never said, the comma before 'because' misdirects the clause, and the sentence ends by shifting tense ('changes ... changed'). It is the third sentence of the document, where the real A1 marker said context was missing.",
+        "fix": "\"Game projects are harder to summarise this way: most of what changes in them is not code (Pascarella et al., 2018), so a code-only report misses most of the week.\" Net +3 words, paid from change 9's savings.",
+        "mark_impact": "Communication +1."
+      },
+      {
+        "priority": 14,
+        "location": "Statement on Generative AI use — \"Evidence (session records, verification files and scripts) accompanies this submission.\"",
+        "problem": "The template requires AI use to be cited, explained AND evidenced. The statement asserts evidence exists but never names where it is, so a marker cannot follow it. The bracketed CONFIRM line immediately below it will read as an unfinished draft if it survives to submission.",
+        "fix": "Name the artefact and path in one clause (\"...accompanies this submission as GENAI-EVIDENCE.md in the submitted archive\"), and resolve or delete the bracketed CONFIRM line. References and the statement are uncounted, so this costs nothing against the word cap.",
+        "mark_impact": "Communication +1; protects against a submission-requirements ding."
+      }
+    ],
+    "evidence_needed": [
+      {
+        "item": "Whether the 'most of what changes is not code' premise survives excluding .meta files",
+        "what_would_settle_it": "Re-run corpus.py over the same five repositories with .meta entries excluded from both numerator and denominator, and report the second set of percentages beside the first. If the code share rises above ~50% once .meta is stripped, the premise needs restating as 'a large minority of change is non-code, and it is invisible to a code-only report' rather than 'most'. No amount of rewording fixes this; only the second number does."
+      },
+      {
+        "item": "A Figure 2 week that actually demonstrates the asset layer",
+        "what_would_settle_it": "Run ChangeLens over an SS3D week whose category table shows non-zero Art, Audio and more than one ScenePrefab entry, and screenshot that. The current capture shows ScenePrefab 1, Art 0, Audio 0 and 46 of 86 entries as Meta renames — the proposal's own proof-of-concept image argues against its premise, and the caption's 'a code-heavy reorganisation week' concedes it without fixing it. A second week with real asset churn is a re-run of an existing script, not new research."
+      },
+      {
+        "item": "That eight student producers are actually reachable",
+        "what_would_settle_it": "Named, dated commitments — e.g. a count of COMP3151 teams contacted and the number of producers who have agreed in principle to a 45-minute Week 12 session, or the tutor's confirmation that recruitment may be announced at the Week 9 prac. The proposal states a target of 8, a floor of 5 and a fallback, which is good practice, but presents no evidence of access. The rubric asks the scoping overview to be 'strongly convincing', and recruitment is the one part of this plan that cannot be de-risked by rewording."
+      },
+      {
+        "item": "That the committed tier's '60% of changed prefabs and scenes named' is achievable",
+        "what_would_settle_it": "A measured naming rate from the existing prototype on one real week: the number of changed prefabs/scenes for which AssetDatabase resolved a name, over the total. A single measured figure turns the 60% target from an assumption into scoping evidence, and it is the success measure the whole committed tier is judged on."
+      },
+      {
+        "item": "Which of the six counted sources have been read in full (the pending CONFIRM line)",
+        "what_would_settle_it": "Raphael's own confirmation, source by source. This is not cosmetic: the convenor's stated diagnostic is whether the student can restate each source's specific lesson unaided, and the A1 Q&A is where that gets tested. Any of the six he has not read end to end should be read before submission or the entry should be rewritten to claim only what he can defend."
+      },
+      {
+        "item": "The three AI-introduced errors the GenAI statement claims were caught",
+        "what_would_settle_it": "The specific three errors, named, with the corrected values, held in the evidence file. Declared as a strength in the statement, it invites the question 'which three?' — an unanswerable version of that question in Q&A is worse than not having made the claim."
+      }
+    ],
+    "notes": "Method: read the A2 rubric block in Assignemnts/Assignments.md, the extracted template, the draft in full, and opened all three figure files. Marked independently — no earlier draft, audit or mock mark was read.\n\nOverall shape: this is a strong D that is being held out of HD by two structural facts and one habit. The structural facts are (a) the inverted word allocation — Literature Review 887 words against a 1,350 allowance while Project Proposal runs 1,268 against ~900, so the 45% criterion is starved to feed the 40% one, and (b) the same-week within-subjects design, which confounds the study the whole proposal exists to run. Both are fixable inside the current 2,499-word budget by moving words, not adding them; the ~20 words of headroom is not the constraint here, the internal allocation is.\n\nThe habit is compression. On the A1 calibration this is the expensive one: the real marker's entire written comment was about density and missing context, and he came in 23 points below the AI mock on both artefact criteria. There are roughly eight sentences in this draft that a marker has to read twice, and under the marking instruction each of them damages Communication and the criterion it sits in. That is why Communication is reported at CR rather than the low D the error count alone would support — the descriptor that fits is 'easy to read', not 'very easy to read'.\n\nWhat is genuinely strong and should not be touched in revision: the six sources are all peer-reviewed, distinct and on-theme, which is the HD source bar met outright; rejected paths and negative lessons are used exactly as the unit asked (Bertram's remedy declined, Nudge's three limits bounding the novelty claim, the LLM prose layer and live tracker connection explicitly ruled out); the synthesis names a falsifiable bet ('if readers can say what changed but not why, opacity wins'), which is better evaluative thinking than most of this cohort will produce; the scoping evidence is real — a working Editor package on real history plus an own-measured corpus — and the tiered committed/stretch/challenge build is precisely the structure the convenor endorsed. The deliverables table meets every mechanical requirement: nine rows, a success measure on each, 65 hours total, 15 in-prac, and all five mandated deliverable types present.\n\nMechanical check: word count inside the limit; template structure and headings followed; cover fields present with Topic Category filled and Student ID pending; three relevant, captioned, in-text-referenced figures; APA referencing consistent with one gap (Atlassian Rovo / GitHub Copilot uncited in Appendix A); GenAI statement present but not naming its evidence file; bracketed CONFIRM line still live. Figure 2 is a 2,000-pixel-wide dark screenshot set at w=14 cm — check it is legible in print at that width, or crop to the Summary and Changes-by-category panels.\n\nWeighting: 0.45(80) + 0.40(79) + 0.15(74) = 78.7, reported as 78. Applying changes 1-3 alone would plausibly move it to 82-84; without them, a real marker applying the A1 pattern could land it in the mid-70s."
+  },
+  "proof": {
+    "corrections": [
+      {
+        "original": "Developers called software voodoo when their input produced unanticipated output whose cause they could not predict.",
+        "corrected": "Developers called it software voodoo when their input produced unanticipated output whose cause they could not predict.",
+        "reason": "Missing direct object: \"called [X] software voodoo\" needs an object pronoun (\"it\") for \"called\" to be complete; as written the verb has no object referring to the situation being named."
+      },
+      {
+        "original": "Over full histories, code is 7–36% of changed-file entries (Figure 1); one week can run higher, as the reorganisation week in Figure 2 shows at 41.9%, so the report is built per week.",
+        "corrected": "Over full histories, code is 7–36% of changed-file entries (Figure 1); one week can run higher, as the reorganisation week in Figure 2 shows, at 41.9%, so the report is built per week.",
+        "reason": "\"Shows at 41.9%\" leaves \"shows\" without an object; a comma before the appositive figure (\"shows, at 41.9%,\") is needed so the percentage reads as the value \"shows\" refers to, not a location."
+      },
+      {
+        "original": "The biggest risk is hand-authoring ground truth, because the corpus's commits say only \"Fixed bugs\"; an unscorable week is replaced, a contradicted claim repaired.",
+        "corrected": "The biggest risk is hand-authoring ground truth, because the corpus's commits say only \"Fixed bugs\"; an unscorable week is replaced; a contradicted claim repaired.",
+        "reason": "Comma splice: \"an unscorable week is replaced\" and \"a contradicted claim repaired\" are two independent clauses joined only by a comma; a semicolon (matching the sentence's other clause boundary) is needed."
+      }
+    ],
+    "clean": false
+  },
+  "cold_reader": {
+    "what_is_it": "This project is a tool called ChangeLens that automatically reads files a game team produces (code, art, audio, scenes) and writes a short report summarizing what changed that week, organized by type. It's meant for game producers who manage teams but don't write code and don't have time to read technical repositories.",
+    "who_is_it_for": "Game producers—people who plan and track their team's work without writing code themselves, and who need to know each week what actually changed in the game project.",
+    "what_will_be_built": "A tool that runs inside Unity (game-development software) to read one week of project history and produce a one-page grouped report. First, it will count and categorize changed files by type (code, art, audio, scenes). Then it will improve to name actual prefabs and scenes (the game objects) by their names instead of just file counts. The project also includes a study where eight student producers read two versions of the report to see whether naming those assets actually helps them understand what happened.",
+    "what_will_be_measured": "Three things: (1) whether the report changes what a producer can say about the week at three levels—what changed, what it means, what will happen next—by scoring six fixed-answer questions; (2) what information the report leaves producers needing by recording six of them thinking aloud while working on a task; and (3) whether the report's claims are actually accurate by checking them against the team's real history (tickets, code changes, release notes) before any session runs.",
+    "first_sentence_understood": "Each week a game producer needs to know what changed.",
+    "where_lost": [
+      {
+        "first_words": "A producer plans and tracks the team's work",
+        "why": "Unknown terms. 'Tickets' and 'stand-ups' are not defined, so I didn't know where the producer's information comes from."
+      },
+      {
+        "first_words": "Games are harder, because most of what changes",
+        "why": "Abstract comparison. I understood games differ from software, but why non-code changes matter for this tool wasn't clear yet."
+      },
+      {
+        "first_words": "The project delivers that tool plus an evaluation",
+        "why": "Too many technical concepts at once. 'Isolates the Unity asset layer' is unexplained jargon; I didn't know what an asset layer is or why testing only it matters."
+      },
+      {
+        "first_words": "Existing tools each cover one part: tracker-and-repository",
+        "why": "Too many unknown tool names in rapid sequence (ZeroStandup, Linear, HacknPlan, Perforce). I didn't know what any of them do or how they differ from each other."
+      },
+      {
+        "first_words": "Fusing all three signals for a non-technical producer",
+        "why": "No context yet on what the three signals are. I didn't know what 'signals' means or what they're being fused from."
+      },
+      {
+        "first_words": "Ko et al. (2007) watched 17 developers at",
+        "why": "Numbers without purpose. It wasn't yet clear why this study (17 watched, 42 surveyed) connects to producers or what it proves."
+      },
+      {
+        "first_words": "Pascarella et al. (2018) mined 30 open-source game",
+        "why": "Unknown technical method. 'Mined' is jargon, and I didn't know why counting file types in past projects matters to this proposal."
+      },
+      {
+        "first_words": "Whitson (2018) describes 10 weeks of fieldwork with",
+        "why": "Lost connection to main goal. This study seemed about how tools shape work across disciplines, but I didn't see how it relates to explaining changes to producers."
+      }
+    ],
+    "overview_verdict": "No, the Introduction does not give a plain overview before diving into technical detail. The first sentence is excellent and clear, but by paragraph two it has jumped into undefined concepts (tickets, stand-ups) and multiple unexplained tools and theories. A single sentence that would most help a non-technical reader: \"Today when a game team makes changes to their project, the producer has to either learn to read code or ask engineers to explain what happened—this project makes a tool that does the explaining automatically.\""
+  },
+  "scout": {
+    "findings": [
+      {
+        "question": "Endsley (1995) 'Toward a theory of situation awareness in dynamic systems' — find an openly readable copy of the abstract/first page and quote the passage naming the three levels (perception, comprehension, projection).",
+        "answer": "The National Academies' online chapter on Situation Awareness (a freely readable page, not behind a paywall) quotes Endsley 1995 verbatim defining the three-level model. The SAGE publisher page (journals.sagepub.com/doi/10.1518/001872095779049543) hosts the official abstract but returned HTTP 403 to automated fetch (likely paywall/bot-block); its plain abstract text (also surfaced via search) covers attention, working memory, mental models etc. but is a different paraphrase and does not spell out the three levels in that exact wording. ResearchGate's page for this paper (publication/210198492) also 403'd on fetch. The National Academies chapter is confirmed openly accessible and contains the exact three-level quote.",
+        "url": "https://www.nationalacademies.org/read/6173/chapter/9",
+        "quote": "Situation awareness is the perception of the elements in the environment within a volume of time and space, the comprehension of their meaning, and the projection of their status in the near future.",
+        "confidence": "high",
+        "safe_to_write": "Endsley (1995, as quoted in National Academies' review of situation awareness literature) defines the construct as the perception of elements in the environment, comprehension of their meaning, and projection of their status in the near future."
+      },
+      {
+        "question": "As of Sep 2026, is there a publicly documented tool/product/Unity feature that reads Unity asset history (scenes, prefabs, .meta files) from version control and produces a change report for non-technical producers?",
+        "answer": "No tool was found that specifically does this end-to-end (read Unity scene/prefab/.meta diffs from VCS and output a producer-readable change report). Unity Production Pipeline (beta, public availability announced for Nov 2026) provides APIs/services to 'query, modify, version, transform, and deploy Unity content' and includes Unity Version Control (UVCS) as a component, but its architecture overview documentation does not mention change-report generation or non-technical/producer-facing summaries. Unity Cloud's Asset Manager has 'Asset Versioning' (linear version history with metadata/import settings), but again no producer-report feature documented. Perforce's P4 MCP Server (github.com/perforce/p4mcp-server, and perforce.com/products/p4/p4-mcp) exposes generic version-history/diff tools via MCP for AI clients (mentions a 'Unity Integration' nav link but the fetched page had no Unity-specific content), with no Unity-specific asset parsing or non-technical report output described. Anchorpoint (artist-friendly Git-based VCS for Unity/Unreal) offers asset thumbnails/tagging/annotation but not change-report generation for producers. No source described a shipping feature matching the full description.",
+        "url": "https://docs.unity.com/en-us/unity-production-pipeline/overview",
+        "quote": "Unity Production Pipeline provides APIs, services, and tools that help you query, modify, version, transform, and deploy Unity content across a wide range of workflows.",
+        "confidence": "medium",
+        "safe_to_write": "As of September 2026, no publicly documented tool was identified that specifically reads Unity scene/prefab/.meta version-control history and outputs a change report tailored for non-technical producers; Unity Production Pipeline (beta, general availability targeted November 2026) and Perforce's P4 MCP Server provide adjacent building blocks (Unity content APIs and version-history/diff access respectively) but neither is documented as producing such a report today, indicating a gap this proposal could address."
+      }
+    ]
+  }
+}

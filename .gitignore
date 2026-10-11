@@ -1,0 +1,62 @@
+# --- Unity (ChangeLens-proto) generated folders ---
+ChangeLens-proto/[Ll]ibrary/
+ChangeLens-proto/[Tt]emp/
+ChangeLens-proto/[Oo]bj/
+ChangeLens-proto/[Bb]uild/
+ChangeLens-proto/[Bb]uilds/
+ChangeLens-proto/[Ll]ogs/
+ChangeLens-proto/[Uu]ser[Ss]ettings/
+ChangeLens-proto/[Mm]emoryCaptures/
+ChangeLens-proto/ProfilerCaptures/
+ChangeLens-proto/[Rr]ecordings/
+ChangeLens-proto/TestResults*.xml
+
+# IDE / solution files Unity regenerates
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+sysinfo.txt
+crashlytics-build.properties
+*.apk
+*.aab
+*.unitypackage
+
+# --- Third-party data, not ours to publish ---
+# SS3D is a cloned external repo (~350 MB, has its own .git); the study reports derived from it stay tracked
+prototype-data/SS3D/
+# Published papers and extracted text; only the reading-kit notes are ours
+reading/*
+!reading/READING-KIT.md
+
+# --- Local tooling / secrets ---
+.claude/
+.env
+*.env
+ruvector.db
+__pycache__/
+node_modules/
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
+
+# --- Review-loop prompts (prompt-master outputs), kept local only ---
+LOOP-PROMPT*.md
+audit/briefs-rounds-11-14.md

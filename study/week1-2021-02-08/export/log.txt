@@ -1,0 +1,298 @@
+commit ea23f08c38c39ccc4ff9abf6ae496cedc53a8c50
+Author: Rutger Hendriks <rutger_dezweef@hotmail.com>
+Date:   2021-02-14 21:42:42 +0100
+
+    Add sound fall off to airlocks (#611)
+
+M	Assets/Content/Structures/Doors/Classic Airlocks/Airlock Classic.prefab
+M	Assets/Content/Structures/Doors/Classic Airlocks/Airlock Double Classic.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Airlock Glass.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Airlock.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Civilian/Airlock Civilian Glass.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Civilian/Airlock Civilian.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Double Airlock.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Maintenance/Airlock Maintenance Glass.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Maintenance/Airlock Maintenance.prefab
+
+commit 61a96bf1cba77aa508867fdc1d651442977cdff7
+Author: Rutger Hendriks <rutger_dezweef@hotmail.com>
+Date:   2021-02-14 21:36:07 +0100
+
+    Add emergency light and light interactions (#610)
+    
+    * Implement emergency light and simple light interactions
+    
+    * Attempt at networking
+    
+    * Updated animation and add NetIdentity
+
+M	Assets/Content/Structures/Wall Mounts/Lights/Emergency Light Fixture.prefab
+A	Assets/Content/Structures/Wall Mounts/Lights/EmergencyLight.controller
+A	Assets/Content/Structures/Wall Mounts/Lights/EmergencyLight.controller.meta
+A	Assets/Content/Structures/Wall Mounts/Lights/EmergencyLightAnim.anim
+A	Assets/Content/Structures/Wall Mounts/Lights/EmergencyLightAnim.anim.meta
+A	Assets/Content/Structures/Wall Mounts/Lights/EmergencyLightObject.cs
+A	Assets/Content/Structures/Wall Mounts/Lights/EmergencyLightObject.cs.meta
+M	Assets/Content/Structures/Wall Mounts/Lights/Light Bulb Fixture.prefab
+M	Assets/Content/Structures/Wall Mounts/Lights/Light Tube Fixture.prefab
+A	Assets/Content/Structures/Wall Mounts/Lights/LightBulb.controller
+A	Assets/Content/Structures/Wall Mounts/Lights/LightBulb.controller.meta
+A	Assets/Content/Structures/Wall Mounts/Lights/SimpleLight.cs
+A	Assets/Content/Structures/Wall Mounts/Lights/SimpleLight.cs.meta
+
+commit a7aab33608fe02e9486adedf3651541faba45057
+Author: CrazyMalk <lucas_o__castro@hotmail.com>
+Date:   2021-02-14 16:19:13 -0300
+
+    Make floor sign openable/closeable  (#609)
+    
+    * Update floor sign mesh and create custom openable class
+    
+    * Streamline FloorSignOpener code
+    
+    * Add NetworkedOpenable component to floor signs
+
+A	Assets/Art/Models/Items/Functional/Tools/Custodial/wet_floor_sign.fbx
+A	Assets/Art/Models/Items/Functional/Tools/Custodial/wet_floor_sign.fbx.meta
+A	Assets/Content/Items/Functional/Tools/Custodial/Floor Sign.meta
+A	Assets/Content/Items/Functional/Tools/Custodial/Floor Sign/Closed.anim
+A	Assets/Content/Items/Functional/Tools/Custodial/Floor Sign/Closed.anim.meta
+A	Assets/Content/Items/Functional/Tools/Custodial/Floor Sign/FloorSign.controller
+A	Assets/Content/Items/Functional/Tools/Custodial/Floor Sign/FloorSign.controller.meta
+A	Assets/Content/Items/Functional/Tools/Custodial/Floor Sign/FloorSignOpener.cs
+A	Assets/Content/Items/Functional/Tools/Custodial/Floor Sign/FloorSignOpener.cs.meta
+A	Assets/Content/Items/Functional/Tools/Custodial/Floor Sign/Open.anim
+A	Assets/Content/Items/Functional/Tools/Custodial/Floor Sign/Open.anim.meta
+A	Assets/Content/Items/Functional/Tools/Custodial/Floor Sign/Wet Floor Sign.prefab
+R100	Assets/Content/Items/Functional/Tools/Custodial/Wet Floor Sign.prefab.meta	Assets/Content/Items/Functional/Tools/Custodial/Floor Sign/Wet Floor Sign.prefab.meta
+D	Assets/Content/Items/Functional/Tools/Custodial/Wet Floor Sign.prefab
+
+commit f68b6a3d65cab1ad0543991dfafd5f8f6462b33a
+Author: CrazyMalk <lucas_o__castro@hotmail.com>
+Date:   2021-02-14 16:01:33 -0300
+
+    Add RigidBody to airlocks to fix their interaction (#608)
+
+M	Assets/Content/Structures/Doors/Classic Airlocks/Airlock Classic.prefab
+M	Assets/Content/Structures/Doors/Classic Airlocks/Airlock Double Classic.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Airlock Glass.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Airlock.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Civilian/Airlock Civilian Glass.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Civilian/Airlock Civilian.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Double Airlock.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Maintenance/Airlock Maintenance Glass.prefab
+M	Assets/Content/Structures/Doors/Station Airlocks/Maintenance/Airlock Maintenance.prefab
+
+commit 3855af4b202ea86e915b90a96c6b4ea279167f22
+Author: Rutger Hendriks <rutger_dezweef@hotmail.com>
+Date:   2021-02-14 19:38:23 +0100
+
+    Optional connections for wires & pipes (#607)
+    
+    * Add initial structure for adjacency editor
+    
+    * Add adjacency editor
+    
+    * Use bitmap instead of array for tracking adjacency blockers
+    
+    * Remove comments and simplify loops
+    
+    * Get serialization working for adjacencyeditor and resolve initialization bug
+    
+    * Solve similar bug in direction editor
+    
+    * Add default editor back
+    
+    * Make adjacency editor more generic and apply to pipes as well
+    
+    * Set block for neighbouring tiles as well
+
+M	Assets/Engine/Tile/Connections/OffsetPipesAdjacencyConnector.cs
+M	Assets/Engine/Tile/Connections/PipesAdjacencyConnector.cs
+M	Assets/Engine/Tile/Connections/WiresAdjacencyConnector.cs
+A	Assets/Engine/Tile/Editor/AdjacencyEditor.cs
+A	Assets/Engine/Tile/Editor/AdjacencyEditor.cs.meta
+A	Assets/Engine/Tile/State/AdjacencyStateMaintainer.cs
+A	Assets/Engine/Tile/State/AdjacencyStateMaintainer.cs.meta
+M	Assets/Engine/Tile/TileManager.cs
+M	Assets/Engine/Tile/TileMapEditorHelpers.cs
+M	Assets/Engine/Tile/TileObject.cs
+
+commit a326ba1168b8b1e7056ad98c5f4316d26899208f
+Author: João Buratto <46575243+joaoburatto@users.noreply.github.com>
+Date:   2021-02-14 01:52:17 -0300
+
+    Rework the container UI (#605)
+    
+    * Rework the container UI
+    
+    * remove spare meta file
+    
+    Co-authored-by: CosmicCoincidence <cosmiccoincidence1991@gmail.com>
+
+M	Assets/Art/Graphics/UI/Inventory/slot_beep_overlay.png.meta
+M	Assets/Content/Graphics/UI/Inventory/HumanoidInventory/Container Display.prefab
+M	Assets/Content/Graphics/UI/Inventory/HumanoidInventory/Item Grid Item.prefab
+M	Assets/Content/Graphics/UI/Inventory/HumanoidInventory/Item Grid Slot.prefab
+
+commit 37e22a353b5ef85001f975f1887f2c6dce95f348
+Author: João Buratto <46575243+joaoburatto@users.noreply.github.com>
+Date:   2021-02-12 18:08:57 -0300
+
+    Fix restart bug (#588)
+    
+    * Simple Loading Screen
+    
+    This separates the main menu from the station scene aswell as adding a loading screen when you join a server. I also created a few images and added some wallpapers from our Google Drive.
+    
+    * Changed the lobby menu and added UI stuff
+    
+    Added a few windows presets for easy UI creation.
+    Updated the Lobby prefab with the new windows and added a little settings for the host button, which is empty for now.
+    Fixed a little problem with the loading screen.
+    
+    * Fixed Client loading screen not disabling
+    
+    * Fixed a bunch of bugs
+    
+    Fixed some scalling to support other resolutions.
+    Fixed the disconnect button not working, now you can use it.
+    Added OOC to the chat channels.
+    Added Grimmie's blurred background.
+    
+    * Lobby menu stuff
+    
+    * Separate scenes and fix UI
+    
+    * UI animations and improvements
+    
+    * Player spawning
+    
+    * Spawning player
+    
+    * Round timer
+    
+    * Map selection
+    
+    * Temporary fix to the pause menu
+    
+    * Moving code from RoundManager to ServerLobbyUIHelper
+    
+    * Event fixes (Local only)
+    
+    * Attempt to network
+    
+    * Prefab Fixes
+    
+    * Embark countdown now works
+    
+    * Attempt to fix the camera bug (Pushing so I can ask for help lol)
+    
+    * Fix camera bug
+    
+    * Only unlock start round after map is loaded
+    
+    * Table prefab fixes
+    
+    * Fixed pause menu
+    
+    * Failling to connect doesn't lock your game
+    
+    * Pause menu no longer can be accessed via the lobby
+    
+    * Fixed clicking embark twice
+    
+    * Fixed camera bugs and added lobby error message
+    
+    * Networked scene unloading
+    
+    * Fixed weird animation on the character preview (I think)
+    
+    * Round restart and map selection fixes
+    
+    * Changed Pause menu UI and server settings UI additions
+    
+    * Updated pause menu function and changes RestartRound()
+    
+    * Fix restart bug
+    
+    * Fixed embark not working and admin settings appearing for non hosts
+    
+    * Update LoginNetworkManager.cs
+    
+    * Fixed FOV and AO, added loading screen when loading a map
+    
+    * Added quit button and disconnect on main lobby
+    
+    * Fixed lobby stuff and changed loading scenes
+    
+    * A few more fixes
+    
+    * Update TileManager.cs
+    
+    * Update Server Lobby.unity
+    
+    * Update Main Station.unity
+
+M	Assets/Art/Textures/World/EmbarkSign.png.meta
+M	Assets/Content/Fonts/Roboto/Roboto.asset
+M	Assets/Content/Fonts/spessman/spessman.asset
+M	Assets/Content/Fonts/spessman/spessman.ttf.meta
+M	Assets/Content/Furniture/Machines/Vendors/Cigarette Vendor.prefab
+M	Assets/Content/Graphics/UI/Game/PauseMenu.prefab
+M	Assets/Content/Graphics/UI/Loading Screen/LoadingScreenUI.prefab
+A	Assets/Content/Items/Weapons/Ranged/Physical/Rifles.meta
+M	Assets/Content/Scenes/Main Menu.unity
+M	Assets/Content/Scenes/Maps/EmptyMapScene.unity
+M	Assets/Content/Scenes/Server Lobby.unity
+M	Assets/Content/Structures/Floors/Overlays/Overlay - Blue.mat
+M	Assets/Content/Systems/Managers/LoadingScreenManager.cs
+A	Assets/Content/Systems/Player/Soul.prefab
+A	Assets/Content/Systems/Player/Soul.prefab.meta
+M	Assets/Content/World/PostProcessing/MKI.asset
+M	Assets/Engine/FOV/Field of View Source.prefab
+M	Assets/Engine/Server/Helpers/ServerLobbyUIHelper.cs
+M	Assets/Engine/Server/Mirror/LoginNetworkManager.cs
+M	Assets/Engine/Server/Mirror/SceneLoaderManager.cs
+M	Assets/Engine/Server/Round/RoundManager.cs
+M	Assets/Engine/Tile/TileManager.cs
+R098	Assets/Engine/UI/LobbyLoginUI.cs	Assets/Engine/UI/MainMenuUI.cs
+R100	Assets/Engine/UI/LobbyLoginUI.cs.meta	Assets/Engine/UI/MainMenuUI.cs.meta
+M	Assets/Engine/UI/PauseMenu.cs
+R078	Assets/Engine/UI/RoundManagerUI.cs	Assets/Engine/UI/PauseMenuTimerUI.cs
+R100	Assets/Engine/UI/RoundManagerUI.cs.meta	Assets/Engine/UI/PauseMenuTimerUI.cs.meta
+M	Assets/Libraries/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
+A	Assets/LoadingSceneUIHelper.cs
+A	Assets/LoadingSceneUIHelper.cs.meta
+A	Assets/LocalPlayerManager.cs
+A	Assets/LocalPlayerManager.cs.meta
+A	Assets/MainLobbyButtonHelper.cs
+A	Assets/MainLobbyButtonHelper.cs.meta
+M	Assets/Soul.cs
+
+commit 0059f5dacbdb569f1d4563ee1ec5eea09e36cf73
+Author: CrazyMalk <lucas_o__castro@hotmail.com>
+Date:   2021-02-10 18:10:47 -0300
+
+    Create PepperSpray class to handle interaction with the pepper spray (#604)
+    
+    * Create PepperSpray class to handle interaction
+    
+    Fixes #600, adds a class that plays the spray effect when the item is interacted with. Ideally, interacting with the item should cycle between power like in the normal game (in fact, as all spray items have this power feature, they should probably share an abstract class or interface), while clicking somewhere would fire in that direction, but no combat system so whatever.
+    
+    * Update pepper spray's particle system collision
+    
+    Updates the pepper spray's particle system so it doesnt collide with the player and disappears instantly on some occasions
+    
+    * Add spray sound to pepper spray
+
+A	Assets/Art/Sounds/Items/Functional.meta
+A	Assets/Art/Sounds/Items/Functional/Containers.meta
+A	Assets/Art/Sounds/Items/Functional/Containers/Liquid.meta
+A	Assets/Art/Sounds/Items/Functional/Containers/Liquid/spray_doubleburst.ogg
+A	Assets/Art/Sounds/Items/Functional/Containers/Liquid/spray_doubleburst.ogg.meta
+A	Assets/Art/Sounds/Items/Functional/Containers/Liquid/spray_singleburst.ogg
+A	Assets/Art/Sounds/Items/Functional/Containers/Liquid/spray_singleburst.ogg.meta
+A	Assets/Content/Items/Functional/Containers/Liquid/PepperSpray.cs
+A	Assets/Content/Items/Functional/Containers/Liquid/PepperSpray.cs.meta
+M	Assets/Content/Items/Functional/Containers/Liquid/pepperspray.prefab

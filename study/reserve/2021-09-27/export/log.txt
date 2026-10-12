@@ -1,0 +1,106 @@
+commit 7e5a33d7074aff89a8a2850219c9bed563531c18
+Author: stilnat <nathan.raynal.castang@gmail.com>
+Date:   2021-10-02 17:38:33 +0200
+
+    Completing container rework [ready for review] (#824)
+    
+    * Adds tooltip to container parameters
+    
+    * Take interaction changed to "first in last out"
+    
+    * Integrates container Item displays to the new container system
+    
+    container descriptor now handles container item display as well.
+
+M	Assets/Content/Entities/Humanoids/Human/Human.prefab
+M	Assets/Content/Furniture/Machines/Science/CellCharger.prefab
+M	Assets/Content/Systems/Interactions/TakeInteraction.cs
+M	Assets/Engine/Inventory/ContainerDescriptor.cs
+M	Assets/Engine/Inventory/ContainerItemDisplay.cs
+M	Assets/Engine/Inventory/Editor/ContainerDescriptorEditor.cs
+
+commit 0b98c2725368023c27e8f29066a7f9322f4630af
+Author: stilnat <nathan.raynal.castang@gmail.com>
+Date:   2021-10-02 11:38:15 +0200
+
+    New Container Editor, multiple container on a single game object (#798)
+    
+    Simplifies adding a container to a game object, as the current system is over complicated for contributors. All relevant container parameters, such as it's type, it's size, if it displays objects, and more, are in a single script, containerDescriptor.
+    This script has a custom editor that allows contributors to build a container in a coherent manner.
+
+A	Assets/Art/Graphics/UI/Resources.meta
+R100	Assets/Art/Graphics/UI/Interactions.meta	Assets/Art/Graphics/UI/Resources/Interactions.meta
+R100	Assets/Art/Graphics/UI/Interactions/build.png	Assets/Art/Graphics/UI/Resources/Interactions/build.png
+R100	Assets/Art/Graphics/UI/Interactions/build.png.meta	Assets/Art/Graphics/UI/Resources/Interactions/build.png.meta
+R100	Assets/Art/Graphics/UI/Interactions/configure.png	Assets/Art/Graphics/UI/Resources/Interactions/configure.png
+R100	Assets/Art/Graphics/UI/Interactions/configure.png.meta	Assets/Art/Graphics/UI/Resources/Interactions/configure.png.meta
+R100	Assets/Art/Graphics/UI/Interactions/container.png	Assets/Art/Graphics/UI/Resources/Interactions/container.png
+R100	Assets/Art/Graphics/UI/Interactions/container.png.meta	Assets/Art/Graphics/UI/Resources/Interactions/container.png.meta
+R100	Assets/Art/Graphics/UI/Interactions/discard.png	Assets/Art/Graphics/UI/Resources/Interactions/discard.png
+R100	Assets/Art/Graphics/UI/Interactions/discard.png.meta	Assets/Art/Graphics/UI/Resources/Interactions/discard.png.meta
+R100	Assets/Art/Graphics/UI/Interactions/door.png	Assets/Art/Graphics/UI/Resources/Interactions/door.png
+R100	Assets/Art/Graphics/UI/Interactions/door.png.meta	Assets/Art/Graphics/UI/Resources/Interactions/door.png.meta
+R100	Assets/Art/Graphics/UI/Interactions/music.png	Assets/Art/Graphics/UI/Resources/Interactions/music.png
+R100	Assets/Art/Graphics/UI/Interactions/music.png.meta	Assets/Art/Graphics/UI/Resources/Interactions/music.png.meta
+R100	Assets/Art/Graphics/UI/Interactions/power.png	Assets/Art/Graphics/UI/Resources/Interactions/power.png
+R100	Assets/Art/Graphics/UI/Interactions/power.png.meta	Assets/Art/Graphics/UI/Resources/Interactions/power.png.meta
+R100	Assets/Art/Graphics/UI/Interactions/reinforce.png	Assets/Art/Graphics/UI/Resources/Interactions/reinforce.png
+R100	Assets/Art/Graphics/UI/Interactions/reinforce.png.meta	Assets/Art/Graphics/UI/Resources/Interactions/reinforce.png.meta
+R100	Assets/Art/Graphics/UI/Interactions/return.png	Assets/Art/Graphics/UI/Resources/Interactions/return.png
+R100	Assets/Art/Graphics/UI/Interactions/return.png.meta	Assets/Art/Graphics/UI/Resources/Interactions/return.png.meta
+R100	Assets/Art/Graphics/UI/Interactions/take.png	Assets/Art/Graphics/UI/Resources/Interactions/take.png
+R100	Assets/Art/Graphics/UI/Interactions/take.png.meta	Assets/Art/Graphics/UI/Resources/Interactions/take.png.meta
+M	Assets/Content/Entities/Humanoids/Human/Human.prefab
+M	Assets/Content/Furniture/Generic/MopBucket.prefab
+M	Assets/Content/Furniture/Generic/Seats/Toilet/Toilet.prefab
+M	Assets/Content/Furniture/Machines/Atmospherics/TankStorageUnit.prefab
+M	Assets/Content/Furniture/Machines/Kitchen/Microwave/Microwave.cs
+M	Assets/Content/Furniture/Machines/Kitchen/Microwave/MicrowaveController.controller
+M	Assets/Content/Furniture/Machines/Kitchen/Microwave/MicrowaveSwing.anim
+M	Assets/Content/Furniture/Machines/Kitchen/Microwave/microwave.prefab
+M	Assets/Content/Furniture/Machines/Science/CellCharger.cs
+M	Assets/Content/Furniture/Machines/Science/CellCharger.prefab
+M	Assets/Content/Furniture/Machines/Supply/DisposalBin/DisposalBin.cs
+M	Assets/Content/Furniture/Machines/Supply/DisposalBin/DisposalBin.prefab
+M	Assets/Content/Furniture/NetworkedOpenable.cs
+M	Assets/Content/Furniture/Storage/Carts/Janitorial Cart.prefab
+A	Assets/Content/Furniture/Storage/Carts/MotorizedJanitorialCart.prefab
+A	Assets/Content/Furniture/Storage/Carts/MotorizedJanitorialCart.prefab.meta
+A	Assets/Content/Furniture/Storage/ContainerInteractive.cs
+R100	Assets/Content/Furniture/Storage/OpenableContainer.cs.meta	Assets/Content/Furniture/Storage/ContainerInteractive.cs.meta
+M	Assets/Content/Furniture/Storage/Crates/Crate.prefab
+M	Assets/Content/Furniture/Storage/Crates/CrateSecure.prefab
+M	Assets/Content/Furniture/Storage/Fridge/fridge.prefab
+M	Assets/Content/Furniture/Storage/Lockers/Locker.prefab
+M	Assets/Content/Furniture/Storage/Lockers/LockerSecure.prefab
+D	Assets/Content/Furniture/Storage/OpenableContainer.cs
+D	Assets/Content/Furniture/Storage/StorageContainer.cs
+M	Assets/Content/Items/Consumables/Chemical/Smokes/Packs/CigarettePack.prefab
+M	Assets/Content/Items/Consumables/Food/Drinks/Soda.meta
+M	Assets/Content/Items/Functional/Containers/Object/CardboardBox.prefab
+M	Assets/Content/Items/Functional/Containers/Object/Medkits/medkit.prefab
+M	Assets/Content/Items/Functional/Containers/Object/Toolboxes/RedToolbox.prefab
+M	Assets/Content/Items/Functional/Generic/TableLamp.prefab
+M	Assets/Content/Items/Weapons/Ranged/Physical/Handguns/Enforcer.prefab
+M	Assets/Content/Scenes/MainMenu.unity
+M	Assets/Content/Scenes/Maps/MiniStation.unity
+M	Assets/Content/Systems/Interactions/OpenInteraction.cs
+M	Assets/Content/Systems/Interactions/StoreInteraction.cs
+M	Assets/Content/Systems/Interactions/TakeInteraction.cs
+M	Assets/Content/Systems/Interactions/ViewContainerInteraction.cs
+M	Assets/Engine/Inventory/AttachedContainer.cs
+D	Assets/Engine/Inventory/AttachedContainerGenerator.cs
+A	Assets/Engine/Inventory/ContainerDescriptor.cs
+R083	Assets/Content/Furniture/Storage/StorageContainer.cs.meta	Assets/Engine/Inventory/ContainerDescriptor.cs.meta
+M	Assets/Engine/Inventory/ContainerItemDisplay.cs
+M	Assets/Engine/Inventory/ContainerSync.cs
+A	Assets/Engine/Inventory/Editor.meta
+A	Assets/Engine/Inventory/Editor/ContainerDescriptorEditor.cs
+R075	Assets/Engine/Inventory/AttachedContainerGenerator.cs.meta	Assets/Engine/Inventory/Editor/ContainerDescriptorEditor.cs.meta
+M	Assets/Engine/Inventory/Inventory.cs
+M	Assets/Engine/Inventory/UI/ContainerUi.cs
+D	Assets/Engine/Inventory/VisibleContainer.cs
+D	Assets/Engine/Inventory/VisibleContainer.cs.meta
+M	Assets/Engine/Server/Mirror/LoginNetworkManager.cs
+A	Assets/Samples.meta
+A	Packages/packages-lock.json

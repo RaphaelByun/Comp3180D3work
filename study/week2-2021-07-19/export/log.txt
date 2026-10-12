@@ -1,0 +1,151 @@
+commit 8d38914ac3a73fcb8fb0964f545f8cff9c291489
+Author: James <jblack144@gmail.com>
+Date:   2021-07-24 21:12:15 -0400
+
+    Show selected setting (#772)
+    
+    * Add body target button, add ability to toggle body target
+    
+    * Revert "Add body target button, add ability to toggle body target"
+    
+    This reverts commit e9d796ec9abadef8da2bb10868a4a3452f5f90cd.
+    
+    * Give setting buttons a yellowish-orange tint when hovered or selected
+
+M	Assets/Content/Scenes/ServerLobby.unity
+
+commit 98fc1a817bc24aff133212f39deb88d00d09f937
+Author: James <jblack144@gmail.com>
+Date:   2021-07-24 21:05:35 -0400
+
+    Fix space cleaner looping (#771)
+    
+    * Add body target button, add ability to toggle body target
+    
+    * Revert "Add body target button, add ability to toggle body target"
+    
+    This reverts commit e9d796ec9abadef8da2bb10868a4a3452f5f90cd.
+    
+    * Stop space cleaner's particle system from looping.
+
+M	Assets/Content/Items/Functional/Containers/Liquid/SpaceCleaner.prefab
+
+commit 65537cc1f1a664cb9c1f3bd69342ab69381c1bed
+Author: James <jblack144@gmail.com>
+Date:   2021-07-23 19:37:38 -0400
+
+    Fix multiple chat buttons (#770)
+    
+    * Add body target button, add ability to toggle body target
+    
+    * Revert "Add body target button, add ability to toggle body target"
+    
+    This reverts commit e9d796ec9abadef8da2bb10868a4a3452f5f90cd.
+    
+    * Fix multiple chat buttons appearing when creating new chats
+
+M	Assets/Content/Systems/UI/Game/Chat/ChatWindow.prefab
+M	Assets/Content/Systems/UI/Game/Inventory/HumanoidInventory/InventoryUIBeep.prefab
+M	Assets/Engine/Chat/ChatWindow.cs
+M	Assets/Engine/Chat/ToggleChat.cs
+M	ProjectSettings/TagManager.asset
+
+commit c36c57302eeb8c520aba4744a5705f3384d607df
+Author: James <jblack144@gmail.com>
+Date:   2021-07-22 14:46:17 -0400
+
+    Add chat back (#745)
+    
+    * Add body target button, add ability to toggle body target
+    
+    * Revert "Add body target button, add ability to toggle body target"
+    
+    This reverts commit e9d796ec9abadef8da2bb10868a4a3452f5f90cd.
+    
+    * Add chat icon, re-enable chat, expand / collapse chat with button
+    
+    * Removed vsconfig and reverted SingleColorMaterial
+    
+    * Change icon to white, give it a background, and make it and the chat responsive to different window sizes
+    
+    * Move chat's default pos over right
+    
+    * Add toggleChat to chat button
+    
+    * rename chat icon to chat, fix responsiveness for chat and inventory for consistency
+    
+    * Move chat button over right, fix null ref for tab creator to allow creating new chat tabs
+    
+    * Move chat window forward so it's on top
+    
+    * revert inventory and chat scaling, make chat icon bigger in button
+    
+    * Darken chat button when clicked
+    
+    * Make chat button scale properly
+
+A	Assets/Art/Graphics/UI/Inventory/Chat.png
+A	Assets/Art/Graphics/UI/Inventory/Chat.png.meta
+M	Assets/Content/Entities/Humanoids/Human/Human.prefab
+M	Assets/Content/Systems/UI/Game/Chat/ChatWindow.prefab
+M	Assets/Engine/Chat/ChatWindow.cs
+A	Assets/Engine/Chat/ToggleChat.cs
+A	Assets/Engine/Chat/ToggleChat.cs.meta
+M	Assets/Engine/Examine/SingleColorMaterial.mat
+
+commit f1c0e55f21d450b8887537119e459a6eff52c3b4
+Author: James <jblack144@gmail.com>
+Date:   2021-07-21 16:04:51 -0400
+
+    Add targeting doll button (#744)
+    
+    * Add body target button, add ability to toggle body target
+    
+    * Revert "Add body target button, add ability to toggle body target"
+    
+    This reverts commit e9d796ec9abadef8da2bb10868a4a3452f5f90cd.
+    
+    * Add body target button, add ability to toggle body target
+
+M	Assets/Content/Systems/UI/Game/Inventory/HumanoidInventory/InventoryUIBeep.prefab
+A	Assets/Engine/Inventory/UI/ToggleBodyTargetUI.cs
+A	Assets/Engine/Inventory/UI/ToggleBodyTargetUI.cs.meta
+
+commit 27cd99180486aa1cccf404313b9c7eb53ee2e3da
+Author: Ryan089 <64360820+Ryan089@users.noreply.github.com>
+Date:   2021-07-20 04:34:03 +1000
+
+    Amended CompositeItemSelector to render sharedMesh rather than mesh. (#743)
+    
+    While I am not completely across the difference, it seems to resolve the issue described in the comments of issue #464, where examining certain objects (Janicart, Sink, Hydroponics Tray) in a compiled build caused their rendering to break.
+
+M	Assets/Engine/Examine/CompositeItemSelector.cs
+
+commit edc747c762e3d88cef9c6d4df998421c91a62c19
+Author: Ryan089 <64360820+Ryan089@users.noreply.github.com>
+Date:   2021-07-20 04:18:49 +1000
+
+    Corrects issue where Items are not on the correct layer. (#739)
+    
+    Prefabs for all offending Items have been placed in the correct layer. Additionally, any Item that spawns on the incorrect layer will now have a warning during Awake(), so that the developer can resolve the issue.
+
+M	Assets/Content/Items/Clothing/Headwear/Helmets/HardHatRed.prefab
+M	Assets/Content/Items/Clothing/Headwear/Helmets/HardHatYellow.prefab
+M	Assets/Content/Items/Functional/Containers/Liquid/LargeBeaker.prefab
+M	Assets/Content/Items/Functional/Containers/Liquid/SmallBeaker.prefab
+M	Assets/Content/Items/Functional/Containers/Liquid/beaker.prefab
+M	Assets/Content/Items/Functional/Containers/Liquid/mug.prefab
+M	Assets/Content/Items/Functional/Generic/BooksPapersPens/Crayons/CrayonBlack.prefab
+M	Assets/Content/Items/Functional/Generic/BooksPapersPens/Crayons/CrayonBlue.prefab
+M	Assets/Content/Items/Functional/Generic/BooksPapersPens/Crayons/CrayonGreen.prefab
+M	Assets/Content/Items/Functional/Generic/BooksPapersPens/Crayons/CrayonOrange.prefab
+M	Assets/Content/Items/Functional/Generic/BooksPapersPens/Crayons/CrayonPurple.prefab
+M	Assets/Content/Items/Functional/Generic/BooksPapersPens/Crayons/CrayonRed.prefab
+M	Assets/Content/Items/Functional/Generic/BooksPapersPens/Crayons/CrayonWhite.prefab
+M	Assets/Content/Items/Functional/Generic/BooksPapersPens/Crayons/CrayonYellow.prefab
+M	Assets/Content/Items/Functional/Parts/Power Cells/BluespacePowerCell.prefab
+M	Assets/Content/Items/Functional/Parts/Power Cells/HighPowerCell.prefab
+M	Assets/Content/Items/Functional/Parts/Power Cells/HyperPowerCell.prefab
+M	Assets/Content/Items/Functional/Parts/Power Cells/PowerCell.prefab
+M	Assets/Content/Items/Functional/Parts/Power Cells/SuperPowerCell.prefab
+M	Assets/Engine/Inventory/Item.cs

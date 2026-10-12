@@ -1,0 +1,126 @@
+commit c9a2e9c027d3d60de1515e01340abc9777faa695
+Author: Seteron <38957910+Seteron@users.noreply.github.com>
+Date:   2020-12-15 16:55:09 -0600
+
+    Fix SSRT (#579)
+    
+    Flips SSRT when using OpenGL drivers, allowing it to render correctly.
+
+M	Assets/Libraries/SSRT/Shaders/Resources/SSRTLib.cginc
+
+commit 3da514e94d7e313b5f65ea1fa84a697c0daea569
+Author: João Buratto <46575243+joaoburatto@users.noreply.github.com>
+Date:   2020-12-15 19:10:16 -0300
+
+    Model fixing (Once again) (#577)
+    
+    * Model Fixing
+    
+    Fixed the water cooler, filling cabinets, janicart and changed the multitool
+    
+    * Model Fixing
+    
+    Cryotube, sleeper, vendings
+    
+    * Model changes and shader fix
+    
+    * Fixes
+    
+    * Welders
+    
+    * Wood Panel
+    
+    * Rotation fix
+    
+    * The Broken Glass Problem
+
+M	Assets/Art/Models/Furniture/Generic/Seats/Toilet.fbx
+M	Assets/Art/Models/Furniture/Generic/Seats/chairs.fbx
+M	Assets/Art/Models/Furniture/Generic/Sink.fbx
+M	Assets/Art/Models/Furniture/Machines/Engineering/SMES.fbx
+M	Assets/Art/Models/Furniture/Machines/Kitchen/blender.fbx
+M	Assets/Art/Models/Furniture/Machines/Kitchen/microwave.fbx
+M	Assets/Art/Models/Furniture/Machines/Medical/Chemical Dispenser.fbx
+M	Assets/Art/Models/Furniture/Machines/Medical/Sleeper Bed.fbx
+M	Assets/Art/Models/Furniture/Machines/Vendors/vending machines.fbx
+M	Assets/Art/Models/Furniture/Storage/crates.fbx
+M	Assets/Art/Models/Furniture/Storage/lockers.fbx
+M	Assets/Art/Models/Items/Functional/Generic/boombox.fbx
+M	Assets/Art/Models/Items/Functional/Parts/light frames and bulbs.fbx
+M	Assets/Art/Models/Items/Functional/Tools/Generic/radio.fbx
+M	Assets/Art/Models/Items/Functional/Tools/Generic/welders.fbx
+M	Assets/Art/Models/Structures/Doors/airlocks.fbx
+M	Assets/Art/Models/Structures/Wall Mounts/APC.fbx
+M	Assets/Art/Models/Structures/Wall Mounts/Fire Alarm.fbx
+M	Assets/Art/Models/Structures/Wall Mounts/Light Switch.fbx
+M	Assets/Art/Models/Structures/Wall Mounts/Mirror.fbx
+M	Assets/Art/Models/Structures/Wall Mounts/Posters.fbx
+M	Assets/Art/Models/Structures/Wall Mounts/light fixtures.fbx
+M	Assets/Art/Models/Structures/Walls and Windows/walls and windows.fbx
+A	Assets/Art/Models/Structures/Walls and Windows/wood panels.fbx
+A	Assets/Art/Models/Structures/Walls and Windows/wood panels.fbx.meta
+M	Assets/Art/Shaders/DeferredShadingWrap.shader
+M	Assets/Content/Furniture/Machines/Vendors/Cigarette Vendor.prefab
+M	Assets/Content/Furniture/Machines/Vendors/Snack Vendor.prefab
+M	Assets/Content/Furniture/Storage/Crates/CrateSwing.anim
+M	Assets/Content/Furniture/Storage/Crates/crate.prefab
+M	Assets/Content/Furniture/Storage/Lockers/Locker Basic Secure.asset
+M	Assets/Content/Furniture/Storage/Lockers/Locker Basic Secure.prefab
+M	Assets/Content/Furniture/Storage/Lockers/Locker Basic Secure.prefab.meta
+M	Assets/Content/Furniture/Storage/Lockers/Locker Basic.prefab
+M	Assets/Content/Furniture/Storage/Lockers/LockerSwing.anim
+M	Assets/Content/Items/Cosmetic/Posters/Poster ARF.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster CLEAN.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster EAT.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster FUN POLICE.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster GREYTIDE.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster HONKMOTHER.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster LUSTY XENO.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster MISSING.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster NT.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster NT2.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster NT3.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster OBEY.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster PUFF.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster PostersRock.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster REBELS.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster REDRUM.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster SMOKE.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster SPACE_L.prefab
+M	Assets/Content/Items/Cosmetic/Posters/Poster SPACE_R.prefab
+A	Assets/Content/Items/Functional/Tools/Generic/Welder.meta
+R100	Assets/Content/Items/Functional/Tools/Generic/Welder.cs	Assets/Content/Items/Functional/Tools/Generic/Welder/Welder.cs
+R100	Assets/Content/Items/Functional/Tools/Generic/Welder.cs.meta	Assets/Content/Items/Functional/Tools/Generic/Welder/Welder.cs.meta
+R100	Assets/Content/Items/Functional/Tools/Generic/Welder_Flame.prefab	Assets/Content/Items/Functional/Tools/Generic/Welder/Welder_Flame.prefab
+R100	Assets/Content/Items/Functional/Tools/Generic/Welder_Flame.prefab.meta	Assets/Content/Items/Functional/Tools/Generic/Welder/Welder_Flame.prefab.meta
+A	Assets/Content/Items/Functional/Tools/Generic/Welder/experimental welder.prefab
+A	Assets/Content/Items/Functional/Tools/Generic/Welder/experimental welder.prefab.meta
+A	Assets/Content/Items/Functional/Tools/Generic/Welder/industrial welder.prefab
+A	Assets/Content/Items/Functional/Tools/Generic/Welder/industrial welder.prefab.meta
+A	Assets/Content/Items/Functional/Tools/Generic/Welder/pocket welder.prefab
+A	Assets/Content/Items/Functional/Tools/Generic/Welder/pocket welder.prefab.meta
+R100	Assets/Content/Items/Functional/Tools/Generic/welder.prefab	Assets/Content/Items/Functional/Tools/Generic/Welder/welder.prefab
+R100	Assets/Content/Items/Functional/Tools/Generic/welder.prefab.meta	Assets/Content/Items/Functional/Tools/Generic/Welder/welder.prefab.meta
+M	Assets/Content/Items/Functional/Tools/Generic/desk lamp.prefab
+A	Assets/Content/Structures/Wall Mounts/Wood Panel.meta
+A	Assets/Content/Structures/Wall Mounts/Wood Panel/Wood Panel Glass.asset
+A	Assets/Content/Structures/Wall Mounts/Wood Panel/Wood Panel Glass.asset.meta
+A	Assets/Content/Structures/Wall Mounts/Wood Panel/Wood Panel Glass.prefab
+A	Assets/Content/Structures/Wall Mounts/Wood Panel/Wood Panel Glass.prefab.meta
+A	Assets/Content/Structures/Wall Mounts/Wood Panel/Wood Panel.asset
+A	Assets/Content/Structures/Wall Mounts/Wood Panel/Wood Panel.asset.meta
+A	Assets/Content/Structures/Wall Mounts/Wood Panel/Wood Panel.prefab
+A	Assets/Content/Structures/Wall Mounts/Wood Panel/Wood Panel.prefab.meta
+
+commit c12b593441908cc208aaa62500c7987f0252c183
+Author: Seteron <38957910+Seteron@users.noreply.github.com>
+Date:   2020-12-14 18:54:39 -0600
+
+    Retime move cycle (#578)
+    
+    Fix run/walk animation asymmetry. Adjust movement speed and animation timing to better match animations.
+
+M	Assets/Art/Animations/Animators/HumanCharacterAnimator.controller
+M	Assets/Art/Animations/Creatures/Player Races/Human/Movement/RunAnim.anim
+M	Assets/Art/Animations/Creatures/Player Races/Human/Movement/WalkAnim.anim
+M	Assets/Content/Creatures/Player Races/Human/Human.prefab

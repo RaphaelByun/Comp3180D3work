@@ -35,7 +35,7 @@ namespace ChangeLens.Editor
         public static WeekExport FromGit(string repoPath, string since, string until)
         {
             var export = new WeekExport();
-            string range = "--since=" + since + " --until=" + until;
+            string range = "--since=" + DateBound(since) + " --until=" + DateBound(until);
             export.LogText = RunGit(repoPath, "log --name-status --date=iso --no-merges " + range);
             export.PatchText = RunGit(repoPath, "log -p --no-merges --date=iso " + range +
                                                 " -- \"*.prefab\" \"*.unity\"");
@@ -47,6 +47,21 @@ namespace ChangeLens.Editor
                 export.GuidText = RunGit(repoPath, "grep -I -e \"^guid:\" " + commits[0].Hash + " -- \"*.cs.meta\"");
             }
             return export;
+        }
+
+        /// <summary>
+        /// Pins a date-only bound ("2021-07-19") to midnight. Git fills a missing
+        /// time with the CURRENT time of day, so a bare date would make the same
+        /// week export different commits depending on when it was run.
+        /// </summary>
+        public static string DateBound(string value)
+        {
+            string trimmed = value == null ? "" : value.Trim();
+            DateTime ignored;
+            bool dateOnly = trimmed.Length == 10 &&
+                DateTime.TryParseExact(trimmed, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture,
+                                       System.Globalization.DateTimeStyles.None, out ignored);
+            return dateOnly ? trimmed + "T00:00:00" : trimmed;
         }
 
         public static WeekExport FromFolder(string folder)

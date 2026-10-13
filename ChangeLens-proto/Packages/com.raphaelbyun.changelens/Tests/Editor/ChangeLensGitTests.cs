@@ -1,8 +1,9 @@
 // ChangeLensGitTests.cs
 // ---------------------------------------------------------------------------
 // EditMode tests for the date bounds handed to git. A bare date has to be
-// pinned to midnight, or git fills in the current time of day and the same
-// study week exports a different set of commits depending on when it is run.
+// pinned to midnight UTC, or git fills in the current time of day in the
+// machine's time zone and the same study week exports a different set of
+// commits depending on when and where it is run.
 // ---------------------------------------------------------------------------
 
 using ChangeLens.Editor;
@@ -13,10 +14,10 @@ namespace ChangeLens.Editor.Tests
     public class ChangeLensGitTests
     {
         [Test]
-        public void DateOnlyBound_IsPinnedToMidnight()
+        public void DateOnlyBound_IsPinnedToMidnightUtc()
         {
-            Assert.AreEqual("2021-07-19T00:00:00", WeekExport.DateBound("2021-07-19"));
-            Assert.AreEqual("2021-07-26T00:00:00", WeekExport.DateBound(" 2021-07-26 "));
+            Assert.AreEqual("2021-07-19T00:00:00+0000", WeekExport.DateBound("2021-07-19"));
+            Assert.AreEqual("2021-07-26T00:00:00+0000", WeekExport.DateBound(" 2021-07-26 "));
         }
 
         [Test]

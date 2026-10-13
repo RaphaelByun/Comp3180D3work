@@ -37,6 +37,11 @@ namespace ChangeLens.Editor
     {
         private readonly Dictionary<string, string> _paths = new Dictionary<string, string>();
 
+        // A repository can hold two .meta files with the same guid (SS3D has
+        // LoadingScreenManager.cs and TileBase.cs sharing one). Unity would
+        // reassign one locally, so from the text alone the name is ambiguous.
+        private readonly Dictionary<string, List<string>> _allPaths = new Dictionary<string, List<string>>();
+
         public int Count { get { return _paths.Count; } }
 
         public static GuidIndex Parse(string grepText)
@@ -57,7 +62,11 @@ namespace ChangeLens.Editor
                 string guid = AssetDiffParser.GuidIn(raw.Substring(marker + ".meta:".Length));
                 if (guid == null || metaPath.Length == 0) continue;
 
-                index._paths[guid] = metaPath; // the asset path is the .meta path minus ".meta"
+                if (!index._paths.ContainsKey(guid))
+                    index._paths[guid] = metaPath; // the asset path is the .meta path minus ".meta"
+                List<string> all;
+                if (!index._allPaths.TryGetValue(guid, out all)) index._allPaths[guid] = all = new List<string>();
+                if (!all.Contains(metaPath)) all.Add(metaPath);
             }
             return index;
         }
@@ -83,7 +92,22 @@ namespace ChangeLens.Editor
         {
             if (resolver == null) return null;
             string path = resolver.PathFor(guid);
-            return string.IsNullOrEmpty(path) ? null : AssetDiffParser.AssetNameOf(path);
+            if (string.IsNullOrEmpty(path)) return null;
+
+            // Ambiguous guid: name every candidate rather than guess.
+            var index = resolver as GuidIndex;
+            List<string> all;
+            if (index != null && index._allPaths.TryGetValue(guid.ToLowerInvariant(), out all) && all.Count > 1)
+            {
+                var names = new List<string>();
+                foreach (string p in all)
+                {
+                    string n = AssetDiffParser.AssetNameOf(p);
+                    if (!names.Contains(n)) names.Add(n);
+                }
+                return string.Join(" or ", names.ToArray());
+            }
+            return AssetDiffParser.AssetNameOf(path);
         }
     }
 }

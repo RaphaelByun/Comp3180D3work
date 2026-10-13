@@ -22,21 +22,21 @@ Open each commit's diff (`git show <hash>`) and mark every claim. Pass rule (A2)
 | 16 | Scenes and prefabs changed | 26 scenes and prefabs changed | 7 commits (all) |  |
 | 17 | Scenes and prefabs changed | 9 prefabs (Airlock Classic, Airlock Double Classic, Airlock Glass, Airlock, Airlock Civilian Glass, Airlock Civilian, Double Airlock, Airlock Maintenance Glass, Airlock Maintenance) — "Add sound fall off to airlocks (#611)": edited Audio Source. | ea23f08 |  |
 | 18 | Scenes and prefabs changed | 9 prefabs (Airlock Classic, Airlock Double Classic, Airlock Glass, Airlock, Airlock Civilian Glass, Airlock Civilian, Double Airlock, Airlock Maintenance Glass, Airlock Maintenance) — "Add RigidBody to airlocks to fix their interaction (#608)": added physics body; edited object setup. | f68b6a3 |  |
-| 19 | Scenes and prefabs changed | Server Lobby — "Fix restart bug (#588)": added new objects, UI layout, Animator, Canvas Renderer and 9 more; removed objects, position/rotation/scale, ServerLobbyUIHelper script, NetworkIdentity script and 1 more; edited Light. | 37e22a3 |  |
+| 19 | Scenes and prefabs changed | Server Lobby — "Fix restart bug (#588)": added new objects, UI layout, Animator, Canvas Renderer and 9 more; removed objects, placed-prefab overrides, position/rotation/scale, ServerLobbyUIHelper script and 2 more; edited Light. | 37e22a3 |  |
 | 20 | Scenes and prefabs changed | Server Lobby — objects named in the change: Loading, LocalPlayerManager, LoadingScreenManager, LoadingSceneUI, Placeholder, Buttons and 10 more | 37e22a3 |  |
-| 21 | Scenes and prefabs changed | EmptyMapScene — "Fix restart bug (#588)": added new objects, placed-prefab overrides, position/rotation/scale, TileObject script; removed objects, placed-prefab overrides, position/rotation/scale, TileObject script. | 37e22a3 |  |
-| 22 | Scenes and prefabs changed | EmptyMapScene — objects named in the change: WallCap2, WallCap0, turf_floor_bar, '[101,106]', plenum_plenum | 37e22a3 |  |
-| 23 | Scenes and prefabs changed | Main Menu — "Fix restart bug (#588)": removed objects, placed-prefab overrides, UI layout, Canvas Renderer and 1 more. | 37e22a3 |  |
+| 21 | Scenes and prefabs changed | EmptyMapScene — "Fix restart bug (#588)": added placed-prefab overrides; removed placed-prefab overrides. | 37e22a3 |  |
+| 22 | Scenes and prefabs changed | EmptyMapScene — objects named in the change: WallCap2, WallCap0 | 37e22a3 |  |
+| 23 | Scenes and prefabs changed | Main Menu — "Fix restart bug (#588)": removed objects, placed-prefab overrides, Canvas Renderer, UI layout and 1 more. | 37e22a3 |  |
 | 24 | Scenes and prefabs changed | Main Menu — objects named in the change: LoadingScreenUI, Map Selection, Panel, Text (TMP), Image, Button | 37e22a3 |  |
 | 25 | Scenes and prefabs changed | Wet Floor Sign — "Make floor sign openable/closeable  (#609)": new prefab added. | a7aab33 |  |
 | 26 | Scenes and prefabs changed | Wet Floor Sign — objects named in the change: Wet Floor Sign 2, Attachment | a7aab33 |  |
-| 27 | Scenes and prefabs changed | LoadingScreenUI — "Fix restart bug (#588)": added new objects, UI layout, Canvas Renderer, Animator and 1 more. | 37e22a3 |  |
+| 27 | Scenes and prefabs changed | LoadingScreenUI — "Fix restart bug (#588)": added new objects, UI layout, Canvas Renderer, Animator and 1 more; removed LoadingScreenManager or TileBase script. | 37e22a3 |  |
 | 28 | Scenes and prefabs changed | LoadingScreenUI — objects named in the change: Loading Text, Text (TMP), Loading Screen | 37e22a3 |  |
 | 29 | Scenes and prefabs changed | Container Display — "Rework the container UI (#605)": added new objects, UI layout, Canvas Renderer, an unidentified script and 1 more; removed objects, UI layout, Canvas Renderer, DraggableWindow script and 1 more. | a326ba1 |  |
 | 30 | Scenes and prefabs changed | Container Display — objects named in the change: Panel, Text, Container Section, Display | a326ba1 |  |
 | 31 | Scenes and prefabs changed | Wet Floor Sign — "Make floor sign openable/closeable  (#609)": prefab deleted. | a7aab33 |  |
 | 32 | Scenes and prefabs changed | Wet Floor Sign — objects named in the change: Attachment | a7aab33 |  |
-| 33 | Scenes and prefabs changed | pepperspray — "Create PepperSpray class to handle interaction with the pepper spray (#604)": added Audio Source, Particle System; removed ItemExaminable script; edited object setup, placed-prefab overrides. | 0059f5d |  |
+| 33 | Scenes and prefabs changed | pepperspray — "Create PepperSpray class to handle interaction with the pepper spray (#604)": added Audio Source; removed ItemExaminable script; edited object setup, placed-prefab overrides. | 0059f5d |  |
 | 34 | Scenes and prefabs changed | Soul — "Fix restart bug (#588)": new prefab added. | 37e22a3 |  |
 | 35 | Scenes and prefabs changed | Emergency Light Fixture — "Add emergency light and light interactions (#610)": added EmergencyLightObject script, NetworkIdentity script; edited Light, Animator, object setup. | 61a96bf |  |
 | 36 | Scenes and prefabs changed | 2 prefabs (Light Bulb Fixture, Light Tube Fixture) — "Add emergency light and light interactions (#610)": added NetworkIdentity script, SimpleLight script; edited object setup. | 61a96bf |  |

@@ -161,6 +161,88 @@ namespace ChangeLens.Editor.Tests
             Assert.AreEqual(0, AssetDiffParser.Parse(null).Count);
         }
 
+        // Found by the February fidelity check (pepperspray, #604): a "stripped"
+        // block is a reference stub to an object inside a nested prefab, so
+        // adding one does not add a Particle System.
+        [Test]
+        public void Parse_StrippedBlocksAreNotAdditions()
+        {
+            List<AssetChange> changes = AssetDiffParser.Parse(
+                "commit 0059f5da\n" +
+                "diff --git a/Assets/Items/pepperspray.prefab b/Assets/Items/pepperspray.prefab\n" +
+                "@@ -10,3 +10,9 @@ PrefabInstance:\n" +
+                "   m_SourcePrefab: {fileID: 100100000, guid: 7fc08e70000000000000000000000000, type: 3}\n" +
+                "+--- !u!198 &5571 stripped\n" +
+                "+ParticleSystem:\n" +
+                "+  m_CorrespondingSourceObject: {fileID: 1}\n" +
+                "+--- !u!114 &5572\n" +
+                "+MonoBehaviour:\n" +
+                "+  m_Script: {fileID: 11500000, guid: 307b90d11903d8c42bef2ae0d15ce5f9, type: 3}\n");
+
+            Assert.AreEqual(1, changes.Count);
+            CollectionAssert.DoesNotContain(changes[0].AddedTypes, "ParticleSystem");
+            CollectionAssert.AreEqual(new[] { "MonoBehaviour" }, changes[0].AddedTypes);
+            CollectionAssert.AreEqual(new[] { "307b90d11903d8c42bef2ae0d15ce5f9" }, changes[0].AddedScriptGuids);
+        }
+
+        // Found by the February fidelity check (EmptyMapScene, #588): a block
+        // whose id is both removed and added only moved within the file.
+        [Test]
+        public void Parse_BlocksThatOnlyMoveAreNotAddedOrRemoved()
+        {
+            List<AssetChange> changes = AssetDiffParser.Parse(
+                "commit 37e22a35\n" +
+                "diff --git a/Assets/Maps/EmptyMapScene.unity b/Assets/Maps/EmptyMapScene.unity\n" +
+                "@@ -100,6 +100,0 @@ Transform:\n" +
+                "---- !u!114 &77\n" +
+                "-MonoBehaviour:\n" +
+                "-  m_Script: {fileID: 11500000, guid: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, type: 3}\n" +
+                "@@ -900,0 +894,6 @@ Transform:\n" +
+                "+--- !u!114 &77\n" +
+                "+MonoBehaviour:\n" +
+                "+  m_Script: {fileID: 11500000, guid: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, type: 3}\n" +
+                "+--- !u!4 &78\n" +
+                "+Transform:\n" +
+                "+  m_LocalPosition: {x: 0, y: 0, z: 0}\n");
+
+            Assert.AreEqual(1, changes.Count);
+            CollectionAssert.AreEqual(new[] { "Transform" }, changes[0].AddedTypes);
+            CollectionAssert.IsEmpty(changes[0].RemovedTypes);
+            CollectionAssert.IsEmpty(changes[0].AddedScriptGuids);
+            CollectionAssert.IsEmpty(changes[0].RemovedScriptGuids);
+            Assert.AreEqual("114 &77", AssetDiffParser.BlockIdOf("--- !u!114 &77 stripped"));
+        }
+
+        // Found by the February fidelity check (Server Lobby, #588): git can pair
+        // a removed header with an added one above a single shared type line.
+        [Test]
+        public void Parse_PairedHeadersAboveASharedTypeLineAreBothCounted()
+        {
+            List<AssetChange> changes = AssetDiffParser.Parse(
+                "commit 37e22a35\n" +
+                "diff --git a/Assets/Scenes/Server Lobby.unity b/Assets/Scenes/Server Lobby.unity\n" +
+                "@@ -5960,6 +5960,6 @@ Canvas:\n" +
+                "   m_TargetDisplay: 0\n" +
+                "---- !u!1001 &500182125\n" +
+                "+--- !u!1001 &443733060\n" +
+                " PrefabInstance:\n" +
+                "   m_ObjectHideFlags: 0\n");
+
+            CollectionAssert.AreEqual(new[] { "PrefabInstance" }, changes[0].AddedTypes);
+            CollectionAssert.AreEqual(new[] { "PrefabInstance" }, changes[0].RemovedTypes);
+        }
+
+        // Found by the February fidelity check: SS3D has two .meta files with
+        // one guid, so the page must not pick one of them silently.
+        [Test]
+        public void GuidIndex_NamesEveryCandidateForADuplicatedGuid()
+        {
+            GuidIndex index = GuidIndex.Parse(
+                "abc:Assets/Managers/LoadingScreenManager.cs.meta:guid: 0ec239178bc4ef641bdaa2c430aa2918\n" +
+                "abc:Assets/Tile/TileBase.cs.meta:guid: 0ec239178bc4ef641bdaa2c430aa2918\n");
+            Assert.AreEqual("LoadingScreenManager or TileBase", GuidIndex.NameFor(index, "0ec239178bc4ef641bdaa2c430aa2918"));
+        }
+
         [Test]
         public void GuidIndex_StripsRevisionAndMetaSuffix()
         {

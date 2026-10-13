@@ -50,9 +50,10 @@ namespace ChangeLens.Editor
         }
 
         /// <summary>
-        /// Pins a date-only bound ("2021-07-19") to midnight. Git fills a missing
-        /// time with the CURRENT time of day, so a bare date would make the same
-        /// week export different commits depending on when it was run.
+        /// Pins a date-only bound ("2021-07-19") to midnight UTC. Git fills a missing
+        /// time with the CURRENT time of day and reads it in the machine's own time
+        /// zone, so a bare date would make the same week export different commits
+        /// depending on when, and where, it was run. Study weeks are UTC weeks.
         /// </summary>
         public static string DateBound(string value)
         {
@@ -61,7 +62,7 @@ namespace ChangeLens.Editor
             bool dateOnly = trimmed.Length == 10 &&
                 DateTime.TryParseExact(trimmed, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture,
                                        System.Globalization.DateTimeStyles.None, out ignored);
-            return dateOnly ? trimmed + "T00:00:00" : trimmed;
+            return dateOnly ? trimmed + "T00:00:00+0000" : trimmed;
         }
 
         public static WeekExport FromFolder(string folder)

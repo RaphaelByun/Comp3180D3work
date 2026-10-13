@@ -39,7 +39,7 @@ Largest area this week: **Code** (25 of 82 file changes).
 - "New Container Editor, multiple container on a single game object (#798)": removed an unidentified script; edited object setup.
 
 **MiniStation** (scene, in `Assets/Content/Scenes/Maps`)
-- "New Container Editor, multiple container on a single game object (#798)": added new objects, placed-prefab overrides, position/rotation/scale, TileMap script; removed objects, placed-prefab overrides, position/rotation/scale, PlacedTileObject script; edited Render Settings.
+- "New Container Editor, multiple container on a single game object (#798)": added new objects, placed-prefab overrides, position/rotation/scale, TileMap script; removed placed-prefab overrides, PlacedTileObject script; edited Render Settings.
   - objects named in the change: Plenum, MetalDoorFrame, APC_0, LightTubeFixture_0, MetalWallReinforced, PipesLayer3 and 87 more
 
 **Janitorial Cart** (prefab, in `Assets/Content/Furniture/Storage/Carts`)

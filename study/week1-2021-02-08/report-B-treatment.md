@@ -39,15 +39,15 @@ Largest area this week: **Scenes and prefabs** (35 of 104 file changes).
 - "Add RigidBody to airlocks to fix their interaction (#608)": added physics body; edited object setup.
 
 **Server Lobby** (scene, in `Assets/Content/Scenes`)
-- "Fix restart bug (#588)": added new objects, UI layout, Animator, Canvas Renderer and 9 more; removed objects, position/rotation/scale, ServerLobbyUIHelper script, NetworkIdentity script and 1 more; edited Light.
+- "Fix restart bug (#588)": added new objects, UI layout, Animator, Canvas Renderer and 9 more; removed objects, placed-prefab overrides, position/rotation/scale, ServerLobbyUIHelper script and 2 more; edited Light.
   - objects named in the change: Loading, LocalPlayerManager, LoadingScreenManager, LoadingSceneUI, Placeholder, Buttons and 10 more
 
 **EmptyMapScene** (scene, in `Assets/Content/Scenes/Maps`)
-- "Fix restart bug (#588)": added new objects, placed-prefab overrides, position/rotation/scale, TileObject script; removed objects, placed-prefab overrides, position/rotation/scale, TileObject script.
-  - objects named in the change: WallCap2, WallCap0, turf_floor_bar, '[101,106]', plenum_plenum
+- "Fix restart bug (#588)": added placed-prefab overrides; removed placed-prefab overrides.
+  - objects named in the change: WallCap2, WallCap0
 
 **Main Menu** (scene, in `Assets/Content/Scenes`)
-- "Fix restart bug (#588)": removed objects, placed-prefab overrides, UI layout, Canvas Renderer and 1 more.
+- "Fix restart bug (#588)": removed objects, placed-prefab overrides, Canvas Renderer, UI layout and 1 more.
   - objects named in the change: LoadingScreenUI, Map Selection, Panel, Text (TMP), Image, Button
 
 **Wet Floor Sign** (prefab, in `Assets/Content/Items/Functional/Tools/Custodial/Floor Sign`)
@@ -55,7 +55,7 @@ Largest area this week: **Scenes and prefabs** (35 of 104 file changes).
   - objects named in the change: Wet Floor Sign 2, Attachment
 
 **LoadingScreenUI** (prefab, in `Assets/Content/Graphics/UI/Loading Screen`)
-- "Fix restart bug (#588)": added new objects, UI layout, Canvas Renderer, Animator and 1 more.
+- "Fix restart bug (#588)": added new objects, UI layout, Canvas Renderer, Animator and 1 more; removed LoadingScreenManager or TileBase script.
   - objects named in the change: Loading Text, Text (TMP), Loading Screen
 
 **Container Display** (prefab, in `Assets/Content/Graphics/UI/Inventory/HumanoidInventory`)
@@ -67,7 +67,7 @@ Largest area this week: **Scenes and prefabs** (35 of 104 file changes).
   - objects named in the change: Attachment
 
 **pepperspray** (prefab, in `Assets/Content/Items/Functional/Containers/Liquid`)
-- "Create PepperSpray class to handle interaction with the pepper spray (#604)": added Audio Source, Particle System; removed ItemExaminable script; edited object setup, placed-prefab overrides.
+- "Create PepperSpray class to handle interaction with the pepper spray (#604)": added Audio Source; removed ItemExaminable script; edited object setup, placed-prefab overrides.
 
 **Soul** (prefab, in `Assets/Content/Systems/Player`)
 - "Fix restart bug (#588)": new prefab added.

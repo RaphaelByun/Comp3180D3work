@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Runs the package's EditMode tests outside Unity -->
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><ImplicitUsings>disable</ImplicitUsings><IsPackable>false</IsPackable></PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <Compile Include="..\..\..\ChangeLens-proto\Packages\com.raphaelbyun.changelens\Tests\Editor\*.cs" />
+    <ProjectReference Include="..\lib\lib.csproj" />
+  </ItemGroup>
+</Project>

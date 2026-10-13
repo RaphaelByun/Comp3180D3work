@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Engine-free ChangeLens core, compiled straight from the Unity package sources -->
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><Nullable>disable</Nullable><ImplicitUsings>disable</ImplicitUsings><AssemblyName>ChangeLens.Core</AssemblyName></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\ChangeLens-proto\Packages\com.raphaelbyun.changelens\Editor\AssetDiffParser.cs;..\..\..\ChangeLens-proto\Packages\com.raphaelbyun.changelens\Editor\ChangeLensGit.cs;..\..\..\ChangeLens-proto\Packages\com.raphaelbyun.changelens\Editor\ChangeReport.cs;..\..\..\ChangeLens-proto\Packages\com.raphaelbyun.changelens\Editor\GitLogParser.cs;..\..\..\ChangeLens-proto\Packages\com.raphaelbyun.changelens\Editor\GuidIndex.cs;..\..\..\ChangeLens-proto\Packages\com.raphaelbyun.changelens\Editor\PathClassifier.cs;..\..\..\ChangeLens-proto\Packages\com.raphaelbyun.changelens\Editor\ProducerReport.cs;..\Stub.cs" />
+  </ItemGroup>
+</Project>

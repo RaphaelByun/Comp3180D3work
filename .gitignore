@@ -15,8 +15,8 @@ ChangeLens-proto/TestResults*.xml
 .vs/
 .vscode/
 .idea/
-*.csproj
-*.sln
+ChangeLens-proto/*.csproj
+ChangeLens-proto/*.sln
 *.suo
 *.user
 *.userprefs

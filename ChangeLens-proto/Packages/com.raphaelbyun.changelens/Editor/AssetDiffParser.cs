@@ -99,14 +99,21 @@ namespace ChangeLens.Editor
             AssetChange current = null;   // null while outside a scene/prefab diff
             bool inHunk = false;
             string currentType = "";      // the YAML block type the cursor is inside
-            char pendingHeaderSign = ' '; // '+'/'-' when the previous line opened a block
             bool lastWasNameOverride = false;
+            var blocks = new List<Block>(); // whole blocks added/removed in the current file diff
+
+            // A diff interleaves two files. Each side is its own run of blocks, so
+            // a '-' line belongs to the last '-' header and a '+' line to the last
+            // '+' header; a context header starts a new block on both sides.
+            Block removedBlock = null, addedBlock = null;
 
             foreach (string line in lines)
             {
                 if (line.StartsWith("commit ", StringComparison.Ordinal))
                 {
                     commitHash = FirstToken(line.Substring("commit ".Length).Trim());
+                    FinishBlocks(current, blocks);
+                    removedBlock = addedBlock = null;
                     current = null;
                     inHunk = false;
                     continue;
@@ -115,10 +122,11 @@ namespace ChangeLens.Editor
                 if (line.StartsWith("diff --git ", StringComparison.Ordinal))
                 {
                     string path = PathFromDiffHeader(line);
+                    FinishBlocks(current, blocks);
+                    removedBlock = addedBlock = null;
                     current = null;
                     inHunk = false;
                     currentType = "";
-                    pendingHeaderSign = ' ';
                     if (IsSceneOrPrefab(path))
                     {
                         current = new AssetChange { CommitHash = commitHash, Path = path };
@@ -138,7 +146,7 @@ namespace ChangeLens.Editor
                 if (line.StartsWith("@@", StringComparison.Ordinal))
                 {
                     inHunk = true;
-                    pendingHeaderSign = ' ';
+                    removedBlock = addedBlock = null;
                     // "@@ -163,7 +163,7 @@ AudioSource:" -> "AudioSource"
                     int close = line.IndexOf("@@", 2, StringComparison.Ordinal);
                     string context = close >= 0 ? line.Substring(close + 2).Trim() : "";
@@ -157,22 +165,42 @@ namespace ChangeLens.Editor
                 // A block header: "--- !u!114 &-809169823751194735".
                 if (body.StartsWith("--- !u!", StringComparison.Ordinal))
                 {
-                    pendingHeaderSign = sign;
                     currentType = "";
+                    lastWasNameOverride = false;
+                    Block opened = sign == ' ' ? null : new Block
+                    {
+                        Id = BlockIdOf(body),
+                        Sign = sign,
+                        Stripped = body.TrimEnd().EndsWith(" stripped", StringComparison.Ordinal)
+                    };
+                    if (opened != null) blocks.Add(opened);
+                    if (sign != '+') removedBlock = opened;
+                    if (sign != '-') addedBlock = opened;
                     CountLine(current, sign);
                     continue;
                 }
 
-                // An unindented "TypeName:" line starts the block body.
+                // Lines inside a wholly added/removed block belong to that block;
+                // FinishBlocks decides afterwards what they mean.
+                Block own = sign == '-' ? removedBlock : sign == '+' ? addedBlock : null;
+                if (own != null) own.Body.Append(body).Append('\n');
+                if (sign == ' ')
+                {
+                    if (removedBlock != null) removedBlock.Body.Append(body).Append('\n');
+                    if (addedBlock != null) addedBlock.Body.Append(body).Append('\n');
+                }
+
+                // An unindented "TypeName:" line starts the block body. A context
+                // type line is shared: git paired a removed header with an added
+                // one above it, so it types whichever block on each side waits.
                 string keyType = TypeFromKeyLine(body);
                 if (keyType != null)
                 {
                     currentType = keyType;
-                    if (pendingHeaderSign == '+') AddUnique(current.AddedTypes, keyType);
-                    else if (pendingHeaderSign == '-') AddUnique(current.RemovedTypes, keyType);
-                    if (sign != ' ') AddUnique(current.TypesTouched, keyType);
+                    if (sign != '+' && removedBlock != null && removedBlock.Type == null) removedBlock.Type = keyType;
+                    if (sign != '-' && addedBlock != null && addedBlock.Type == null) addedBlock.Type = keyType;
+                    if (sign != ' ' && own == null) AddUnique(current.TypesTouched, keyType);
                     CountLine(current, sign);
-                    pendingHeaderSign = sign == ' ' ? ' ' : pendingHeaderSign;
                     continue;
                 }
 
@@ -181,7 +209,7 @@ namespace ChangeLens.Editor
                 if (trimmed.StartsWith("m_Name:", StringComparison.Ordinal))
                 {
                     string name = trimmed.Substring("m_Name:".Length).Trim();
-                    if (name.Length > 0) AddUnique(current.ObjectNames, name);
+                    if (name.Length > 0) AddName(current, own, name);
                 }
 
                 // Prefab instances in scenes rename objects through overrides:
@@ -191,7 +219,7 @@ namespace ChangeLens.Editor
                 if (lastWasNameOverride && trimmed.StartsWith("value:", StringComparison.Ordinal))
                 {
                     string name = trimmed.Substring("value:".Length).Trim();
-                    if (name.Length > 0) AddUnique(current.ObjectNames, name);
+                    if (name.Length > 0) AddName(current, own, name);
                 }
                 lastWasNameOverride = trimmed == "propertyPath: m_Name" ||
                                       (lastWasNameOverride && trimmed.StartsWith("value:", StringComparison.Ordinal));
@@ -201,22 +229,118 @@ namespace ChangeLens.Editor
                     string guid = GuidIn(trimmed);
                     if (guid != null)
                     {
-                        bool blockAdded = sign == '+' && current.AddedTypes.Contains("MonoBehaviour") && pendingHeaderSign == '+';
-                        bool blockRemoved = sign == '-' && current.RemovedTypes.Contains("MonoBehaviour") && pendingHeaderSign == '-';
-                        if (blockAdded) AddUnique(current.AddedScriptGuids, guid);
-                        else if (blockRemoved) AddUnique(current.RemovedScriptGuids, guid);
-                        else if (currentType == "MonoBehaviour") AddUnique(current.TouchedScriptGuids, guid);
+                        bool claimed = false;
+                        foreach (Block b in new[] { own, sign == ' ' ? removedBlock : null, sign == ' ' ? addedBlock : null })
+                        {
+                            if (b == null || b.Type != "MonoBehaviour") continue;
+                            if (b.ScriptGuid == null) b.ScriptGuid = guid;
+                            claimed = true;
+                        }
+                        if (!claimed && currentType == "MonoBehaviour") AddUnique(current.TouchedScriptGuids, guid);
                     }
                 }
 
                 if (sign != ' ')
                 {
-                    if (currentType.Length > 0) AddUnique(current.TypesTouched, currentType);
+                    if (currentType.Length > 0 && own == null) AddUnique(current.TypesTouched, currentType);
                     CountLine(current, sign);
                 }
             }
 
+            FinishBlocks(current, blocks);
             return result;
+        }
+
+        /// <summary>One "--- !u!" block that a diff shows as wholly added or removed.</summary>
+        private class Block
+        {
+            public string Id = "";
+            public char Sign;
+            public string Type;
+            public string ScriptGuid;
+            public bool Stripped;
+            public readonly System.Text.StringBuilder Body = new System.Text.StringBuilder();
+            public readonly List<string> Names = new List<string>();
+        }
+
+        /// <summary>Names seen outside whole blocks, per file, so a dropped block only drops its own names.</summary>
+        private static readonly Dictionary<AssetChange, HashSet<string>> NamesOutsideBlocks =
+            new Dictionary<AssetChange, HashSet<string>>();
+
+        private static void AddName(AssetChange change, Block block, string name)
+        {
+            AddUnique(change.ObjectNames, name);
+            if (block != null) { AddUnique(block.Names, name); return; }
+            HashSet<string> outside;
+            if (!NamesOutsideBlocks.TryGetValue(change, out outside))
+                NamesOutsideBlocks[change] = outside = new HashSet<string>();
+            outside.Add(name);
+        }
+
+        /// <summary>
+        /// Turns the file's added/removed blocks into AddedTypes/RemovedTypes and
+        /// the script guid lists. Three kinds of block are NOT additions or removals:
+        ///   * a "stripped" block is only a reference stub to an object that lives
+        ///     in a nested prefab, so adding one neither adds nor edits the object;
+        ///   * a block whose id is both removed and added with the same text only
+        ///     moved within the file (git aligned the text differently): nothing
+        ///     changed, and names seen only inside it are not "named in the change";
+        ///   * the same, but with different text: the object was edited, not added.
+        /// </summary>
+        private static void FinishBlocks(AssetChange change, List<Block> blocks)
+        {
+            if (change != null)
+            {
+                var addedBody = new Dictionary<string, string>();
+                var removedBody = new Dictionary<string, string>();
+                foreach (Block b in blocks)
+                {
+                    if (b.Id.Length == 0) continue;
+                    (b.Sign == '+' ? addedBody : removedBody)[b.Id] = b.Body.ToString();
+                }
+
+                var keptNames = new HashSet<string>();
+                var droppedNames = new List<string>();
+                foreach (Block b in blocks)
+                {
+                    bool moved = addedBody.ContainsKey(b.Id) && removedBody.ContainsKey(b.Id);
+                    bool unchanged = moved && addedBody[b.Id] == removedBody[b.Id];
+                    if (b.Stripped || unchanged || b.Type == null)
+                    {
+                        droppedNames.AddRange(b.Names);
+                        continue;
+                    }
+                    foreach (string n in b.Names) keptNames.Add(n);
+                    if (moved)
+                    {
+                        AddUnique(change.TypesTouched, b.Type);
+                        if (b.Type == "MonoBehaviour" && b.ScriptGuid != null)
+                            AddUnique(change.TouchedScriptGuids, b.ScriptGuid);
+                        continue;
+                    }
+                    bool isAdd = b.Sign == '+';
+                    AddUnique(isAdd ? change.AddedTypes : change.RemovedTypes, b.Type);
+                    if (b.Type == "MonoBehaviour" && b.ScriptGuid != null)
+                        AddUnique(isAdd ? change.AddedScriptGuids : change.RemovedScriptGuids, b.ScriptGuid);
+                }
+
+                HashSet<string> outside;
+                NamesOutsideBlocks.TryGetValue(change, out outside);
+                foreach (string n in droppedNames)
+                    if (!keptNames.Contains(n) && (outside == null || !outside.Contains(n)))
+                        change.ObjectNames.Remove(n);
+                NamesOutsideBlocks.Remove(change);
+            }
+            blocks.Clear();
+        }
+
+        /// <summary>"--- !u!114 &amp;-8091 stripped" -> "114 &amp;-8091" (class id and file id).</summary>
+        public static string BlockIdOf(string header)
+        {
+            string rest = header.Substring("--- !u!".Length).Trim();
+            if (rest.EndsWith(" stripped", StringComparison.Ordinal))
+                rest = rest.Substring(0, rest.Length - " stripped".Length).TrimEnd();
+            return rest;
         }
 
         // -------------------------------------------------------------------

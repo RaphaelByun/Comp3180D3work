@@ -17,9 +17,9 @@ Open each commit's diff (`git show <hash>`) and mark every claim. Pass rule (A2)
 | 11 | Scenes and prefabs changed | 33 scenes and prefabs changed | 3da514e, c12b593 |  |
 | 12 | Scenes and prefabs changed | 5 prefabs (experimental welder, industrial welder, pocket welder, Wood Panel Glass, Wood Panel) — "Model fixing (Once again) (#577)": new prefab added. | 3da514e |  |
 | 13 | Scenes and prefabs changed | 5 prefabs (experimental welder, industrial welder, pocket welder, Wood Panel Glass, Wood Panel) — objects named in the change: Fuel Tank, FlameTransform, Attachment, Welder_Flame | 3da514e |  |
-| 14 | Scenes and prefabs changed | Locker Basic — "Model fixing (Once again) (#577)": added new objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 3 more; removed Box Collider. | 3da514e |  |
+| 14 | Scenes and prefabs changed | Locker Basic — "Model fixing (Once again) (#577)": added new objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 3 more; removed objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 3 more. | 3da514e |  |
 | 15 | Scenes and prefabs changed | Locker Basic — objects named in the change: Locker Basic Door, Light, Lock, Door | 3da514e |  |
-| 16 | Scenes and prefabs changed | Locker Basic Secure — "Model fixing (Once again) (#577)": added new objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 5 more. | 3da514e |  |
+| 16 | Scenes and prefabs changed | Locker Basic Secure — "Model fixing (Once again) (#577)": added new objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 8 more; removed objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 8 more. | 3da514e |  |
 | 17 | Scenes and prefabs changed | Locker Basic Secure — objects named in the change: Locker Secure Door Light, Door, Locker Basic Door, Lock, fixture_floor_furniturefixturemain_locker_basic_secure, Light | 3da514e |  |
 | 18 | Scenes and prefabs changed | crate — "Model fixing (Once again) (#577)": added new objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 3 more. | 3da514e |  |
 | 19 | Scenes and prefabs changed | crate — objects named in the change: crate lid, lid, lock | 3da514e |  |

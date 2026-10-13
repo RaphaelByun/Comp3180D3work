@@ -34,11 +34,11 @@ Largest area this week: **Scenes and prefabs** (33 of 82 file changes).
   - objects named in the change: Fuel Tank, FlameTransform, Attachment, Welder_Flame
 
 **Locker Basic** (prefab, in `Assets/Content/Furniture/Storage/Lockers`)
-- "Model fixing (Once again) (#577)": added new objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 3 more; removed Box Collider.
+- "Model fixing (Once again) (#577)": added new objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 3 more; removed objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 3 more.
   - objects named in the change: Locker Basic Door, Light, Lock, Door
 
 **Locker Basic Secure** (prefab, in `Assets/Content/Furniture/Storage/Lockers`)
-- "Model fixing (Once again) (#577)": added new objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 5 more.
+- "Model fixing (Once again) (#577)": added new objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 8 more; removed objects, position/rotation/scale, Mesh Filter, Mesh Renderer and 8 more.
   - objects named in the change: Locker Secure Door Light, Door, Locker Basic Door, Lock, fixture_floor_furniturefixturemain_locker_basic_secure, Light
 
 **crate** (prefab, in `Assets/Content/Furniture/Storage/Crates`)

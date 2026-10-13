@@ -1,0 +1,120 @@
+# A3 Learning Reflection: skeleton (about 500 words in the report)
+
+Status: skeleton and prompts only. Nothing here is a reflection; every answer is yours, written from your diary, hours and deliverables. Delete the prompts and this note before using any of it in the report.
+
+Template instruction (Learning Reflection, ~500 words): start with the list of learning goals from the proposal; for each, reflect on the extent to which you built new skills, extended your capabilities or understanding, or struggled to make tangible progress (and why). Include explicit reflection on self-directed learning through research and experimentation, with goals for improving it.
+
+A2 success measure for Deliverable 9 (2 h, 0 in prac): **"All four goals evidenced; hour variances explained."**
+
+Marker's notes to act on (A2 feedback, 100/100):
+1. The Understand and Evaluate goals use project-specific terms (the three mechanisms) instead of transferable skills. In the A3 Learning Reflection and Industry Relevance sections, restate them as transferable skills (section 3 below).
+2. For the A3 Evaluation, report raw counts and limits (that is Deliverable 6, but carry the habit into any number you quote here).
+3. Staff will mark down hour variances that have no explanation (Lecture 4). The table in section 2 is where you explain them.
+
+## 1. The four learning goals, quoted exactly from A2
+
+A2 lead-in: "These capabilities span understand to create (Anderson & Krathwohl, 2001); after this unit I want to be able to:"
+
+**Understand:** explain why a team's production record under-reports its work, distinguishing the structural, opacity and audience explanations. Measure: a diary entry stating each mechanism unaided, with its source and a breakdown it predicts.
+
+**Apply and Analyse:** inspect a production tool against usability heuristics, then test those findings against what its users say, since one evaluator finds only a minority of a tool's problems (Nielsen & Molich, 1990). Measure: four tools coded; one reconciliation naming three places where inspection and interviews disagree.
+
+**Evaluate:** judge whether a team's artefacts can serve a producer's information need, or whether a person must. Measure: every need classified against a named artefact, with three needs where I name the artefact I rejected and why.
+
+**Create:** design a change report that a reader who never opens the codebase can act on, and build it as a Unity Editor tool over the serialised asset layer. Measure: a diary entry, written against an unfamiliar Unity week, tying each layout decision to a named reader need.
+
+### Evidence checklist: each goal's measure must be met by something you can link
+
+| Goal | A2 measure needs | Where the evidence comes from | Status (fill in) |
+|---|---|---|---|
+| Understand | A diary entry stating each of the three mechanisms unaided, with its source and a breakdown it predicts | **A diary entry you still have to write** (see the note below). Mechanisms: structural (Dourish & Bellotti, 1992), opacity (Whitson, 2018), audience (Stray et al., 2016) | Not started |
+| Apply and Analyse | Four tools coded; one reconciliation naming three places inspection and interviews disagree | Deliverable 1: heuristic coding sheet, two interviews, reconciliation in the design spec | D1 prep done; heuristic pass and interviews are yours |
+| Evaluate | Every need classified against a named artefact; three needs where you name the rejected artefact and why | Deliverable 1 needs catalogue (25 needs) and the ten-need sheet in Deliverables 3 and 6 | Draft catalogue exists; marking is yours |
+| Create | A diary entry written against an unfamiliar Unity week, tying each layout decision to a named reader need | Deliverable 2 (the report layout) plus **a diary entry you still have to write** against a week you have not worked on (a reserve week such as 14 Dec 2020 or 27 Sep 2021 would do) | Not started |
+
+Note: two of the four measures are diary entries (Understand and Create). They must be written in the diary (Deliverable 8) in your own words, with the date you really wrote them. The skeleton cannot do this for you.
+
+## 2. Hour variance (planned from A2, actual from the Deliverable 8 hours log)
+
+How to fill: log hours in `deliverable-8/hours-entries.csv`, total them into `deliverable-8/hours-log.csv`, then run `node deliverable-9/variance-table.js deliverable-8/hours-log.csv` and paste the table here. The "Why" column is only yours. A difference of 2 hours or 25% is flagged to explain; explain smaller ones if there is a lesson. A short, specific cause beats a long one ("fidelity scoring needed two scorers, which I had not counted"). Say what you would estimate next time.
+
+| # | Deliverable | Planned (A2) | In-prac planned | Actual | In-prac actual | Variance (actual minus planned) | Why (write this yourself) |
+|---|---|---:|---:|---:|---:|---:|---|
+| 1 | Production-tool UX study and design spec | 10 | 2 | | | | |
+| 2 | ChangeLens Unity Editor package (both conditions) | 16 | 5 | | | | |
+| 3 | Evaluation protocol and instruments | 4 | 1 | | | | |
+| 4 | Fidelity check | 3 | 1 | | | | |
+| 5 | Sessions run and coded | 18 | 4 | | | | |
+| 6 | Evaluation report, instruments, data | 6 | 1 | | | | |
+| 7 | Portfolio video | 4 | 1 | | | | |
+| 8 | Development diary | 2 | 0 | | | | |
+| 9 | Reflection report (all four goals) | 2 | 0 | | | | |
+| | **Total** | **65** | **15** | | | | |
+
+Things the planned figures already include, which can help explain differences: the committed tier is 11 h, the stretch tier 3 h, the challenge tier 2 h (A2); an overrun drops the challenge tier first, then the stretch tier. Say which tiers were built, cut or changed. Recruitment is the named biggest risk; if sessions fell short, say how that moved the hours.
+
+Prompts for the "Why" column:
+- Was it scope (more or less built), skill (slower or faster than expected), waiting (people, tools, fixes), or rework (a bug, a marker's note, a redo)?
+- Did a surprise from your fact log or diary cause it? Link the diary week.
+- What would you change in the next estimate?
+- Staff said "everything always takes longer than you expect, even if you take that into account." Does your data agree?
+
+## 3. Restating the goals as transferable skills (the marker's note)
+
+Do this before writing the reflection. The aim is the skill that would still be true if the project topic changed.
+
+| Goal | A2 wording keeps project terms such as | Prompt: the transferable skill is... (write it) | Options to start from (accept, change or throw away) |
+|---|---|---|---|
+| Understand | "structural, opacity and audience explanations" | What general skill is it to compare competing explanations of a problem against evidence and say which predictions tell them apart? | Weighing competing explanations of a problem against evidence |
+| Apply and Analyse | usability heuristics, "four tools" | What general skill is it to combine expert inspection with user data and reconcile disagreements? | Combining expert review with user interviews |
+| Evaluate | "team's artefacts", "producer's information need" | What general skill is it to judge whether automated data can meet a stakeholder's need or a person must? | Judging when automation can meet a stakeholder's need and when it cannot |
+| Create | "Unity Editor tool", "serialised asset layer" | What general skill is it to design an output for a non-expert reader and build it? | Designing for a non-technical reader and building the tool that serves them |
+
+Use the restated skill as the heading in the report and the A2 goal name in brackets, so a marker can match them.
+
+## 4. Per-goal reflection prompts (about 80 words each in the report)
+
+For each goal, answer in your own words, in this order. Keep the evidence link next to each claim.
+
+**Understand**
+- Which of the three explanations did you believe at the start, and has that changed? What in the study (think-aloud segments, the ten-need sheet, the reports themselves) pushed it?
+- Where did the sources help and where did they fail to transfer from the settings they studied (one company, ten interns, non-game teams)?
+- Did you actually produce the diary entry that states each mechanism unaided? If you could not, say why.
+- Skill gained (restated as transferable): ___. Extent: new / extended / little progress, and why.
+
+**Apply and Analyse**
+- What did inspection find that the interviews did not, and the reverse? Name the three disagreements (from the reconciliation).
+- What limit did one evaluator and two interviews put on the findings?
+- How did the heuristic pass change what you built in Deliverable 2?
+- Skill gained: ___. Extent and why.
+
+**Evaluate**
+- Which needs surprised you in your key versus the readers' classifications? Name three where you rejected an artefact and why.
+- What did the readers' disagreements tell you that a table of agreement could not?
+- Where did your marking key prove wrong or unclear?
+- Skill gained: ___. Extent and why.
+
+**Create**
+- Which layout decisions survived contact with real readers, and which did the think-alouds undo?
+- What did building over the asset layer teach you about what a file can and cannot tell you (names yes, reasons no)?
+- What did the fidelity check and the date bugs teach you about trusting your own tool?
+- Skill gained: ___. Extent and why.
+
+## 5. Self-directed learning (about 100 words in the report)
+
+- What worked in how you learned this unit (reading plan, one branch per deliverable, prac conversations, mock marking)? What did not (timing, break, recruitment)?
+- Where did you stall and what got you moving? Link diary weeks.
+- AI tools: what did they speed up, and what did you have to check yourself? What would you do differently so the learning is yours?
+- Two or three concrete changes for next time (for example: log hours daily, recruit earlier, write diary entries on the day).
+
+## 6. Word budget
+
+Goals list (names only, restated) 40; four goals at about 80 each 320; self-directed learning about 100; hour variance sentence about 40 (the table itself can sit in an appendix and be referred to). Total about 500. Count with Word before submitting.
+
+## 7. Before submitting
+
+- [ ] Every goal has a link to its evidence and a plain statement of how far you got.
+- [ ] Every flagged variance has a cause in your own words.
+- [ ] Transferable-skill wording used; A2 goal names in brackets.
+- [ ] Numbers quoted as counts with limits.
+- [ ] No sentence here was written by an AI. If you used AI to proofread, say so in the Statement on Generative AI use.

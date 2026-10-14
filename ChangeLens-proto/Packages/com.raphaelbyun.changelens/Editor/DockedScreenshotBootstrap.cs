@@ -21,8 +21,10 @@ namespace ChangeLens.Editor
 {
     public static class DockedScreenshotBootstrap
     {
-        private const string FiguresFolder =
-            @"C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\figures";
+        // The repository's figures/ folder, beside the Unity project
+        // (Unity runs with the project as its current directory).
+        private static readonly string FiguresFolder =
+            Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "figures"));
 
         private const string OutputFile = "fig2-changelens-docked-raw.png";
 

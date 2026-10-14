@@ -29,9 +29,10 @@ namespace ChangeLens.Editor
 {
     public static class ScreenshotBootstrap
     {
-        // Where the two figures are written.
-        private const string FiguresFolder =
-            @"C:\Users\rapha\Documents\School\Unit 3 Sem 2\COMP3180\Working folder\a2-final-sprint-17-sep-2026\figures";
+        // Where the two figures are written: the repository's figures/ folder,
+        // beside the Unity project (Unity runs with the project as its current directory).
+        private static readonly string FiguresFolder =
+            Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "figures"));
 
         private const string Figure1 = "fig1-changelens-window.png";
         private const string Figure2 = "fig2-package-in-project.png";

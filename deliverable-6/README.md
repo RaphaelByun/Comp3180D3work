@@ -51,7 +51,7 @@ node deliverable-6/analysis/analyse.js --scores deliverable-6/data/item-scores.c
 3. Run the tool on the real files in Week 13, paste its output into Appendix E, and write the Results and Discussion in your own words from it. Write the opening answer last.
 4. Make Figure 1 and Tables 1 to 3 from the output.
 5. Keep the claims modest: raw counts first, limits stated (proxy upper bound, eight readers, ten items, a quarter re-coded).
-6. If the readers recruited fall below the participant floor, use the A2 fallback and say so in Method. What counts as the floor (five readers in total, or five per report version) is Raphael's open decision, stated in `deliverable-3/README.md` (open decision 5) and `deliverable-5/README.md`; do not apply either reading until it is made.
+6. If the readers recruited fall below the participant floor, use the A2 fallback and say so in Method. The floor is five readers in total (decided 14 Oct 2026; `deliverable-3/README.md` decision 5).
 
 ## Not done on purpose
 

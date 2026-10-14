@@ -18,7 +18,7 @@ The template wants raw results in an appendix, not counted in the 2500 words. Ea
 2. Never edit a raw CSV after analysis. Corrections go in a new row with a note, or a dated change log.
 3. Pilot data is kept, labelled, and excluded by the tool (any code like `P00`, or `pilot` = yes).
 4. Quotes in the report come from timestamped notes; keep the timestamp in Appendix D.
-5. If the readers recruited fall below the participant floor, say so in Method and keep the A2 fallback: think-alouds first, quantitative arm descriptive. What the floor is (five readers in total, or five per report version) is an open decision in `deliverable-3/README.md` (open decision 5).
+5. If the readers recruited fall below the participant floor, say so in Method and keep the A2 fallback: think-alouds first, quantitative arm descriptive. The floor is five readers in total (decided 14 Oct 2026; `deliverable-3/README.md` decision 5).
 6. Put the repo path of each appendix in the Project Deliverables links and check them in a private browser window.
 
 ## Folder layout to create when data exists

@@ -46,7 +46,7 @@ Recruit at the Weeks 9 and 10 pracs; slots booked by the end of Week 10 (Sun 18 
 
 ## Open questions for Raphael
 
-- **Participant floor (open decision, not yet made; same text as `deliverable-3/README.md` open decision 5).** A2 says both "The floor is five of each" and "below five, think-alouds run first and the quantitative arm is descriptive". **Raphael to decide: five readers in total, or five per report version.** If *five readers in total*: the floor is met after R05 (R01 to R04 cover all four sequences, R05 repeats S2), the quantitative arm runs on those five or more, and the pilot never counts. If *five per report version*, counted as readers whose first report is that version: that needs ten readers (five starting with A, five with B), and R01 to R08 give only four of each, so two more readers must be recruited. Until decided, fewer readers than the floor means think-alouds run first and the quantitative arm is reported as descriptive only. The fallback rule in `session-checklist.md` points here and hard-codes no number.
+- **Participant floor (decided; same text as `deliverable-3/README.md` decision 5).** Decided by Raphael, 14 Oct 2026: **five readers in total**. The floor is met once R05 has finished (R01 to R04 cover all four sequences, R05 repeats S2); the quantitative arm runs on those five or more, and the pilot never counts. Below five, A2's fallback applies: think-alouds run first and the quantitative arm is reported as descriptive only. The fallback rule in `session-checklist.md` points here.
 - Recording: the recruitment text says notes only, no audio. Change it if you want audio, and add consent wording.
 
 ## Link to the A2 success measure

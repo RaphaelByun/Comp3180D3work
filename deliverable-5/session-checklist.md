@@ -13,7 +13,7 @@ Readers R07 and R08 in the tracker skip the think-aloud and finish at 35 minutes
 - [ ] Consent wording and briefing script printed.
 - [ ] Marking key for the ten needs written and dated (before any reader sheet is seen).
 - [ ] Booking tracker updated with slots; each reader's sequence (S1 to S4, `deliverable-3/session-protocol.md` section 3) tells you which report goes first.
-- [ ] Participant floor decided (see Open questions in `README.md`), so you know when to stop recruiting.
+- [ ] Floor is five readers in total (decided 14 Oct): keep recruiting until R05 has finished, then fill R06 to R08 if you can.
 
 ## Per session: before the reader arrives (10 min)
 
@@ -57,4 +57,4 @@ Prods, term replies and what not to say are all in D3 (2.2 for content and term 
 | Reader recognises the game | Note it; keep the data and say so in Method |
 | Wrong report order given | Note it, finish the session, mark the reader `order error`, and decide with the sequence counts in mind whether to recruit a replacement |
 | Reader withdraws | Delete their sheets; update the tracker; the next person takes the next unused row (D3 section 3) |
-| Fewer readers than the floor | Follow the participant-floor decision in `README.md` (Open questions), which points to `deliverable-3/README.md` open decision 5. Do not apply a rule from memory |
+| Fewer than five readers | Think-alouds run first and the quantitative arm is reported as descriptive only (floor: five readers in total, `deliverable-3/README.md` decision 5) |

@@ -1,6 +1,6 @@
 # Design spec — outline
 
-The written output Deliverable 1 ends in ("Production-tool UX study and design spec"). This is an outline only: headings, what evidence fills each, and where it comes from. Sections 4–7 cannot be written until the heuristic pass and interviews are done.
+The written output Deliverable 1 ends in ("Production-tool UX study and design spec"). This is the outline the spec was written from: headings, what evidence fills each, and where it comes from. **Superseded 15 October 2026 by `design-spec.md`**, which Claude Code drafted from this outline (Raphael to accept or change). Two departures from the outline: §4 covers the six published sources instead of the dropped interviews, and §5's reconciliation is taken from `published-sources.md` §6.1. The "to fill" cells below are filled in `design-spec.md` §7; RS8 is kept.
 
 ChangeLens report sections referred to below are those the prototype produces now (prototype/HOW-IT-WORKS.md §5) and those A2 commits to adding:
 

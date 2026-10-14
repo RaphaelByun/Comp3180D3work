@@ -81,6 +81,7 @@ To the COMP3180 convenor. Copy the Ethics Secretariat only if the convenor agree
 > 3. What must I complete first (ethics training, FoRA application, information and consent form), and what is the realistic turnaround? I understand low-risk review can take up to about 20 working days, which is after the 8 Nov due date.
 > 4. If approval cannot arrive in time, what would you accept for A3? I do not think running it on myself or with simulated readers is a substitute for human participants. Could I submit the full protocol, ethics package and a clear statement that the study did not run, or is an extension possible?
 > 5. May I draft the application now? I have a draft application, risk table and data management plan (AI-assisted, which I will disclose as the Policy requires) for you to edit.
+> 6. For the tool-research part of the project I replaced two planned interviews with coding six published producer accounts (conference talk write-ups, postmortems, a public devlog). Can you confirm that analysing published public material like this needs no ethics approval?
 >
 > I have not recruited or run any session and will not until I have your answer in writing. [CONFIRM this is true before sending. If you have already asked people about the study, say so plainly.]
 >

@@ -4,6 +4,8 @@ Deliverable 1, 3 hours in A2: "25 needs classified by artefact source, seeded fr
 
 **Status: DRAFT, 12 October 2026.** The 25 needs and the classifications are a starting draft prepared by Claude Code from Ko et al. (2007), the job-ad scan and A2. Every classification is a provisional suggestion for Raphael to accept, change or reject; the evidence counts that decide the final ranks come only after the heuristic pass and the two interviews.
 
+**Update, 14 October 2026.** The heuristic pass is done (by Claude, through the browser; Raphael still hand-checks the severity 3–4 findings) and its evidence per need is in §6, with pass points under the §5 rule. The two interviews were dropped and replaced by six coded published sources (published-sources.md); wherever §5 says "interviewee", read "published source", and see published-sources.md §5 on whether to cap that stream at 2. No provisional mark was changed (change log at the end of §6).
+
 ## 1. Ko et al. (2007): the 21 information types, adapted
 
 Source: Ko, A. J., DeLine, R., & Venolia, G. (2007). Information needs in collocated software development teams. *Proceedings of the 29th International Conference on Software Engineering* (ICSE '07), 344–353. IEEE. https://doi.org/10.1109/ICSE.2007.45. Read from the Microsoft Research copy, https://www.microsoft.com/en-us/research/wp-content/uploads/2007/05/icse07_ko.pdf, retrieved 12 October 2026. Seventeen developers observed at Microsoft; 21 types in seven work categories (§5.1–5.7).
@@ -100,3 +102,30 @@ A2 says the sheet uses "the ten needs Deliverable 1 raises most often". Fix the 
 6. **Write each of the ten in plain words** a reader with no repository access understands (the sheet is read by COMP3151 producers), and keep Raphael's own D/P/N marking for each off the sheet.
 
 The three needs marked "candidate rejected-artefact case" (N07, N10, N23) are a starting point for the Evaluate measure; Raphael should keep or swap them after the interviews.
+
+
+## 6. Evidence from the heuristic pass (added 14 October 2026)
+
+Source: heuristic-coding-sheet.md §5, the pass Claude ran through the browser on Raphael's accounts on 14 October 2026 (single AI evaluator; Trello on an automatic Premium trial, Jira on a Standard trial, HacknPlan and GitHub on free plans; severity 3–4 findings still need Raphael's hand check). This section records what the pass shows for each need. It does not fill the "Evidence count" column in §3, because the other evidence kinds are not counted yet.
+
+**Pass points under the §5 rule** ("a tool task in the heuristic pass that failed or was only partly completed because of it, 0–4, one per tool"). How they were counted: each task maps to the needs in the task script (heuristic-coding-sheet.md §4); "Partly", "N" and "Y / partly" each score 1; "N (not tested)" scores 0, because a task that was not tried did not fail; a need probed by two tasks still scores at most 1 per tool.
+
+| Need | Task(s) | Trello | HacknPlan | Jira (trial) | GitHub | Pass points | What the pass shows |
+|---|---|---|---|---|---|---|---|
+| N01 Each discipline's changes | T1, T6 | Partly | Partly | Partly | Partly | 4 | Every tool answered "what art changed" with art-tagged tasks, never with changed files. Discipline shows only where someone tagged it; Trello's colour bars hide it (TR-07); HacknPlan has discipline categories built in and per-discipline counts in Metrics. |
+| N12 New art and audio assets | T1 | Partly | Partly | Partly | Partly | 4 | No tool showed which art or audio files were added. Supports the provisional T = N. |
+| N02 What each teammate has been working on | T2 | Y | Y | Y | Y | 0 | All four found Dev B's cards, but only through tags or labels, because none allows a fictional assignee. Trello's keyword search gave a wrong answer first (TR-12). |
+| N03 Which planned tasks were finished this week | T2 | Y | Y | Y | Y | 0 | "Finished" was found everywhere; "this week" could be checked only in GitHub (Closed field, issue timeline) and Jira (resolution dates). HacknPlan and Trello cards carry no completion date (HP-24, TR-14). Only Jira's Summary gave a weekly completed count out of the box ("8 completed in the last 7 days", on a Standard trial). |
+| N09 Is the milestone on track | T3 | Partly | Partly | Y / partly | Partly | 4 | GitHub free has a burn-up chart; HacknPlan's Burndown is Premium (HP-27) but Metrics gives "7 of 9 closed (78%)"; Trello free gives nothing beyond list counts (TR-13); Jira's Summary is the closest, on a trial. No estimates were seeded, so "on track" against a plan was not tested. |
+| N25 What can I tell others | T3, T7 | Partly | Partly (T3), N (T7) | Y / partly (T3), Partly (T7) | Partly | 4 | Every T3 update had to be written by hand. Sharing without an account: Trello Print/CSV/JSON, GitHub CSV, Jira per item only (JI-08), HacknPlan nothing on free (HP-27). |
+| N07 What is blocked, and on whom | T4 | Y | Partly | Y | Partly | 2 | Fast where a convention exists (Trello custom list, Jira flag, about 10 s each); HacknPlan free has no blocked state (HP-25); GitHub shows only a tiny red dot on the board (GP-09). Supports T = P and best source Person: the tracker holds it only if someone records it. |
+| N08 Emerging risks | T4 | Y | Partly | Y | Partly | 0 | The partial results were about blocked status (N07), not risk. No "at risk" item was seeded, so risk was not tested. |
+| N04 Work with no ticket | T5 | N (not tested) | N | N (not tested) | Y | 1 | On the plans seen, only GitHub links task to code natively (issue timeline shows the closing commit and its files). HacknPlan's integrations are Premium; Trello's Power-Up and Jira's GitHub app needed an OAuth grant and were not tried. Even in GitHub the link exists only when the commit message cites the issue (GP-10), which is exactly what N04 is about. |
+| N10 Why was this change made | T5 | N (not tested) | N | N (not tested) | Y | 1 | Weak evidence: T5 tested whether the link exists, not the rationale. GitHub's link leads to the commit message, which is where rationale would sit; no other tool linked to code on the plans seen. |
+| N19 Work that has gone quiet | T6 | Y / partly | N | Y / partly | Partly | 4 | Trello's and Jira's feeds give recent changes but no date filter (TR-15, JI-07); Trello hides label edits (TR-16); HacknPlan free has no activity feed (HP-26); GitHub's `updated:` filter lists which items changed, not what changed (GP-08). None shows "started but untouched for N days" directly. |
+
+Needs not probed by any task (pass points 0): N05, N06, N11, N13, N14, N15, N16, N17, N18, N20, N21, N22, N23, N24. Side observations only: N20, HacknPlan's Metrics splits closed tasks by discipline category; N17, no estimates were seeded, so remaining effort was not tested; N15, no bug cards were seeded.
+
+NEW needs from published-sources.md §4: NEW-1 (freshness) is touched by HacknPlan's "Log work" prompt on completion (HP-19) and by GitHub's commit-driven closing (GP-10, published-sources.md §6.1, point 2); NEW-2 (capacity) was not tested, and HacknPlan's Timetable and Calendar are Premium; NEW-3 (playable build) was not tested.
+
+**Change log for the provisional marks.** 14 October 2026: no T / R / U or D / P / N mark changed. The pass agrees with the provisional tracker marks it touched: N01 T = P (discipline only through tags), N12 T = N (no tool showed files), N04 T = P (only GitHub, and only through commit messages), N07 T = P (only if a convention is used). N03 stays T = D, with a note that it holds only in a tracker that records completion dates (GitHub, Jira), not on HacknPlan's or Trello's cards. The pass gives no evidence about the R or U columns, because the repository side was tested only in GitHub with placeholder files.

@@ -139,7 +139,7 @@ W1 = week of 8 Feb 2021 (`study/week1-2021-02-08`); W2 = week of 19 Jul 2021 (`s
 | R07 | S4 | No | |
 | R08 | S3 | No | Each sequence used twice over R01–R08. |
 
-Codes and sequences go to participants **in order of arrival**, not by name. If someone withdraws, the next person takes the next unused row. The participant floor, and what happens below it, is an open decision stated once in `README.md` (open decision 5). Do not apply either reading until Raphael has chosen.
+Codes and sequences go to participants **in order of arrival**, not by name. If someone withdraws, the next person takes the next unused row. The participant floor is five readers in total (decided 14 Oct 2026; `README.md` decision 5): it is met once R05 has finished, and below it think-alouds run first and the quantitative arm is descriptive.
 
 Report the per-week baseline scores (A2: week difficulty is a rival explanation).
 

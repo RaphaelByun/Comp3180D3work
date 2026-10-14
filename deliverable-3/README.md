@@ -16,6 +16,7 @@ Prepared 13 October 2026 (Week 10). **Nothing here has been piloted.** All files
 | `participant-info-and-consent.md` | Information sheet and consent form | Draft; **ethics check outstanding**; brackets to fill | Both pages, minus the top box |
 | `proxy-scenario.md` | One-page scenario, same for both versions. Handed to proxies; producers get the same context as a one-line verbal brief (`session-protocol.md` 2.1) | Draft | Participant part, proxies only |
 | `pilot-plan.md` | What the pilot checks, decision rules, change log | Plan only | Researcher copy |
+| `ethics/` | **Ethics tab** (14 Oct): what Macquarie most likely requires, with sources and what is inference (`README.md`), the email to the convenor, risk assessment, draft low-risk application ([CONFIRM] fields) and data management plan | Research and drafts; **no approval yet** | Not for participants |
 
 ## How this meets the A2 measure
 
@@ -33,6 +34,8 @@ Prepared 13 October 2026 (Week 10). **Nothing here has been piloted.** All files
 The measure is met only when the pilot has run and the change log is filled in.
 
 ## What Raphael must do himself
+
+**First, before any recruiting or the pilot:** send the email in `ethics/README.md` section 4 to the convenor. Macquarie policy requires approval (or a written exemption) before research starts and does not accept retrospective approval, so the Week 11 pilot waits on the answer.
 
 1. **Ethics.** Ask the unit convenor whether Macquarie needs ethics approval or a low-risk application for this class-based study, and whether a university consent template must be used. Record the answer and date here. No session, including the pilot, before that.
 2. **Fidelity check.** The `study/*/fidelity-A.md` and `fidelity-B.md` files here are blank templates; the scored files are on the `deliverable-4-fidelity-check` branch. July scored PASS for both A and B. February was scored by two scorers: Version B failed on contradicted claims, the tool was repaired and the changed rows are being re-scored. A2 requires scoring "read by hand", so Raphael must verify the AI-assisted scoring and disclose it. Do not start sessions until both weeks pass; if a report is regenerated, re-check the item line references.

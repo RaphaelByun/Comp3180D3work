@@ -1,6 +1,6 @@
 # Deliverable 8: Development diary
 
-Status (13 Oct 2026, Week 10): format, fact log and hours log ready. **No diary entry exists and none has been written for you.** Nothing here is committed.
+Status (17 Oct 2026, Week 10): format, fact log and hours log ready and committed on this branch. **No diary entry exists and none has been written for you.**
 
 A2 success measure (Deliverables table, row 8, 2 h, 0 in prac): **"A dated entry each week naming a roadblock or breakthrough."** The diary also carries most of the evidence for the R&D Engagement criterion (15% of A3), together with commit cadence and prac attendance.
 

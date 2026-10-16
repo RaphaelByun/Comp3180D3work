@@ -23,6 +23,7 @@ A2 success measure (Deliverables table, row 9, 2 h, 0 in prac): **"All four goal
 3. In Week 13: run `variance-table.js`, paste the table, write each "why" yourself, then write the reflection from the prompts. Stay near 500 words.
 4. Say plainly where a goal was only partly met and why. Staff mark the honest version higher than a tidy one.
 5. Mention any AI help with the wording in the Statement on Generative AI use.
+6. In Industry Relevance and Future Work, use point 3 of `deliverable-3/ethics/report-ethics-points.md`: a producer tool like ChangeLens could be used to monitor or blame developers, so it reports changes to the project, not people's output. That is a professional judgement worth naming for a producer or tools role.
 
 ## Link to the A2 success measure
 

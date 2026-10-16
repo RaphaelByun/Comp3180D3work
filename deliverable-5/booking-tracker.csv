@@ -1,10 +1,10 @@
 code,role,sequence,week_order,think_aloud,planned_week,slot,status,notes
-P0,,S1,W1-B then W2-A,yes,Week 11 (19-25 Oct),,to recruit,Pilot. Excluded from the data. Role: record on arrival
-R01,,S1,W1-B then W2-A,yes,Week 11 (19-25 Oct),,to recruit,Role: record on arrival
-R02,,S2,W2-A then W1-B,yes,Week 11 (19-25 Oct),,to recruit,Role: record on arrival
-R03,,S3,W1-A then W2-B,yes,Week 11 (19-25 Oct),,to recruit,Role: record on arrival
-R04,,S4,W2-B then W1-A,yes,Week 12 (26 Oct-1 Nov),,to recruit,Role: record on arrival
-R05,,S2,W2-A then W1-B,yes,Week 12 (26 Oct-1 Nov),,to recruit,Role: record on arrival
-R06,,S1,W1-B then W2-A,yes,Week 12 (26 Oct-1 Nov),,to recruit,Role: record on arrival
-R07,,S4,W2-B then W1-A,no,Week 12 (26 Oct-1 Nov),,to recruit,Ends at 35 min (no think-aloud). Role: record on arrival
-R08,,S3,W1-A then W2-B,no,Week 12 (26 Oct-1 Nov),,to recruit,Ends at 35 min (no think-aloud). Role: record on arrival
+P0,,S1,W1-B then W2-A,yes,Week 11 (target Tue 20-Wed 21 Oct),,to recruit,Pilot. Excluded from the data. Must not be a reader later. Role: record on arrival
+R01,,S1,W1-B then W2-A,yes,Week 11 (target Thu 22-Sun 25 Oct),,to recruit,Role: record on arrival
+R02,,S2,W2-A then W1-B,yes,Week 11 (target Thu 22-Sun 25 Oct),,to recruit,Role: record on arrival
+R03,,S3,W1-A then W2-B,yes,Week 11 (target Thu 22-Sun 25 Oct),,to recruit,Role: record on arrival
+R04,,S4,W2-B then W1-A,yes,Week 12 (target Mon 26-Wed 28 Oct),,to recruit,Role: record on arrival
+R05,,S2,W2-A then W1-B,yes,Week 12 (target Mon 26-Wed 28 Oct),,to recruit,Floor (five readers) met when R05 has finished. Role: record on arrival
+R06,,S1,W1-B then W2-A,yes,Week 12 (target by Thu 29 Oct),,to recruit,Last think-aloud reader; by Thu 29 Oct to keep the re-code wait before 8 Nov. Role: record on arrival
+R07,,S4,W2-B then W1-A,no,Week 12 (target Fri 30 Oct-Sun 1 Nov),,to recruit,Ends at 35 min (no think-aloud). Role: record on arrival
+R08,,S3,W1-A then W2-B,no,Week 12 (target Fri 30 Oct-Sun 1 Nov),,to recruit,Ends at 35 min (no think-aloud). Role: record on arrival

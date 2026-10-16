@@ -64,7 +64,7 @@ Ko et al. studied developers. Producers may ask things none of the 21 types cove
 |---|---|---|---|
 | 1. Capture | During or right after each session | One row per utterance, timestamp from the notes, which report was open (A or B), quote as noted | `think-aloud-coding-sheet.csv` |
 | 2. Pass 1 | Separate sitting, after sessions | Fill `pass1_code` and `pass1_date` for every row (pilot rows may be coded for practice but are excluded from analysis) | same |
-| 3. Wait | At least 7 days | Do something else. Note the date in the diary | |
+| 3. Wait | At least 7 days | Do something else. Note the date in the diary. A3 is due 8 Nov, so finish pass 1 by Fri 30 Oct (catch-up plan in `README.md`) | |
 | 4. Draw | After the wait | `node deliverable-5/recode-sample.js draw --in deliverable-5/think-aloud-coding-sheet.csv --out deliverable-5/recode-blind.csv`. It picks a seeded random quarter (rounded up) of the pass-1 rows, pilot excluded, and writes them without the pass-1 codes. Write the printed seed and count in your diary | `recode-blind.csv` |
 | 5. Pass 2 | Same day as the draw | Code the blind file from the quote_note alone, without opening the main sheet | `recode-blind.csv` |
 | 6. Merge | After pass 2 | `node deliverable-5/recode-sample.js merge --in deliverable-5/think-aloud-coding-sheet.csv --blind deliverable-5/recode-blind.csv --out deliverable-5/think-aloud-coding-sheet.csv`. Pass-1 codes are not changed | main sheet |

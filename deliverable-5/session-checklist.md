@@ -8,12 +8,13 @@ Readers R07 and R08 in the tracker skip the think-aloud and finish at 35 minutes
 
 ## Before the day (once)
 
-- [ ] Fidelity check passed for both study weeks (Deliverable 4: none contradicted, 90% of claims supported). No session before this. Current status is in `deliverable-3/README.md`, item 2.
+- [ ] Fidelity check passed for both study weeks (Deliverable 4: none contradicted, 90% of claims supported). No session before this. The scored files and `study/week1-2021-02-08/FIDELITY-RESULT.md` are on the `deliverable-4-fidelity-check` branch (July PASS for A and B; February A 15/15, B 39/39 after the repair and re-score); Raphael checks the AI-assisted scoring by hand himself (17 Oct).
 - [ ] Instruments final and piloted (Deliverable 3): six items per week, fixed-answer sheet, ten-need sheet, think-aloud prompt, proxy scenario.
-- [ ] Consent wording and briefing script printed.
+- [ ] Consent form brackets filled (contact, withdrawal date, storage; `deliverable-3/participant-info-and-consent.md`), then the information sheet, consent form and briefing script printed.
 - [ ] Marking key for the ten needs written and dated (before any reader sheet is seen).
 - [ ] Booking tracker updated with slots; each reader's sequence (S1 to S4, `deliverable-3/session-protocol.md` section 3) tells you which report goes first.
-- [ ] Floor is five readers in total (decided 14 Oct): keep recruiting until R05 has finished, then fill R06 to R08 if you can.
+- [ ] Floor is five readers in total (decided 14 Oct): keep recruiting until R05 has finished, then fill R06 to R08 if you can. Target dates and the fallback date are in the catch-up plan in `README.md` (think-aloud readers R01 to R06 by Thu 29 Oct).
+- [ ] The pilot participant (P0) is someone who will not be a reader later.
 
 ## Per session: before the reader arrives (10 min)
 
@@ -41,12 +42,12 @@ Prods, term replies and what not to say are all in D3 (2.2 for content and term 
 ## Right after the reader leaves (5 min, same day)
 
 - [ ] Score items 1 to 5 as 0, 1 or 2 with `deliverable-3/answer-key-and-scoring.md`; code item 6 as Pass, Hedged or Over-claim (it is not scored); tick S on items 4 and 5 if the answer used a name only Version B shows. Blind to version where you can.
-- [ ] Enter scores in `deliverable-6/data/item-scores.csv` (participant, role, condition, week, order, item, score, specific). Item 6 goes in as the category word.
-- [ ] Enter the ten-need sheet in `need-classifications.csv` (participant, need_id, class, and the T, R or U source the reader circled in the `records` column).
-- [ ] Copy the think-aloud notes into `think-aloud-coding-sheet.csv` (one row per utterance, verbatim as noted). Do not code yet; pass-1 coding happens in a separate sitting.
+- [ ] Enter scores in `deliverable-6/data/item-scores.csv` (participant, role, condition, week, order, item, score, specific). Item 6 goes in as the category word. First time only: copy the header-only templates from `deliverable-6/analysis/templates/` into `deliverable-6/data/`.
+- [ ] Enter the ten-need sheet in `deliverable-6/data/need-classifications.csv` (participant, need_id, class, and the T, R or U source the reader circled in the `records` column).
+- [ ] Copy the think-aloud notes into `deliverable-5/think-aloud-coding-sheet.csv` (one row per utterance, verbatim as noted). Do not code yet; pass-1 coding happens in a separate sitting.
 - [ ] Update the tracker: role, status `done`, date, anything odd.
 - [ ] Put original paper sheets in a folder labelled with the code only. Names are never on them.
-- [ ] Two lines in your diary notes: what happened, what surprised you (for you to write in your own words).
+- [ ] Two lines in your diary notes: what happened, what surprised you (for you to write in your own words). Log the session hours in `deliverable-8/hours-entries.csv`.
 
 ## If something goes wrong
 
@@ -57,4 +58,4 @@ Prods, term replies and what not to say are all in D3 (2.2 for content and term 
 | Reader recognises the game | Note it; keep the data and say so in Method |
 | Wrong report order given | Note it, finish the session, mark the reader `order error`, and decide with the sequence counts in mind whether to recruit a replacement |
 | Reader withdraws | Delete their sheets; update the tracker; the next person takes the next unused row (D3 section 3) |
-| Fewer than five readers | Think-alouds run first and the quantitative arm is reported as descriptive only (floor: five readers in total, `deliverable-3/README.md` decision 5) |
+| Fewer than five readers | Think-alouds run first and the quantitative arm is reported as descriptive only (floor: five readers in total, `deliverable-3/README.md` decision 5). Decide on Mon 26 Oct (fallback date in `README.md`, catch-up plan); the pilot never counts |

@@ -36,4 +36,8 @@ Things the A3 Statement on Generative AI use must cover, noted here so they are 
 
 - Commits in the repository are co-authored by Claude Code (the `Co-Authored-By` trailer).
 - The February fidelity scoring and its re-score were done by AI scorers. A2 requires scoring "read by hand", so Raphael must verify those scores by hand and say so; the July scoring (PASS for A and B) needs the same check.
+- Deliverable 1: Claude (Claude Code) ran the heuristic pass through Chrome on Raphael's accounts on 14 October 2026 and coded the 61 problems and their severities, as a single AI evaluator. It also coded the six published sources that replaced the interviews and drafted the reconciliation.
+- Deliverable 1: on 15 October 2026 Claude verified the job ads, reviews and source quotes on the live pages, marked the 25 needs (75 marks), picked the three rejected-artefact cases and the top ten, and drafted the design spec. Every judgement is AI-drafted, pending Raphael's accept-or-change step; the statement must say which he checked and when.
+- The Deliverable 1 starters (tool selection, coding sheet, scan, draft needs, spec outline, 12 October 2026) were drafted with Claude Code.
+- Deliverable 2: the ChangeLens code and tests were written with Claude Code under Raphael's direction (see the commit trailers). Say how much of it you wrote or changed yourself.
 - The Deliverable 3 to 9 starters (instruments, session kits, analysis tool, diary and reflection scaffolds) were drafted with Claude Code; Raphael must review them, and the data, diary entries, results and reflection text must be his own.

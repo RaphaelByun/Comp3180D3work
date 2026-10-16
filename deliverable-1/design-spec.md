@@ -12,7 +12,7 @@ The page is for a producer who never opens the codebase (A2, Learning Goal *Crea
 - **Desk scan:** 10 producer ads and 5 reviews, coded with a fixed codebook and verified on the live pages on 15 October 2026 (JA). Review V5 is unverified and not scored.
 - **Needs:** Ko et al.'s (2007) 21 types checked against the paper; 14 kept fully or partly (NC §1). 25 needs, each marked T / R / U × D / P / N (NC §3), checked on one UXF week (NC §4) and ranked by a rule fixed before counting (NC §5).
 - **Departure 1:** the pass was run and coded by an AI agent (Claude) on Raphael's accounts, as a single evaluator; Trello was on a Premium trial and Jira on a Standard trial. Nielsen and Molich (1990) show one evaluator finds a minority of problems, so the findings are a sample. Raphael hand-checks the severity 3–4 findings before citing them.
-- **Departure 2:** the two interviews were replaced by six coded published producer accounts (PS §1), because talking to participants needs ethics approval that could not be obtained in time. The *Apply and Analyse* measure is reported as "three places where inspection and the published sources disagree".
+- **Departure 2:** the two interviews were replaced by six coded published producer accounts (PS §1), because there was not time to recruit and run them. The *Apply and Analyse* measure is reported as "three places where inspection and the published sources disagree".
 
 ## 3. What existing tools show a producer
 

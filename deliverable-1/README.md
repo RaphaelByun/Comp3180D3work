@@ -23,6 +23,7 @@ Three departures from A2's plan, all to be stated in the spec and in the A3 refl
 
 1. **The heuristic pass was run by AI.** Raphael had no time to run it, so he authorised Claude (Claude Code) to run it through Chrome on his accounts on 14 October 2026. Claude seeded all four tools, ran tasks T1 to T7, wrote raw notes, and then coded the problems, rated severity and filled the summary matrix. The method note at the top of `heuristic-coding-sheet.md` sets out the limits: one evaluator, and an AI one; automated input (three HacknPlan findings are provisional); Trello seen on an automatic Premium trial and Jira on a Standard trial, not Free; no screenshots saved. **Raphael must hand-check at least the 16 severity 3–4 findings before citing them, and disclose the AI use in the A3 GenAI statement.**
 2. **The interviews were dropped.** Raphael decided on 14 October 2026 to drop the two interviews, for time and because talking to participants needs ethics approval he could not get in time. Six published producer accounts were coded in their place (`published-sources.md`). The *Apply and Analyse* measure now reads "three places where inspection and the published sources disagree"; the reconciliation is in `published-sources.md` §6.1, and the substitution has to be stated wherever the measure is reported.
+   **Update, 17 October 2026:** Raphael decided the project needs no ethics application (the unit guide sets no ethics requirement; `deliverable-3/README.md`), so the ethics half of this reason no longer applies. The interviews stay dropped for time; when reporting the substitution, give time as the reason. Coding published sources needs no ethics step.
 
 3. **The analysis was drafted by AI (15 October 2026).** Raphael had no time, so Claude Code did README steps 1, 3, 5, 6, 7, 8, 10 to 15 on 15 October 2026: it re-checked the free tiers and verified the ads, reviews V1–V4 and the published-source quotes on the live pages (one agent), and checked the Ko et al. adaptation against the PDF, recoded the sources, set the cap, tightened the reconciliation, edited and marked the 25 needs, picked the three rejected-artefact cases, ran the UXF week check, ranked the needs and wrote the spec and the D3 handoff (another agent). Every judgement is marked "AI-drafted, Raphael to accept or change". The A3 GenAI statement must say so.
 
@@ -45,9 +46,9 @@ Analysis results in brief (15 October 2026): the ten needs for the D3 sheet are 
 | `HANDOFF-TO-D3.md` | The ten needs in sheet wording, the researcher marking key (T / R / U × D / P / N, overall mark under both rules), five runners-up | AI-drafted; copy into `deliverable-3/ten-need-sheet.md` once accepted |
 | `design-spec-outline.md` | The outline the spec was written from | Superseded by `design-spec.md` |
 
-## To do for Raphael, in order (revised 15 October 2026)
+## To do for Raphael, in order (revised 17 October 2026)
 
-A2 planned 600 minutes for D1. After the AI work on 14 and 15 October, about 182 minutes of Raphael's own work remain, almost all of it checking and accepting.
+A2 planned 600 minutes for D1. After the AI work on 14 and 15 October, about 177 minutes of Raphael's own work remain, almost all of it checking and accepting.
 
 | # | Step | File | Minutes | A2 part |
 |---|---|---|---|---|
@@ -59,7 +60,7 @@ A2 planned 600 minutes for D1. After the AI work on 14 and 15 October, about 182
 | 6 | Accept the live-page quote check and the P1, P4, P6 settlements | published-sources.md §7 | 10 | Sources (2 h) |
 | 7 | Accept or change the seven recodes and the cap of 2 | published-sources.md §3, §5 | 10 | Sources |
 | 8 | Accept or rewrite the three-point reconciliation | published-sources.md §6.1 | 10 | Sources |
-| 9 | Confirm with the convenor that coding public sources needs no ethics approval (question 6 of the D3 ethics email) | — | 5 | Sources |
+| 9 | ~~Confirm with the convenor that coding public sources needs no ethics approval~~ Dropped 17 Oct 2026: no ethics application or convenor email (`deliverable-3/README.md`) | — | 0 | Sources |
 | 10 | Accept the seven Ko et al. fixes | needs-catalogue.md §1 | 5 | Needs (3 h) |
 | 11 | Accept or change the merges, additions and rewordings | needs-catalogue.md §3, §7 | 10 | Needs |
 | 12 | Accept or change the 75 marks and the three rejected-artefact cases (N07, N10, N27) | needs-catalogue.md §3, §3.1 | 20 | Needs |
@@ -67,9 +68,9 @@ A2 planned 600 minutes for D1. After the AI work on 14 and 15 October, about 182
 | 14 | Accept the rule, map and ranks; if anything above changed, re-run the count | needs-catalogue.md §5 | 5 | Needs |
 | 15 | Read and edit the spec; put it in your own words where you will quote it in A3 | design-spec.md | 20 | Needs (remaining) |
 | 16 | GenAI statement lines (below) | A3 report | 10 | — |
-| | **Total** | | **182** | |
+| | **Total** | | **177** | |
 
-Minutes check: 5 + 45 + 5 + 2 + 15 + 10 + 10 + 10 + 5 + 5 + 10 + 20 + 5 + 5 + 20 + 10 = 182. Against A2's 600: log the variance in the reflection report with the reason (time pressure) and the cost (an AI single evaluator, no interviews, AI-drafted analysis that Raphael checked rather than did).
+Minutes check: 5 + 45 + 5 + 2 + 15 + 10 + 10 + 10 + 0 + 5 + 10 + 20 + 5 + 5 + 20 + 10 = 177. Against A2's 600: log the variance in the reflection report with the reason (time pressure) and the cost (an AI single evaluator, no interviews, AI-drafted analysis that Raphael checked rather than did).
 
 **GenAI statement lines for A3 (draft; adjust to what you actually did):**
 - "Claude (Claude Code) ran the heuristic pass through a browser on my accounts on 14 October 2026 and coded the problems and severities; I hand-checked the severity 3–4 findings on [date]."
@@ -83,7 +84,7 @@ Minutes check: 5 + 45 + 5 + 2 + 15 + 10 + 10 + 10 + 5 + 5 + 10 + 20 + 5 + 5 + 20
 | 12 Oct 2026: picked four tools; built the coding sheet, task script and seed; found 10 ads and 5 reviews; extracted Ko et al.'s 21 types; drafted 25 needs; outlined the spec | Glance at the pricing pages |
 | 14 Oct 2026: ran and coded the heuristic pass (61 problems); coded six published sources in place of interviews; drafted the reconciliation; added pass evidence to the catalogue | Hand-check the severity 3–4 findings; confirm the trials lapse |
 | 15 Oct 2026 (web agent): re-verified free tiers; verified 10 ads, reviews V1–V4 and every source quote on the live pages; recounted the ad codes; settled P1, P4, P6 | Spot-check the verified ads and reviews; decide on V5 |
-| 15 Oct 2026 (analysis agent): checked Ko et al. against the PDF (7 fixes); recoded the sources and set the cap; tightened the reconciliation; edited and marked the 25 needs; picked N07, N10, N27 as rejected-artefact cases; UXF week check (9–15 Nov 2020); ranked the needs; wrote design-spec.md and HANDOFF-TO-D3.md | Accept or change every judgement in needs-catalogue.md §8; edit the spec; convenor line; GenAI statement |
+| 15 Oct 2026 (analysis agent): checked Ko et al. against the PDF (7 fixes); recoded the sources and set the cap; tightened the reconciliation; edited and marked the 25 needs; picked N07, N10, N27 as rejected-artefact cases; UXF week check (9–15 Nov 2020); ranked the needs; wrote design-spec.md and HANDOFF-TO-D3.md | Accept or change every judgement in needs-catalogue.md §8; edit the spec; GenAI statement |
 
 ## Network limits in this session (why some things are unverified)
 

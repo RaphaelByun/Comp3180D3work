@@ -1,6 +1,6 @@
 # Deliverable 7: Portfolio video
 
-Status (13 Oct 2026, Week 10): plan only. Nothing is recorded or uploaded. Nothing here is committed.
+Status (17 Oct 2026, Week 10): plan only, committed on this branch. Nothing is recorded or uploaded.
 
 A2 success measure (Deliverables table, row 7, 4 h, 1 in prac): **"Three to four minutes showing both conditions; two outside viewers can state its purpose and reader."** A2 timeline: analysis and video in Week 13.
 
@@ -25,7 +25,7 @@ Beat 6 is a placeholder until the Week 13 analysis is done. It must hold the rea
 3. Re-record beat 6 once the analysis is done (Week 13).
 4. Run the feedback form with two outside viewers; keep the responses; fix and retest if either fails.
 5. Upload to Echo 360 at least a day before 8 Nov 2026 and put the link in both places.
-6. Log hours in `deliverable-8/hours-log.csv` (A2 budget 4 h, 1 in prac).
+6. Log hours in `deliverable-8/hours-entries.csv`; the weekly total goes into `deliverable-8/hours-log.csv` (A2 budget 4 h, 1 in prac).
 
 ## Check against the unit's calibration
 

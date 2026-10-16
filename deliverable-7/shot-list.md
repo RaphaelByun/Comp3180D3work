@@ -41,4 +41,4 @@ Status: plan only. Tick when captured. Record screens at 1920x1080, 30 fps; reco
 | Result slide and re-record of beat 6 (Week 13) | 0.5 |
 | Viewer test, fixes, upload, link check | 1.0 |
 
-Log your real hours in `deliverable-8/hours-log.csv`; the variance goes into the reflection.
+Log your real hours in `deliverable-8/hours-entries.csv`; the weekly total goes into `deliverable-8/hours-log.csv`. The variance goes into the reflection.

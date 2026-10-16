@@ -14,8 +14,9 @@ Status: plan only. Tick when captured. Record screens at 1920x1080, 30 fps; reco
 | S6 | 5 | Flip to Version B (treatment) in the same window: same sections, then the scene and prefab names | 25 s | Same scroll speed as S5 so the eye compares | [ ] |
 | S7 | 5 | Flip A then B again, with the airlock prefab names highlighted | 12 s | Edit overlay | [ ] |
 | S8 | 6 | Result slide with the real figure | 20 s | After analysis only | [ ] |
-| S9 | 7 | Limits slide | 12 s | Three bullets maximum | [ ] |
-| S10 | 8 | End card | 8 s | Repo URL as text | [ ] |
+| S9 | 8 | Limits slide | 12 s | Three bullets maximum | [ ] |
+| S10 | 9 | End card | 8 s | Repo URL as text | [ ] |
+| S11 | 7 | Contribution: what you designed, decided, ran and hand-checked versus what the AI drafted, against repo evidence (commit history, study sessions, hand fidelity check) | 12 s | Reader codes only; never cut this shot | [ ] |
 
 ## Voice-over and audio
 
@@ -36,7 +37,7 @@ Status: plan only. Tick when captured. Record screens at 1920x1080, 30 fps; reco
 
 | Task | Suggested hours |
 |---|---|
-| Capture screens (S1 to S7, S9, S10) | 1.0 |
+| Capture screens (S1 to S7, S9 to S11) | 1.0 |
 | Voice-over and edit | 1.5 |
 | Result slide and re-record of beat 6 (Week 13) | 0.5 |
 | Viewer test, fixes, upload, link check | 1.0 |

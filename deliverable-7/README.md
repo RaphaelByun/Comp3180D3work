@@ -10,8 +10,8 @@ A2 success measure (Deliverables table, row 7, 4 h, 1 in prac): **"Three to four
 
 | File | What it is |
 |---|---|
-| `storyboard.md` | Eight beats with timings, what the viewer must understand, what is on screen, repo sources, cut order, rules. Covers the reader, the problem, the tool, both report conditions and a result slot |
-| `shot-list.md` | Ten shots to capture, audio and edit checklist, export and upload steps, hour budget |
+| `storyboard.md` | Nine beats with timings, what the viewer must understand, what is on screen, repo sources, cut order, rules. Covers the reader, the problem, the tool, both report conditions, a result slot and your own contribution |
+| `shot-list.md` | Eleven shots to capture, audio and edit checklist, export and upload steps, hour budget |
 | `feedback-form.md` | The two-viewer test: how to run it, the form, the marking key, a response log |
 
 ## The result slot

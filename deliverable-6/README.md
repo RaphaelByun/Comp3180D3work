@@ -52,6 +52,7 @@ node deliverable-6/analysis/analyse.js --scores deliverable-6/data/item-scores.c
 4. Make Figure 1 and Tables 1 to 3 from the output.
 5. Keep the claims modest: raw counts first, limits stated (proxy upper bound, eight readers, ten items, a quarter re-coded).
 6. If the readers recruited fall below the participant floor, use the A2 fallback and say so in Method. The floor is five readers in total (decided 14 Oct 2026; `deliverable-3/README.md` decision 5).
+7. Add the ethics row to Method (one or two sentences) from `deliverable-3/ethics/report-ethics-points.md` points 1 and 2. No ethics application was made (decided 17 Oct 2026, `deliverable-3/README.md`).
 
 ## Not done on purpose
 

@@ -21,9 +21,10 @@ A2 success measure (Deliverables table, row 9, 2 h, 0 in prac): **"All four goal
 1. Keep `deliverable-8/hours-log.csv` current from now on. The variance table is only as honest as the log.
 2. Write the two evidence diary entries above (suggested: the Understand one when you next re-read Dourish and Bellotti, Whitson and Stray; the Create one on a reserve week once the Producer Page window is stable).
 3. In Week 13: run `variance-table.js`, paste the table, write each "why" yourself, then write the reflection from the prompts. Stay near 500 words.
-4. Say plainly where a goal was only partly met and why. Staff mark the honest version higher than a tidy one.
-5. Mention any AI help with the wording in the Statement on Generative AI use.
-6. In Industry Relevance and Future Work, use point 3 of `deliverable-3/ethics/report-ethics-points.md`: a producer tool like ChangeLens could be used to monitor or blame developers, so it reports changes to the project, not people's output. That is a professional judgement worth naming for a producer or tools role.
+4. For Deliverable 1, state two A2-plan variances in the reflection: the interviews were replaced by six coded published sources (so the Apply and Analyse measure reads "inspection and the published sources"), and A2's 600 minutes for D1 became AI work plus your checking (about 177 minutes left on 17 Oct). Give time as the reason. The skeleton's section 2 and the Apply and Analyse prompts cover this.
+5. Say plainly where a goal was only partly met and why. Staff mark the honest version higher than a tidy one.
+6. Mention any AI help with the wording in the Statement on Generative AI use.
+7. In Industry Relevance and Future Work, use point 3 of `deliverable-3/ethics/report-ethics-points.md`: a producer tool like ChangeLens could be used to monitor or blame developers, so it reports changes to the project, not people's output. That is a professional judgement worth naming for a producer or tools role.
 
 ## Link to the A2 success measure
 

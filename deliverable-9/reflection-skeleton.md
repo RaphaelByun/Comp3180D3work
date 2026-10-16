@@ -28,8 +28,8 @@ A2 lead-in: "These capabilities span understand to create (Anderson & Krathwohl,
 | Goal | A2 measure needs | Where the evidence comes from | Status (fill in) |
 |---|---|---|---|
 | Understand | A diary entry stating each of the three mechanisms unaided, with its source and a breakdown it predicts | **A diary entry you still have to write** (see the note below). Mechanisms: structural (Dourish & Bellotti, 1992), opacity (Whitson, 2018), audience (Stray et al., 2016) | Not started |
-| Apply and Analyse | Four tools coded; one reconciliation naming three places inspection and interviews disagree | Deliverable 1: heuristic coding sheet, two interviews, reconciliation in the design spec | D1 prep done; heuristic pass and interviews are yours |
-| Evaluate | Every need classified against a named artefact; three needs where you name the rejected artefact and why | Deliverable 1 needs catalogue (25 needs) and the ten-need sheet in Deliverables 3 and 6 | Draft catalogue exists; marking is yours |
+| Apply and Analyse | Four tools coded; one reconciliation naming three places inspection and interviews disagree. **Changed in D1 (14 Oct 2026):** the interviews were dropped for time and six published producer accounts were coded instead, so the measure now reads "three places where inspection and the published sources disagree". State this substitution wherever you report the measure | Deliverable 1: `heuristic-coding-sheet.md` (61 problems across the four tools), `published-sources.md` (six sources; reconciliation in §6.1), `design-spec.md` | Heuristic pass run by AI (Claude Code, 14 Oct 2026): one evaluator, and an AI one. Reconciliation AI-drafted. Yours: hand spot-check the 16 severity 3–4 findings and accept or rewrite the reconciliation (D1 README steps 2 and 8) |
+| Evaluate | Every need classified against a named artefact; three needs where you name the rejected artefact and why | Deliverable 1 `needs-catalogue.md` (25 needs, 75 marks; rejected-artefact cases N07, N10, N27 in §3.1) and the ten-need sheet in Deliverables 3 and 6 | All 25 needs marked and the three cases picked by AI (15 Oct 2026). Yours: accept or change each mark and case (D1 README steps 10 to 14, needs-catalogue.md §8) |
 | Create | A diary entry written against an unfamiliar Unity week, tying each layout decision to a named reader need | Deliverable 2 (the report layout) plus **a diary entry you still have to write** against a week you have not worked on (a reserve week such as 14 Dec 2020 or 27 Sep 2021 would do) | Not started |
 
 Note: two of the four measures are diary entries (Understand and Create). They must be written in the diary (Deliverable 8) in your own words, with the date you really wrote them. The skeleton cannot do this for you.
@@ -59,6 +59,13 @@ Prompts for the "Why" column:
 - What would you change in the next estimate?
 - Staff said "everything always takes longer than you expect, even if you take that into account." Does your data agree?
 
+Deliverable 1 is a variance in method as well as hours. A2 planned 600 minutes of your own work; after the AI work on 14 and 15 October about 177 minutes remain, almost all checking (D1 README, revised 17 Oct 2026). Prompts for its "Why" cell and one sentence in the report:
+- What was dropped or handed over: the two interviews (replaced by six coded published sources), the heuristic pass (run by AI), and the needs analysis (AI-drafted, you accepted or changed it). Say which, in your words.
+- Why: the reason D1 records is time. The ethics reason given on 14 Oct no longer applies after the 17 Oct no-ethics decision, so do not give it.
+- Effect on the Apply and Analyse measure: the reconciliation is now inspection against published sources, not interviews, and the inspection had one AI evaluator. What does that cost the finding?
+- Effect on the Evaluate measure: were the marks your judgement or your check of someone else's? How much did you change?
+- Count your real D1 minutes, including the checking, before you write the cause.
+
 ## 3. Restating the goals as transferable skills (the marker's note)
 
 Do this before writing the reflection. The aim is the skill that would still be true if the project topic changed.
@@ -66,7 +73,7 @@ Do this before writing the reflection. The aim is the skill that would still be 
 | Goal | A2 wording keeps project terms such as | Prompt: the transferable skill is... (write it) | Options to start from (accept, change or throw away) |
 |---|---|---|---|
 | Understand | "structural, opacity and audience explanations" | What general skill is it to compare competing explanations of a problem against evidence and say which predictions tell them apart? | Weighing competing explanations of a problem against evidence |
-| Apply and Analyse | usability heuristics, "four tools" | What general skill is it to combine expert inspection with user data and reconcile disagreements? | Combining expert review with user interviews |
+| Apply and Analyse | usability heuristics, "four tools" | What general skill is it to combine expert inspection with user evidence and reconcile disagreements? | Combining expert review with user evidence (here, published user accounts) |
 | Evaluate | "team's artefacts", "producer's information need" | What general skill is it to judge whether automated data can meet a stakeholder's need or a person must? | Judging when automation can meet a stakeholder's need and when it cannot |
 | Create | "Unity Editor tool", "serialised asset layer" | What general skill is it to design an output for a non-expert reader and build it? | Designing for a non-technical reader and building the tool that serves them |
 
@@ -83,12 +90,16 @@ For each goal, answer in your own words, in this order. Keep the evidence link n
 - Skill gained (restated as transferable): ___. Extent: new / extended / little progress, and why.
 
 **Apply and Analyse**
-- What did inspection find that the interviews did not, and the reverse? Name the three disagreements (from the reconciliation).
-- What limit did one evaluator and two interviews put on the findings?
-- How did the heuristic pass change what you built in Deliverable 2?
+- State the substitution first: the A2 measure named interviews; D1 coded six published producer sources instead, for time. One plain sentence.
+- What did inspection find that the published sources did not, and the reverse? Name the three disagreements (`published-sources.md` §6.1), and say whether you accepted the AI draft or rewrote it.
+- The pass was run by AI, with one evaluator. What limit does that put on the findings? What did your hand spot-check of the severity 3–4 findings confirm, change or delete?
+- What can published accounts not tell you that an interview could have (follow-up questions, your own tools, a game team you chose)?
+- Did you apply and analyse here, or check an analysis? Be honest about the extent; this goal may be only partly met.
+- How did the heuristic findings change what you built in Deliverable 2, if at all?
 - Skill gained: ___. Extent and why.
 
 **Evaluate**
+- The 75 marks and the three rejected-artefact cases (N07, N10, N27) were AI-drafted. Which did you change when you checked them, and why? If you changed none, say so.
 - Which needs surprised you in your key versus the readers' classifications? Name three where you rejected an artefact and why.
 - What did the readers' disagreements tell you that a table of agreement could not?
 - Where did your marking key prove wrong or unclear?

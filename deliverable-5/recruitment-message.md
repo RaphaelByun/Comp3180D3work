@@ -25,7 +25,7 @@ Draft for Raphael to edit into his own voice. Say it out loud at the prac or pas
 
 ## Before sending (checks Raphael does)
 
-- [ ] Ask Malcolm or Mitchell at the Week 10 prac whether this study needs any ethics step or just the voluntary-and-de-identified approach in A2. Record the answer in the diary.
+- No ethics step before sending (decided 17 Oct 2026, `deliverable-3/README.md`). Recruit with a general call-out like this one, not personal asks, so nobody feels singled out.
 - [ ] COMP3151 is busy toward the 3 November release: offer short, flexible slots and say plainly it is 45 minutes.
 - [ ] Do not recruit anyone whose mark you affect or who may feel unable to say no.
 - [ ] If audio is wanted for the think-aloud, add one line asking permission and say where the recording is kept and when it is deleted. Notes only is simpler and is what A2 plans ("timestamped notes").

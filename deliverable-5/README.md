@@ -36,7 +36,7 @@ Recruit at the Weeks 9 and 10 pracs; slots booked by the end of Week 10 (Sun 18 
 
 ## What Raphael must do
 
-1. Edit the recruitment message into your own voice and send it. Ask Malcolm or Mitchell at the Week 10 prac whether any ethics step is needed (A2 says voluntary and de-identified), and note the answer.
+1. Edit the recruitment message into your own voice and send it. No ethics step is needed first: Raphael decided on 17 Oct 2026 not to apply or ask the convenor, because the unit guide sets no ethics requirement and the Final Project expects testing with the target audience (`deliverable-3/README.md`). The A2 safeguards stay: voluntary, de-identified, notes only. The report covers ethics using `deliverable-3/ethics/report-ethics-points.md`.
 2. Recruit and fill the tracker (codes only; keep names in a private file outside the repo). Book slots by the end of Week 10.
 3. Make sure Deliverable 3 (instruments) and Deliverable 4 (fidelity check) are finished before the pilot. The `fidelity-A.md` / `fidelity-B.md` files are blank templates; scored files live on the `deliverable-4-fidelity-check` branch. July scored PASS for A and B. February was scored by two scorers: Version B failed on contradicted claims, the tool was repaired and the changed rows are being re-scored. A2 requires scoring "read by hand", so you must verify the AI-assisted scoring and disclose it.
 4. Run the pilot first and fix the instruments before reader 1. The pilot is excluded.

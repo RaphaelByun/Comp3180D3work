@@ -187,7 +187,7 @@ namespace ChangeLens.Editor
                 Fail("Week start must look like 2021-07-19.");
                 return;
             }
-            string until = start.AddDays(_days).ToString("yyyy-MM-dd");
+            string until = WeekExport.WeekEnd(start, _days);
 
             EditorUtility.DisplayProgressBar("ChangeLens", "Running git log for the week...", 0.3f);
             _export = WeekExport.FromGit(_repoPath, _weekStart.Trim(), until);

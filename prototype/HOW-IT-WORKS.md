@@ -14,12 +14,14 @@ talk to git directly.
 You hand it **a text file**. That text file is what you get when you run this in any git repository:
 
 ```
-git log --name-status --date=iso --no-merges --since=2024-02-19 --until=2024-02-26 > week.txt
+git -c core.quotepath=false log --first-parent --diff-merges=first-parent --name-status --date=iso --since=2024-02-19 --until=2024-02-26 > week.txt
 ```
 
 `--name-status` is the important part: it makes git print, under each commit, one line per file that
 the commit touched, with a letter saying what happened to it (`A` added, `M` modified, `D` deleted,
-`R094` renamed).
+`R094` renamed). `-c core.quotepath=false` makes git print file names with non-English letters as
+they are, not as escape codes. ChangeLens can read the escape codes too, but the plain names are
+easier to check by eye.
 
 ChangeLens reads that text, sorts every path into a category (code / scenes / art / audio / data /
 `.meta` / other), adds it all up, and shows you the result as a one-page report. There is also an
@@ -142,7 +144,7 @@ The blue box under the buttons tells you how many commits and how many file entr
 To make your own export from any repo — including Inkform — run:
 
 ```
-git log --name-status --date=iso --no-merges --since=2025-09-01 --until=2025-09-08 > week.txt
+git -c core.quotepath=false log --first-parent --diff-merges=first-parent --name-status --date=iso --since=2025-09-01 --until=2025-09-08 > week.txt
 ```
 
 and load `week.txt` the same way.
@@ -155,7 +157,7 @@ and load `week.txt` the same way.
 
 | Row | Meaning |
 |---|---|
-| **Commits** | How many commits are in the export. Merge commits are excluded because the export used `--no-merges`. |
+| **Commits** | How many commits are in the export. The command walks the main line only (`--first-parent`), so a merged branch shows up as its one merge commit, listing every file the branch brought in, in the week it was merged. |
 | **Date range** | The earliest and latest commit date in the file. A sanity check that you exported the week you meant to. |
 | **Changed-file entries** | One entry = **one file touched by one commit**. If the same file is edited in three commits it counts three times. This is what a git log literally reports, and it is the denominator for the percentage below. |
 | **Code-file entries** | How many of those entries were code files (`.cs`, `.shader`, `.hlsl`, `.uxml`, `.asmdef`, …). |

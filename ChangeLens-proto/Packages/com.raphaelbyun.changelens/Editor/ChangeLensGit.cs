@@ -35,10 +35,8 @@ namespace ChangeLens.Editor
         public static WeekExport FromGit(string repoPath, string since, string until)
         {
             var export = new WeekExport();
-            string range = "--since=" + DateBound(since) + " --until=" + DateBound(until);
-            export.LogText = RunGit(repoPath, "log --name-status --date=iso --no-merges " + range);
-            export.PatchText = RunGit(repoPath, "log -p --no-merges --date=iso " + range +
-                                                " -- \"*.prefab\" \"*.unity\"");
+            export.LogText = RunGit(repoPath, LogArgs(since, until));
+            export.PatchText = RunGit(repoPath, PatchArgs(since, until));
 
             List<CommitRecord> commits = GitLogParser.Parse(export.LogText);
             if (commits.Count > 0)
@@ -47,6 +45,58 @@ namespace ChangeLens.Editor
                 export.GuidText = RunGit(repoPath, "grep -I -e \"^guid:\" " + commits[0].Hash + " -- \"*.cs.meta\"");
             }
             return export;
+        }
+
+        /// <summary>
+        /// The git arguments for the week's name-status log. The export walks the
+        /// main line only (--first-parent) and shows each merge as everything it
+        /// brought in (--diff-merges=first-parent). So work done on a branch is
+        /// reported in the week it was merged, not the week it was committed,
+        /// which a weekly report run on the day would never see.
+        /// </summary>
+        public static string LogArgs(string since, string until)
+        {
+            return "log --first-parent --diff-merges=first-parent --name-status --date=iso " + Range(since, until);
+        }
+
+        /// <summary>The git arguments for the week's scene and prefab patch (see <see cref="LogArgs"/>).</summary>
+        public static string PatchArgs(string since, string until)
+        {
+            return "log -p --first-parent --diff-merges=first-parent --date=iso " + Range(since, until) +
+                   " -- \"*.prefab\" \"*.unity\"";
+        }
+
+        private static string Range(string since, string until)
+        {
+            return "--since=" + DateBound(since) + " --until=" + UntilBound(until);
+        }
+
+        /// <summary>
+        /// The day after the week's last day as yyyy-MM-dd, always on the
+        /// Gregorian calendar. The machine's own culture could be Thai or Persian,
+        /// where the same date would print as 2564 or 1400.
+        /// </summary>
+        public static string WeekEnd(DateTime start, int days)
+        {
+            return start.AddDays(days).ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// The end bound handed to git. Git's --until includes a commit made at
+        /// exactly that second, so a date-only end ("2021-07-26") becomes one
+        /// second before that midnight UTC ("2021-07-25T23:59:59+0000"). A commit
+        /// at 00:00:00 then falls in the next week only, not in both.
+        /// </summary>
+        public static string UntilBound(string value)
+        {
+            string trimmed = value == null ? "" : value.Trim();
+            DateTime day;
+            if (trimmed.Length != 10 ||
+                !DateTime.TryParseExact(trimmed, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture,
+                                        System.Globalization.DateTimeStyles.None, out day))
+                return trimmed;
+            return day.AddDays(-1).ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture) +
+                   "T23:59:59+0000";
         }
 
         /// <summary>

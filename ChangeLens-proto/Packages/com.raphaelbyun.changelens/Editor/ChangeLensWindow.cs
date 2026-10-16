@@ -93,7 +93,8 @@ namespace ChangeLens.Editor
                 EditorGUILayout.HelpBox(
                     "No report yet.\n\n" +
                     "Produce an export with:\n" +
-                    "    git log --name-status --date=iso --no-merges --since=<start> --until=<end> > week.txt\n\n" +
+                    "    git -c core.quotepath=false log --first-parent --diff-merges=first-parent\n" +
+                    "        --name-status --date=iso --since=<start> --until=<end> > week.txt\n\n" +
                     "then point the field above at that file and press Load.",
                     MessageType.Info);
             }

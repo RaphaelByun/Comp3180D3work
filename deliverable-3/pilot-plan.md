@@ -6,7 +6,7 @@ One pilot session (code P0, sequence S1) runs the full 45-minute protocol before
 
 ## Before the pilot
 
-- [ ] Ethics question answered by the convenor (see `participant-info-and-consent.md`). No pilot until it is.
+- [x] Ethics: no application or convenor question needed (decided 17 Oct 2026, `README.md`). The pilot waits only on the checks below.
 - [ ] Fidelity check passed on both weeks (A2: none contradicted, 90% supported). If a report changes, re-check the line references in both items files.
 - [ ] Ten-need marking key filled in and dated, with the overall-mark rule chosen (`ten-need-sheet.md`, section B).
 - [ ] **Desk run by Raphael:** answer all twelve items against all four report files, timing each block. Any item Raphael cannot answer from Version A alone is a fault; fix it before the pilot.

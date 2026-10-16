@@ -68,6 +68,8 @@ Counts: 8 commits in the repo, all dated 11 to 13 Oct (3 by Claude, 5 by Raphael
 - Deliverable 4: July 2021 week scored by two scorers. Version A 14 of 14 claims supported; Version B 27 supported, 0 contradicted, 1 unsupported (row 25) of 28 (96.4%). Both pass the A2 rule (none contradicted, at least 90% supported). Two omissions logged as Deliverable 2 repair items. The February week is not yet scored. Dates in the reports are author-local.
 - `TRY-CHANGELENS.md`: a 15-minute hands-on guide, added 13 Oct.
 - Deliverables 5 to 9: scaffolds prepared in local worktrees on 13 Oct (nothing committed): recruitment and session kit, analysis tool and evaluation skeleton, video plan, diary and hours log, reflection skeleton.
+- Ethics (14 Oct): Claude researched Macquarie's human research ethics policy and drafted an email to the convenor, a risk assessment, a draft low-risk application and a data management plan (`deliverable-3/ethics/`). The D1 interviews were dropped the same day, for time and because of the ethics question.
+- Ethics decision (17 Oct, Raphael): no ethics application and no convenor email, because the COMP3180 unit guide sets no ethics requirement and the Final Project expects testing with the target audience. The study keeps its own safeguards (voluntary, codes not names, notes only), and the A3 report will discuss the project's ethics instead (`deliverable-3/ethics/report-ethics-points.md`).
 - Not on disk: any recruitment message sent, any booking, any session, any instrument for Deliverable 3, or any Week 10 prac attendance record.
 
 ## 5. Gaps the files cannot fill (you must supply these)
@@ -83,4 +85,5 @@ Counts: 8 commits in the repo, all dated 11 to 13 Oct (3 by Claude, 5 by Raphael
 
 - Week 9: what did you do with the A2 feedback? What was the first thing you decided about A3 and why did you split the repo into one branch per deliverable?
 - Week 10: what blocked or unblocked you with the study weeks, the date bugs or the fidelity check? What changed from the A2 plan so far (tiers, order, hours)?
+- Week 10: why did you look into ethics, and why did you decide on 17 Oct to handle it in the report rather than through an application? What ethical issues did you see in your own project?
 - Both weeks: what did you learn that you could not have got from reading?

@@ -5,7 +5,7 @@ This file lists what the git history and the files on disk show for Weeks 9 and 
 Built 13 Oct 2026 (about 19:00 Sydney time, Week 10) and updated 17 Oct 2026 (Sydney time) from:
 
 ```
-git -C "<COMP3180>/Working folder/a2-final-sprint-17-sep-2026" log --all --format='%h %ad %an %s' --date=short
+git -C "<COMP3180>/Assignemnts/Assignment 3 Final Project/Comp3180D3work" log --all --format='%h %ad %an %s' --date=short
 ```
 
 plus the branch contents, file modified-times on this machine, and two notes in `COMP3180/CLAUDE.md`. Re-run the command before you write: other sessions are still committing, and this log was true at the time above only. The 13 Oct build missed the commits made that evening between 18:41 and 19:08; they are in section 2 now.

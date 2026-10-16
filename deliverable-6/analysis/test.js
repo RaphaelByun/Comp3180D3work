@@ -133,20 +133,28 @@ eq('undefined kappa is NaN', Number.isNaN(A.cohenKappa(L('A A A A'), L('A A A A'
   const co = A.analyseCodes(A.parseCSV(fs.readFileSync(path.join(dir, 'sample-think-aloud-codes.csv'), 'utf8')));
   has('coding overlap', co, 'Segments with pass 1: 16. Re-coded in pass 2: 8');
   has('coding agreement', co, 'Agreement: 6/8 (75%). Cohen\'s kappa: 0.70.');
-  has('coding differences', co, '| S06     | a3     | d1     |');
+  has('coding differences', co, '| S06     | F01    | a3     | d1     |');
   hasNot('coding ignores single-pass segments', co, '| S09     |');
 }
 
-// 8b. Validation. A score of 3 on an item 1-5 row is flagged; a numeric item 6 is flagged;
+// 8b. Validation. A score of 3 on an item 1-5 row is flagged by reader and item; a numeric item 6 is flagged;
 //     item 6 words are accepted in any case/spelling; a file with no specific or records columns still works.
 {
   const csv = ['participant,role,condition,week,order,item,score',
     'X1,proxy,A,W1,1,1,3', 'X1,proxy,A,W1,1,2,2', 'X1,proxy,A,W1,1,6,1', 'X1,proxy,B,W2,2,6,over claim', 'X1,proxy,B,W2,2,1,2'].join('\n');
   const v = A.analyseScores(A.parseCSV(csv));
-  has('flags score 3', v, 'WARNING: 1 row(s) for items 1-5 with a score that is not 0, 1 or 2.');
-  has('flags numeric item 6', v, 'WARNING: 1 row(s) for item 6 not coded Pass, Hedged or Over-claim.');
-  has('item 6 spelling', v, '| Over-claim | 0/1      | 1/1       |');
+  has('flags score 3', v, 'WARNING: 1 row(s) for items 1-5 with a score that is not 0, 1 or 2: X1 baseline item 1 ("3").');
+  has('flags numeric item 6', v, 'WARNING: 1 row(s) for item 6 not coded Pass, Hedged or Over-claim: X1 baseline.');
+  // X1 has only items 1, 2 and 6, so X1 is incomplete and left out of the tables (see 10a-10e)
+  has('incomplete X1 named', v, 'X1 (baseline item 3, 4, 5 missing; baseline item 1 score not 0, 1 or 2; treatment item 2, 3, 4, 5 missing)');
   hasNot('no specificity section without column', v, 'Specificity tick');
+  // item 6 spelling, on a complete reader (items 1-5 in both conditions)
+  const ok = ['participant,role,condition,week,order,item,score'];
+  for (const [c, w, o] of [['A', 'W1', 1], ['B', 'W2', 2]]) for (let i = 1; i <= 5; i++) ok.push(`X3,proxy,${c},${w},${o},${i},2`);
+  ok.push('X3,proxy,A,W1,1,6,PASS', 'X3,proxy,B,W2,2,6,over claim');
+  const v6 = A.analyseScores(A.parseCSV(ok.join('\n')));
+  has('item 6 spelling', v6, '| Over-claim | 0/1      | 1/1       |');
+  has('item 6 upper case', v6, '| Pass       | 1/1      | 0/1       |');
   const half = A.analyseScores(A.parseCSV('participant,role,condition,week,order,item,score\nX2,proxy,A,W1,1,1,0.5'));
   has('flags half mark', half, 'WARNING: 1 row(s) for items 1-5');
 }
@@ -157,6 +165,172 @@ eq('undefined kappa is NaN', Number.isNaN(A.cohenKappa(L('A A A A'), L('A A A A'
   // S1-S3 in both passes, 2 of 3 agree
   has('wide layout overlap', wide, 'Re-coded in pass 2: 3');
   has('wide layout agreement', wide, 'Agreement: 2/3 (67%)');
+}
+
+// 10. Edge cases the real study can hit. Base set: five readers R01-R05 plus a pilot P0.
+//     Items 1-5 (baseline / treatment), worked by hand:
+//     R01 producer  base W1 o1 2,2,1,0,1 = 6   treat W2 o2 2,2,2,2,1 = 9   diff +3
+//     R02 proxy     base W2 o2 2,1,0,1,0 = 4   treat W1 o1 2,2,2,1,1 = 8   diff +4
+//     R03 proxy     base W1 o1 2,2,1,1,0 = 6   treat W2 o2 2,2,2,1,1 = 8   diff +2
+//     R04 producer  base W2 o1 2,2,2,1,1 = 8   treat W1 o2 2,2,1,1,0 = 6   diff -2
+//     R05 proxy     base W1 o2 1,1,1,1,1 = 5   treat W2 o1 2,1,1,1,1 = 6   diff +1
+//     Item 6 is Pass everywhere. P0 copies R01 and must never count.
+const BASE = {
+  R01: ['producer', ['W1', 1, [2, 2, 1, 0, 1]], ['W2', 2, [2, 2, 2, 2, 1]]],
+  R02: ['proxy', ['W2', 2, [2, 1, 0, 1, 0]], ['W1', 1, [2, 2, 2, 1, 1]]],
+  R03: ['proxy', ['W1', 1, [2, 2, 1, 1, 0]], ['W2', 2, [2, 2, 2, 1, 1]]],
+  R04: ['producer', ['W2', 1, [2, 2, 2, 1, 1]], ['W1', 2, [2, 2, 1, 1, 0]]],
+  R05: ['proxy', ['W1', 2, [1, 1, 1, 1, 1]], ['W2', 1, [2, 1, 1, 1, 1]]],
+  P0: ['proxy', ['W1', 1, [2, 2, 1, 0, 1]], ['W2', 2, [2, 2, 2, 2, 1]]],
+};
+function scoreLines(only) {
+  const lines = [];
+  for (const p of Object.keys(BASE)) {
+    if (only && !only.includes(p)) continue;
+    const [role, b, t] = BASE[p];
+    for (const [cond, [w, o, s]] of [['baseline', b], ['treatment', t]]) {
+      s.forEach((x, i) => lines.push(`${p},${role},${cond},${w},${o},${i + 1},${x},`));
+      lines.push(`${p},${role},${cond},${w},${o},6,Pass,`);
+    }
+  }
+  return lines;
+}
+const HEAD = 'participant,role,condition,week,order,item,score,specific';
+const run = lines => A.analyseScores(A.parseCSV([HEAD].concat(lines).join('\r\n') + '\r\n'));
+
+// 10a. All five complete: diffs 3, 4, 2, -2, 1 -> mean 8/5 = 1.60, median 2.00; no floor notice.
+//      Roles: producers R01, R04 (3, -2) mean 0.50; proxies R02, R03, R05 (4, 2, 1) mean 7/3 = 2.33.
+{
+  const o = run(scoreLines());
+  has('five: summary', o, 'Readers: 5. Higher with names: 4. Same: 0. Lower with names: 1.');
+  has('five: mean', o, 'Mean difference 1.60 points out of 10 (median 2.00, range -2.00 to 4.00');
+  has('five: roles', o, 'producer n=2, mean 0.50; proxy n=3, mean 2.33');
+  has('five: pilot dropped', o, 'pilot rows excluded: 12; analysed: 60');
+  hasNot('five: no floor notice', o, 'Below the five-reader floor');
+  eq('five: footer', A.footer(A.prepareScores(A.parseCSV([HEAD].concat(scoreLines()).join('\n'))).complete.length),
+    'Report raw counts and limits. 5 complete readers (pilot excluded) show direction and failure points, not significance.');
+}
+
+// 10b. Blank score: R03 treatment item 4 left blank. R03 is left out and named; the mean is over
+//      R01, R02, R04, R05: 3, 4, -2, 1 -> 6/4 = 1.50, median (1+3)/2 = 2.00. No NaN anywhere.
+//      Item 4 treatment over the four: 2, 1, 1, 1 -> full 1/4, mean 1.25.
+{
+  const o = run(scoreLines().map(l => (l === 'R03,proxy,treatment,W2,2,4,1,' ? 'R03,proxy,treatment,W2,2,4,,' : l)));
+  has('blank: warning names row', o, 'R03 treatment item 4 ("")');
+  has('blank: reader excluded', o, 'R03 (treatment item 4 score not 0, 1 or 2)');
+  has('blank: mean over 4', o, 'Mean difference 1.50 points out of 10 (median 2.00, range -2.00 to 4.00');
+  has('blank: counts', o, 'Readers: 4. Higher with names: 3. Same: 0. Lower with names: 1.');
+  has('blank: item 4', o, '| 4    | 0/4           | 0.75          | 1/4            | 1.25           |');
+  hasNot('blank: no NaN', o, 'NaN');
+  hasNot('blank: no n/a', o, 'n/a');
+  hasNot('blank: R03 not in paired table', o, '| R03 ');
+}
+
+// 10c. Missing row: R03 treatment item 4 row deleted. Same exclusion and the same mean, 1.50.
+{
+  const o = run(scoreLines().filter(l => l !== 'R03,proxy,treatment,W2,2,4,1,'));
+  has('missing: reader excluded', o, 'R03 (treatment item 4 missing)');
+  has('missing: mean over 4', o, 'Mean difference 1.50 points out of 10');
+}
+
+// 10d. Duplicate row: an extra R02 treatment item 3 row. R02 is left out and the duplicate is named.
+//      Remaining R01, R03, R04, R05: 3, 2, -2, 1 -> mean 4/4 = 1.00, median (1+2)/2 = 1.50, range -2 to 3.
+{
+  const o = run(scoreLines().concat(['R02,proxy,treatment,W1,1,3,2,']));
+  has('dup: warning', o, 'WARNING: duplicate rows (same reader, condition and item): R02 treatment item 3 (2 rows).');
+  has('dup: reader excluded', o, 'R02 (treatment item 3 duplicated)');
+  has('dup: mean', o, 'Mean difference 1.00 points out of 10 (median 1.50, range -2.00 to 3.00');
+}
+
+// 10e. One condition only: R05's treatment rows removed. R05 is out of the paired table and of every
+//      condition table. Item 1: baseline R01-R04 all 2 -> 4/4; treatment 4/4.
+//      Order: order 1 = R01 base 6, R02 treat 8, R03 base 6, R04 base 8 -> 7.00 (n=4);
+//             order 2 = R01 treat 9, R02 base 4, R03 treat 8, R04 treat 6 -> 6.75 (n=4).
+{
+  const o = run(scoreLines().filter(l => !l.startsWith('R05,proxy,treatment')));
+  has('one-cond: reason', o, 'R05 (no treatment rows)');
+  has('one-cond: item 1', o, '| 1    | 4/4           | 2.00          | 4/4            | 2.00           |');
+  has('one-cond: item 6', o, '| Pass       | 4/4      | 4/4       |');
+  has('one-cond: order', o, 'order 1: 7.00 (n=4); order 2: 6.75 (n=4)');
+}
+
+// 10f. Three readers (R01-R03): floor notice at the top, role split withheld (one producer).
+{
+  const o = run(scoreLines(['R01', 'R02', 'R03', 'P0']));
+  has('floor: notice', o, '**Below the five-reader floor (3 complete readers): A2 fallback. Report this arm as descriptive only and the think-alouds first.**');
+  eq('floor: notice comes first', o.indexOf('Below the five-reader floor'), 2);
+  has('floor: role split withheld', o, 'By role: not split. producer n=1; proxy n=2.');
+  has('floor: footer', A.footer(3), '3 complete readers (pilot excluded)');
+  has('floor: footer fallback', A.footer(3), 'Below the five-reader floor: A2 fallback applies.');
+}
+
+// 10g. Excel blank rows (",,,,,,,") are dropped, not counted and not warned about.
+{
+  const o = run(scoreLines().concat([',,,,,,,', ' , ,,,,,,']));
+  has('excel: rows read', o, 'Rows read: 72; pilot rows excluded: 12; analysed: 60.');
+  hasNot('excel: no warning', o, 'WARNING');
+}
+
+// 11. Think-aloud codes with the real D5 wide header, CRLF and a quoted note with a comma.
+const WIDE = 'segment_id,participant,timestamp,report_condition,quote_note,pass1_code,pass1_date,pass2_code,pass2_date,final_code,resolution_rule';
+const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') + '\r\n'));
+// 11a. Four pilot rows (P0, a2) and four reader rows; two re-coded (S05 a2/a2, S06 d1/d3).
+//      Pilot out: 4 segments, 2 re-coded = 50%, agreement 1/2, pass 1 a2 = 2 (S05, S07).
+{
+  const o = wide([
+    'S01,P0,00:01,A,"practice, pilot",a2,2026-10-20,,,,', 'S02,P0,00:02,A,x,a2,2026-10-20,,,,',
+    'S03,P0,00:03,A,x,a2,2026-10-20,,,,', 'S04,P0,00:04,A,x,a2,2026-10-20,,,,',
+    'S05,R01,00:01,B,"who did it, and when",a2,2026-10-28,a2,2026-11-04,,', 'S06,R01,00:02,B,x,d1,2026-10-28,d3,2026-11-04,,',
+    'S07,R02,00:01,A,x,a2,2026-10-28,,,,', 'S08,R02,00:02,A,x,u1,2026-10-28,,,,',
+  ]);
+  has('codes pilot: count', o, 'Pilot rows excluded: 4.');
+  has('codes pilot: segments', o, 'Segments with pass 1: 4. Re-coded in pass 2: 2 (50% of pass 1');
+  has('codes pilot: agreement', o, 'Agreement: 1/2 (50%)');
+  has('codes pilot: a2 count', o, '| a2   | 2        |');
+}
+// 11b. segment_id restarting per reader: S01/S02 for R01 and for R02. Keyed by reader, nothing merges:
+//      4 segments, 2 re-coded (R01 S01 a2/a2, R02 S01 d3/d4), agreement 1/2; a warning names the shared ids.
+{
+  const o = wide(['S01,R01,,,,a2,,a2,,,', 'S02,R01,,,,d1,,,,,', 'S01,R02,,,,d3,,d4,,,', 'S02,R02,,,,u1,,,,,']);
+  has('collision: segments', o, 'Segments with pass 1: 4. Re-coded in pass 2: 2');
+  has('collision: agreement', o, 'Agreement: 1/2 (50%)');
+  has('collision: warning', o, 'segment_id used for more than one reader: S01 (R01, R02); S02 (R01, R02)');
+  has('collision: diff row', o, '| S01     | R02    | d3     | d4     |');
+}
+// 11c. The same reader and segment twice: left out and named.
+{
+  const o = wide(['S01,R01,,,,a2,,a2,,,', 'S01,R01,,,,d1,,d1,,,', 'S02,R01,,,,u1,,u1,,,']);
+  has('seg dup: warning', o, 'left out until fixed: R01 S01.');
+  has('seg dup: counts', o, 'Segments with pass 1: 1. Re-coded in pass 2: 1');
+}
+// 11d. All codes identical: agreement 4/4 but kappa undefined, not 1 and not a crash.
+{
+  const o = wide(['S1,R01,,,,a2,,a2,,,', 'S2,R01,,,,a2,,a2,,,', 'S3,R02,,,,a2,,a2,,,', 'S4,R02,,,,a2,,a2,,,']);
+  has('identical: agreement', o, 'Agreement: 4/4 (100%)');
+  has('identical: kappa', o, "Cohen's kappa: undefined (no variation in labels).");
+}
+
+// 12. Ten-need sheet with a blank need. Key N01-N10 = D D D D P P P N N N.
+//     R01 and R03 match all ten. R02 labels N10 as D (9/10). R04 labels N09 as P and leaves N10 blank (8/9).
+//     Lowest by proportion is R04 8/9 (0.89), highest 10/10. N10 was classified by three readers, so its
+//     departure count is 1/3; N09 by four, 1/4.
+{
+  const keyL = L('D D D D P P P N N N');
+  const id = i => `N${String(i + 1).padStart(2, '0')}`;
+  const keyRows = A.parseCSV(['need_id,class'].concat(keyL.map((c, i) => `${id(i)},${c}`)).join('\n'));
+  const lines = ['participant,need_id,class'];
+  for (const p of ['R01', 'R02', 'R03', 'R04']) keyL.forEach((c, i) => {
+    let x = c;
+    if (p === 'R02' && i === 9) x = 'D';
+    if (p === 'R04' && i === 8) x = 'P';
+    if (p === 'R04' && i === 9) x = '';
+    lines.push(`${p},${id(i)},${x}`);
+  });
+  const o = A.analyseNeeds(A.parseCSV(lines.join('\n')), keyRows);
+  has('needs blank: summary', o, 'Agreement ranged 8/9 to 10/10 across 4 readers');
+  has('needs blank: short reader', o, '1 reader(s) classified fewer than 10 needs: R04 (9).');
+  has('needs blank: N10 denominator', o, '| N10  | N   | 1/3               | R02:D              |');
+  has('needs blank: N09 denominator', o, '| N09  | N   | 1/4               | R04:P              |');
 }
 
 console.log(`${pass} checks passed, ${fail} failed`);

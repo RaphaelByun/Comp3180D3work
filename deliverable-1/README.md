@@ -1,6 +1,6 @@
 # Deliverable 1 — Production-tool UX study and design spec
 
-COMP3180, Semester 2 2026. Raphael Byun. Folder prepared 12 October 2026 (Week 10) by Claude Code; nothing here is committed.
+COMP3180, Semester 2 2026. Raphael Byun. Folder prepared 12 October 2026 (Week 10) by Claude Code. The files are committed on branch `deliverable-1-ux-study`.
 
 ## What D1 is
 
@@ -45,6 +45,7 @@ Analysis results in brief (15 October 2026): the ten needs for the D3 sheet are 
 | `design-spec.md` | The design spec: reader, method and departures, tool findings, sources, reconciliation, the ten needs and headline finding, needs → report sections for Version A and B, layout, out of scope (about 1,700 words) | AI-drafted 15 Oct 2026; Raphael edits |
 | `HANDOFF-TO-D3.md` | The ten needs in sheet wording, the researcher marking key (T / R / U × D / P / N, overall mark under both rules), five runners-up | AI-drafted; copy into `deliverable-3/ten-need-sheet.md` once accepted |
 | `design-spec-outline.md` | The outline the spec was written from | Superseded by `design-spec.md` |
+| `CHECK-PACK.md` | Raphael's hand-check pack: 16 spot-check cards for step 2 (Part A) and an accept list for the other steps (Part B) | Prepared 17 Oct 2026 by Claude Code; Raphael ticks and dates it |
 
 ## To do for Raphael, in order (revised 17 October 2026)
 
@@ -53,7 +54,7 @@ A2 planned 600 minutes for D1. After the AI work on 14 and 15 October, about 177
 | # | Step | File | Minutes | A2 part |
 |---|---|---|---|---|
 | 1 | Glance at the four pricing pages; overwrite the "checked" date. Jira Free's Summary tab is unverified, so cite the Jira T3 result as "on a Standard trial" | tool-selection.md | 5 | Heuristic (4 h) |
-| 2 | **Hand spot-check the 16 severity 3–4 findings**, starting with the provisional HP-16, HP-17, HP-18 and then HP-25, TR-13, HP-27 (the reconciliation rests on them); change, re-rate or delete what you cannot reproduce; screenshot each one you keep | heuristic-coding-sheet.md §5 | 45 | Heuristic |
+| 2 | **Hand spot-check the 16 severity 3–4 findings**, starting with the provisional HP-16, HP-17, HP-18 and then HP-25, HP-24, HP-27 (the reconciliation rests on them) and TR-13 (the §6 Trello row); change, re-rate or delete what you cannot reproduce; screenshot each one you keep | heuristic-coding-sheet.md §5 | 45 | Heuristic |
 | 3 | Read the Jira T3 update Claude wrote on 15 Oct; recheck the §6 matrix if any row changes in step 2 | heuristic-coding-sheet.md §5.3, §6 | 5 | Heuristic |
 | 4 | Check later that the Trello Premium and Jira Standard trials lapse with nothing to pay | — | 2 | Heuristic |
 | 5 | Spot-check three verified ads and the four verified reviews; decide whether to drop V5 or verify it | job-ads-and-reviews.md | 15 | Scan (1 h) |

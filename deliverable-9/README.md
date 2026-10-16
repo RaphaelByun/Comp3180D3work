@@ -1,6 +1,6 @@
 # Deliverable 9: Reflection report (all four goals)
 
-Status (13 Oct 2026, Week 10): skeleton, prompts and a variance-table helper ready. **No reflection has been written.** Nothing here is committed.
+Status (17 Oct 2026, Week 10): skeleton, prompts and a variance-table helper ready and committed on `deliverable-9-reflection`. **No reflection has been written.**
 
 A2 success measure (Deliverables table, row 9, 2 h, 0 in prac): **"All four goals evidenced; hour variances explained."** This feeds the A3 Learning Reflection (about 500 words, 15% of A3 is Reflection).
 

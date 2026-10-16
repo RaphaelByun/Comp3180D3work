@@ -1,5 +1,7 @@
 # COMP3180 A3 user study: ethics requirement, decision path and timeline
 
+> **Not being pursued (decided by Raphael, 17 Oct 2026).** The COMP3180 unit guide sets no ethics requirement, and the Final Project expects an evaluation with the target audience, so no application is made and the section 4 email is not sent. This file, the risk assessment, the draft application and the data management plan are kept as background. What goes in the A3 report is in `report-ethics-points.md`.
+
 Prepared 14 Oct 2026 for Raphael Byun. All web pages below were retrieved on 14 Oct 2026. This is research and a draft, not advice from Macquarie. The decision belongs to the convenor and the Ethics Secretariat.
 
 ## 1. Bottom line

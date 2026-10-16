@@ -13,10 +13,10 @@ Prepared 13 October 2026 (Week 10). **Nothing here has been piloted.** All files
 | `answer-key-and-scoring.md` | 0–2 scoring per item, accepted wording, item 6 codes, second-scorer check | Draft | Researcher copy |
 | `ten-need-sheet.md` | One-page participant sheet; researcher marking key template; how the ten were chosen; five runners-up | Final from D1 (15 Oct 2026), AI-drafted, Raphael to accept; pilot may use either set | Section A only |
 | `session-protocol.md` | Minute-by-minute script, counterbalancing table, what is recorded, note format | Draft | Researcher copy |
-| `participant-info-and-consent.md` | Information sheet and consent form | Draft; **ethics check outstanding**; brackets to fill | Both pages, minus the top box |
+| `participant-info-and-consent.md` | Information sheet and consent form | Draft; brackets to fill (no ethics check needed: decided 17 Oct, see below) | Both pages, minus the top box |
 | `proxy-scenario.md` | One-page scenario, same for both versions. Handed to proxies; producers get the same context as a one-line verbal brief (`session-protocol.md` 2.1) | Draft | Participant part, proxies only |
 | `pilot-plan.md` | What the pilot checks, decision rules, change log | Plan only | Researcher copy |
-| `ethics/` | **Ethics tab** (14 Oct): what Macquarie most likely requires, with sources and what is inference (`README.md`), the email to the convenor, risk assessment, draft low-risk application ([CONFIRM] fields) and data management plan | Research and drafts; **no approval yet** | Not for participants |
+| `ethics/` | **Ethics tab.** `report-ethics-points.md` (17 Oct): the ethics issues the project raises and how each is managed, for the A3 report. The 14 Oct research (`README.md`, risk assessment, draft application, data management plan) is kept as background; the application and convenor email are not being pursued | Report notes current; application **not pursued** (17 Oct) | Not for participants |
 
 ## How this meets the A2 measure
 
@@ -35,9 +35,9 @@ The measure is met only when the pilot has run and the change log is filled in.
 
 ## What Raphael must do himself
 
-**First, before any recruiting or the pilot:** send the email in `ethics/README.md` section 4 to the convenor. Macquarie policy requires approval (or a written exemption) before research starts and does not accept retrospective approval, so the Week 11 pilot waits on the answer.
+**Ethics (decided by Raphael, 17 Oct 2026): no ethics application and no convenor email.** The COMP3180 unit guide sets no ethics requirement, and the Final Project asks for an evaluation with the deliverable's target audience, so testing with classmates is how the unit is run. The pilot does not wait on anything ethics-related. The safeguards stay: voluntary, de-identified, notes only, information sheet and consent form. Ethics is covered in the A3 report instead, using `ethics/report-ethics-points.md`.
 
-1. **Ethics.** Ask the unit convenor whether Macquarie needs ethics approval or a low-risk application for this class-based study, and whether a university consent template must be used. Record the answer and date here. No session, including the pilot, before that.
+1. **Write the ethics lines for the report** in your own words from `ethics/report-ethics-points.md` (Method: points 1–2; Industry Relevance and Future Work: point 3).
 2. **Fidelity check.** The `study/*/fidelity-A.md` and `fidelity-B.md` files here are blank templates; the scored files are on the `deliverable-4-fidelity-check` branch. July scored PASS for both A and B. February was scored by two scorers: Version B failed on contradicted claims, the tool was repaired and the changed rows are being re-scored. A2 requires scoring "read by hand", so Raphael must verify the AI-assisted scoring and disclose it. Do not start sessions until both weeks pass; if a report is regenerated, re-check the item line references.
 3. **Approve the items.** Read both item sets against the reports; desk-run all twelve items on all four report files with a timer.
 4. **Ten-need sheet.** Fill and date the marking key, and choose the overall-mark rule (open decision 2) before any session. D1's final ten are already on the sheet (15 Oct 2026, AI-drafted); accept or change them before R01.
@@ -45,7 +45,6 @@ The measure is met only when the pilot has run and the change log is filled in.
 6. **Run the pilot** (P0, sequence S1), apply `pilot-plan.md`, and log every change.
 7. **Find a second scorer** for the pilot sheets and for two real participants.
 
-Ethics answer: __________________ (date: ________)
 Pilot run: __________ Items approved: __________ Key dated: __________
 
 ## Open decisions

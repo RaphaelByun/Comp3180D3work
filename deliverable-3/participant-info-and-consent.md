@@ -1,6 +1,6 @@
 # Participant information sheet and consent form
 
-> **RAPHAEL: CHECK BEFORE USE (do not print this box).** Before the pilot, ask the COMP3180 unit convenor whether this class-based evaluation needs Macquarie University human research ethics approval, a low-risk application, or is covered as a unit learning activity, and whether the university requires its own information and consent template. This draft does not decide that question. If approval is needed, no session (including the pilot) runs until it is granted, and this text is replaced by the approved version. Fill every [bracket] before printing. Record the convenor's answer and its date in `README.md`.
+> **RAPHAEL: CHECK BEFORE USE (do not print this box).** No ethics application is being made (decided 17 Oct 2026, see `README.md`); this sheet and form are the study's own safeguards. Fill every [bracket] before printing.
 
 ---
 
@@ -30,7 +30,7 @@ This is not a test of you. There are no right answers on the sheet in step 3.
 
 **Risks and benefits.** No risks are expected beyond the time taken. You may find it interesting to see a producer tool from the inside. There is no payment.
 
-**Questions or concerns?** Contact me at [student email], or the unit convenor at [email]. [If ethics approval applies: the approval number and the university's ethics contact go here.]
+**Questions or concerns?** Contact me at [student email], or the unit convenor at [email].
 
 ---
 

@@ -22,7 +22,7 @@ The timings below add up to 3:30 (15 + 30 + 25 + 35 + 35 + 30 + 15 + 15 + 10 sec
 | 8 | 3:05 to 3:20 | **What it cannot do and what is next** | Honest limits: says what changed, not why; one reader group; the stretch tier if done. Optional: the page reports changes to the project, not people (no per-person counts or rankings), so it is not a tool to monitor or blame developers. Wording is yours | One slide, three or four short bullets | A2 Study design limits; Deliverable 2 tier status; point 3 of `deliverable-3/ethics/report-ethics-points.md` (Deliverable 3 branch) |
 | 9 | 3:20 to 3:30 | **End card** | Who made it, role you are aiming for, where the repo is | Name, repo URL, "Producer / production tools" line, and one AI-use line (for example "Built with Claude Code; see the GenAI statement in the report"; wording is yours) | A3 allows AI use but all use must be cited, explained and evidenced |
 
-Cut order if over 4:00: beat 8 first, then trim beat 2, then beat 1. Never cut beats 4 or 5 (both conditions are the success measure), beat 6 (the evaluation) or beat 7 (your contribution; the rubric and Lecture 4 ask for it).
+Cut order if over 4:00: beat 8 first, then trim beat 2, then beat 1. Never cut beats 4 or 5 (both conditions are the success measure), beat 6 (the evaluation) or beat 7 (your contribution; the HD anchors ask for a clear individual contribution, and unevidenced contribution claims are an F trigger).
 
 ## Rules
 

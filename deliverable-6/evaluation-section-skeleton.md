@@ -12,13 +12,15 @@ Word budget (template guide): RQ and opening about 60, Target Audience about 60,
 
 > Which of a producer's information needs can be answered automatically from the artefacts a team already produces — and which can't?
 
-[PLACEHOLDER: one sentence saying the study tests it two ways, as in A2: Sub-question 1 (which artefact could supply each of ten needs; eight readers sort them) and Sub-question 2 (does naming the changed scenes and prefabs help a reader understand the week?). Add one sentence naming which of utility, usability or UX the study assesses; the template wants one named. Likely: utility of the report for the producer, with usability notes from the think-alouds.]
+[PLACEHOLDER: one sentence saying the study tests it two ways, as in A2: Sub-question 1 (which artefact could supply each of ten needs; N readers sort them, N from the tracker) and Sub-question 2 (does naming the changed scenes and prefabs help a reader understand the week?). Add one sentence naming which of utility, usability or UX the study assesses; the template wants one named. Likely: utility of the report for the producer, with usability notes from the think-alouds.]
 
 ### 3.1 Target Audience (about 60 words)
 
-[PLACEHOLDER: who the reader is (a game producer who plans and tracks work without opening the codebase) and why, in industry terms. Evidence: the job-advertisement result. A2 Appendix A had six of nine employers asking for progress reporting; replace it with the Deliverable 1 coded scan (ten ads, five reviews) if D1 finished. One clause on proxies: COMP3151 teammates briefed into the role, and what that gives up.]
+[PLACEHOLDER: who the reader is (a game producer who plans and tracks work without opening the codebase) and why, in industry terms. Evidence: the job-advertisement result. A2 Appendix A had six of nine employers asking for progress reporting; replace it with the Deliverable 1 coded scan (ten ads, four verified reviews; review V5 was not verified and is not scored) if D1 finished. One clause on proxies: COMP3151 teammates briefed into the role, and what that gives up.]
 
 ### 3.2 Method (200 words or fewer)
+
+Word cap: the eight rows below share 200 words, about 25 each. Cut each row to one sentence and push the detail to the appendices (instruments to Appendix A, fidelity to Appendix F).
 
 | Part | What to say | Evidence source |
 |---|---|---|
@@ -27,7 +29,7 @@ Word budget (template guide): RQ and opening about 60, Target Audience about 60,
 | Instruments | Six items per week scored against fixed answers (Endsley's three levels; item 6 is unanswerable); ten-need sheet; think-aloud prompt. Link to the appendices. | Appendix A |
 | Procedure | 45 minutes: 5 briefing and consent, 12 per report, 6 on the ten-need sheet, 10 think-aloud for six readers. [PLACEHOLDER: when and where the sessions ran, in prac or not, remote or on campus.] | session checklist |
 | Ethics | One or two sentences: voluntary, stop or withdraw at any time, a general call-out so classmates did not feel singled out, codes not names, written notes only. No ethics application: the unit sets no requirement (decided 17 Oct 2026). | `deliverable-3/ethics/report-ethics-points.md` points 1 and 2 |
-| Fidelity check | One sentence: both weeks' reports were checked claim by claim against the diffs before any session; state the Deliverable 4 result. | `fidelity-*` files |
+| Fidelity check | One sentence: both weeks' reports were checked claim by claim against the diffs before any session; state the Deliverable 4 result (July: A and B pass. February: A 15 of 15; B 39 of 39 after the repair and re-score of six rows). Say who scored: an AI-assisted first pass, hand-checked by Raphael (only once that check is done). | `FIDELITY-RESULT.md` and the scored files on `deliverable-4-fidelity-check` (Appendix F) |
 | Analysis | Item means with raw counts, treatment-minus-baseline difference per reader, per-week baseline scores, percentage agreement and per-reader Cohen's kappa against my key, and think-aloud codes against Ko et al.'s (2007) 21 types with a quarter re-coded after a week. | `analysis/analyse.js` output |
 | Deviations | [PLACEHOLDER: anything that changed from A2: fewer than eight readers, a reserve week used, a session shortened. Say it here; honesty is marked.] | diary, tracker notes |
 
@@ -39,7 +41,7 @@ Plan the 700 words as five short blocks, each with one piece of integrated evide
 
 2. **Sub-question 1: ten-need sheet** (about 180 words). Evidence: Table 1, my key (D / P / N) beside the count of readers who matched it for each need. [PLACEHOLDER: agreement as a raw count per reader (for example "7 of 10"), the per-reader kappa range, and the needs where readers departed from the key. Each departure is a finding about what the artefacts cannot say; name two or three.] Limit to state: over ten items these are indicative, not inferential, and kappa swings widely.
 
-3. **Sub-question 2: comprehension items** (about 220 words). Evidence: Figure 1, each reader's treatment-minus-baseline difference over the five scored items (a dot plot, one dot per reader, producers and proxies marked differently), and Table 2, full-mark counts per item by condition. [PLACEHOLDER: how many readers scored higher, the same and lower with names; which items moved (watch the Level 3 item about what to test next); item 6, how many over-claimed from the page.] Limits to state: eight readers show direction and failure points, not significance; proxies strip a real producer's context, so the difference is an upper bound.
+3. **Sub-question 2: comprehension items** (about 220 words). Evidence: Figure 1, each reader's treatment-minus-baseline difference over the five scored items (a dot plot, one dot per reader, producers and proxies marked differently), and Table 2, full-mark counts per item by condition. [PLACEHOLDER: how many readers scored higher, the same and lower with names; which items moved (watch the Level 3 item about what to test next); item 6, how many over-claimed from the page.] Limits to state: N readers (N from the tracker) show direction and failure points, not significance; proxies strip a real producer's context, so the difference is an upper bound.
 
 4. **Rival explanation: week difficulty** (about 60 words). Evidence: per-week baseline scores from `analyse.js`. [PLACEHOLDER: baseline means for each week and the gap; say whether the gap is smaller or larger than the treatment difference.]
 
@@ -47,7 +49,7 @@ Plan the 700 words as five short blocks, each with one piece of integrated evide
 
 Close (about 40 words). [PLACEHOLDER: one sentence on what this means for the tool (utility) and one on the biggest limit of the study.]
 
-### Figures and tables to prepare (integrate them in the text, not only in appendices)
+### Figures and tables to prepare (integrate them in the text, not only in appendices; `analysis/figures.js` builds Figure 1 and Tables 1 to 3)
 
 - Figure 1: paired differences per reader.
 - Table 1: ten needs, key, readers matching.
@@ -60,5 +62,5 @@ Close (about 40 words). [PLACEHOLDER: one sentence on what this means for the to
 - Raw counts before percentages; no percentage from small n without the count beside it (the A2 marker's note).
 - RQ stated first, in the exact A2 words.
 - Each claim traceable to an appendix (A to G in `appendix-plan.md`).
-- Participants de-identified (codes R01 to R08 only).
+- Participants de-identified (reader codes R01 onward and P0 for the pilot only).
 - The Evaluation must be a conducted study, not self-assessment: say plainly it had human readers.

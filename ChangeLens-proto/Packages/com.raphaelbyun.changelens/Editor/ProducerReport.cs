@@ -395,6 +395,14 @@ namespace ChangeLens.Editor
 
             if (a.FileAdded) parts.Add("new " + (a.IsScene ? "scene" : "prefab") + " added");
             if (a.FileDeleted) parts.Add((a.IsScene ? "scene" : "prefab") + " deleted");
+            if (!string.IsNullOrEmpty(a.RenamedFrom) && a.RenamedFrom != a.Path)
+            {
+                bool sameFolder = FolderOf(a.RenamedFrom) == FolderOf(a.Path);
+                bool sameName = AssetDiffParser.AssetNameOf(a.RenamedFrom) == a.AssetName;
+                if (sameName && !sameFolder) parts.Add("moved from `" + FolderOf(a.RenamedFrom) + "`");
+                else if (sameFolder) parts.Add("renamed from " + AssetDiffParser.AssetNameOf(a.RenamedFrom));
+                else parts.Add("moved and renamed from `" + a.RenamedFrom + "`");
+            }
 
             if (!a.FileAdded && !a.FileDeleted)
             {

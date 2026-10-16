@@ -138,6 +138,28 @@ namespace ChangeLens.Editor.Tests
         }
 
         [Test]
+        public void UnquoteGitPath_DecodesGitsQuoting()
+        {
+            Assert.AreEqual("Assets/Kiste_\u00C4pfel.prefab",
+                GitLogParser.UnquoteGitPath("\"Assets/Kiste_\\303\\204pfel.prefab\""));
+            Assert.AreEqual("Assets/say \"hi\"\\tab\there.cs",
+                GitLogParser.UnquoteGitPath("\"Assets/say \\\"hi\\\"\\\\tab\\there.cs\""));
+            Assert.AreEqual("Assets/Plain Name.cs", GitLogParser.UnquoteGitPath("Assets/Plain Name.cs"));
+            Assert.IsNull(GitLogParser.UnquoteGitPath(null));
+        }
+
+        [Test]
+        public void ParseStatusLine_UnquotesNonAsciiPaths()
+        {
+            FileChange added = GitLogParser.ParseStatusLine("A\t\"Assets/Prefabs/Kiste_\\303\\204pfel.prefab\"");
+            Assert.AreEqual("Assets/Prefabs/Kiste_\u00C4pfel.prefab", added.Path);
+
+            FileChange renamed = GitLogParser.ParseStatusLine("R100\t\"Assets/\\303\\204.cs\"\tAssets/A.cs");
+            Assert.AreEqual("Assets/\u00C4.cs", renamed.OldPath);
+            Assert.AreEqual("Assets/A.cs", renamed.Path);
+        }
+
+        [Test]
         public void ShortHash_IsSevenCharacters()
         {
             CommitRecord first = GitLogParser.Parse(SampleLog.Text)[0];

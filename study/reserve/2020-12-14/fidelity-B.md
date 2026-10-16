@@ -27,6 +27,6 @@ Open each commit's diff (`git show <hash>`) and mark every claim. Pass rule (A2)
 | 21 | Scenes and prefabs changed | Human — "Retime move cycle (#578)": edited script settings. | c12b593 |  |
 | 22 | Scenes and prefabs changed | desk lamp — "Model fixing (Once again) (#577)": edited Mesh Collider, ItemExaminable script settings. | 3da514e |  |
 | 23 | Scenes and prefabs changed | 19 prefabs (Poster ARF, Poster CLEAN, Poster EAT, Poster FUN POLICE, Poster GREYTIDE, Poster HONKMOTHER, Poster LUSTY XENO, Poster MISSING, Poster NT, Poster NT2, Poster NT3, Poster OBEY, Poster PUFF, Poster PostersRock, Poster REBELS, Poster REDRUM, Poster SMOKE, Poster SPACE_L, Poster SPACE_R) — "Model fixing (Once again) (#577)": edited Mesh Renderer, ItemExaminable script settings. | 3da514e |  |
-| 24 | Scenes and prefabs changed | 2 prefabs (Welder_Flame, welder) — "Model fixing (Once again) (#577)": changed (0 lines). | 3da514e |  |
+| 24 | Scenes and prefabs changed | 2 prefabs (Welder_Flame, welder) — "Model fixing (Once again) (#577)": moved from `Assets/Content/Items/Functional/Tools/Generic`. | 3da514e |  |
 
 Supported: ___ of 24 · Contradicted: ___ · Unclear: ___

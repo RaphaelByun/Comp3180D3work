@@ -2,7 +2,8 @@
 // ---------------------------------------------------------------------------
 // Turns the plain text produced by:
 //
-//     git log --name-status --date=iso --no-merges
+//     git -c core.quotepath=false log --first-parent --diff-merges=first-parent
+//         --name-status --date=iso
 //
 // into ordinary C# objects that the rest of ChangeLens can work with.
 //
@@ -27,6 +28,12 @@
 // The single-letter codes mean: A = added, M = modified, D = deleted,
 // T = type change, R### = renamed (with a similarity score), C### = copied.
 // Rename and copy lines carry TWO paths separated by a tab: old then new.
+//
+// Git wraps a path in double quotes, C style, when it holds a character it
+// will not print as is: "Assets/Kiste_\303\204pfel.prefab". Without
+// core.quotepath=false that is any non-ASCII name. With it, a name holding a
+// double quote, a backslash or a control character is still quoted.
+// UnquoteGitPath undoes this.
 // ---------------------------------------------------------------------------
 
 using System;
@@ -224,13 +231,13 @@ namespace ChangeLens.Editor
             switch (letter)
             {
                 case 'A':
-                    return new FileChange(ChangeStatus.Added, parts[1].Trim());
+                    return new FileChange(ChangeStatus.Added, UnquoteGitPath(parts[1].Trim()));
                 case 'M':
-                    return new FileChange(ChangeStatus.Modified, parts[1].Trim());
+                    return new FileChange(ChangeStatus.Modified, UnquoteGitPath(parts[1].Trim()));
                 case 'D':
-                    return new FileChange(ChangeStatus.Deleted, parts[1].Trim());
+                    return new FileChange(ChangeStatus.Deleted, UnquoteGitPath(parts[1].Trim()));
                 case 'T':
-                    return new FileChange(ChangeStatus.TypeChanged, parts[1].Trim());
+                    return new FileChange(ChangeStatus.TypeChanged, UnquoteGitPath(parts[1].Trim()));
 
                 case 'R':
                 case 'C':
@@ -238,14 +245,61 @@ namespace ChangeLens.Editor
                     // Rename/copy lines carry the old path then the new path.
                     // If the new path is missing we fall back to the old one so
                     // the report still has something sensible to show.
-                    string oldPath = parts[1].Trim();
-                    string newPath = parts.Length >= 3 ? parts[2].Trim() : oldPath;
+                    string oldPath = UnquoteGitPath(parts[1].Trim());
+                    string newPath = parts.Length >= 3 ? UnquoteGitPath(parts[2].Trim()) : oldPath;
                     ChangeStatus status = letter == 'R' ? ChangeStatus.Renamed : ChangeStatus.Copied;
                     return new FileChange(status, newPath, oldPath, ReadScore(tail));
                 }
             }
 
             return null; // not a status line we recognise
+        }
+
+        /// <summary>
+        /// Undoes git's C-style path quoting, so "Assets/Kiste_\303\204pfel.prefab"
+        /// in double quotes becomes Assets/Kiste_Äpfel.prefab. Octal escapes are
+        /// UTF-8 bytes. A path not wrapped in double quotes is returned unchanged.
+        /// </summary>
+        public static string UnquoteGitPath(string path)
+        {
+            if (path == null || path.Length < 2 || path[0] != '"' || path[path.Length - 1] != '"')
+                return path;
+
+            var bytes = new List<byte>();
+            int end = path.Length - 1; // index of the closing quote
+            for (int i = 1; i < end; i++)
+            {
+                char c = path[i];
+                if (c != '\\' || i + 1 >= end)
+                {
+                    bytes.AddRange(System.Text.Encoding.UTF8.GetBytes(c.ToString()));
+                    continue;
+                }
+                char e = path[++i];
+                if (IsOctal(e) && i + 2 < end && IsOctal(path[i + 1]) && IsOctal(path[i + 2]))
+                {
+                    bytes.Add((byte)(((e - '0') << 6) | ((path[i + 1] - '0') << 3) | (path[i + 2] - '0')));
+                    i += 2;
+                    continue;
+                }
+                switch (e)
+                {
+                    case 'a': bytes.Add(7); break;
+                    case 'b': bytes.Add(8); break;
+                    case 't': bytes.Add(9); break;
+                    case 'n': bytes.Add(10); break;
+                    case 'v': bytes.Add(11); break;
+                    case 'f': bytes.Add(12); break;
+                    case 'r': bytes.Add(13); break;
+                    default: bytes.AddRange(System.Text.Encoding.UTF8.GetBytes(e.ToString())); break; // \" and \\
+                }
+            }
+            return System.Text.Encoding.UTF8.GetString(bytes.ToArray());
+        }
+
+        private static bool IsOctal(char c)
+        {
+            return c >= '0' && c <= '7';
         }
 
         /// <summary>Reads the numeric similarity score out of "094"; 0 when absent.</summary>

@@ -161,6 +161,77 @@ namespace ChangeLens.Editor.Tests
             Assert.AreEqual(0, AssetDiffParser.Parse(null).Count);
         }
 
+        // Found in the reserve week of 14 Dec 2020 (#577): a prefab moved with no
+        // content change has no hunk, so the page said "changed (0 lines)".
+        [Test]
+        public void Parse_ReadsAPureRename()
+        {
+            string patch =
+                "commit abc\n" +
+                "diff --git a/Assets/Tools/Welder_Flame.prefab b/Assets/Tools/Welder/Welder_Flame.prefab\n" +
+                "similarity index 100%\n" +
+                "rename from Assets/Tools/Welder_Flame.prefab\n" +
+                "rename to Assets/Tools/Welder/Welder_Flame.prefab\n";
+            AssetChange change = AssetDiffParser.Parse(patch)[0];
+            Assert.AreEqual("Assets/Tools/Welder/Welder_Flame.prefab", change.Path);
+            Assert.AreEqual("Assets/Tools/Welder_Flame.prefab", change.RenamedFrom);
+            Assert.AreEqual(0, change.LinesAdded + change.LinesRemoved);
+        }
+
+        // A folder whose name ends in " b" used to cut the path at the last " b/".
+        [Test]
+        public void Parse_KeepsAFolderEndingInB()
+        {
+            Assert.AreEqual("Assets/Level b/Door.prefab",
+                AssetDiffParser.PathFromDiffHeader("diff --git a/Assets/Level b/Door.prefab b/Assets/Level b/Door.prefab"));
+            string patch =
+                "commit abc\n" +
+                "diff --git a/Assets/Level b/Door.prefab b/Assets/Level b/Door.prefab\n" +
+                "index 1..2 100644\n" +
+                "--- a/Assets/Level b/Door.prefab\t\n" +
+                "+++ b/Assets/Level b/Door.prefab\t\n" +
+                "@@ -1,2 +1,2 @@ GameObject:\n" +
+                "-  m_Layer: 0\n" +
+                "+  m_Layer: 8\n";
+            Assert.AreEqual("Assets/Level b/Door.prefab", AssetDiffParser.Parse(patch)[0].Path);
+        }
+
+        // Without core.quotepath=false git quotes non-ASCII paths, octal-escaped.
+        [Test]
+        public void Parse_UnquotesNonAsciiPaths()
+        {
+            string patch =
+                "commit abc\n" +
+                "diff --git \"a/Assets/Prefabs/Kiste_\\303\\204pfel.prefab\" \"b/Assets/Prefabs/Kiste_\\303\\204pfel.prefab\"\n" +
+                "index 1..2 100644\n" +
+                "--- \"a/Assets/Prefabs/Kiste_\\303\\204pfel.prefab\"\n" +
+                "+++ \"b/Assets/Prefabs/Kiste_\\303\\204pfel.prefab\"\n" +
+                "@@ -1,2 +1,2 @@ GameObject:\n" +
+                "-  m_Layer: 0\n" +
+                "+  m_Layer: 8\n";
+            List<AssetChange> changes = AssetDiffParser.Parse(patch);
+            Assert.AreEqual(1, changes.Count);
+            Assert.AreEqual("Assets/Prefabs/Kiste_\u00C4pfel.prefab", changes[0].Path);
+            Assert.AreEqual("Kiste_\u00C4pfel", changes[0].AssetName);
+        }
+
+        [Test]
+        public void Parse_ReadsTheOldPathOfADeletedFile()
+        {
+            string patch =
+                "commit abc\n" +
+                "diff --git a/Assets/Old Door.prefab b/Assets/Old Door.prefab\n" +
+                "deleted file mode 100644\n" +
+                "--- a/Assets/Old Door.prefab\t\n" +
+                "+++ /dev/null\n" +
+                "@@ -1,2 +0,0 @@\n" +
+                "---- !u!1 &1\n" +
+                "-GameObject:\n";
+            AssetChange change = AssetDiffParser.Parse(patch)[0];
+            Assert.AreEqual("Assets/Old Door.prefab", change.Path);
+            Assert.IsTrue(change.FileDeleted);
+        }
+
         // Found by the February fidelity check (pepperspray, #604): a "stripped"
         // block is a reference stub to an object inside a nested prefab, so
         // adding one does not add a Particle System.
@@ -309,6 +380,24 @@ namespace ChangeLens.Editor.Tests
         {
             Assert.AreEqual("Audio Source", ProducerReport.SplitCamel("AudioSource"));
             Assert.AreEqual("UI Layout", ProducerReport.SplitCamel("UILayout"));
+        }
+
+        [Test]
+        public void Treatment_SaysWhereAMovedOrRenamedAssetCameFrom()
+        {
+            ProducerReport report = Build(ReportCondition.Treatment);
+            List<string> names;
+
+            var moved = new AssetChange { Path = "Assets/Tools/Welder/welder.prefab", RenamedFrom = "Assets/Tools/welder.prefab" };
+            Assert.AreEqual("moved from `Assets/Tools`.", report.DescribeInside(moved, out names));
+
+            var renamed = new AssetChange { Path = "Assets/Tools/Torch.prefab", RenamedFrom = "Assets/Tools/welder.prefab" };
+            Assert.AreEqual("renamed from welder.", report.DescribeInside(renamed, out names));
+
+            var both = new AssetChange { Path = "Assets/Gear/Torch.prefab", RenamedFrom = "Assets/Tools/welder.prefab" };
+            both.TypesTouched.Add("Transform");
+            StringAssert.StartsWith("moved and renamed from `Assets/Tools/welder.prefab`; edited ",
+                                    report.DescribeInside(both, out names));
         }
     }
 }

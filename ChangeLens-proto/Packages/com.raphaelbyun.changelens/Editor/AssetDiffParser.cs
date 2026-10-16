@@ -2,7 +2,8 @@
 // ---------------------------------------------------------------------------
 // The committed tier's "object naming" step. Reads the patch text produced by:
 //
-//     git log -p --no-merges --date=iso -- "*.prefab" "*.unity"
+//     git -c core.quotepath=false log -p --first-parent --diff-merges=first-parent
+//         --date=iso -- "*.prefab" "*.unity"
 //
 // and works out, for every scene or prefab a commit touched, WHAT inside it
 // changed: which objects (GameObject names), which component types (Transform,
@@ -68,6 +69,9 @@ namespace ChangeLens.Editor
         /// <summary>True when git reported the file as new or deleted outright.</summary>
         public bool FileAdded;
         public bool FileDeleted;
+
+        /// <summary>The old path when git reported the file as moved or renamed; otherwise null.</summary>
+        public string RenamedFrom;
 
         /// <summary>The asset's own name: file name without folder or extension.</summary>
         public string AssetName
@@ -141,6 +145,17 @@ namespace ChangeLens.Editor
                 {
                     if (line.StartsWith("new file mode", StringComparison.Ordinal)) current.FileAdded = true;
                     else if (line.StartsWith("deleted file mode", StringComparison.Ordinal)) current.FileDeleted = true;
+                    else if (line.StartsWith("rename from ", StringComparison.Ordinal))
+                        current.RenamedFrom = GitLogParser.UnquoteGitPath(line.Substring("rename from ".Length));
+                    else if (line.StartsWith("rename to ", StringComparison.Ordinal))
+                        current.Path = GitLogParser.UnquoteGitPath(line.Substring("rename to ".Length));
+                    else if (line.StartsWith("+++ ", StringComparison.Ordinal) || line.StartsWith("--- ", StringComparison.Ordinal))
+                    {
+                        // "+++ b/<path>" names the file after the change, "--- a/<path>"
+                        // before it; /dev/null stands in for the missing side.
+                        string side = PathFromFileLine(line, line[0] == '+' ? "b/" : "a/");
+                        if (side != null) current.Path = side;
+                    }
                 }
 
                 if (line.StartsWith("@@", StringComparison.Ordinal))
@@ -366,13 +381,58 @@ namespace ChangeLens.Editor
         }
 
         /// <summary>
-        /// "diff --git a/X b/X" -> "X". Paths may contain spaces, so the new path
-        /// is everything after the last " b/".
+        /// "diff --git a/X b/X" -> "X". The header is only a first guess: the
+        /// "rename to", "+++ b/" and "--- a/" lines that follow it name the file
+        /// exactly, and Parse takes the path from them when they are there.
+        /// Paths may contain spaces, and a folder may end in " b", so an unquoted
+        /// header is split in the middle when both halves name the same file.
+        /// Quoted halves ("a/..." "b/...") are unquoted.
         /// </summary>
         public static string PathFromDiffHeader(string line)
         {
-            int b = line.LastIndexOf(" b/", StringComparison.Ordinal);
-            return b >= 0 ? line.Substring(b + 3).Trim() : "";
+            string rest = line.StartsWith("diff --git ", StringComparison.Ordinal)
+                ? line.Substring("diff --git ".Length).TrimEnd('\r', '\n')
+                : line;
+
+            // The new side is quoted: take the last quoted token.
+            if (rest.EndsWith("\"", StringComparison.Ordinal))
+            {
+                int q = rest.LastIndexOf(" \"b/", StringComparison.Ordinal);
+                if (q >= 0) return StripSide(GitLogParser.UnquoteGitPath(rest.Substring(q + 1)), "b/");
+            }
+
+            // No rename: "a/X b/X" has the same X twice around the middle space.
+            if (rest.StartsWith("a/", StringComparison.Ordinal) && rest.Length % 2 == 1)
+            {
+                int n = (rest.Length - 5) / 2;
+                if (n > 0)
+                {
+                    string first = rest.Substring(2, n);
+                    if (rest.Substring(n + 2) == " b/" + first) return first;
+                }
+            }
+
+            int b = rest.LastIndexOf(" b/", StringComparison.Ordinal);
+            return b >= 0 ? rest.Substring(b + 3).Trim() : "";
+        }
+
+        /// <summary>
+        /// "+++ b/Assets/X.prefab" -> "Assets/X.prefab". Git ends the line with a
+        /// tab when the path has a space, and quotes unusual paths. Returns null
+        /// for /dev/null (the side that does not exist).
+        /// </summary>
+        public static string PathFromFileLine(string line, string prefix)
+        {
+            if (line.Length < 4) return null;
+            string text = line.Substring(4).TrimEnd('\t', '\r');
+            if (text == "/dev/null") return null;
+            text = GitLogParser.UnquoteGitPath(text);
+            return text.StartsWith(prefix, StringComparison.Ordinal) ? text.Substring(prefix.Length) : null;
+        }
+
+        private static string StripSide(string path, string prefix)
+        {
+            return path.StartsWith(prefix, StringComparison.Ordinal) ? path.Substring(prefix.Length) : path;
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ Source for the types: Ko, A. J., DeLine, R., & Venolia, G. (2007). Information n
 All 21 question texts below were checked against two sources on disk, 13 Oct 2026:
 
 1. `Working folder/a2-draft-2-sep-2026/verify/ko2007.md` (a 2 Sep 2026 verification that read the paper's page images and recorded all 7 categories and 21 types as verbatim);
-2. the text layer of `Working folder/a2-final-sprint-17-sep-2026/reading/ko2007.pdf` (each question matched after removing spaces and case, because the text layer drops spaces; the apostrophe forms "team's" and "What's" matched too).
+2. the text layer of `reading/ko2007.pdf` in the A3 repo checkout (untracked, on disk only) (each question matched after removing spaces and case, because the text layer drops spaces; the apostrophe forms "team's" and "What's" matched too).
 
 Raphael: before you cite wording in the report, glance at Section 5 of the paper once yourself. A2 says you read the sources.
 

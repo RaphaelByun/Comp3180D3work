@@ -118,11 +118,21 @@ For each goal, answer in your own words, in this order. Keep the evidence link n
 - AI tools: what did they speed up, and what did you have to check yourself? What would you do differently so the learning is yours?
 - Two or three concrete changes for next time (for example: log hours daily, recruit earlier, write diary entries on the day).
 
-## 6. Word budget
+## 6. Industry Relevance and Future Work (about 200 words, a separate A3 section)
 
-Goals list (names only, restated) 40; four goals at about 80 each 320; self-directed learning about 100; hour variance sentence about 40 (the table itself can sit in an appendix and be referred to). Total about 500. Count with Word before submitting.
+The template asks how the skills and the portfolio piece support being hired into a specific games-industry role; Future Work is optional. Prompts only; write every sentence yourself.
 
-## 7. Before submitting
+- Name one role (for example producer, associate producer or tools programmer). Which Deliverable 1 job ad backs it? Cite the ad by its code in `deliverable-1/job-ads-and-reviews.md`.
+- Which one or two of the transferable skills from section 3 does that ad ask for? Quote the ad's words, not yours.
+- Which repo artefacts show those skills to a hiring panel (the Producer Page tool, the design spec, the evaluation report, the portfolio video)? Link each.
+- Ethics sentence slot: point 3 of `deliverable-3/ethics/report-ethics-points.md` (the tool reports changes to the project, not people's output, so it cannot be used to blame developers). Why does that judgement matter in the role you named?
+- Future Work (optional): which stretch or challenge tier items were built, cut or left (Deliverable 2 status)? Name one next step and the evidence from the study that points to it. Do not promise results.
+
+## 7. Word budget
+
+Goals list (names only, restated) 40; four goals at about 80 each 320; self-directed learning about 100; hour variance sentence about 40 (the table itself can sit in an appendix and be referred to). Total about 500. Count with Word before submitting. Industry Relevance and Future Work (section 6) is a separate budget of about 200 words.
+
+## 8. Before submitting
 
 - [ ] Every goal has a link to its evidence and a plain statement of how far you got.
 - [ ] Every flagged variance has a cause in your own words.

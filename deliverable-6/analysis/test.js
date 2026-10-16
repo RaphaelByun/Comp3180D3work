@@ -333,5 +333,37 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   has('needs blank: N09 denominator', o, '| N09  | N   | 1/4               | R04:P              |');
 }
 
+// 13. figures.js on the FAKE sample: Figure 1 has one mark per complete reader and the FAKE stamp;
+//     Table 1 lists all ten needs (N04: F02, F03 match the key D -> 2/4); Table 2 matches the item table
+//     in test 8 (item 2: 3/4 and 4/4); Table 3 names the Ko et al. type (d1: 3 segments, S02, S08, S14).
+{
+  const F = require('./figures.js');
+  const dir = __dirname;
+  const r = F.build({
+    scores: path.join(dir, 'sample-item-scores.csv'), needs: path.join(dir, 'sample-need-classifications.csv'),
+    key: path.join(dir, 'sample-marking-key.csv'), codes: path.join(dir, 'sample-think-aloud-codes.csv'),
+  });
+  eq('fig: fake flag', r.fake, true);
+  has('fig: svg fake stamp', r.svg, 'FAKE DATA');
+  has('fig: tables fake stamp', r.md, '**FAKE DATA');
+  eq('fig: producer dots', (r.svg.match(/<circle [^>]*><title>/g) || []).length, 2);
+  eq('fig: proxy squares', (r.svg.match(/<rect [^>]*><title>/g) || []).length, 2);
+  has('fig: F04 at -1', r.svg, 'F04 proxy -1');
+  has('fig: F02 at +4', r.svg, 'F02 proxy +4');
+  eq('table 1: ten needs', (r.md.match(/^\| N\d\d \|/gm) || []).length, 10);
+  has('table 1: N04', r.md, '| N04 | D | 2/4 |');
+  has('table 2: item 2', r.md, '| 2 | 3/4 | 4/4 |');
+  has('table 3: d1 named', r.md, '| d1 | Reasoning about Design | What is the purpose of this code? | 3 |');
+  has('table 3: total', r.md, 'pilot excluded, 16 segments');
+  // real (non-sample) file names are not stamped
+  const tmp = path.join(require('os').tmpdir(), `cl-fig-${process.pid}.csv`);
+  fs.writeFileSync(tmp, [HEAD].concat(scoreLines()).join('\n'));
+  const real = F.build({ scores: tmp });
+  fs.unlinkSync(tmp);
+  eq('fig: real not fake', real.fake, false);
+  hasNot('fig: real svg not stamped', real.svg, 'FAKE');
+  has('fig: real n', real.svg, '(n = 5)');
+}
+
 console.log(`${pass} checks passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

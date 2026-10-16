@@ -30,12 +30,14 @@ Dates in the page are each author's own local date, so a change made late on Sun
 3. Try any other week, e.g. `2021-09-27` or `2020-12-14` (the reserves), or point it at another Unity repository you have (the Inkform repo works too).
 4. **Save study files...** writes the frozen export plus both reports, the two fidelity checklists and the naming measures into a folder you choose. Use a scratch folder, not `study/`, unless you mean to replace a study week.
 
-Weeks are cut at midnight UTC, so the result is the same whatever time or time zone you run it in.
+Weeks are cut at midnight UTC, so the result is the same whatever time or time zone you run it in. A commit at exactly midnight belongs to the week it starts.
+
+The export follows the main line only. Work done on a branch shows up in the week the branch was merged, as one merge commit listing every file it brought in.
 
 ## 4. Run the tests
 
-- In Unity: **Window → General → Test Runner → EditMode → Run All**. Expect 42 passing.
-- Without Unity: `dotnet test tools/changelens-dotnet/tests/tests.csproj` (also 42).
+- In Unity: **Window → General → Test Runner → EditMode → Run All**. Expect 56 passing.
+- Without Unity: `dotnet test tools/changelens-dotnet/tests/tests.csproj` (also 56).
 
 ## 5. Things worth trying to break
 

@@ -14,8 +14,8 @@ Status: plan only. Tick when captured. Record screens at 1920x1080, 30 fps; reco
 | S6 | 5 | Flip to Version B (treatment) in the same window: same sections, then the scene and prefab names | 25 s | Same scroll speed as S5 so the eye compares | [ ] |
 | S7 | 5 | Flip A then B again, with the airlock prefab names highlighted | 12 s | Edit overlay | [ ] |
 | S8 | 6 | Result slide with the real figure | 20 s | After analysis only | [ ] |
-| S9 | 8 | Limits slide | 12 s | Three bullets maximum | [ ] |
-| S10 | 9 | End card | 8 s | Repo URL as text | [ ] |
+| S9 | 8 | Limits slide | 12 s | Four bullets maximum (the "changes to the project, not people" bullet is optional) | [ ] |
+| S10 | 9 | End card | 8 s | Repo URL as text; one AI-use line pointing to the GenAI statement | [ ] |
 | S11 | 7 | Contribution: what you designed, decided, ran and hand-checked versus what the AI drafted, against repo evidence (commit history, study sessions, hand fidelity check) | 12 s | Reader codes only; never cut this shot | [ ] |
 
 ## Voice-over and audio

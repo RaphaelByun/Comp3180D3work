@@ -3,7 +3,7 @@
   "displayName": "ChangeLens",
   "version": "0.1.0",
   "unity": "6000.0",
-  "description": "Reads a git log --name-status export and renders a grouped change report with add/modify/delete counts and the code-file percentage.",
+  "description": "Writes a one-page weekly change report for a game producer from a project's git history. Window > ChangeLens Producer Page builds Version A (baseline) and Version B (treatment), which names the objects and components changed inside each scene and prefab. Window > ChangeLens is the A2 prototype that sorts a git log export by file type.",
   "author": {
     "name": "Raphael Byun"
   }

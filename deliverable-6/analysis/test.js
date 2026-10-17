@@ -422,6 +422,39 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   has('week typo: reason', o, 'R01 (baseline rows give more than one week (W1, W2))');
   has('week typo: mean over 4', o, 'Readers: 4.');
 }
+// 15d. Order typed 1st/2nd on every row (and 02 on R05): read as 1 and 2, so the output matches the base set
+//      (sequence cells and the order-within-condition line), with no warning.
+{
+  const base = run(scoreLines());
+  const o = run(scoreLines().map(l => {
+    const c = l.split(',');
+    c[4] = c[0] === 'R05' ? '0' + c[4] : (c[4] === '1' ? '1st' : '2nd');
+    return c.join(',');
+  }));
+  hasNot('order 1st/2nd: no warning', o, 'WARNING');
+  has('order 1st/2nd: sequences', o, 'W1 order 1: 1; W1 order 2: 1; W2 order 1: 1; W2 order 2: 2.');
+  hasNot('order 1st/2nd: no extra cells', o, 'order 1st');
+  const line = t => t.split('\n').find(x => x.startsWith('Mean total /10 by reading order'));
+  eq('order 1st/2nd: order line as base', line(o), line(base));
+  hasNot('order 1st/2nd: no n=0 cells', line(o), 'n=0');
+}
+// 15e. Order 3: R05 treatment typed order 3. Warned with the raw value, R05 left out with the reason,
+//      R01-R04 remain: 3, 4, 2, -2 -> mean 1.75.
+{
+  const o = run(scoreLines().map(l => l.replace(/^R05,proxy,treatment,W2,1,/, 'R05,proxy,treatment,W2,3,')));
+  has('order 3: warning', o, 'WARNING: order not 1 or 2 (1st, first and 01 are read as 1): R05 "3".');
+  has('order 3: reason', o, 'R05 (treatment order not 1 or 2 ("3"))');
+  has('order 3: mean over 4', o, 'Mean difference 1.75 points out of 10');
+  hasNot('order 3: no extra cell', o, 'order 3:');
+}
+// 15f. Weeks typed 'Week 1'/'Week 2': the week warning fires, and the week-balanced line says the weeks
+//      are not W1/W2 instead of claiming every treatment report was in one week.
+{
+  const o = run(scoreLines().map(l => l.replace(/,W([12]),/, ',Week $1,')));
+  has('week words: week warning', o, 'WARNING: weeks found are WEEK 1, WEEK 2; expected exactly W1 and W2.');
+  has('week words: balanced not computed', o, 'Week-balanced difference: not computed: weeks are not W1/W2 (WEEK 1, WEEK 2).');
+  hasNot('week words: no one-week claim', o, 'every treatment report was in one week');
+}
 
 // 16. Week and role case. All R05 rows with week w1/w2 and role Proxy give the same output as test 10a.
 {

@@ -37,6 +37,7 @@
  * Design checks: every row of one report gives one week and one order, and a reader's two reports
  * differ in both week and order; a reader failing this is left out and named. Weeks are read in upper
  * case and roles in lower case; weeks other than W1/W2 and roles other than producer/proxy are warned about.
+ * Order is read as 1 or 2 (01, 1st, first; 02, 2nd, second); any other order is warned about and the reader left out.
  * Ten-need sheet: duplicate (reader, need) rows and classes other than D, P or N are named and left out.
  * need_id is the key N-number (n1, N1 and n01 read as N01); a bare number maps through the key's optional
  * `row` column. A reader with any need_id not in the key is named and left out of every need table.
@@ -183,6 +184,15 @@ const isTick = s => /^(y|yes|true|1|s|x)$/i.test((s || '').trim());
 const SCORED = ['1', '2', '3', '4', '5'];
 const CONDS = ['baseline', 'treatment'];
 const validScore = s => s === 0 || s === 1 || s === 2;
+// Reading order is typed by hand: 1, 01, 1st and first read as '1'; 2, 02, 2nd and second as '2'.
+// Anything else is kept as typed, warned about, and the reader is left out.
+function normOrder(s) {
+  const t = (s || '').trim().toLowerCase();
+  if (/^0*1$|^1st$|^first$/.test(t)) return '1';
+  if (/^0*2$|^2nd$|^second$/.test(t)) return '2';
+  return (s || '').trim();
+}
+const validOrder = o => o === '1' || o === '2';
 
 // Sorts readers into complete (both conditions, items 1-5 each scored once with 0, 1 or 2) and
 // excluded (with the reason). Every table and statistic uses complete readers only, so baseline
@@ -194,7 +204,7 @@ function prepareScores(rowsAll) {
     const raw = (r.score || '').trim();
     return {
       participant: r.participant, role: (r.role || '').toLowerCase(), cond: normCond(r.condition),
-      week: (r.week || '').toUpperCase(), order: (r.order || '').trim(), item,
+      week: (r.week || '').toUpperCase(), order: normOrder(r.order), item,
       // items 1-5: number 0, 1 or 2. item 6: a category word, never a number.
       score: item === '6' ? null : (raw === '' ? NaN : Number(raw)),
       code6: item === '6' ? normCode6(r.score) : null,
@@ -228,6 +238,8 @@ function prepareScores(rowsAll) {
   }
   const badRoles = Array.from(new Set(rows.filter(r => r.role !== 'producer' && r.role !== 'proxy').map(r => r.role || '(blank)'))).sort();
   if (badRoles.length) warnings.push(`WARNING: role not producer or proxy: ${badRoles.join(', ')}. Fix the role column.`);
+  const badOrd = Array.from(new Set(rows.filter(r => !validOrder(r.order)).map(r => `${r.participant} "${r.order}"`))).sort();
+  if (badOrd.length) warnings.push(`WARNING: order not 1 or 2 (1st, first and 01 are read as 1): ${badOrd.join(', ')}. Those readers are left out. Fix the order column.`);
 
   const people = Array.from(new Set(rows.map(r => r.participant))).sort();
   const complete = [], excluded = [];
@@ -253,13 +265,15 @@ function prepareScores(rowsAll) {
       const wks = Array.from(new Set(cr.map(r => r.week))), ords = Array.from(new Set(cr.map(r => r.order)));
       if (wks.length > 1) reasons.push(`${c} rows give more than one week (${wks.join(', ')})`);
       if (ords.length > 1) reasons.push(`${c} rows give more than one order (${ords.join(', ')})`);
+      const badO = ords.filter(o => !validOrder(o));
+      if (badO.length) reasons.push(`${c} order not 1 or 2 (${badO.map(o => `"${o}"`).join(', ')})`);
       const sr = cr.filter(r => SCORED.includes(r.item) && validScore(r.score));
       per[c] = { sum: sr.reduce((s, r) => s + r.score, 0), week: cr[0].week, order: cr[0].order, role: cr[0].role };
     }
     // counterbalanced design: the two reports are different weeks and were read in different orders
     if (per.baseline && per.treatment) {
       if (per.baseline.week === per.treatment.week) reasons.push(`baseline and treatment both ${per.baseline.week || '(blank week)'}`);
-      if (per.baseline.order === per.treatment.order) reasons.push(`baseline and treatment both order ${per.baseline.order || '(blank)'}, likely an order error`);
+      if (per.baseline.order === per.treatment.order && validOrder(per.baseline.order)) reasons.push(`baseline and treatment both order ${per.baseline.order || '(blank)'}, likely an order error`);
     }
     const other = mine.filter(r => !CONDS.includes(r.cond));
     if (other.length) reasons.push(`condition not baseline/treatment or A/B (${Array.from(new Set(other.map(r => r.cond || '(blank)'))).join(', ')})`);
@@ -361,7 +375,9 @@ function analyseScores(rowsAll) {
     // Week balance: if more readers had their treatment report in one week, week difficulty leaks into
     // the plain mean. The mean per treatment week, averaged, weights both weeks equally.
     const wb = weekBalanced(S);
-    if (wb.balanced === null) {
+    if (wb.otherWeeks.length) {
+      out.push(`Week-balanced difference: not computed: weeks are not W1/W2 (${wb.otherWeeks.map(w => w || '(blank)').join(', ')}). Fix the week column.`);
+    } else if (wb.balanced === null) {
       out.push('Week-balanced difference: not computed, because every treatment report was in one week. The names effect and the week cannot be told apart.');
     } else {
       out.push('By week of the treatment report: ' + wb.groups.map(g => `${g.week} n=${g.n}, mean ${f2(g.mean)}`).join('; ') +
@@ -423,7 +439,9 @@ function weekBalanced(S) {
     const xs = diffs.filter(d => S.tot[d.p].treatment.week === w).map(d => d.d);
     return { week: w, n: xs.length, mean: mean(xs) };
   });
-  return { groups, balanced: groups.every(g => g.n) ? (groups[0].mean + groups[1].mean) / 2 : null };
+  // weeks typed as anything but W1/W2 ('Week 1') fall in neither group; say so rather than "one week"
+  const otherWeeks = Array.from(new Set(diffs.map(d => S.tot[d.p].treatment.week).filter(w => w !== 'W1' && w !== 'W2'))).sort();
+  return { groups, otherWeeks, balanced: !otherWeeks.length && groups.every(g => g.n) ? (groups[0].mean + groups[1].mean) / 2 : null };
 }
 
 // Treatment-minus-baseline difference for each complete reader (used by the report and by figures.js).

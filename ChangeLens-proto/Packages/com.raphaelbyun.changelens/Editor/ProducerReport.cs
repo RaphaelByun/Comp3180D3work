@@ -217,13 +217,20 @@ namespace ChangeLens.Editor
             AddClaim("Where the work went", supporting, AllHashes());
             sb.AppendLine();
 
-            PathCategory largest = WorkAreas.OrderByDescending(a => c.CountsFor(a).Total).First();
-            if (c.CountsFor(largest).Total > 0)
+            // On a tie every area with the top count is named, so the page never
+            // calls one area the largest when another is just as large.
+            int top = WorkAreas.Max(a => c.CountsFor(a).Total);
+            List<PathCategory> largest = WorkAreas.Where(a => c.CountsFor(a).Total == top).ToList();
+            if (top > 0)
             {
-                string line = "Largest area this week: **" + AreaName(largest) + "** (" +
-                              c.CountsFor(largest).Total + " of " + c.TotalFileEntries + " file changes).";
+                string line = largest.Count == 1
+                    ? "Largest area this week: **" + AreaName(largest[0]) + "** (" +
+                      top + " of " + c.TotalFileEntries + " file changes)."
+                    : "Largest areas this week: " + JoinAnd(largest.Select(a => "**" + AreaName(a) + "**").ToList()) +
+                      " (" + top + " each of " + c.TotalFileEntries + " file changes).";
                 sb.AppendLine(line);
-                AddClaim("Where the work went", line.Replace("**", ""), HashesTouching(largest));
+                AddClaim("Where the work went", line.Replace("**", ""),
+                         largest.SelectMany(HashesTouching).Distinct().ToList());
                 sb.AppendLine();
             }
 
@@ -441,6 +448,13 @@ namespace ChangeLens.Editor
         {
             if (items.Count <= max) return string.Join(", ", items);
             return string.Join(", ", items.Take(max)) + " and " + (items.Count - max) + " more";
+        }
+
+        /// <summary>"a", "a and b", "a, b and c".</summary>
+        public static string JoinAnd(List<string> items)
+        {
+            if (items.Count <= 1) return items.Count == 0 ? "" : items[0];
+            return string.Join(", ", items.Take(items.Count - 1)) + " and " + items[items.Count - 1];
         }
 
         private static string CommonFolder(List<string> paths)

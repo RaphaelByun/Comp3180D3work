@@ -38,6 +38,9 @@ namespace ChangeLens.Editor
         /// </summary>
         public string MergedText = "";
 
+        /// <summary>Things the export noticed but could not fix (not saved with the export).</summary>
+        public List<string> Warnings = new List<string>();
+
         /// <summary>Runs git for [since, until) in <paramref name="repoPath"/>.</summary>
         public static WeekExport FromGit(string repoPath, string since, string until)
         {

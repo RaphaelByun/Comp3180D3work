@@ -375,6 +375,28 @@ namespace ChangeLens.Editor.Tests
             StringAssert.Contains("S / C / U", report.FidelityChecklistMarkdown());
         }
 
+        // On a tie the page used to name whichever area came first in the list.
+        [Test]
+        public void LargestArea_NamesEveryAreaOnATie()
+        {
+            string log =
+                "commit aaaa000000000000000000000000000000000000\n" +
+                "Author: Dev <dev@example.com>\n" +
+                "Date:   2021-03-09 10:00:00 +0000\n\n" +
+                "    Tie\n\n" +
+                "M\tAssets/Scripts/Door.cs\n" +
+                "M\tAssets/Prefabs/Door.prefab\n" +
+                "M\tAssets/Art/door.png\n";
+            ProducerReport tie = ProducerReport.Build(ChangeReport.Build(GitLogParser.Parse(log), "t"), null, null,
+                                                      ReportCondition.Baseline, "t");
+            StringAssert.Contains("Largest areas this week: **Code**, **Scenes and prefabs** and **Art** (1 each of 3 file changes).",
+                                  tie.ToMarkdown());
+
+            string page = Build(ReportCondition.Baseline).ToMarkdown();
+            StringAssert.Contains("Largest area this week: **", page);
+            StringAssert.DoesNotContain("Largest areas", page);
+        }
+
         [Test]
         public void SplitCamel_ReadsLikeWords()
         {

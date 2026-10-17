@@ -26,7 +26,7 @@ How the A2 prototype window works is in `prototype/HOW-IT-WORKS.md`.
 
 | Folder | What it holds |
 | --- | --- |
-| `Editor/` | The package code. The parsers and report builders are plain C# with no UnityEditor use, so the .NET harness can test them. It also holds the three helper scripts listed below. |
+| `Editor/` | The package code. The parsers and report builders are plain C# with no UnityEditor use, so the .NET harness can test them. It also holds the four helper scripts listed below. |
 | `Tests/Editor/` | EditMode tests (NUnit). |
 | `Samples~/` | Sample SS3D week exports and reports from the A2 prototype. |
 
@@ -39,5 +39,6 @@ These are not part of the tool. None of them runs unless Unity is started with `
 | `BatchTools.cs` | Headless entry points, set up with environment variables. `ExportReport` writes the A2 prototype report from a log export (`CHANGELENS_SAMPLE`, `CHANGELENS_REPORT_OUT`). `ExportStudyWeek` writes a study week from a repository (`CHANGELENS_REPO`, `CHANGELENS_SINCE`, `CHANGELENS_UNTIL`, `CHANGELENS_OUT`, `CHANGELENS_TITLE`). `BuildAndReport` builds an empty scene and writes Unity's BuildReport summary (`CHANGELENS_BUILDREPORT_OUT`); it was the A2 BuildReport probe. |
 | `ScreenshotBootstrap.cs` | One-off figure tool. It took the two A2 proposal screenshots of the prototype window. Kept as a record of how those figures were made. |
 | `DockedScreenshotBootstrap.cs` | One-off figure tool. It took the A2 Figure 2 capture with the window docked in the Editor. Kept as a record of how that figure was made. |
+| `ProducerPageScreenshotBootstrap.cs` | One-off figure tool (17 Oct 2026). It opens Window > ChangeLens Producer Page docked in the Editor, reopens a frozen study week (July by default, `CHANGELENS_WEEK`) and captures Version A, Version B and Version B scrolled to its scene section (`CHANGELENS_SCROLL`) into `figures/a3-producer-page-*.png`. Run it without `-batchmode`. |
 
 Changes are listed in `CHANGELOG.md`.

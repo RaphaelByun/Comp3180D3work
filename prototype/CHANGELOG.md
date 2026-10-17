@@ -218,6 +218,29 @@ upscaled 2x (`figures/fig2-changelens-docked-2021.png`). The new sample lives be
    shows the prototype can already read it. The build output went to the user's temp folder
    (`%TEMP%\ChangeLensBuild`) and can be deleted; `Assets/Scenes/BuildReportProbe.unity` stays in the project.
 
+## A3 test run and Producer Page captures (17 Oct 2026)
+
+Run by Claude Code on the `deliverable-2-changelens` branch, after the 17 Oct repairs.
+
+1. EditMode tests in batch mode (`a3-compile-2026-10-17.log`, `a3-tests-2026-10-17.xml`): the package compiled
+   with no errors and 76 of 76 tests passed. The only Unity results committed before this were the A2 run (27/27) and the
+   10 Oct run (`tests-committed.xml`, 39/39). This run also compiles the window code the .NET harness does not compile.
+   ```
+   Unity.exe -batchmode -nographics -projectPath ChangeLens-proto -runTests -testPlatform EditMode \
+     -testResults prototype-logs/a3-tests-2026-10-17.xml -logFile prototype-logs/a3-compile-2026-10-17.log
+   ```
+2. Producer Page captures (`a3-screenshot-2026-10-17.log`), with `Editor/ProducerPageScreenshotBootstrap.cs`
+   and no `-batchmode`. They show the July study week (`study/week2-2021-07-19`), which the current code
+   rebuilds byte for byte. The February week was not used: the window rebuilds it with the 17 Oct repairs,
+   so two rows would differ from the frozen page readers see.
+   - `figures/a3-producer-page-A.png`: Version A.
+   - `figures/a3-producer-page-B.png`: Version B, top of the page.
+   - `figures/a3-producer-page-B-scenes.png`: Version B, scrolled to "Scenes and prefabs changed".
+
+   The first attempt captured each image one step early (A twice, then B unscrolled), because the window had
+   not repainted. The helper now repaints in a step of its own before each capture; the second attempt is
+   the one kept.
+
 ---
 
 ## Log files
@@ -234,6 +257,8 @@ upscaled 2x (`figures/fig2-changelens-docked-2021.png`). The new sample lives be
 | `prototype-logs/screenshot4.log` | The docked-capture pass of 18 Sep on the February 2021 week |
 | `prototype-logs/export-2021.log` | Batch export of the February 2021 report |
 | `prototype-logs/build.log`, `buildreport.txt` | The build-report probe (last run) |
+| `prototype-logs/a3-compile-2026-10-17.log`, `a3-tests-2026-10-17.xml` | A3 compile and EditMode run, 17 Oct 2026: 76/76 passed |
+| `prototype-logs/a3-screenshot-2026-10-17.log` | The Producer Page captures of 17 Oct 2026 |
 
 ---
 

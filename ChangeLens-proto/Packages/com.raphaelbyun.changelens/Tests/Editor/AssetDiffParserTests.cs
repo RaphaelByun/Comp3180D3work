@@ -687,6 +687,28 @@ namespace ChangeLens.Editor.Tests
             StringAssert.Contains("2 changes by 1 person", page.ToMarkdown());
         }
 
+        // The Producer Page window split every row on '|', including the "\|"
+        // that the page writes for a bar in a commit subject, so the columns
+        // no longer lined up.
+        [Test]
+        public void TableRow_KeepsAnEscapedBarInItsCell()
+        {
+            string log =
+                "commit aaaa000000000000000000000000000000000003\n" +
+                "Author: Dev <dev@example.com>\n" +
+                "Date:   2021-03-09 10:00:00 +0000\n\n" +
+                "    Fix A | B\n\n" +
+                "M\tAssets/Scripts/Door.cs\n";
+            string page = ProducerReport.Build(ChangeReport.Build(GitLogParser.Parse(log), "t"), null, null,
+                                               ReportCondition.Baseline, "t").ToMarkdown();
+            string row = System.Array.Find(page.Split('\n'), l => l.Contains("Fix A"));
+            List<string> cells = ProducerReport.SplitTableRow(row);
+            Assert.AreEqual(4, cells.Count, row);
+            Assert.AreEqual("Fix A | B", cells[1]);
+            Assert.AreEqual("1", cells[2]);
+            CollectionAssert.AreEqual(new[] { "a", "b" }, ProducerReport.SplitTableRow("| a | b |"));
+        }
+
         // The strict measure counts the asset's own root name, which the page
         // never shows, so a third line counts only names a reader sees.
         [Test]

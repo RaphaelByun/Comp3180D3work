@@ -359,10 +359,7 @@ namespace ChangeLens.Editor
 
         private static List<string> SplitRow(string row)
         {
-            string trimmed = row.Trim().Trim('|');
-            var cells = new List<string>();
-            foreach (string cell in trimmed.Split('|')) cells.Add(cell.Trim());
-            return cells;
+            return ProducerReport.SplitTableRow(row);
         }
 
         /// <summary>**bold**, *italic* and `code` to Unity rich text.</summary>

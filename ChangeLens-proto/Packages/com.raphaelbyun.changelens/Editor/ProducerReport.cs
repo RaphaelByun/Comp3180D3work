@@ -645,5 +645,28 @@ namespace ChangeLens.Editor
         {
             return (text ?? "").Replace("|", "\\|");
         }
+
+        /// <summary>
+        /// "| a | Fix A \| B | 3 |" -> "a", "Fix A | B", "3". Splits a page table
+        /// row on its cell bars only: a bar that EscapeCell wrote as "\|" stays
+        /// in its cell, without the backslash.
+        /// </summary>
+        public static List<string> SplitTableRow(string row)
+        {
+            string text = (row ?? "").Trim();
+            if (text.StartsWith("|", StringComparison.Ordinal)) text = text.Substring(1);
+            if (text.EndsWith("|", StringComparison.Ordinal) && !text.EndsWith("\\|", StringComparison.Ordinal))
+                text = text.Substring(0, text.Length - 1);
+            var cells = new List<string>();
+            var cell = new StringBuilder();
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] == '\\' && i + 1 < text.Length && text[i + 1] == '|') { cell.Append('|'); i++; }
+                else if (text[i] == '|') { cells.Add(cell.ToString().Trim()); cell.Clear(); }
+                else cell.Append(text[i]);
+            }
+            cells.Add(cell.ToString().Trim());
+            return cells;
+        }
     }
 }

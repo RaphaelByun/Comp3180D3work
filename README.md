@@ -22,6 +22,23 @@ Each deliverable has its own branch. A folder named below exists on its own bran
 | D8 | Development diary | `deliverable-8-dev-diary` | `deliverable-8/` | A dated entry each week naming a roadblock or breakthrough | Template, fact log and hours log. No entries yet | `deliverable-8/README.md` |
 | D9 | Reflection report | `deliverable-9-reflection` | `deliverable-9/` | All four goals evidenced; hour variances explained | Skeleton and variance-table helper. No reflection yet | `deliverable-9/README.md` |
 
+### Changes from the A2 plan
+
+Facts only, for the report's Project Deliverables section. "A2 said" quotes the A2 Deliverables table and Evaluation Method. The "Reason recorded" column repeats what the source file says. The last column is for Raphael to write in his own words. Hour variances are left to `deliverable-9/variance-table.js`, which reads the hours log.
+
+| Deliverable | A2 said | What changed | Date | Source (branch: file) | Reason recorded | Why, in Raphael's words |
+| --- | --- | --- | --- | --- | --- | --- |
+| D1 | "two 20-minute interviews outside the reader pool (2 h)" | Interviews not run. Replaced by six coded first-hand accounts by game producers | 14 Oct 2026 | `deliverable-1-ux-study`: `deliverable-1/interview-guide.md` (top note), `deliverable-1/published-sources.md` | 14 Oct: no time to get ethics approval. 17 Oct update: no ethics application is needed, and the interviews stay dropped for time | |
+| D1 | "Four free-tier tools coded against Nielsen and Molich (1990) and Nielsen (1994)" (planned as Raphael's own pass) | The heuristic pass was run by Claude, an AI agent, in Chrome on Raphael's accounts. Raphael did not watch it. A spot-check of the 16 severity 3–4 findings is his to do | 14 Oct 2026 | `deliverable-1-ux-study`: `deliverable-1/heuristic-coding-sheet.md` (Evaluator note), `deliverable-1/CHECK-PACK.md` | "Raphael authorised this because he had no time to run it himself" | |
+| D1 | 10 h of Raphael's own work for D1 | The verification, needs marks, ranking and design spec were drafted by Claude Code. Each judgement is for Raphael to accept or change | 15 Oct 2026 | `deliverable-1-ux-study`: `deliverable-1/README.md` (status item 3), `deliverable-1/needs-catalogue.md` | "Raphael had no time" | |
+| D1 | "five G2 reviews coded" | Four of the five reviews verified on the live pages. V5 could not be verified | 15 Oct 2026 | `deliverable-1-ux-study`: `deliverable-1/job-ads-and-reviews.md` | G2 rotates the reviews it shows, and the quoted one did not reappear | |
+| D2 | ChangeLens "reads a git log export for one week" | Added Window > ChangeLens Producer Page. It runs git itself for a chosen week, reopens a frozen week, flips Version A and B and saves the study files | 13 Oct 2026 | `deliverable-2-changelens`: commit `323eac1`, `TRY-CHANGELENS.md` | None recorded | |
+| D4 | Every claim scored against each commit's diff, "read by hand" | Both weeks scored by two independent AI scorers. Raphael's own hand check is open | 12–13 Oct 2026 | `deliverable-4-fidelity-check`: `study/week1-2021-02-08/FIDELITY-RESULT.md`; `GENAI-EVIDENCE.md` (D4 row) | None recorded | |
+| D5 | "Nine 45-minute sessions including the pilot" | Not changed yet. The floor was set at five readers in total, pilot excluded. Fewer than nine sessions would be a variance | 14 Oct 2026 | `deliverable-5-sessions`: `deliverable-5/README.md` (floor decision); commit `46857b4` | Raphael's reading of A2's floor | |
+| D3, D5 | Sessions with "briefing and consent"; no ethics step in the plan | An ethics application was researched and drafted (14 Oct), then not pursued. The study keeps its own safeguards: voluntary, codes not names, notes only, information sheet and consent form | 14 and 17 Oct 2026 | `deliverable-3-instruments`: `deliverable-3/ethics/README.md` (top note), `deliverable-3/ethics/report-ethics-points.md` | The unit guide sets no ethics requirement, and the Final Project expects an evaluation with the target audience | |
+| D3 | "both piloted in Week 11" | Not yet due. Pilot P0 planned for Tue 20 or Wed 21 Oct | 17 Oct 2026 | `deliverable-5-sessions`: `deliverable-5/README.md` (catch-up plan) | Not a change yet | |
+| D8 | "A dated entry each week" | No entries yet. A template, a fact log and an hours log exist | 17 Oct 2026 | `deliverable-8-dev-diary`: `deliverable-8/README.md` | None recorded | |
+
 ## Running the checks
 
 From the repository root:

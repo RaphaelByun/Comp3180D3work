@@ -87,6 +87,8 @@ Minutes check: 5 + 45 + 5 + 2 + 15 + 10 + 10 + 10 + 0 + 5 + 10 + 20 + 5 + 5 + 20
 | 15 Oct 2026 (web agent): re-verified free tiers; verified 10 ads, reviews V1–V4 and every source quote on the live pages; recounted the ad codes; settled P1, P4, P6 | Spot-check the verified ads and reviews; decide on V5 |
 | 15 Oct 2026 (analysis agent): checked Ko et al. against the PDF (6 changes, items 1 to 6 of the step 10 log); recoded the sources and set the cap; tightened the reconciliation; edited and marked the 25 needs; picked N07, N10, N27 as rejected-artefact cases; UXF week check (9–15 Nov 2020); ranked the needs; wrote design-spec.md and HANDOFF-TO-D3.md | Accept or change every judgement in needs-catalogue.md §8; edit the spec; GenAI statement |
 
-## Network limits in this session (why some things are unverified)
+## Network limits on 12 October (historical)
+
+Since 15 October 2026 only review V5 and the Jira Free Summary tab are unverified.
 
 On 12 October 2026 this session could not open trello.com, hacknplan.com, atlassian.com, codecks.io, notion.com, linear.app, gamejobs.co, workwithindies.com, hitmarker.net, LinkedIn, Teamtailor, G2 or Capterra directly. Facts from those sites came through web-search results and are marked as such. github.com and microsoft.com (the Ko et al. PDF) were readable.

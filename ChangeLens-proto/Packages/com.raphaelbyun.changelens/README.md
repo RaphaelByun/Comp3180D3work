@@ -22,6 +22,10 @@ The hands-on guide is `TRY-CHANGELENS.md` at the root of the repository. It cove
 
 How the A2 prototype window works is in `prototype/HOW-IT-WORKS.md`.
 
+## Evaluation
+
+Since 17 Oct 2026 the evaluation is solo: Raphael evaluates ChangeLens himself, with no other readers. The plan is `deliverable-5/self-evaluation-plan.md` on branch `deliverable-5-sessions`. The two reserve weeks under `study/reserve/` are frozen at commit `d9fa4bf` for his self-read. Don't regenerate them, and don't open them before that self-read is scored.
+
 ## Folders
 
 | Folder | What it holds |

@@ -47,7 +47,8 @@ function build(text) {
     out.push(`| ${r.deliverable} | ${r.name} | ${p} | ${pp} | ${a === null ? '' : a} | ${pa === null ? '' : pa} | ${v}${flag} | ${r.variance_why || ''} |`);
   }
   const d = ta - tp;
-  out.push(`| | **Total** | **${tp}** | **${tpp}** | **${allLogged ? ta : ''}** | **${allLogged ? tpa : ''}** | **${allLogged ? (d > 0 ? '+' : '') + d : 'incomplete'}** | |`);
+  const bold = x => (x === '' ? '' : `**${x}**`);
+  out.push(`| | **Total** | ${bold(tp)} | ${bold(tpp)} | ${bold(allLogged ? ta : '')} | ${bold(allLogged ? tpa : '')} | ${bold(allLogged ? (d > 0 ? '+' : '') + d : 'incomplete')} | |`);
   return out.join('\n') + '\n';
 }
 

@@ -1,6 +1,6 @@
 # Handoff to Deliverable 3: the ten needs
 
-From D1, 15 October 2026. **AI-drafted by Claude Code; Raphael to accept or change** (needs-catalogue.md §8). Replaces the provisional ten in `deliverable-3/ten-need-sheet.md` (13 Oct 2026) before the first real session; the pilot may use either set.
+From D1, 15 October 2026. **AI-drafted by Claude Code; Raphael to accept or change** (needs-catalogue.md §8). These ten already replace the provisional ten (13 Oct 2026) on `deliverable-3/ten-need-sheet.md` (commit cf90ef9 on `deliverable-3-instruments`); the pilot may use either set. If Raphael changes a need when accepting, update both this file and the sheet.
 
 How chosen: the rule in needs-catalogue.md §5, fixed before counting (ads, verified reviews V1–V4, published sources capped at 2, heuristic-pass points, Ko type). If any ad, review, source coding or pass outcome changes, re-run the count and update this file. Tenth place is the fragile one (N12 on 5 against N24 on 4).
 

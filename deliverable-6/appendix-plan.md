@@ -12,7 +12,7 @@ Updated 17 Oct 2026 for the solo evaluation (Raphael's decision that day: no stu
 | D. Needs-log coding | Segment id, read, time, note, pass 1 code, pass 2 code on the blind quarter, final code and the rule used for each disagreement; the `recode-sample.js` seed and sample size | `deliverable-6/data/se2-needs-log.csv` (the `deliverable-5/think-aloud-coding-sheet.csv` layout, participant `SELF`) | Raphael | Empty template: `analysis/templates/se2-needs-log.csv` |
 | E. Analysis output | The unedited text printed by `node deliverable-6/analysis/analyse.js ... --out deliverable-6/data/analysis-output.md` (full command in `README.md`), with the date it was run: Tables A to H and the scoring check | `deliverable-6/data/analysis-output.md` | Raphael runs it | Not run |
 | F. Fidelity check | SE1: Raphael's hand verdicts beside each AI scorer's, per row (Table A), and the scored checklists from Deliverable 4 | `deliverable-6/data/se1-fidelity-handcheck.csv`; on branch `deliverable-4-fidelity-check`: February, `study/week1-2021-02-08/` (`FIDELITY-RESULT.md`, `fidelity-A-scored-scorer1.md`, `fidelity-A-scored-scorer2.md`, `fidelity-B-scored-scorer1.md`, `fidelity-B-scored-scorer2.md`, `fidelity-B-rescore-repaired-rows.md`); July, `study/week2-2021-07-19/` (`fidelity-A-scored.md`, `fidelity-B-scored.md`, one scorer); the reserve-week checklists once regenerated from `d9fa4bf` and scored after SE2 | Raphael (hand-check); Deliverable 4 (AI scorers) | AI scoring done for both study weeks: July PASS for A and B; February A 15 of 15, B 39 of 39 after the repair and re-score of rows 19, 21, 22, 23, 27, 33 (`FIDELITY-RESULT.md`). A2 requires scoring "read by hand": the hand-check is pending, and the AI-assisted scoring must be disclosed. The reserve-week checklists on D4 are out of date (plan section 11) |
-| G. SE3 and SE4 sheets | The walkthrough (persona, correct actions, Q1 to Q4 per step, failure stories, severities) and the heuristic evaluation (problems, severities, T1 to T7 outcomes); the D1 rows used beside them in Table F, marked checked or not | `deliverable-6/data/se3-walkthrough.csv`, `se4-heuristic-problems.csv`, `se4-task-outcomes.csv`, optional `d1-problems.csv`, `d1-task-outcomes.csv`; screenshots named in `screenshot_file` | Raphael | Empty templates in `analysis/templates/` |
+| G. SE3 and SE4 sheets | The walkthrough (persona, written before the walkthrough; correct actions, Q1 to Q4 per step, failure stories, severities) and the heuristic evaluation (problems, severities, T1 to T7 outcomes); the D1 rows used beside them in Table F, marked checked or not | `deliverable-6/data/se3-persona.md`, `se3-walkthrough.csv`, `se4-heuristic-problems.csv`, `se4-task-outcomes.csv`, optional `d1-problems.csv`, `d1-task-outcomes.csv`; screenshots named in `screenshot_file` | Raphael | Empty templates in `analysis/templates/` |
 
 ## Rules
 
@@ -35,6 +35,7 @@ deliverable-6/
     se2-needs-log.csv
     se2-second-scorer.csv      (optional)
     se2-answers-<week>-<version>.md
+    se3-persona.md
     se3-walkthrough.csv
     se4-heuristic-problems.csv
     se4-task-outcomes.csv

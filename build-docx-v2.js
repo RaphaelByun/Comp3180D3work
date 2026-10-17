@@ -5,8 +5,9 @@
 // bold/italic runs, boxed placeholder paragraphs, header/footer, A4 page, Calibri house
 // style) still works unchanged.
 //
-// Usage (from School/):  node "Unit 3 Sem 2/COMP3180/Working folder/a2-final-sprint-17-sep-2026/build-docx-v2.js" <in.md> <out.docx>
-// Requires the docx package already installed in School/node_modules. No new dependencies.
+// Usage (from the repo root):  node build-docx-v2.js <in.md> <out.docx>
+// Needs the docx package (version in package.json). In a fresh clone run `npm install` first.
+// On Raphael's PC Node also finds it in School/node_modules, a parent folder of this repo.
 //
 // Markdown extensions recognised by v2:
 //   %TITLE: / %SUBTITLE: / %NAME: / %ID: / %CATEGORY:   -> cover page (rendered first, in this order)
@@ -21,7 +22,14 @@ const {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
   Header, Footer, AlignmentType, LevelFormat, HeadingLevel,
   BorderStyle, WidthType, ShadingType, PageNumber, ImageRun, PageBreak,
-} = require(path.join(__dirname, '..', '..', '..', '..', 'node_modules', 'docx'));
+} = (() => {
+  try {
+    return require('docx');
+  } catch (e) {
+    console.error('Cannot load the docx package. Run "npm install" in ' + __dirname + ' first.');
+    process.exit(1);
+  }
+})();
 
 const FONT = 'Calibri';
 const BODY = 22, SMALL = 20, TINY = 18;

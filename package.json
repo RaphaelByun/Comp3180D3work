@@ -1,0 +1,8 @@
+{
+  "name": "comp3180-d3work",
+  "private": true,
+  "description": "Node tools in this repo: build-docx-v2.js (Markdown to Word).",
+  "dependencies": {
+    "docx": "^9.6.1"
+  }
+}

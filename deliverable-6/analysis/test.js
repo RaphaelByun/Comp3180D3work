@@ -608,5 +608,33 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   has('one week: not computed', one, 'Week-balanced difference: not computed');
 }
 
+// 23. PNG copy of Figure 1 for the Word builder (build-docx-v2.js embeds .png/.jpg only).
+//     pngSize reads the IHDR chunk; findChrome honours CHROME_PATH; svgToPng runs when a browser is installed.
+{
+  const F = require('./figures.js');
+  const hdr = Buffer.alloc(24);
+  Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).copy(hdr, 0);
+  hdr.writeUInt32BE(1280, 16); hdr.writeUInt32BE(496, 20);
+  eq('png: size width', F.pngSize(hdr).width, 1280);
+  eq('png: size height', F.pngSize(hdr).height, 496);
+  eq('png: not a png', F.pngSize(Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"/>')), null);
+  eq('png: CHROME_PATH wins', F.findChrome({ CHROME_PATH: __filename }), __filename);
+  eq('png: nothing found', F.findChrome({ CHROME_PATH: path.join(__dirname, 'no-such-browser.exe') }) === path.join(__dirname, 'no-such-browser.exe'), false);
+  const chrome = F.findChrome();
+  if (!chrome) console.log('SKIP png render: no Chrome or Edge found (set CHROME_PATH to run it)');
+  else {
+    const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'cl-png-'));
+    const svg = F.build({ scores: path.join(__dirname, 'sample-item-scores.csv') }).svg;
+    const h = Number(/<svg[^>]*\sheight="(\d+)"/.exec(svg)[1]);
+    fs.writeFileSync(path.join(dir, 'f.svg'), svg);
+    const s = F.svgToPng(path.join(dir, 'f.svg'), path.join(dir, 'f.png'), chrome);
+    const back = F.pngSize(fs.readFileSync(path.join(dir, 'f.png')));
+    eq('png render: width is twice the SVG', back.width, 1280);
+    eq('png render: height is twice the SVG', back.height, 2 * h);
+    eq('png render: return value', s.width, back.width);
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+}
+
 console.log(`${pass} checks passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

@@ -32,6 +32,6 @@ deliverable-6/
     marking-key.csv
     think-aloud-codes.csv
     analysis-output.md
-    figures/        (figures.js output: figure-1-paired-differences.svg, tables.md)
+    figures/        (figures.js output: figure-1-paired-differences.svg and .png, tables.md)
   analysis/   (this tool, unchanged)
 ```

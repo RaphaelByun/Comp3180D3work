@@ -10,8 +10,11 @@
  *   node figures.js --scores item-scores.csv --needs need-classifications.csv --key marking-key.csv \
  *                   --codes think-aloud-coding-sheet.csv --outdir deliverable-6/data/figures
  *
- * With --outdir it writes figure-1-paired-differences.svg and tables.md there. Without it, the
- * tables are printed and no SVG is written. Anything built from a sample-*.csv file is stamped FAKE.
+ * With --outdir it writes figure-1-paired-differences.svg and tables.md there, and a PNG copy of the
+ * figure (figure-1-paired-differences.png, at twice the SVG size) for the Word builder, which embeds
+ * PNG or JPG only. The PNG is made by an installed Chrome or Edge in headless mode (no npm package):
+ * set CHROME_PATH if it is not found, or give --png no to skip it. Without --outdir, the tables are
+ * printed and no image is written. Anything built from a sample-*.csv file is stamped FAKE.
  *
  *   Figure 1: dot plot, one dot per complete reader, treatment minus baseline (-10 to +10).
  *             Producers are filled circles, proxies hollow squares (shape, not colour, so it prints).
@@ -23,6 +26,9 @@
  */
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
+const cp = require('child_process');
+const { pathToFileURL } = require('url');
 const A = require('./analyse.js');
 
 // The 21 types, from deliverable-5/think-aloud-coding-sheet.md (checked against Ko et al., 2007,
@@ -149,6 +155,50 @@ function table3(codeRows) {
   return out.join('\n');
 }
 
+// ---------- PNG copy of Figure 1 ----------
+// The Word builder (build-docx-v2.js) embeds .png/.jpg only. Chrome or Edge in headless mode renders the
+// SVG to a PNG, so the tool keeps no npm dependencies. CHROME_PATH wins over the usual install places.
+function findChrome(env) {
+  env = env || process.env;
+  const c = [env.CHROME_PATH];
+  for (const base of [env.PROGRAMFILES, env['PROGRAMFILES(X86)'], env.LOCALAPPDATA]) {
+    if (!base) continue;
+    c.push(path.join(base, 'Google', 'Chrome', 'Application', 'chrome.exe'));
+    c.push(path.join(base, 'Microsoft', 'Edge', 'Application', 'msedge.exe'));
+  }
+  c.push('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/usr/bin/google-chrome', '/usr/bin/chromium', '/usr/bin/chromium-browser');
+  return c.find(p => p && fs.existsSync(p)) || null;
+}
+
+// Width and height from a PNG's IHDR chunk (bytes 16-23); null if the bytes are not a PNG.
+function pngSize(buf) {
+  const sig = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+  if (!buf || buf.length < 24 || sig.some((b, i) => buf[i] !== b)) return null;
+  return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+}
+
+// Renders svgFile to pngFile at `scale` times the SVG's own width and height. Throws with the reason on failure.
+function svgToPng(svgFile, pngFile, chrome, scale) {
+  scale = scale || 2;
+  const svg = fs.readFileSync(svgFile, 'utf8');
+  const tag = (/<svg[^>]*>/.exec(svg) || [''])[0];
+  const w = Number((/\swidth="(\d+)"/.exec(tag) || [])[1]), h = Number((/\sheight="(\d+)"/.exec(tag) || [])[1]);
+  if (!w || !h) throw new Error('no width and height on the <svg> element');
+  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'cl-chrome-'));
+  try {
+    if (fs.existsSync(pngFile)) fs.unlinkSync(pngFile);
+    cp.execFileSync(chrome, ['--headless', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
+      `--user-data-dir=${profile}`, `--force-device-scale-factor=${scale}`, `--window-size=${w},${h}`,
+      '--default-background-color=FFFFFFFF', `--screenshot=${path.resolve(pngFile)}`, pathToFileURL(path.resolve(svgFile)).href],
+    { stdio: 'ignore', timeout: 60000 });
+  } finally {
+    try { fs.rmSync(profile, { recursive: true, force: true }); } catch (e) { /* the browser may still hold a file; harmless */ }
+  }
+  const size = fs.existsSync(pngFile) ? pngSize(fs.readFileSync(pngFile)) : null;
+  if (!size) throw new Error('the browser wrote no PNG');
+  return size;
+}
+
 // ---------- main ----------
 function args(argv) {
   const o = {};
@@ -192,12 +242,27 @@ function main() {
     fs.mkdirSync(a.outdir, { recursive: true });
     const stem = r.fake ? 'FAKE-' : '';
     fs.writeFileSync(path.join(a.outdir, `${stem}tables.md`), r.md);
-    if (r.svg) fs.writeFileSync(path.join(a.outdir, `${stem}figure-1-paired-differences.svg`), r.svg);
-    process.stdout.write(r.md + `\nWritten to ${a.outdir}: ${stem}tables.md${r.svg ? `, ${stem}figure-1-paired-differences.svg` : ''}\n`);
+    const written = [`${stem}tables.md`];
+    let note = '';
+    if (r.svg) {
+      const svgFile = path.join(a.outdir, `${stem}figure-1-paired-differences.svg`);
+      fs.writeFileSync(svgFile, r.svg);
+      written.push(path.basename(svgFile));
+      if (a.png !== 'no') {
+        const chrome = findChrome();
+        const pngFile = svgFile.replace(/\.svg$/, '.png');
+        if (!chrome) note = 'PNG not written: no Chrome or Edge found. Set CHROME_PATH to chrome.exe or msedge.exe and run again.\n';
+        else {
+          try { const s = svgToPng(svgFile, pngFile, chrome); written.push(`${path.basename(pngFile)} (${s.width} x ${s.height})`); }
+          catch (e) { note = `PNG not written: ${e.message}. The SVG is fine; set CHROME_PATH or convert it by hand.\n`; }
+        }
+      }
+    }
+    process.stdout.write(r.md + `\nWritten to ${a.outdir}: ${written.join(', ')}\n` + note);
   } else {
     process.stdout.write(r.md + (r.svg ? '\nFigure 1 SVG not written: give --outdir to save it.\n' : ''));
   }
 }
 
-module.exports = { figure1Svg, table1, table2, table3, build, KO_TYPES };
+module.exports = { figure1Svg, table1, table2, table3, build, KO_TYPES, findChrome, pngSize, svgToPng };
 if (require.main === module) main();

@@ -11,8 +11,8 @@ A2 success measure (Deliverables table, row 6, 6 h, 1 in prac): **"All six items
 | `evaluation-section-skeleton.md` | The A3 Evaluation section (about 1000 words): RQ, Target Audience, Method (200 or fewer), Results and Discussion (about 700), with placeholders saying what evidence goes where |
 | `appendix-plan.md` | Appendices A to G for raw data, with source files and rules |
 | `analysis/analyse.js` | Node tool (no dependencies). Reads CSVs, prints a Markdown report |
-| `analysis/figures.js` | Node tool (no dependencies). Same CSVs; writes Figure 1 (SVG dot plot of each reader's difference, producers as filled circles, proxies as hollow squares) and Tables 1, 2, 2b and 3 as Markdown |
-| `analysis/test.js` | 195 checks against hand-computed values, for both tools. Run `node deliverable-6/analysis/test.js` from the repo root. Result on 17 Oct: 195 passed, 0 failed |
+| `analysis/figures.js` | Node tool (no dependencies). Same CSVs; writes Figure 1 (SVG dot plot, plus a PNG copy for Word, of each reader's difference, producers as filled circles, proxies as hollow squares) and Tables 1, 2, 2b and 3 as Markdown |
+| `analysis/test.js` | 203 checks against hand-computed values, for both tools. Run `node deliverable-6/analysis/test.js` from the repo root. Result on 17 Oct: 203 passed, 0 failed. The PNG render check is skipped when no Chrome or Edge is found |
 | `analysis/sample-*.csv` | **FAKE** data (4 invented readers and a pilot row) so you can see the output. Labelled FAKE inside each file and in the tool's banner |
 | `analysis/templates/*.csv` | Header-only files to copy into `deliverable-6/data/` and fill |
 
@@ -55,7 +55,7 @@ node deliverable-6/analysis/figures.js                    # demo tables on FAKE 
 node deliverable-6/analysis/figures.js --scores deliverable-6/data/item-scores.csv --needs deliverable-6/data/need-classifications.csv --key deliverable-6/data/marking-key.csv --codes deliverable-5/think-aloud-coding-sheet.csv --outdir deliverable-6/data/figures
 ```
 
-`figures.js` writes `figure-1-paired-differences.svg` and `tables.md` into `--outdir`. Output built from any `sample-*.csv` file is stamped FAKE in the image and the tables, and its file names start with `FAKE-`.
+`figures.js` writes `figure-1-paired-differences.svg`, `figure-1-paired-differences.png` and `tables.md` into `--outdir`. The PNG (twice the SVG size) is for the Word builder `build-docx-v2.js`, which embeds PNG or JPG only. It is made by an installed Chrome or Edge in headless mode, so the tool still needs no npm package. If no browser is found, the tool says so and writes the SVG only: set `CHROME_PATH` to `chrome.exe` or `msedge.exe`, or add `--png no` to skip the PNG. Output built from any `sample-*.csv` file is stamped FAKE in the image and the tables, and its file names start with `FAKE-`.
 
 ## What Raphael must do
 

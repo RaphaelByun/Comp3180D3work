@@ -6,11 +6,12 @@ Use this with two people who are not in your project, did not take part in the s
 
 ## How to run it (5 minutes each)
 
-1. Give them the rough cut with no introduction. Say only: "Please watch this video. It is 3 to 4 minutes. I will ask five short questions afterwards."
-2. Do not pause, explain or hint while they watch.
-3. Hand them the form below (or read it out and write their words down exactly). Ask all five questions before telling them anything. Only questions 1 and 2 are marked. Question 3 is a note on whether they saw the two versions, and questions 4 and 5 are notes for fixing the cut.
-4. Mark pass or fail with the key. Then you may discuss.
-5. If either viewer fails, fix the video and test with a new viewer (the same person has seen it already).
+1. Before the video, tell them it is voluntary, they can stop at any time, and only a viewer code (V1, V2) and their answers are kept, with no name. This is the same basis as the reader study: no ethics application, so voluntary and de-identified (`deliverable-3/README.md`, ethics decision of 17 Oct; `deliverable-3/ethics/report-ethics-points.md`). If they say no, ask someone else.
+2. Then give them the rough cut with no introduction. Say only: "Please watch this video. It is 3 to 4 minutes. I will ask five short questions afterwards."
+3. Do not pause, explain or hint while they watch.
+4. Hand them the form below (or read it out and write their words down exactly). Ask all five questions before telling them anything. Only questions 1 and 2 are marked. Question 3 is a note on whether they saw the two versions, and questions 4 and 5 are notes for fixing the cut.
+5. Mark pass or fail with the key. Then you may discuss.
+6. If either viewer fails, fix the video and test with a new viewer (the same person has seen it already).
 
 ## Form (print or copy)
 
@@ -50,6 +51,8 @@ Questions 3, 4 and 5 are not scored. Use their answers to choose what to fix.
 Measure met when both viewers pass Q1 and Q2. Record the outcome as a count: "2 of 2 viewers stated both" (or "1 of 2, then fixed and retested with V3").
 
 ## Response log (copy rows into `viewer-responses.csv` or keep here)
+
+This log is the evidence for the video's success measure. Put it in the A3 report as an appendix after Appendix G (`deliverable-6/appendix-plan.md`), and put its repo path in the Project Deliverables links next to the Echo 360 link. Codes only, no names.
 
 | Viewer | Date | Cut version | Q1 pass | Q2 pass | Q3 noticed both | Confusing moment (time) | Change made |
 |---|---|---|---|---|---|---|---|

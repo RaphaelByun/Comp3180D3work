@@ -358,6 +358,16 @@ function analyseScores(rowsAll) {
     const up = ds.filter(x => x > 0).length, dn = ds.filter(x => x < 0).length, z = ds.length - up - dn;
     out.push(`\nReaders: ${ds.length}. Higher with names: ${up}. Same: ${z}. Lower with names: ${dn}.`);
     out.push(`Mean difference ${f2(mean(ds))} points out of 10 (median ${f2(median(ds))}, range ${f2(Math.min(...ds))} to ${f2(Math.max(...ds))}; possible range -10 to +10).`);
+    // Week balance: if more readers had their treatment report in one week, week difficulty leaks into
+    // the plain mean. The mean per treatment week, averaged, weights both weeks equally.
+    const wb = weekBalanced(S);
+    if (wb.balanced === null) {
+      out.push('Week-balanced difference: not computed, because every treatment report was in one week. The names effect and the week cannot be told apart.');
+    } else {
+      out.push('By week of the treatment report: ' + wb.groups.map(g => `${g.week} n=${g.n}, mean ${f2(g.mean)}`).join('; ') +
+        `. Week-balanced difference (the average of the two): ${f2(wb.balanced)} points out of 10.` +
+        (wb.groups[0].n !== wb.groups[1].n ? ' The two groups differ in size, so the plain mean above is unbalanced: it leans toward the bigger group\'s week. Report the week-balanced figure beside it.' : ''));
+    }
     const roles = Array.from(new Set(diffs.map(x => x.role))).sort();
     if (roles.length > 1) {
       const byRole = roles.map(r => ({ r, x: diffs.filter(d => d.role === r).map(d => d.d) }));
@@ -385,15 +395,35 @@ function analyseScores(rowsAll) {
     out.push(`\nBaseline mean gap between weeks: ${f2(Math.abs(mean(bw[0]) - mean(bw[1])))} points out of 10. Compare this with the treatment effect before crediting the names.`);
   }
 
-  // order check
-  const byOrder = {};
-  for (const p of people) for (const c of CONDS) {
-    const t = tot[p][c];
-    const k = `order ${t.order}`; (byOrder[k] = byOrder[k] || []).push(t.sum);
+  // order check, within each condition: pooling the conditions mixes the order effect with the
+  // condition imbalance whenever the sequences are uneven (five readers on S1, S2, S3, S4, S2).
+  if (people.length) {
+    out.push('\nMean total /10 by reading order within each condition (first report vs second): ' +
+      orderByCondition(S).map(x => `${x.cond}: ` + x.orders.map(o => `order ${o.order} ${o.n ? f2(o.mean) : 'n/a'} (n=${o.n})`).join(', ')).join('; ') +
+      '. Compare order 1 with order 2 inside one condition only.');
   }
-  const ok = Object.keys(byOrder).sort();
-  if (ok.length) out.push('\nMean total /10 by reading order (first report vs second): ' + ok.map(k => `${k}: ${f2(mean(byOrder[k]))} (n=${byOrder[k].length})`).join('; ') + '.');
   return out.join('\n');
+}
+
+// Mean total per reading order inside each condition, complete readers only.
+function orderByCondition(S) {
+  return CONDS.map(c => ({
+    cond: c,
+    orders: ['1', '2'].map(o => {
+      const xs = S.complete.filter(p => S.tot[p][c].order === o).map(p => S.tot[p][c].sum);
+      return { order: o, n: xs.length, mean: mean(xs) };
+    }),
+  }));
+}
+
+// Mean paired difference per week of the treatment report, and their average (null when a week is empty).
+function weekBalanced(S) {
+  const diffs = pairedDiffs(S);
+  const groups = ['W1', 'W2'].map(w => {
+    const xs = diffs.filter(d => S.tot[d.p].treatment.week === w).map(d => d.d);
+    return { week: w, n: xs.length, mean: mean(xs) };
+  });
+  return { groups, balanced: groups.every(g => g.n) ? (groups[0].mean + groups[1].mean) / 2 : null };
 }
 
 // Treatment-minus-baseline difference for each complete reader (used by the report and by figures.js).
@@ -736,6 +766,6 @@ function main() {
 module.exports = {
   parseCSV, readCSV, agreement, cohenKappa, analyseScores, analyseNeeds, analyseCodes, mean, median,
   prepareScores, prepareNeeds, prepareCodes, pairedDiffs, fullMarkCounts, item6Counts, sequenceCounts,
-  secondScorer, analyseSecondScorer, footer, isPilot, FLOOR, normNeedId,
+  secondScorer, analyseSecondScorer, footer, isPilot, FLOOR, normNeedId, orderByCondition, weekBalanced,
 };
 if (require.main === module) main();

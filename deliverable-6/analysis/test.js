@@ -244,14 +244,14 @@ const run = lines => A.analyseScores(A.parseCSV([HEAD].concat(lines).join('\r\n'
 
 // 10e. One condition only: R05's treatment rows removed. R05 is out of the paired table and of every
 //      condition table. Item 1: baseline R01-R04 all 2 -> 4/4; treatment 4/4.
-//      Order: order 1 = R01 base 6, R02 treat 8, R03 base 6, R04 base 8 -> 7.00 (n=4);
-//             order 2 = R01 treat 9, R02 base 4, R03 treat 8, R04 treat 6 -> 6.75 (n=4).
+//      Order within condition: baseline order 1 = R01 6, R03 6, R04 8 -> 6.67 (n=3); baseline order 2 = R02 4 (n=1);
+//      treatment order 1 = R02 8 (n=1); treatment order 2 = R01 9, R03 8, R04 6 -> 7.67 (n=3).
 {
   const o = run(scoreLines().filter(l => !l.startsWith('R05,proxy,treatment')));
   has('one-cond: reason', o, 'R05 (no treatment rows)');
   has('one-cond: item 1', o, '| 1    | 4/4           | 2.00          | 4/4            | 2.00           |');
   has('one-cond: item 6', o, '| Pass       | 4/4      | 4/4       |');
-  has('one-cond: order', o, 'order 1: 7.00 (n=4); order 2: 6.75 (n=4)');
+  has('one-cond: order', o, 'baseline: order 1 6.67 (n=3), order 2 4.00 (n=1); treatment: order 1 8.00 (n=1), order 2 7.67 (n=3).');
 }
 
 // 10f. Three readers (R01-R03): floor notice at the top, role split withheld (one producer).
@@ -566,6 +566,46 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   eq('need id: key template parses empty', A.parseCSV(tk).length, 0);
   has('need id: key template row column', tk, 'row,need_id,class');
   has('need id: sheet template note', fs.readFileSync(path.join(__dirname, 'templates', 'need-classifications.csv'), 'utf8'), 'not the printed row number');
+}
+
+// 22. The tracker's five-reader sequences (deliverable-5/booking-tracker.csv): R01 S1, R02 S2, R03 S3, R04 S4,
+//     R05 S2. S1 = W1-B then W2-A; S2 = W2-A then W1-B; S3 = W1-A then W2-B; S4 = W2-B then W1-A.
+//     So treatment is W1 for R01, R02, R05 (3) and W2 for R03, R04 (2); order 2 for R02, R03, R05 (3).
+{
+  const SEQ = { S1: [['W2', 2], ['W1', 1]], S2: [['W2', 1], ['W1', 2]], S3: [['W1', 1], ['W2', 2]], S4: [['W1', 2], ['W2', 1]] };
+  const READERS = [['R01', 'S1'], ['R02', 'S2'], ['R03', 'S3'], ['R04', 'S4'], ['R05', 'S2']];
+  const build = scoreOf => {
+    const lines = [];
+    for (const [p, s] of READERS) {
+      const [[bw, bo], [tw, to]] = SEQ[s];
+      for (const [cond, w, o] of [['baseline', bw, bo], ['treatment', tw, to]]) {
+        scoreOf(cond, w).forEach((x, i) => lines.push(`${p},proxy,${cond},${w},${o},${i + 1},${x},`));
+        lines.push(`${p},proxy,${cond},${w},${o},6,Pass,`);
+      }
+    }
+    return lines;
+  };
+  // 22a. Every treatment report 8/10 (2,2,2,1,1), every baseline 5/10 (1,1,1,1,1): no order effect, no week effect.
+  //      Within each condition the order means are equal; both week groups are +3, so the week-balanced figure is 3.00.
+  const a = run(build(c => (c === 'treatment' ? [2, 2, 2, 1, 1] : [1, 1, 1, 1, 1])));
+  has('tracker five: sequences', a, 'W1 order 1: 1; W1 order 2: 2; W2 order 1: 1; W2 order 2: 1.');
+  has('tracker five: order within condition', a, 'baseline: order 1 5.00 (n=3), order 2 5.00 (n=2); treatment: order 1 8.00 (n=2), order 2 8.00 (n=3).');
+  hasNot('tracker five: no pooled order line', a, 'order 1: 6.20 (n=5)');
+  has('tracker five: by week', a, 'By week of the treatment report: W1 n=3, mean 3.00; W2 n=2, mean 3.00. Week-balanced difference (the average of the two): 3.00 points out of 10.');
+  has('tracker five: unbalanced note', a, 'the plain mean above is unbalanced');
+  // 22b. Week only: every W1 report 7/10 (2,2,1,1,1), every W2 report 5/10, whatever the version. No names effect.
+  //      Treatment W1 readers: 7 - 5 = +2 (x3); treatment W2 readers: 5 - 7 = -2 (x2). Plain mean (6 - 4)/5 = 0.40,
+  //      week-balanced (2 + -2)/2 = 0.00.
+  const b = run(build((c, w) => (w === 'W1' ? [2, 2, 1, 1, 1] : [1, 1, 1, 1, 1])));
+  has('week only: plain mean', b, 'Mean difference 0.40 points out of 10');
+  has('week only: balanced', b, 'By week of the treatment report: W1 n=3, mean 2.00; W2 n=2, mean -2.00. Week-balanced difference (the average of the two): 0.00 points out of 10.');
+  eq('week only: helper', A.weekBalanced(A.prepareScores(A.parseCSV([HEAD].concat(build((c, w) => (w === 'W1' ? [2, 2, 1, 1, 1] : [1, 1, 1, 1, 1]))).join('\n')))).balanced, 0, 1e-12);
+  // With four readers one per sequence the groups are 2 and 2, so no unbalanced note.
+  const four = run(build(c => (c === 'treatment' ? [2, 2, 2, 1, 1] : [1, 1, 1, 1, 1])).filter(l => !l.startsWith('R05,')));
+  hasNot('four sequences: no unbalanced note', four, 'the plain mean above is unbalanced');
+  // every treatment report in one week (R02 and R04 of the base set, both treatment W1): no week-balanced figure
+  const one = run(scoreLines(['R02', 'R04']));
+  has('one week: not computed', one, 'Week-balanced difference: not computed');
 }
 
 console.log(`${pass} checks passed, ${fail} failed`);

@@ -12,15 +12,15 @@ A2 success measure (Deliverables table, row 6, 6 h, 1 in prac): **"All six items
 | `appendix-plan.md` | Appendices A to G for raw data, with source files and rules |
 | `analysis/analyse.js` | Node tool (no dependencies). Reads CSVs, prints a Markdown report |
 | `analysis/figures.js` | Node tool (no dependencies). Same CSVs; writes Figure 1 (SVG dot plot of each reader's difference, producers as filled circles, proxies as hollow squares) and Tables 1, 2, 2b and 3 as Markdown |
-| `analysis/test.js` | 185 checks against hand-computed values, for both tools. Run `node deliverable-6/analysis/test.js` from the repo root. Result on 17 Oct: 185 passed, 0 failed |
+| `analysis/test.js` | 195 checks against hand-computed values, for both tools. Run `node deliverable-6/analysis/test.js` from the repo root. Result on 17 Oct: 195 passed, 0 failed |
 | `analysis/sample-*.csv` | **FAKE** data (4 invented readers and a pilot row) so you can see the output. Labelled FAKE inside each file and in the tool's banner |
 | `analysis/templates/*.csv` | Header-only files to copy into `deliverable-6/data/` and fill |
 
 ## What the tool reports
 
 1. Item means by condition and by week, with raw full-mark counts (items 1 to 5 scored 0, 1 or 2, a full mark is 2; item 6 is the unanswerable item, reported as Pass / Hedged / Over-claim counts per version, never as a number). Optional specificity tick counts for items 4 and 5.
-2. Each reader's treatment-minus-baseline difference over the five scored items (each report is out of 10, so the difference runs from -10 to +10), counts up/same/down, mean, median, range, and a split by role.
-3. Per-week baseline scores (the week-difficulty rival explanation), plus the gap between weeks.
+2. Each reader's treatment-minus-baseline difference over the five scored items (each report is out of 10, so the difference runs from -10 to +10), counts up/same/down, mean, median, range, and a split by role. Beside the mean: the mean for readers whose treatment report was W1, the mean for those whose treatment was W2, and their average as a week-balanced figure. At five readers the tracker repeats S2, so the groups are 3 and 2 and the plain mean leans toward one week; the tool says so.
+3. Per-week baseline scores (the week-difficulty rival explanation), plus the gap between weeks. Reading order is compared inside each condition (baseline order 1 vs order 2, treatment order 1 vs order 2), never pooled, because uneven sequences would make a pooled order line show the condition gap.
 4. Ten-need sheet: agreement with your key as a raw count and whole percentage, and Cohen's kappa per reader, plus a list of needs where readers departed from the key. Optional counts of the T / R / U sources readers circled (counts only, no agreement statistic).
 5. Think-aloud codes: agreement and kappa between pass 1 and pass 2 on the segments coded twice, and which segments differ.
 6. Second scorer (optional `--scores2`): items in agreement out of items scored, items 1 to 5 and item 6 apart, and the items where the two scorers differ. This is the check in `deliverable-3/answer-key-and-scoring.md` (at least two readers, both reports).

@@ -83,5 +83,18 @@ test('a row with more cells than the header stops the tool', () => {
   assert.match(d.out, /line 2 has 12 cells but the header has 11/);
 });
 
+test('a segment_id on two rows stops draw and merge and leaves the sheet alone', () => {
+  const dup = path.join(tmp, 'dup.csv');
+  const text = HEAD + '\nS01,R01,00:01,B,note,a2,2026-10-30,,,,\nS01,R01,00:01,B,note split,d3,2026-10-30,,,,\nS02,R01,00:02,B,note,d1,2026-10-30,,,,\n';
+  fs.writeFileSync(dup, text);
+  const d = run(['draw', '--in', dup, '--out', path.join(tmp, 'z.csv')]);
+  assert.notStrictEqual(d.code, 0);
+  assert.match(d.out, /segment_id used on more than one row .*: S01\./);
+  assert.ok(!fs.existsSync(path.join(tmp, 'z.csv')));
+  const m = run(['merge', '--in', dup, '--blind', blind, '--out', dup]);
+  assert.notStrictEqual(m.code, 0);
+  assert.strictEqual(fs.readFileSync(dup, 'utf8'), text);
+});
+
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log(`${passed} tests passed.`);

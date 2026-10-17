@@ -51,7 +51,7 @@ Ko et al. studied developers. Producers may ask things none of the 21 types cove
 
 ## How to code
 
-1. Unit of analysis: one utterance that states or implies one thing the reader wants to know or says the page leaves out. Split an utterance carrying two needs into two rows (the tool allows one code per row).
+1. Unit of analysis: one utterance that states or implies one thing the reader wants to know or says the page leaves out. Split an utterance carrying two needs into two rows (the tool allows one code per row). Give the new row its own segment_id (for example S05 and S05b). Every segment_id must be unique across the whole sheet.
 2. Code the question behind the words, not the words. "Who did the airlock work?" is a2 (what have my coworkers been doing?). "Why did they change the airlocks?" is d3.
 3. When two types fit, pick the one nearer the reader's purpose (drafting a stand-up update) and write the other in `resolution_rule` only if it was a close call.
 4. Keep a running memo of every rule you invent ("name of person asked for = a2") in the section below. Apply it to all readers.

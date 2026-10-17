@@ -11,7 +11,8 @@
  * merge copies the pass-2 codes you filled in back into the main sheet (column pass2_code).
  *       If --out is the same file as --in, the old sheet is kept as <in>.bak first.
  *       It writes nothing if the merged sheet would not keep the same rows and pass-1 codes.
- * Both stop with an error on an unclosed quote or a row with more cells than the header.
+ * Both stop with an error on an unclosed quote, a row with more cells than the header,
+ *       or a segment_id used on more than one row (split rows need their own id, e.g. S05b).
  * The seed and sample size are printed: write them in the diary and in Appendix D.
  */
 const fs = require('fs');
@@ -60,6 +61,13 @@ function mulberry32(a) {
 }
 function opts(argv) { const o = {}; for (let i = 1; i < argv.length; i++) if (argv[i].startsWith('--')) o[argv[i].slice(2)] = argv[++i]; o._ = argv[0]; return o; }
 
+// Both commands key rows by segment_id, so every id must be unique.
+function checkIds(rows, file) {
+  const seen = new Set(), dup = new Set();
+  rows.forEach(r => { if (seen.has(r.segment_id)) dup.add(r.segment_id); seen.add(r.segment_id); });
+  if (dup.size) throw new Error(`ID error: segment_id used on more than one row in ${file}: ${[...dup].join(', ')}. Give each split row its own id (for example S05b) and run again.`);
+}
+
 function draw(rows, seed, share) {
   const pool = rows.filter(r => r.pass1_code && !/^P\d+$/i.test(r.participant));
   const k = Math.ceil(pool.length * share);
@@ -90,6 +98,7 @@ if (require.main === module) {
     if (o._ === 'draw' && o.in && o.out) {
       const seed = parseInt(o.seed || '2026', 10), share = parseFloat(o.share || '0.25');
       const { rows } = parse(fs.readFileSync(o.in, 'utf8'));
+      checkIds(rows, o.in);
       const { pool, chosen } = draw(rows, seed, share);
       const outHead = ['segment_id', 'participant', 'timestamp', 'report_condition', 'quote_note', 'pass2_code'];
       write(o.out, outHead, chosen.map(r => ({ ...r, pass2_code: '' })));
@@ -97,6 +106,7 @@ if (require.main === module) {
       console.log('Wait at least a week after pass 1, then code the file without opening the main sheet.');
     } else if (o._ === 'merge' && o.in && o.blind && o.out) {
       const main = parse(fs.readFileSync(o.in, 'utf8')), blind = parse(fs.readFileSync(o.blind, 'utf8'));
+      checkIds(main.rows, o.in); checkIds(blind.rows, o.blind);
       const { text, n } = merge(main, blind);
       if (path.resolve(o.out) === path.resolve(o.in)) {
         fs.copyFileSync(o.in, o.in + '.bak');
@@ -113,4 +123,4 @@ if (require.main === module) {
     process.exit(1);
   }
 }
-module.exports = { draw, merge, parse, serialise, mulberry32 };
+module.exports = { draw, merge, parse, serialise, mulberry32, checkIds };

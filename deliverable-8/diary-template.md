@@ -58,7 +58,11 @@ One short summary for the report. Source material: `fact-log-weeks-1-8.md` (star
 
 ### Week 10 (12 to 18 Oct 2026)
 
+Include a dated entry for 17 Oct on the evaluation decision (no study with other people; you evaluate ChangeLens yourself). Source material: `fact-log-weeks-9-10.md` section 4, where your reasons from that day are quoted.
+
 ### Week 11 (19 to 25 Oct 2026)
+
+The solo evaluation runs this week (`deliverable-5/self-evaluation-plan.md`). Write the Create entry `[goal evidence]` on the same day as an SE2 first read of a reserve week, straight after it, never before.
 
 ### Week 12 (26 Oct to 1 Nov 2026)
 

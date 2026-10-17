@@ -42,7 +42,7 @@ Plan the 700 words as five short blocks, each with one piece of integrated evide
 
 2. **Sub-question 1: ten-need sheet** (about 180 words). Evidence: Table 1, the ten-need key (D / P / N) beside the count of readers who matched it for each need. [PLACEHOLDER: agreement as a raw count per reader (for example "7 of 10"), the per-reader kappa range, and the needs where readers departed from the key. Each departure is a finding about what the artefacts cannot say; name two or three.] Limit to state: over ten items these are indicative, not inferential, and kappa swings widely.
 
-3. **Sub-question 2: comprehension items** (about 220 words). Evidence: Figure 1, each reader's treatment-minus-baseline difference over the five scored items (a dot plot, one dot per reader, producers and proxies marked differently), Table 2, full-mark counts per item by condition and by week, and Table 2b, item 6 codes per version. [PLACEHOLDER: how many readers scored higher, the same and lower with names; which items moved (watch the Level 3 item about what to test next); item 6, how many over-claimed from the page.] Limits to state: N readers (N from the tracker) show direction and failure points, not significance; proxies strip a real producer's context, so the difference is an upper bound.
+3. **Sub-question 2: comprehension items** (about 220 words). Evidence: Figure 5, each reader's treatment-minus-baseline difference over the five scored items (a dot plot, one dot per reader, producers and proxies marked differently), Table 2, full-mark counts per item by condition and by week, and Table 2b, item 6 codes per version. [PLACEHOLDER: how many readers scored higher, the same and lower with names; which items moved (watch the Level 3 item about what to test next); item 6, how many over-claimed from the page.] Limits to state: N readers (N from the tracker) show direction and failure points, not significance; proxies strip a real producer's context, so the difference is an upper bound.
 
 4. **Rival explanation: week difficulty** (about 60 words). Evidence: per-week baseline scores from `analyse.js`. [PLACEHOLDER: baseline means for each week and the gap; say whether the gap is smaller or larger than the treatment difference.]
 
@@ -50,9 +50,9 @@ Plan the 700 words as five short blocks, each with one piece of integrated evide
 
 Close (about 40 words). [PLACEHOLDER: one sentence on what this means for the tool (utility) and one on the biggest limit of the study.]
 
-### Figures and tables to prepare (integrate them in the text, not only in appendices; `analysis/figures.js` builds Figure 1 and Tables 1 to 3)
+### Figures and tables to prepare (integrate them in the text, not only in appendices; `analysis/figures.js` builds the plot and Tables 1 to 3)
 
-- Figure 1: paired differences per reader.
+- Figure 5: paired differences per reader. The number follows the report-wide list in `deliverable-7/README.md`, where Figure 1 is the code-share chart and Figures 2 to 4 are the video stills. Run `figures.js` with `--figure 5` so the plot's title matches; its files are still named `figure-1-paired-differences.*`.
 - Table 1: ten needs, key, readers matching.
 - Table 2: item full-mark counts by condition and by week within condition.
 - Table 2b: item 6 Pass / Hedged / Over-claim counts per version.

@@ -409,6 +409,13 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   eq('fig: real not fake', real.fake, false);
   hasNot('fig: real svg not stamped', real.svg, 'FAKE');
   has('fig: real n', real.svg, '(n = 5)');
+  // the figure number follows the report (deliverable-7/README.md makes the plot Figure 5); default stays 1
+  has('fig: default number', r.svg, '<title id="t">Figure 1: paired difference per reader</title>');
+  const r5 = F.build({ scores: path.join(dir, 'sample-item-scores.csv') }, { number: 5 });
+  has('fig: number 5 title', r5.svg, '<title id="t">Figure 5: paired difference per reader</title>');
+  has('fig: number 5 tables', r5.md, '# ChangeLens evaluation: Figure 5 and Tables 1-3');
+  has('fig: number 5 count line', r5.md, 'Figure 5 uses 4 complete reader(s).');
+  hasNot('fig: number 5 no Figure 1', r5.svg + r5.md, 'Figure 1');
 }
 
 // 14. CSV quotes (RFC 4180). A quote opens a quoted field only as the first character of a field.

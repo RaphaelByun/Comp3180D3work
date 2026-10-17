@@ -10,6 +10,10 @@
  *   node figures.js --scores item-scores.csv --needs need-classifications.csv --key marking-key.csv \
  *                   --codes think-aloud-coding-sheet.csv --outdir deliverable-6/data/figures
  *
+ * --figure N sets the plot's figure number in its title and in tables.md (default 1). The report-wide
+ * numbering list in deliverable-7/README.md makes this plot Figure 5, so give --figure 5 for the report.
+ * The file names keep figure-1 whatever the number.
+ *
  * With --outdir it writes figure-1-paired-differences.svg and tables.md there, and a PNG copy of the
  * figure (figure-1-paired-differences.png, at twice the SVG size) for the Word builder, which embeds
  * PNG or JPG only. The PNG is made by an installed Chrome or Edge in headless mode (no npm package):
@@ -43,6 +47,7 @@ function mdTable(head, rows) {
 // ---------- Figure 1 ----------
 function figure1Svg(diffs, opts) {
   const fake = opts && opts.fake;
+  const num = (opts && opts.number) || 1;
   const W = 640, left = 90, right = 30, top = fake ? 74 : 54, rowH = 26;
   const plotH = Math.max(1, diffs.length) * rowH;
   const H = top + plotH + 70;
@@ -50,7 +55,7 @@ function figure1Svg(diffs, opts) {
   const ink = '#1F3A5F', grey = '#404040', grid = '#D0D0D0';
   const o = [];
   o.push(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="Calibri, Arial, sans-serif" role="img" aria-labelledby="t d">`);
-  o.push(`<title id="t">Figure 1: paired difference per reader</title>`);
+  o.push(`<title id="t">Figure ${num}: paired difference per reader</title>`);
   o.push(`<desc id="d">Treatment score minus baseline score out of 10 for each of ${diffs.length} readers. ` +
     esc(diffs.map(r => `${r.p} (${r.role || 'no role'}) ${r.d > 0 ? '+' : ''}${r.d}`).join('; ')) + '.</desc>');
   o.push(`<rect width="${W}" height="${H}" fill="#FFFFFF"/>`);
@@ -178,17 +183,18 @@ function args(argv) {
   return o;
 }
 
-function build(f) {
+function build(f, opts) {
+  const num = (opts && opts.number) || 1;
   const fake = Object.values(f).some(x => x && path.basename(x).startsWith('sample-'));
-  const md = ['# ChangeLens evaluation: Figure 1 and Tables 1-3'];
+  const md = [`# ChangeLens evaluation: Figure ${num} and Tables 1-3`];
   if (fake) md.push('', '**FAKE DATA: one or more inputs are sample-*.csv files. Nothing below is a result.**');
   md.push('', 'Inputs: ' + Object.entries(f).filter(([, v]) => v).map(([k, v]) => `${k}=${path.basename(v)}`).join(', '));
   let svg = null;
   if (f.scores) {
     const sRows = A.readCSV(f.scores);
     const S = A.prepareScores(sRows);
-    svg = figure1Svg(A.pairedDiffs(S), { fake });
-    md.push('', `Figure 1 uses ${S.complete.length} complete reader(s).` +
+    svg = figure1Svg(A.pairedDiffs(S), { fake, number: num });
+    md.push('', `Figure ${num} uses ${S.complete.length} complete reader(s).` +
       (S.excluded.length ? ` Left out: ${S.excluded.map(x => `${x.p} (${x.reasons.join('; ')})`).join('; ')}.` : ''));
     S.warnings.forEach(w => md.push('', w));
     if (S.complete.length < A.FLOOR) md.push('**Below the five-reader floor: A2 fallback. Report this arm as descriptive only and the think-alouds first.**');
@@ -209,7 +215,11 @@ function main() {
     key: a.key || (useSample ? path.join(dir, 'sample-marking-key.csv') : null),
     codes: a.codes || (useSample ? path.join(dir, 'sample-think-aloud-codes.csv') : null),
   };
-  const r = build(f);
+  if (a.figure !== undefined && !/^[1-9]\d*$/.test(a.figure)) {
+    process.stderr.write(`--figure must be a whole number from 1 (got "${a.figure}").\n`);
+    process.exit(1);
+  }
+  const r = build(f, { number: a.figure ? Number(a.figure) : 1 });
   if (a.outdir) {
     fs.mkdirSync(a.outdir, { recursive: true });
     const stem = r.fake ? 'FAKE-' : '';
@@ -232,7 +242,7 @@ function main() {
     }
     process.stdout.write(r.md + `\nWritten to ${a.outdir}: ${written.join(', ')}\n` + note);
   } else {
-    process.stdout.write(r.md + (r.svg ? '\nFigure 1 SVG not written: give --outdir to save it.\n' : ''));
+    process.stdout.write(r.md + (r.svg ? `\nFigure ${a.figure || 1} SVG not written: give --outdir to save it.\n` : ''));
   }
 }
 

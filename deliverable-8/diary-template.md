@@ -50,7 +50,7 @@
 
 ### Up to Week 8 (to A2 submission, 20 Sep 2026)
 
-One short summary for the report. Source material: A2 Appendix D, `GENAI-EVIDENCE.md`, `REPORT.md`.
+One short summary for the report. Source material: `fact-log-weeks-1-8.md` (start here), A2 Appendix D, `GENAI-EVIDENCE.md`, `REPORT.md`.
 
 ### Mid-session break (21 Sep to 4 Oct 2026)
 

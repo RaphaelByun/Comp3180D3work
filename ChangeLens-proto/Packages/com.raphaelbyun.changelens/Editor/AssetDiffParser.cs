@@ -48,6 +48,14 @@ namespace ChangeLens.Editor
         /// <summary>Non-empty GameObject names seen in the changed text or its context.</summary>
         public List<string> ObjectNames = new List<string>();
 
+        /// <summary>
+        /// The same names split by side: those on removed or context lines (the
+        /// file before) and those on added or context lines (the file after).
+        /// Used to split a rename that git guessed but the asset's guid does not back.
+        /// </summary>
+        public List<string> NamesBefore = new List<string>();
+        public List<string> NamesAfter = new List<string>();
+
         /// <summary>Whole blocks added ("--- !u!" header on a + line), by type.</summary>
         public List<string> AddedTypes = new List<string>();
 
@@ -242,7 +250,7 @@ namespace ChangeLens.Editor
                 if (trimmed.StartsWith("m_Name:", StringComparison.Ordinal))
                 {
                     string name = UnquoteYamlScalar(trimmed.Substring("m_Name:".Length).Trim());
-                    if (name.Length > 0) AddName(current, own, name);
+                    if (name.Length > 0) AddName(current, own, name, sign);
                 }
 
                 // Prefab instances in scenes rename objects through overrides:
@@ -252,7 +260,7 @@ namespace ChangeLens.Editor
                 if (lastWasNameOverride && trimmed.StartsWith("value:", StringComparison.Ordinal))
                 {
                     string name = UnquoteYamlScalar(trimmed.Substring("value:".Length).Trim());
-                    if (name.Length > 0) AddName(current, own, name);
+                    if (name.Length > 0) AddName(current, own, name, sign);
                 }
                 lastWasNameOverride = trimmed == "propertyPath: m_Name" ||
                                       (lastWasNameOverride && trimmed.StartsWith("value:", StringComparison.Ordinal));
@@ -285,39 +293,85 @@ namespace ChangeLens.Editor
         }
 
         /// <summary>
-        /// Joins an asset that was moved AND rewritten in one commit. Git cannot
-        /// pair the two files when the text changed too much, so the patch shows
-        /// "D X.prefab" and "A Y.prefab". But the .meta file keeps the asset's
-        /// guid and usually moves unchanged, so the name-status log has
-        /// "R X.prefab.meta Y.prefab.meta" in the same commit (Wet Floor Sign,
-        /// #609). When all three are there, the added Y is marked as moved from X
-        /// and rebuilt, and the deleted X is dropped, so the asset counts once.
+        /// Checks every move or rename against the asset's guid, which Unity keeps
+        /// in the .meta file next to it. A .meta that git reports as renamed at
+        /// R100 moved unchanged, so the guid stayed and the asset is the same one.
+        ///
+        /// 1. Git also pairs two different prefabs on text alone (50% similar is
+        ///    enough, and prefab YAML is mostly boilerplate): SS3D, 2 Sep 2019,
+        ///    "locker.prefab -> officechair.prefab" at 59%. A patch rename with no
+        ///    R100 .meta rename behind it is split back into a deleted asset at
+        ///    the old path and a new asset at the new path.
+        /// 2. An asset moved AND rewritten in one commit shows as "D X.prefab" and
+        ///    "A Y.prefab", because git cannot pair the text (Wet Floor Sign, #609).
+        ///    When the log has "R100 X.prefab.meta Y.prefab.meta" in the same
+        ///    commit, the added Y is marked as moved from X and rebuilt, and the
+        ///    deleted X is dropped, so the asset counts once. A .meta renamed below
+        ///    100 is not enough: two different .meta files differ only in the guid
+        ///    line, so git pairs them at about R074 (SS3D, 28 Oct 2019).
         /// </summary>
         public static void PairMovedAssets(List<AssetChange> assets, List<CommitRecord> commits)
         {
             if (assets == null || commits == null) return;
+
+            // (commit, old asset path, new asset path) for every R100 .meta rename.
+            var guidKept = new List<string[]>();
             foreach (CommitRecord commit in commits)
             {
                 foreach (FileChange f in commit.Changes)
                 {
-                    if (f.Status != ChangeStatus.Renamed || f.OldPath == null) continue;
+                    if (f.Status != ChangeStatus.Renamed || f.OldPath == null || f.SimilarityScore != 100) continue;
                     if (!f.OldPath.EndsWith(".meta", StringComparison.Ordinal) ||
                         !f.Path.EndsWith(".meta", StringComparison.Ordinal)) continue;
                     string from = f.OldPath.Substring(0, f.OldPath.Length - ".meta".Length);
                     string to = f.Path.Substring(0, f.Path.Length - ".meta".Length);
-                    if (!IsSceneOrPrefab(from) || !IsSceneOrPrefab(to)) continue;
-
-                    AssetChange added = assets.Find(a => a.CommitHash == commit.Hash && a.Path == to && a.FileAdded);
-                    AssetChange deleted = assets.Find(a => a.CommitHash == commit.Hash && a.Path == from && a.FileDeleted);
-                    if (added == null || deleted == null) continue;
-
-                    added.FileAdded = false;
-                    added.RenamedFrom = from;
-                    added.Rebuilt = true;
-                    foreach (string n in deleted.ObjectNames) AddUnique(added.ObjectNames, n);
-                    added.LinesRemoved += deleted.LinesRemoved;
-                    assets.Remove(deleted);
+                    if (IsSceneOrPrefab(from) && IsSceneOrPrefab(to)) guidKept.Add(new[] { commit.Hash, from, to });
                 }
+            }
+
+            // 1. Split the renames git guessed from the text alone.
+            for (int i = 0; i < assets.Count; i++)
+            {
+                AssetChange a = assets[i];
+                if (string.IsNullOrEmpty(a.RenamedFrom) || a.RenamedFrom == a.Path || a.Rebuilt) continue;
+                if (guidKept.Exists(k => k[0] == a.CommitHash && k[1] == a.RenamedFrom && k[2] == a.Path)) continue;
+                var deleted = new AssetChange
+                {
+                    CommitHash = a.CommitHash,
+                    Path = a.RenamedFrom,
+                    FileDeleted = true,
+                    LinesRemoved = a.LinesRemoved
+                };
+                deleted.ObjectNames.AddRange(a.NamesBefore);
+                deleted.NamesBefore.AddRange(a.NamesBefore);
+                a.RenamedFrom = null;
+                a.FileAdded = true;
+                a.LinesRemoved = 0;
+                a.ObjectNames.RemoveAll(n => !a.NamesAfter.Contains(n));
+                a.NamesBefore.Clear();
+                a.TypesTouched.Clear();
+                a.AddedTypes.Clear();
+                a.RemovedTypes.Clear();
+                a.AddedScriptGuids.Clear();
+                a.RemovedScriptGuids.Clear();
+                a.TouchedScriptGuids.Clear();
+                assets.Insert(++i, deleted);
+            }
+
+            // 2. Join a delete and an add whose .meta moved unchanged.
+            foreach (string[] k in guidKept)
+            {
+                string hash = k[0], from = k[1], to = k[2];
+                AssetChange added = assets.Find(a => a.CommitHash == hash && a.Path == to && a.FileAdded);
+                AssetChange deleted = assets.Find(a => a.CommitHash == hash && a.Path == from && a.FileDeleted);
+                if (added == null || deleted == null) continue;
+
+                added.FileAdded = false;
+                added.RenamedFrom = from;
+                added.Rebuilt = true;
+                foreach (string n in deleted.ObjectNames) AddUnique(added.ObjectNames, n);
+                added.LinesRemoved += deleted.LinesRemoved;
+                assets.Remove(deleted);
             }
         }
 
@@ -378,9 +432,11 @@ namespace ChangeLens.Editor
         private static readonly Dictionary<AssetChange, HashSet<string>> NamesOutsideBlocks =
             new Dictionary<AssetChange, HashSet<string>>();
 
-        private static void AddName(AssetChange change, Block block, string name)
+        private static void AddName(AssetChange change, Block block, string name, char sign)
         {
             AddUnique(change.ObjectNames, name);
+            if (sign != '+') AddUnique(change.NamesBefore, name);
+            if (sign != '-') AddUnique(change.NamesAfter, name);
             if (block != null) { AddUnique(block.Names, name); return; }
             HashSet<string> outside;
             if (!NamesOutsideBlocks.TryGetValue(change, out outside))
@@ -440,6 +496,8 @@ namespace ChangeLens.Editor
                 foreach (string n in droppedNames)
                     if (!keptNames.Contains(n) && (outside == null || !outside.Contains(n)))
                         change.ObjectNames.Remove(n);
+                change.NamesBefore.RemoveAll(n => !change.ObjectNames.Contains(n));
+                change.NamesAfter.RemoveAll(n => !change.ObjectNames.Contains(n));
                 NamesOutsideBlocks.Remove(change);
             }
             blocks.Clear();

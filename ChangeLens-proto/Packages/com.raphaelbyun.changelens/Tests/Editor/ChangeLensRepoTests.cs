@@ -489,14 +489,18 @@ namespace ChangeLens.Editor.Tests
             RequireGit();
             using (var repo = new TempRepo())
             {
+                // Unity moves the .meta (and so the guid) with the asset.
                 repo.Write("Assets/Türen b/Tür Ä.prefab", Yaml.Prefab("Tür", "0"));
+                repo.Write("Assets/Türen b/Tür Ä.prefab.meta", Yaml.Meta(Yaml.KeepGuid));
                 repo.Commit("Setup", "2021-03-01T12:00:00+0000", "Start");
                 repo.Write("Assets/Türen b/Tür Ä.prefab", Yaml.Prefab("Tür", "1"));
                 repo.Commit("Dev", "2021-03-09T10:00:00+0000", "Move the door");
                 repo.Git("mv \"Assets/Türen b/Tür Ä.prefab\" \"Assets/Türen b/Tür Ö.prefab\"");
+                repo.Git("mv \"Assets/Türen b/Tür Ä.prefab.meta\" \"Assets/Türen b/Tür Ö.prefab.meta\"");
                 repo.Commit("Dev", "2021-03-10T10:00:00+0000", "Rename the door");
                 Directory.CreateDirectory(Path.Combine(repo.Dir, "Assets", "Neu"));
                 repo.Git("mv \"Assets/Türen b/Tür Ö.prefab\" \"Assets/Neu/Tür Ö.prefab\"");
+                repo.Git("mv \"Assets/Türen b/Tür Ö.prefab.meta\" \"Assets/Neu/Tür Ö.prefab.meta\"");
                 repo.Write("Assets/Neu/Tür Ö.prefab", Yaml.Prefab("Tür", "2"));
                 repo.Commit("Dev", "2021-03-11T10:00:00+0000", "File the door");
 

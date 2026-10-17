@@ -566,6 +566,106 @@ namespace ChangeLens.Editor.Tests
             StringAssert.Contains("2 scenes and prefabs changed", export.BuildReport(ReportCondition.Treatment, "t").ToMarkdown());
         }
 
+        // Found in SS3D, week of 28 Oct 2019: two different prefabs' .meta files
+        // differ only in the guid line, so git paired them at R074 and the page
+        // said BodyContainer was "renamed from VisualObject and rebuilt".
+        [Test]
+        public void MetaRenameBelow100_DoesNotJoinTwoAssets()
+        {
+            const string hash = "10afa72000000000000000000000000000000000";
+            var export = new WeekExport
+            {
+                LogText =
+                    "commit " + hash + "\n" +
+                    "Author: Dev <dev@example.com>\n" +
+                    "Date:   2019-10-30 10:00:00 +0000\n\n" +
+                    "    Inventory rework\n\n" +
+                    "A\tAssets/UI/BodyContainer.prefab\n" +
+                    "R074\tAssets/UI/Inventory/VisualObject.prefab.meta\tAssets/UI/BodyContainer.prefab.meta\n" +
+                    "D\tAssets/UI/Inventory/VisualObject.prefab\n",
+                PatchText =
+                    "commit " + hash + "\n" +
+                    "diff --git a/Assets/UI/BodyContainer.prefab b/Assets/UI/BodyContainer.prefab\n" +
+                    "new file mode 100644\n" +
+                    "--- /dev/null\n" +
+                    "+++ b/Assets/UI/BodyContainer.prefab\n" +
+                    "@@ -0,0 +1,3 @@\n" +
+                    "+--- !u!1 &1\n" +
+                    "+GameObject:\n" +
+                    "+  m_Name: BodyContainer\n" +
+                    "diff --git a/Assets/UI/Inventory/VisualObject.prefab b/Assets/UI/Inventory/VisualObject.prefab\n" +
+                    "deleted file mode 100644\n" +
+                    "--- a/Assets/UI/Inventory/VisualObject.prefab\n" +
+                    "+++ /dev/null\n" +
+                    "@@ -1,3 +0,0 @@\n" +
+                    "---- !u!1 &1\n" +
+                    "-GameObject:\n" +
+                    "-  m_Name: VisualObject\n"
+            };
+            string page = export.BuildReport(ReportCondition.Treatment, "t").ToMarkdown();
+            StringAssert.Contains("2 scenes and prefabs changed", page);
+            StringAssert.Contains("new prefab added", page);
+            StringAssert.Contains("prefab deleted", page);
+            StringAssert.DoesNotContain("renamed from", page);
+            StringAssert.DoesNotContain("rebuilt", page);
+        }
+
+        // Found in SS3D, week of 2 Sep 2019: git paired locker.prefab with a new
+        // officechair.prefab at 59% similarity, so the page said the chair was
+        // "moved and renamed from" the locker and listed both files' objects.
+        // No .meta moved at R100, so the asset's guid did not move with it.
+        [Test]
+        public void TextOnlyRename_IsSplitIntoADeleteAndAnAdd()
+        {
+            const string hash = "aaaa111100000000000000000000000000000000";
+            string log =
+                "commit " + hash + "\n" +
+                "Author: Dev <dev@example.com>\n" +
+                "Date:   2019-09-03 10:00:00 +0000\n\n" +
+                "    Furniture\n\n" +
+                "R059\tAssets/Furniture/locker.prefab\tAssets/Models/officechair.prefab\n" +
+                "D\tAssets/Furniture/locker.prefab.meta\n" +
+                "A\tAssets/Models/officechair.prefab.meta\n";
+            string patch =
+                "commit " + hash + "\n" +
+                "diff --git a/Assets/Furniture/locker.prefab b/Assets/Models/officechair.prefab\n" +
+                "similarity index 59%\n" +
+                "rename from Assets/Furniture/locker.prefab\n" +
+                "rename to Assets/Models/officechair.prefab\n" +
+                "--- a/Assets/Furniture/locker.prefab\n" +
+                "+++ b/Assets/Models/officechair.prefab\n" +
+                "@@ -1,4 +1,4 @@\n" +
+                " --- !u!1 &1\n" +
+                " GameObject:\n" +
+                "-  m_Name: locker\n" +
+                "+  m_Name: OfficeChair\n" +
+                "   m_IsActive: 1\n";
+            var export = new WeekExport { LogText = log, PatchText = patch };
+            ProducerReport b = export.BuildReport(ReportCondition.Treatment, "t");
+            string page = b.ToMarkdown();
+            StringAssert.Contains("2 scenes and prefabs changed", page);
+            StringAssert.DoesNotContain("renamed from", page);
+
+            List<AssetChange> assets = AssetDiffParser.Parse(patch);
+            AssetDiffParser.PairMovedAssets(assets, GitLogParser.Parse(log));
+            Assert.AreEqual(2, assets.Count);
+            Assert.AreEqual("Assets/Models/officechair.prefab", assets[0].Path);
+            Assert.IsTrue(assets[0].FileAdded);
+            Assert.IsNull(assets[0].RenamedFrom);
+            CollectionAssert.AreEqual(new[] { "OfficeChair" }, assets[0].ObjectNames);
+            Assert.AreEqual("Assets/Furniture/locker.prefab", assets[1].Path);
+            Assert.IsTrue(assets[1].FileDeleted);
+            CollectionAssert.AreEqual(new[] { "locker" }, assets[1].ObjectNames);
+
+            // With the .meta moved unchanged, the guid stayed: it is one asset, renamed.
+            string kept = log.Replace("D\tAssets/Furniture/locker.prefab.meta\nA\tAssets/Models/officechair.prefab.meta\n",
+                                      "R100\tAssets/Furniture/locker.prefab.meta\tAssets/Models/officechair.prefab.meta\n");
+            assets = AssetDiffParser.Parse(patch);
+            AssetDiffParser.PairMovedAssets(assets, GitLogParser.Parse(kept));
+            Assert.AreEqual(1, assets.Count);
+            Assert.AreEqual("Assets/Furniture/locker.prefab", assets[0].RenamedFrom);
+        }
+
         // The strict measure counts the asset's own root name, which the page
         // never shows, so a third line counts only names a reader sees.
         [Test]

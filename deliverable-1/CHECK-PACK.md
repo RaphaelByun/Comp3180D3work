@@ -488,13 +488,12 @@ How to check: Open three ad URLs from §2 and search the page for the §2.1 phra
 
 - [ ] Spot-check three of the ten verified ads (A01–A10). A09 is verified only through two mirrors because the Teamtailor URL returns 410 Gone
 - [ ] Accept the SR rule: SR only for progress or status reporting to leadership or internal stakeholders. So A09 is not SR, A06 is EXT only (clients are external) and A07 is SR ('stakeholders and teams')
-- [ ] Accept the code changes in §2.3. The log has 13 rows, of which 7 change a code (A01 +SR, A03 −BLD, A04 −KC, A05 −EXT, A06 −SR, A07 −EXT, A09 −CH −SR? +RK +TN); the other rows fix locations, status, quotes and sources. needs-catalogue.md §5 calls them '13 code changes', which overstates it. The resulting counts are SR 4, EXT 2, SR or EXT 6, RK 5, DP 4, XD 4, MS 8, CH 3, DOC 5, BLD 1, TN 7, KC 0
+- [ ] Accept the code changes in §2.3. The log has 13 rows, of which 7 change a code (A01 +SR, A03 −BLD, A04 −KC, A05 −EXT, A06 −SR, A07 −EXT, A09 −CH −SR? +RK +TN); the other rows fix locations, status, quotes and sources. The resulting counts are SR 4, EXT 2, SR or EXT 6, RK 5, DP 4, XD 4, MS 8, CH 3, DOC 5, BLD 1, TN 7, KC 0
 - [ ] Accept that KC = 0: no ad asks to know what changed. Also accept reporting that no ad is confirmed live (6 closed, 1 probably closed, 3 unclear)
 - [ ] Spot-check V1 (Trello, Muhammed A., 1 Aug 2026), V2 (Trello, Nitin V., 9 Jun 2026, marked Incentivized), V3 (HacknPlan Capterra, Ole J., 26 Oct 2023) and V4 (HacknPlan Capterra, Senior Producer, 16 Jul 2018)
 - [ ] V4 is dated 2018. The file says to keep it only if dated sources are acceptable; it is the only review by someone in a producer role
 - [ ] State that the HacknPlan reviews come from Capterra, not G2
 - [ ] V5 (Jira, G2) was not found on the live page. Decide: replace it with a verified Jira review or drop it and say so. It scores 0 now. If dropped it stays 0; a verified replacement would score a point for whatever need you code it to (V5's own code, XD, feeds N01 only). That cannot change the top ten, because N01 is already 5th on 10 points
-- [ ] Stale text to fix: the 'Read this first' bullet and the closing 'Sources' paragraph still say the reviews are unverified or unretrievable, but §3 now says V1–V4 are verified
 
 ### Step 6: Accept the live-page quote check and the P1, P4, P6 settlements (10 min)
 
@@ -509,7 +508,7 @@ How to check: Open the P1, P4 and P6 URLs and confirm the bio line, the missing 
 - [ ] P4 is settled as having no byline: cite 'Game Developer staff / no byline' and name the speakers, Matt Cox and Kayla Belmore. Its canonical URL is under /gdc-2023-updates/
 - [ ] P6 is settled as dated 16 Oct 2025 (UTC, from the raw HTML; 17 Oct in Australia). The byline is Angeleen Arellano; CAGD; no school is named
 - [ ] Accept the stated limits: no Australian source; P3 and P4 are journalists' accounts of GDC talks (second-hand); P2 and P1 sit on tool-vendor or tool-fan sites
-- [ ] Stale text: §7 says 'I have not edited them' about the corrections, but §3 shows they were applied. The 'Status' paragraph at the top still says every quote must be matched against the live page and that this check is still Raphael's job. §1 still opens with the ethics rationale; per README, give time as the reason
+- [ ] §1 still opens with the ethics rationale, followed by the 17 Oct update. Per README, give time as the reason
 
 ### Step 7: Accept or change the seven recodes and the cap of 2 (10 min)
 
@@ -621,11 +620,10 @@ How to check: If steps 2, 5, 7, 12 or 13 changed anything (an ad code, a review,
 - [ ] Robustness checks: without reviews, the same ten come out; without the cap, N02 replaces N12; with the provisional codes, tenth place was N24
 - [ ] Fragile point: tenth place. N12's 5 rests on 4 T1 pass points from one AI evaluator; if the step 2 hand check changes T1, N12 can drop below N24
 - [ ] Headline finding to accept: among the ten, only N01 and N12 are best answered by the repository (across all 25 the repository is best source for 6); N05 ranks 23rd of 25; producers ask most for plan-side information ChangeLens does not read
-- [ ] Stale text: needs-catalogue.md §6 intro says it 'does not fill the Evidence count column in §3', but that column is now filled
 
 ### Step 15: Read and edit the spec; put it in your own words where you will quote it in A3 (20 min)
 
-Where: design-spec.md (about 1,700 words)
+Where: design-spec.md (about 1,800 words, plus a 600-word status section in §10)
 
 How to check: Read it through once and fix any number or ID that steps 1–14 changed. Rewrite in your own voice any sentence you plan to quote in the A3 report.
 

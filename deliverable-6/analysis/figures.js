@@ -16,8 +16,10 @@
  *   Figure 1: dot plot, one dot per complete reader, treatment minus baseline (-10 to +10).
  *             Producers are filled circles, proxies hollow squares (shape, not colour, so it prints).
  *   Table 1:  all ten needs, the key class, readers matching the key n/N (N = readers who classified it).
- *   Table 2:  full-mark counts by item and condition (complete readers only).
- *   Table 3:  pass 1 segment counts per Ko et al. (2007) information type, with the type's question.
+ *   Table 2:  full-mark counts by item and condition, and by week within condition (complete readers only).
+ *   Table 2b: item 6 Pass / Hedged / Over-claim counts per version (complete readers only).
+ *   Table 3:  segment counts per Ko et al. (2007) information type, with the type's question. A segment
+ *             counts under its final_code when the D5 resolve step set one, else under its pass 1 code.
  */
 const fs = require('fs');
 const path = require('path');
@@ -101,21 +103,36 @@ function figure1Svg(diffs, opts) {
 function table1(needRows, keyRows) {
   const N = A.prepareNeeds(needRows, keyRows);
   const rows = N.perNeed.map(x => [x.id, x.key, `${x.matching}/${x.classified}`]);
-  return '**Table 1. The ten needs: my key and readers matching it** (D derivable, P partly, N not; n/N = readers matching / readers who classified that need)\n\n' +
-    mdTable(['Need', 'Key', 'Readers matching'], rows);
+  const out = ['**Table 1. The ten needs: the marking key and readers matching it** (D derivable, P partly, N not; n/N = readers matching / readers who classified that need)\n\n' +
+    mdTable(['Need', 'Key', 'Readers matching'], rows)];
+  N.warnings.forEach(w => out.push('', w));
+  return out.join('\n');
 }
 
+// Table 2: full-mark counts by condition, then by week within condition (W1/W2 columns).
+// Table 2b: item 6 codes per version. Both use the same analyse.js helpers as analyse.js's own tables.
 function table2(scoreRows) {
   const S = A.prepareScores(scoreRows);
-  const rows = A.fullMarkCounts(S).map(x => [x.item].concat(x.cells.map(c => `${c.full}/${c.n}`)));
-  return `**Table 2. Full marks (2 of 2) per item by condition** (complete readers only, n = ${S.complete.length})\n\n` +
-    mdTable(['Item', 'Baseline (no names)', 'Treatment (names)'], rows);
+  const all = A.fullMarkCounts(S), wk = A.fullMarkCounts(S, true);
+  const weekHead = wk.length ? wk[0].cells.map(c => `${c.week} ${c.cond === 'baseline' ? 'baseline' : 'treatment'}`) : [];
+  const rows = all.map((x, i) => [x.item].concat(x.cells.map(c => `${c.full}/${c.n}`), wk[i].cells.map(c => `${c.full}/${c.n}`)));
+  const six = A.item6Counts(S).map(x => [x.code].concat(x.cells.map(c => `${c.k}/${c.n}`)));
+  return [`**Table 2. Full marks (2 of 2) per item by condition, and by week within condition** (complete readers only, n = ${S.complete.length})`, '',
+    mdTable(['Item', 'Baseline (no names)', 'Treatment (names)'].concat(weekHead), rows), '',
+    `**Table 2b. Item 6 (unanswerable) codes per version** (complete readers only, n = ${S.complete.length}; Over-claim is the count that matters, Hedged is shown beside it)`, '',
+    mdTable(['Code', 'Baseline (no names)', 'Treatment (names)'], six)].join('\n');
 }
 
+// Table 3 counts each segment by its final code where the D5 resolve step set one, else by its pass 1 code.
 function table3(codeRows) {
   const C = A.prepareCodes(codeRows);
   const cnt = {};
-  Object.values(C.by).forEach(s => { if (s['1']) cnt[s['1']] = (cnt[s['1']] || 0) + 1; });
+  let resolved = 0;
+  Object.values(C.by).forEach(s => {
+    const c = s.f || s['1'];
+    if (s.f) resolved++;
+    if (c) cnt[c] = (cnt[c] || 0) + 1;
+  });
   const total = Object.values(cnt).reduce((a, b) => a + b, 0);
   const codes = Object.keys(cnt).sort((p, q) => cnt[q] - cnt[p] || p.localeCompare(q));
   const unknown = codes.filter(c => !KO_TYPES[c] && !EXTRA_CODES[c]);
@@ -124,7 +141,7 @@ function table3(codeRows) {
     return [c, t[0], t[1], String(cnt[c])];
   });
   const never = Object.keys(KO_TYPES).filter(c => !cnt[c]);
-  const out = [`**Table 3. Think-aloud segments by information type** (pass 1 codes, pilot excluded, ${total} segments; types from Ko et al., 2007)`, '',
+  const out = [`**Table 3. Think-aloud segments by information type** (final code after resolution, else pass 1 code; ${resolved} segment(s) with a final code; pilot excluded, ${total} segments; types from Ko et al., 2007)`, '',
     mdTable(['Code', 'Category', 'Information type', 'Segments'], rows)];
   out.push('', `Types never coded: ${never.length ? never.join(', ') : 'none'}.`);
   if (unknown.length) out.push(`WARNING: codes not in the codebook: ${unknown.join(', ')}.`);
@@ -151,6 +168,7 @@ function build(f) {
     svg = figure1Svg(A.pairedDiffs(S), { fake });
     md.push('', `Figure 1 uses ${S.complete.length} complete reader(s).` +
       (S.excluded.length ? ` Left out: ${S.excluded.map(x => `${x.p} (${x.reasons.join('; ')})`).join('; ')}.` : ''));
+    S.warnings.forEach(w => md.push('', w));
     if (S.complete.length < A.FLOOR) md.push('**Below the five-reader floor: A2 fallback. Report this arm as descriptive only and the think-alouds first.**');
   }
   if (f.needs && f.key) md.push('', table1(A.readCSV(f.needs), A.readCSV(f.key)));

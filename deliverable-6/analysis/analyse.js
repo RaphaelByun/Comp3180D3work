@@ -7,7 +7,8 @@
  * Usage:
  *   node analyse.js                       (runs on the FAKE sample-*.csv files beside this script)
  *   node analyse.js --scores item-scores.csv --needs need-classifications.csv \
- *                   --key marking-key.csv --codes think-aloud-codes.csv [--out results.md]
+ *                   --key marking-key.csv --codes think-aloud-codes.csv [--scores2 second-scorer-scores.csv]
+ *                   [--out results.md]
  *
  * Any input may be left out; that section is skipped. Input formats are in README.md
  * (header-only templates are in ../analysis/templates/).
@@ -25,47 +26,84 @@
  *   4. Ten-need sheet: percentage agreement and Cohen's kappa for each reader against the key,
  *      plus which needs readers disagreed with the key on.
  *   5. Think-aloud coding: percentage agreement and kappa between coding pass 1 and pass 2.
+ *   6. Second scorer (optional --scores2, item-scores layout): items in agreement out of items scored,
+ *      items 1-5 and item 6 apart, and the items where the two scorers differ.
  *
  * Data checks: sections 1-3 use complete readers only (both conditions, items 1-5 each scored once
  * with 0, 1 or 2). Any other reader is named with the reason and left out of every table. Fewer than
  * five complete readers prints the A2 fallback notice. Pilot codes (P followed by digits, e.g. P0) and
  * rows with pilot = yes are dropped from every section. Think-aloud segments are keyed by
  * participant + segment_id.
+ * Design checks: every row of one report gives one week and one order, and a reader's two reports
+ * differ in both week and order; a reader failing this is left out and named. Weeks are read in upper
+ * case and roles in lower case; weeks other than W1/W2 and roles other than producer/proxy are warned about.
+ * Ten-need sheet: duplicate (reader, need) rows and classes other than D, P or N are named and left out.
+ * CSV: RFC 4180 quoting (a quote opens a quoted field only at the start of a field); an unclosed quote
+ * and a row with more filled cells than the header are warned about.
  */
 
 const fs = require('fs');
 const path = require('path');
 
 // ---------- CSV ----------
+// RFC 4180: a quote opens a quoted field only as the first character of a field. A quote anywhere
+// else is kept as a literal character (hand-typed notes often hold one). A line whose first non-blank
+// character is # is a comment and is skipped whole, quotes included. The returned array carries a
+// `warnings` list: the file ending inside a quoted field, and data rows with more filled cells than the header.
 function parseCSV(text) {
   text = text.replace(/^﻿/, '');
-  const rows = [];
-  let row = [], cell = '', inQ = false;
+  const rows = [], lines = [];
+  let row = [], cell = '', inQ = false, fieldStart = true, line = 1, rowLine = 1, openLine = 0;
   for (let i = 0; i < text.length; i++) {
     const c = text[i];
+    if (!inQ && fieldStart && row.length === 0) {
+      // start of a line: skip a # comment line whole
+      let j = i;
+      while (text[j] === ' ' || text[j] === '\t') j++;
+      if (text[j] === '#') {
+        while (j < text.length && text[j] !== '\n' && text[j] !== '\r') j++;
+        if (text[j] === '\r' && text[j + 1] === '\n') j++;
+        i = j; line++; rowLine = line;
+        continue;
+      }
+    }
     if (inQ) {
       if (c === '"') {
         if (text[i + 1] === '"') { cell += '"'; i++; } else inQ = false;
-      } else cell += c;
-    } else if (c === '"') inQ = true;
-    else if (c === ',') { row.push(cell); cell = ''; }
+      } else {
+        if (c === '\n' || (c === '\r' && text[i + 1] !== '\n')) line++;
+        cell += c;
+      }
+    } else if (c === '"' && fieldStart) { inQ = true; fieldStart = false; openLine = line; }
+    else if (c === ',') { row.push(cell); cell = ''; fieldStart = true; }
     else if (c === '\n' || c === '\r') {
       if (c === '\r' && text[i + 1] === '\n') i++;
       row.push(cell); cell = '';
-      rows.push(row); row = [];
-    } else cell += c;
+      rows.push(row); lines.push(rowLine); row = [];
+      fieldStart = true; line++; rowLine = line;
+    } else { cell += c; fieldStart = false; }
   }
-  if (cell !== '' || row.length) { row.push(cell); rows.push(row); }
-  // drop rows where every cell is blank (Excel writes ",,,,,," lines after an edit) and # comment lines
-  const clean = rows.filter(r => r.some(c => c.trim() !== '') && !(r[0] || '').trim().startsWith('#'));
-  if (!clean.length) return [];
-  const head = clean[0].map(h => h.trim().toLowerCase());
-  return clean.slice(1).map(r => {
+  const warnings = [];
+  if (inQ) warnings.push(`WARNING: the file ends inside a quoted field opened on line ${openLine}. A quote was not closed; everything after it was read as one cell. Fix the quote on that line.`);
+  if (cell !== '' || row.length) { row.push(cell); rows.push(row); lines.push(rowLine); }
+  // drop rows where every cell is blank (Excel writes ",,,,,," lines after an edit)
+  const keep = rows.map((r, i) => i).filter(i => rows[i].some(c => c.trim() !== ''));
+  const out = [];
+  out.warnings = warnings;
+  if (!keep.length) return out;
+  const head = rows[keep[0]].map(h => h.trim().toLowerCase());
+  for (const i of keep.slice(1)) {
+    const r = rows[i];
+    if (r.slice(head.length).some(c => c.trim() !== '')) {
+      warnings.push(`WARNING: line ${lines[i]} has ${r.length} cells but the header has ${head.length}; the extra cells are ignored. An unquoted comma in a note does this: put the note in double quotes.`);
+    }
     const o = {};
-    head.forEach((h, i) => { o[h] = (r[i] === undefined ? '' : r[i]).trim(); });
-    return o;
-  });
+    head.forEach((h, k) => { o[h] = (r[k] === undefined ? '' : r[k]).trim(); });
+    out.push(o);
+  }
+  return out;
 }
+const csvWarnings = rows => (rows && rows.warnings) || [];
 
 function readCSV(file) {
   return parseCSV(fs.readFileSync(file, 'utf8'));
@@ -153,15 +191,15 @@ function prepareScores(rowsAll) {
     const item = String(parseInt(r.item, 10));
     const raw = (r.score || '').trim();
     return {
-      participant: r.participant, role: r.role || '', cond: normCond(r.condition),
-      week: r.week, order: r.order, item,
+      participant: r.participant, role: (r.role || '').toLowerCase(), cond: normCond(r.condition),
+      week: (r.week || '').toUpperCase(), order: (r.order || '').trim(), item,
       // items 1-5: number 0, 1 or 2. item 6: a category word, never a number.
       score: item === '6' ? null : (raw === '' ? NaN : Number(raw)),
       code6: item === '6' ? normCode6(r.score) : null,
       specific: (r.specific || '').trim(),
     };
   });
-  const warnings = [];
+  const warnings = csvWarnings(rowsAll).slice();
   const bad = rows.filter(r => SCORED.includes(r.item) && !validScore(r.score));
   if (bad.length) {
     warnings.push(`WARNING: ${bad.length} row(s) for items 1-5 with a score that is not 0, 1 or 2: ` +
@@ -180,6 +218,14 @@ function prepareScores(rowsAll) {
     warnings.push('WARNING: duplicate rows (same reader, condition and item): ' +
       dups.map(k => { const [p, c, it] = k.split('|'); return `${p} ${c} item ${it} (${seen[k]} rows)`; }).join('; ') + '.');
   }
+
+  // weeks and roles are typed by hand: case is normalised above, anything else is named here
+  const weekSet = Array.from(new Set(rows.map(r => r.week))).sort();
+  if (rows.length && weekSet.join(',') !== 'W1,W2') {
+    warnings.push(`WARNING: weeks found are ${weekSet.map(w => w || '(blank)').join(', ')}; expected exactly W1 and W2. Fix the week column.`);
+  }
+  const badRoles = Array.from(new Set(rows.filter(r => r.role !== 'producer' && r.role !== 'proxy').map(r => r.role || '(blank)'))).sort();
+  if (badRoles.length) warnings.push(`WARNING: role not producer or proxy: ${badRoles.join(', ')}. Fix the role column.`);
 
   const people = Array.from(new Set(rows.map(r => r.participant))).sort();
   const complete = [], excluded = [];
@@ -201,8 +247,17 @@ function prepareScores(rowsAll) {
       if (missing.length) reasons.push(`${c} item ${missing.join(', ')} missing`);
       if (dupIt.length) reasons.push(`${c} item ${dupIt.join(', ')} duplicated`);
       if (badIt.length) reasons.push(`${c} item ${badIt.join(', ')} score not 0, 1 or 2`);
+      // every row of one report must give the same week and the same order
+      const wks = Array.from(new Set(cr.map(r => r.week))), ords = Array.from(new Set(cr.map(r => r.order)));
+      if (wks.length > 1) reasons.push(`${c} rows give more than one week (${wks.join(', ')})`);
+      if (ords.length > 1) reasons.push(`${c} rows give more than one order (${ords.join(', ')})`);
       const sr = cr.filter(r => SCORED.includes(r.item) && validScore(r.score));
       per[c] = { sum: sr.reduce((s, r) => s + r.score, 0), week: cr[0].week, order: cr[0].order, role: cr[0].role };
+    }
+    // counterbalanced design: the two reports are different weeks and were read in different orders
+    if (per.baseline && per.treatment) {
+      if (per.baseline.week === per.treatment.week) reasons.push(`baseline and treatment both ${per.baseline.week || '(blank week)'}`);
+      if (per.baseline.order === per.treatment.order) reasons.push(`baseline and treatment both order ${per.baseline.order || '(blank)'}, likely an order error`);
     }
     const other = mine.filter(r => !CONDS.includes(r.cond));
     if (other.length) reasons.push(`condition not baseline/treatment or A/B (${Array.from(new Set(other.map(r => r.cond || '(blank)'))).join(', ')})`);
@@ -233,6 +288,7 @@ function analyseScores(rowsAll) {
   }
 
   const rows = S.used, tot = S.tot, people = S.complete;
+  if (people.length) out.push('Readers per sequence (week and order of the treatment report): ' + sequenceCounts(S).map(x => `${x.week} order ${x.order}: ${x.n}`).join('; ') + '. Uneven or empty cells weaken the counterbalance.');
   const weeks = Array.from(new Set(rows.map(r => r.week))).sort();
   const sel = f => rows.filter(f);
 
@@ -272,10 +328,7 @@ function analyseScores(rowsAll) {
 
   // 1c. item 6: category counts per version, never a number
   out.push('\n### Item 6 (unanswerable): category counts per version\n');
-  const t6 = CODES6.map(code => [code].concat(CONDS.map(c => {
-    const all = sel(r => r.cond === c && r.item === '6');
-    return `${all.filter(r => r.code6 === code).length}/${all.length}`;
-  })));
+  const t6 = item6Counts(S).map(x => [x.code].concat(x.cells.map(c => `${c.k}/${c.n}`)));
   out.push(table(['Code', 'Baseline', 'Treatment'], t6));
   out.push('\nItem 6 is answerable only by saying the report does not tell you. Over-claim is the count that matters; Hedged is shown beside it, not merged. It is not part of the /10 total.');
 
@@ -349,36 +402,139 @@ function pairedDiffs(S) {
   });
 }
 
+// Complete readers per sequence cell, keyed by the treatment report's week and order. The four
+// design cells (W1/W2 x order 1/2) are always listed, empty ones as 0.
+function sequenceCounts(S) {
+  const cnt = {};
+  for (const w of ['W1', 'W2']) for (const o of ['1', '2']) cnt[`${w}|${o}`] = 0;
+  for (const p of S.complete) { const t = S.tot[p].treatment; const k = `${t.week}|${t.order}`; cnt[k] = (cnt[k] || 0) + 1; }
+  return Object.keys(cnt).sort().map(k => { const [week, order] = k.split('|'); return { week, order, n: cnt[k] }; });
+}
+
 // Full-mark counts per item and condition over complete readers (Table 2 in figures.js).
-function fullMarkCounts(S) {
+// With byWeek, each condition is split by the week of that report (W1 and W2 cells).
+function fullMarkCounts(S, byWeek) {
+  const weeks = byWeek ? Array.from(new Set(S.used.map(r => r.week))).sort() : [null];
   return SCORED.map(it => ({
     item: it,
+    cells: [].concat(...weeks.map(w => CONDS.map(c => {
+      const v = S.used.filter(r => r.cond === c && r.item === it && validScore(r.score) && (w === null || r.week === w));
+      return { cond: c, week: w, full: v.filter(r => r.score === 2).length, n: v.length };
+    }))),
+  }));
+}
+
+// Item 6 code counts per condition over complete readers: { code, cells: [{cond, k, n}] }.
+function item6Counts(S) {
+  return CODES6.map(code => ({
+    code,
     cells: CONDS.map(c => {
-      const v = S.used.filter(r => r.cond === c && r.item === it && validScore(r.score));
-      return { cond: c, full: v.filter(r => r.score === 2).length, n: v.length };
+      const all = S.used.filter(r => r.cond === c && r.item === '6');
+      return { cond: c, k: all.filter(r => r.code6 === code).length, n: all.length };
     }),
   }));
 }
 
+// ---------- 1e. second-scorer check ----------
+// deliverable-3/answer-key-and-scoring.md: after sessions a second scorer re-scores at least two readers'
+// sheets (both reports); agreement is items in agreement out of items scored. scores2 uses the
+// item-scores layout and holds only the re-scored readers. Each (reader, condition, item) in scores2 is
+// matched to the first scorer's row. Items 1-5 compare the 0/1/2 score; item 6 compares the code.
+function secondScorer(rows1All, rows2All) {
+  const S1 = prepareScores(rows1All), S2 = prepareScores(rows2All);
+  const warnings = csvWarnings(rows2All).map(w => 'Second-scorer file: ' + w);
+  const key = r => `${r.participant}|${r.cond}|${r.item}`;
+  const group = rows => { const g = {}; rows.forEach(r => { (g[key(r)] = g[key(r)] || []).push(r); }); return g; };
+  const g1 = group(S1.rows), g2 = group(S2.rows);
+  const pairs = [], dup = [], noMatch = [], invalid = [];
+  for (const k of Object.keys(g2).sort()) {
+    const a = g1[k] || [], b = g2[k];
+    if (a.length > 1 || b.length > 1) { dup.push(k); continue; }
+    if (!a.length) { noMatch.push(k); continue; }
+    const x = a[0], y = b[0];
+    if (x.item === '6') {
+      if (!x.code6 || !y.code6) { invalid.push(k); continue; }
+      pairs.push({ p: x.participant, cond: x.cond, item: '6', s1: x.code6, s2: y.code6 });
+    } else if (SCORED.includes(x.item)) {
+      if (!validScore(x.score) || !validScore(y.score)) { invalid.push(k); continue; }
+      pairs.push({ p: x.participant, cond: x.cond, item: x.item, s1: String(x.score), s2: String(y.score) });
+    }
+  }
+  const fmt = k => { const [p, c, it] = k.split('|'); return `${p} ${c} item ${it}`; };
+  if (dup.length) warnings.push(`WARNING: duplicate rows in either file, left out: ${dup.map(fmt).join('; ')}.`);
+  if (noMatch.length) warnings.push(`WARNING: second-scorer rows with no first-scorer row, left out: ${noMatch.map(fmt).join('; ')}.`);
+  if (invalid.length) warnings.push(`WARNING: rows with a score not 0, 1 or 2 (items 1-5) or a code not Pass, Hedged or Over-claim (item 6) in either file, left out: ${invalid.map(fmt).join('; ')}.`);
+  const readers = Array.from(new Set(pairs.map(x => x.p))).sort();
+  const oneReport = readers.filter(p => CONDS.some(c => !pairs.some(x => x.p === p && x.cond === c)));
+  if (oneReport.length) warnings.push(`WARNING: re-scored on one report only: ${oneReport.join(', ')}. D3 asks for both reports.`);
+  if (readers.length < 2) warnings.push(`WARNING: ${readers.length} reader(s) re-scored; D3 asks for at least two.`);
+  const s15 = pairs.filter(x => x.item !== '6'), s6 = pairs.filter(x => x.item === '6');
+  return {
+    readers, warnings, pairs,
+    items15: { agree: s15.filter(x => x.s1 === x.s2).length, n: s15.length },
+    item6: { agree: s6.filter(x => x.s1 === x.s2).length, n: s6.length },
+    differ: pairs.filter(x => x.s1 !== x.s2),
+  };
+}
+
+function analyseSecondScorer(rows1All, rows2All) {
+  const R = secondScorer(rows1All, rows2All);
+  const out = [];
+  out.push(`Readers re-scored by the second scorer: ${R.readers.length}${R.readers.length ? ' (' + R.readers.join(', ') + ')' : ''}. Pilot excluded.`);
+  R.warnings.forEach(w => out.push(w));
+  out.push(`Items 1-5 in agreement: ${R.items15.agree}/${R.items15.n}. Item 6 codes in agreement: ${R.item6.agree}/${R.item6.n}.`);
+  out.push('\n### Items where the scorers differ (settle each with a written rule in the answer key)\n');
+  out.push(R.differ.length ? table(['Reader', 'Condition', 'Item', 'Scorer 1', 'Scorer 2'], R.differ.map(x => [x.p, x.cond, x.item, x.s1, x.s2])) : 'None.');
+  return out.join('\n');
+}
+
 // ---------- 4. ten-need sheet ----------
 // Per reader: the needs they classified. Per need: how many readers classified it and how many matched the key.
+// A class is D, P or N. Blank means not classified. Anything else (e.g. "D/P" for two circles, a word)
+// is named in a warning and left out, as is every row of a duplicated (reader, need) pair.
+const NEED_CLASSES = ['D', 'P', 'N'];
 function prepareNeeds(needRows, keyRows) {
-  const key = {};
-  keyRows.forEach(r => { key[r.need_id] = (r.class || '').toUpperCase(); });
+  const warnings = csvWarnings(keyRows).concat(csvWarnings(needRows));
+  const key = {}, keyCount = {}, badKey = [];
+  keyRows.forEach(r => { keyCount[r.need_id] = (keyCount[r.need_id] || 0) + 1; });
+  keyRows.forEach(r => {
+    const c = (r.class || '').trim().toUpperCase();
+    if (keyCount[r.need_id] > 1) return;
+    if (!NEED_CLASSES.includes(c)) { badKey.push(`${r.need_id} ("${r.class || ''}")`); return; }
+    key[r.need_id] = c;
+  });
+  const keyDups = Object.keys(keyCount).filter(id => keyCount[id] > 1);
+  if (keyDups.length) warnings.push(`WARNING: need listed more than once in the key, left out: ${keyDups.join(', ')}.`);
+  if (badKey.length) warnings.push(`WARNING: key class not D, P or N, need left out: ${badKey.join(', ')}.`);
   const needIds = Object.keys(key);
   const rows = needRows.filter(r => !isPilot(r));
+  const seen = {};
+  rows.forEach(r => { const k = `${r.participant}|${r.need_id}`; seen[k] = (seen[k] || 0) + 1; });
+  const dups = Object.keys(seen).filter(k => seen[k] > 1);
+  if (dups.length) {
+    warnings.push('WARNING: duplicate rows (same reader and need), left out until fixed: ' +
+      dups.map(k => { const [p, id] = k.split('|'); return `${p} ${id} (${seen[k]} rows)`; }).join('; ') + '.');
+  }
+  const badCls = [];
   const people = Array.from(new Set(rows.map(r => r.participant))).sort();
   const sheets = {};
   for (const p of people) {
     const mine = {};
-    rows.filter(r => r.participant === p).forEach(r => { mine[r.need_id] = (r.class || '').toUpperCase(); });
+    rows.filter(r => r.participant === p).forEach(r => {
+      if (seen[`${p}|${r.need_id}`] > 1) return;
+      const c = (r.class || '').trim().toUpperCase();
+      if (c === '') return;
+      if (!NEED_CLASSES.includes(c)) { badCls.push(`${p} ${r.need_id} ("${r.class}")`); return; }
+      mine[r.need_id] = c;
+    });
     sheets[p] = mine;
   }
+  if (badCls.length) warnings.push(`WARNING: class not D, P or N, left out: ${badCls.join('; ')}.`);
   const perNeed = needIds.map(id => {
     const by = people.filter(p => sheets[p][id]);
     return { id, key: key[id], classified: by.length, matching: by.filter(p => sheets[p][id] === key[id]).length };
   });
-  return { key, needIds, rows, people, sheets, perNeed };
+  return { key, needIds, rows, people, sheets, perNeed, warnings };
 }
 
 function analyseNeeds(needRows, keyRows) {
@@ -386,6 +542,7 @@ function analyseNeeds(needRows, keyRows) {
   const { key, needIds, rows, people, sheets } = N;
   const out = [];
   out.push(`Key has ${needIds.length} needs; readers analysed: ${people.length} (pilot excluded).`);
+  N.warnings.forEach(w => out.push(w));
   const t = [], miss = {};
   const per = [];
   for (const p of people) {
@@ -436,7 +593,7 @@ function analyseNeeds(needRows, keyRows) {
 // pass1_code, pass2_code, as in deliverable-5/think-aloud-coding-sheet.csv). Segments are keyed by
 // participant + segment_id, so ids that restart for each reader do not merge. Pilot rows are dropped.
 function prepareCodes(codeRows) {
-  const warnings = [];
+  const warnings = csvWarnings(codeRows).slice();
   const pilot = codeRows.filter(isPilot);
   const rows = codeRows.filter(r => !isPilot(r));
   const by = {}, label = {}, count = {};
@@ -448,13 +605,14 @@ function prepareCodes(codeRows) {
     (owners[r.segment_id] = owners[r.segment_id] || new Set()).add(p);
     const seg = (by[k] = by[k] || {});
     if (r.pass !== undefined && r.code !== undefined) {
-      const pass = String(parseInt(r.pass, 10));
+      const pass = /^f/i.test((r.pass || '').trim()) ? 'f' : String(parseInt(r.pass, 10));
       const ck = `${k}|${pass}`; count[ck] = (count[ck] || 0) + 1;
       if (r.code) seg[pass] = r.code.toLowerCase();
     } else {
       count[k] = (count[k] || 0) + 1;
       if (r.pass1_code) seg['1'] = r.pass1_code.toLowerCase();
       if (r.pass2_code) seg['2'] = r.pass2_code.toLowerCase();
+      if (r.final_code) seg.f = r.final_code.toLowerCase();
     }
   });
   // a segment listed twice (twice in one pass for the long layout) cannot be trusted: leave it out
@@ -515,13 +673,14 @@ function footer(n) {
 function main() {
   const a = args(process.argv.slice(2));
   const dir = __dirname;
-  const useSample = !a.scores && !a.needs && !a.key && !a.codes;
+  const useSample = !a.scores && !a.needs && !a.key && !a.codes && !a.scores2;
   const f = {
     scores: a.scores || (useSample ? path.join(dir, 'sample-item-scores.csv') : null),
     needs: a.needs || (useSample ? path.join(dir, 'sample-need-classifications.csv') : null),
     key: a.key || (useSample ? path.join(dir, 'sample-marking-key.csv') : null),
     codes: a.codes || (useSample ? path.join(dir, 'sample-think-aloud-codes.csv') : null),
   };
+  if (a.scores2) f.scores2 = a.scores2;
   const out = [];
   const fake = Object.values(f).some(x => x && path.basename(x).startsWith('sample-'));
   out.push('# ChangeLens evaluation analysis');
@@ -532,7 +691,8 @@ function main() {
     const sRows = readCSV(f.scores);
     nReaders = prepareScores(sRows).complete.length;
     out.push('\n## 1. Item scores'); out.push(analyseScores(sRows));
-  }
+    if (a.scores2) { out.push('\n## 1b. Second-scorer agreement'); out.push(analyseSecondScorer(sRows, readCSV(a.scores2))); }
+  } else if (a.scores2) out.push('\n## 1b. Second-scorer agreement\nNeeds both --scores and --scores2; skipped.');
   if (f.needs && f.key) { out.push('\n## 2. Ten-need sheet'); out.push(analyseNeeds(readCSV(f.needs), readCSV(f.key))); }
   else if (f.needs || f.key) out.push('\n## 2. Ten-need sheet\nNeeds both --needs and --key; skipped.');
   if (f.codes) { out.push('\n## 3. Think-aloud coding agreement'); out.push(analyseCodes(readCSV(f.codes))); }
@@ -544,6 +704,7 @@ function main() {
 
 module.exports = {
   parseCSV, readCSV, agreement, cohenKappa, analyseScores, analyseNeeds, analyseCodes, mean, median,
-  prepareScores, prepareNeeds, prepareCodes, pairedDiffs, fullMarkCounts, footer, isPilot, FLOOR,
+  prepareScores, prepareNeeds, prepareCodes, pairedDiffs, fullMarkCounts, item6Counts, sequenceCounts,
+  secondScorer, analyseSecondScorer, footer, isPilot, FLOOR,
 };
 if (require.main === module) main();

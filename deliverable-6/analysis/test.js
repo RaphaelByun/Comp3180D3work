@@ -365,5 +365,165 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   has('fig: real n', real.svg, '(n = 5)');
 }
 
+// 14. CSV quotes (RFC 4180). A quote opens a quoted field only as the first character of a field.
+// 14a. Unclosed quote typed inside a quote_note (wide sheet, CRLF, four segments): all four segments
+//      are read, the quote is kept as a literal, and no warning is needed.
+{
+  const o = wide(['S01,R01,00:01,A,reads the title then says "who did #588,a2,,a2,,,', 'S02,R01,00:02,A,x,d1,,,,,',
+    'S03,R02,00:01,B,x,u1,,,,,', 'S04,R02,00:02,B,x,d3,,,,,']);
+  has('stray quote: all segments read', o, 'Segments with pass 1: 4. Re-coded in pass 2: 1');
+  hasNot('stray quote: no warning', o, 'WARNING');
+  const r = A.parseCSV('id,q\r\nS1,reads the title then says "who did #588\r\nS2,x\r\n');
+  eq('stray quote: kept literal', r[0].q, 'reads the title then says "who did #588');
+  eq('stray quote: next row intact', r[1].id, 'S2');
+}
+// 14b. A comment line holding an unclosed quote is skipped whole: the five readers are all read.
+{
+  const o = A.analyseScores(A.parseCSV(['# R03 said "the airlock bit, then stopped', HEAD].concat(scoreLines()).join('\n')));
+  has('comment quote: rows read', o, 'Rows read: 72;');
+  has('comment quote: five complete', o, 'Complete readers (both reports, items 1-5 each scored once): 5');
+}
+// 14c. A balanced quote in the middle of a field keeps its quote marks. With a comma inside it, the
+//      row splits and a warning names the line (the note should have been quoted as a whole).
+{
+  eq('mid quote: kept', A.parseCSV('id,q\nS1,said "is this the art one" twice\n')[0].q, 'said "is this the art one" twice');
+  const r = A.parseCSV('id,q\nS1,said "is this, the art one" twice\n');
+  eq('mid quote comma: warning', r.warnings[0], 'WARNING: line 2 has 3 cells but the header has 2; the extra cells are ignored. An unquoted comma in a note does this: put the note in double quotes.');
+  eq('quoted note: no warning', A.parseCSV('id,q\nS1,"said ""is this, the art one"" twice"\n').warnings.length, 0);
+}
+// 14d. A quoted field that is never closed is warned about in the analysis output, with its line.
+{
+  const o = wide(['S01,R01,,,"who did it,a2,,,,,', 'S02,R01,,,x,d1,,,,,']);
+  has('unclosed field: warning', o, 'WARNING: the file ends inside a quoted field opened on line 2.');
+}
+
+// 15. Counterbalanced design checks. Base set as in 10.
+//     Treatment cells: R01 W2 o2, R02 W1 o1, R03 W2 o2, R04 W1 o2, R05 W2 o1.
+{
+  const o = run(scoreLines());
+  has('sequence counts', o, 'Readers per sequence (week and order of the treatment report): W1 order 1: 1; W1 order 2: 1; W2 order 1: 1; W2 order 2: 2.');
+}
+// 15a. Same week: R05 treatment typed W1 order 1 (baseline W1 order 2). R05 is left out and named.
+//      Remaining R01-R04: 3, 4, 2, -2 -> mean 7/4 = 1.75.
+{
+  const o = run(scoreLines().map(l => l.replace(/^R05,proxy,treatment,W2,1,/, 'R05,proxy,treatment,W1,1,')));
+  has('same week: reason', o, 'R05 (baseline and treatment both W1)');
+  has('same week: mean over 4', o, 'Mean difference 1.75 points out of 10');
+}
+// 15b. Same order: R05 treatment typed W2 order 2 (baseline W1 order 2). Left out as a likely order error.
+{
+  const o = run(scoreLines().map(l => l.replace(/^R05,proxy,treatment,W2,1,/, 'R05,proxy,treatment,W2,2,')));
+  has('same order: reason', o, 'R05 (baseline and treatment both order 2, likely an order error)');
+  hasNot('same order: not in paired table', o, '| R05 ');
+}
+// 15c. One-row week typo: R01 baseline item 3 typed W2 while R01's other baseline rows are W1.
+{
+  const o = run(scoreLines().map(l => (l === 'R01,producer,baseline,W1,1,3,1,' ? 'R01,producer,baseline,W2,1,3,1,' : l)));
+  has('week typo: reason', o, 'R01 (baseline rows give more than one week (W1, W2))');
+  has('week typo: mean over 4', o, 'Readers: 4.');
+}
+
+// 16. Week and role case. All R05 rows with week w1/w2 and role Proxy give the same output as test 10a.
+{
+  const o = run(scoreLines().map(l => l.startsWith('R05,') ? l.replace('R05,proxy,', 'R05,Proxy,').replace(/,W([12]),/, ',w$1,') : l));
+  has('case: roles merged', o, 'producer n=2, mean 0.50; proxy n=3, mean 2.33');
+  has('case: week gap kept', o, 'Baseline mean gap between weeks');
+  hasNot('case: no warning', o, 'WARNING');
+  const bad = run(scoreLines().map(l => l.startsWith('R05,') ? l.replace('R05,proxy,', 'R05,prod,').replace(/,W2,/, ',W3,') : l));
+  has('case: odd week warned', bad, 'WARNING: weeks found are W1, W2, W3; expected exactly W1 and W2.');
+  has('case: odd role warned', bad, 'WARNING: role not producer or proxy: prod.');
+}
+
+// 17. Ten-need data checks. Key N01-N10 = D D D D P P P N N N; every reader matches it unless changed.
+{
+  const keyL = L('D D D D P P P N N N');
+  const id = i => `N${String(i + 1).padStart(2, '0')}`;
+  const keyCsv = ['need_id,class'].concat(keyL.map((c, i) => `${id(i)},${c}`));
+  const lines = ['participant,need_id,class'];
+  for (const p of ['R01', 'R02']) keyL.forEach((c, i) => {
+    let x = c;
+    if (p === 'R02' && i === 0) x = 'derivable';
+    if (p === 'R02' && i === 4) x = 'D/P';
+    lines.push(`${p},${id(i)},${x}`);
+  });
+  // R01 lists N04 twice, P then D: both rows are left out, so R01 is 9/9 either way round.
+  const o1 = A.analyseNeeds(A.parseCSV(lines.concat(['R01,N04,P']).join('\n')), A.parseCSV(keyCsv.join('\n')));
+  has('needs dup: warning', o1, 'WARNING: duplicate rows (same reader and need), left out until fixed: R01 N04 (2 rows).');
+  has('needs dup: R01 9/9', o1, '| R01    | 9/9 (100%)');
+  // R02's two invalid cells are left out and named: 8/8, no departure rows for them.
+  has('needs invalid: warning', o1, 'WARNING: class not D, P or N, left out: R02 N01 ("derivable"); R02 N05 ("D/P").');
+  has('needs invalid: R02 8/8', o1, '| R02    | 8/8 (100%)');
+  hasNot('needs invalid: not a departure', o1, 'R02:DERIVABLE');
+  // a key class outside D/P/N: that need is left out of the key and named
+  const o2 = A.analyseNeeds(A.parseCSV(lines.join('\n')), A.parseCSV(keyCsv.map(l => (l === 'N10,N' ? 'N10,X' : l)).join('\n')));
+  has('key invalid: warning', o2, 'WARNING: key class not D, P or N, need left out: N10 ("X").');
+  has('key invalid: nine needs', o2, 'Key has 9 needs');
+}
+
+// 18. Second scorer. First scorer: the base set. Second scorer re-scores R01 and R02 (both reports) and
+//     differs on R01 baseline item 4 (0 -> 1) and R02 treatment item 6 (Pass -> Hedged).
+//     Items 1-5: 2 readers x 2 reports x 5 items = 20, 19 agree. Item 6: 4 codes, 3 agree. Pilot rows dropped.
+{
+  const first = A.parseCSV([HEAD].concat(scoreLines()).join('\n'));
+  const second = scoreLines(['R01', 'R02', 'P0']).map(l => {
+    if (l === 'R01,producer,baseline,W1,1,4,0,') return 'R01,producer,baseline,W1,1,4,1,';
+    if (l === 'R02,proxy,treatment,W1,1,6,Pass,') return 'R02,proxy,treatment,W1,1,6,Hedged,';
+    return l;
+  });
+  const o = A.analyseSecondScorer(first, A.parseCSV([HEAD].concat(second).join('\n')));
+  has('scorer2: readers', o, 'Readers re-scored by the second scorer: 2 (R01, R02). Pilot excluded.');
+  has('scorer2: agreement', o, 'Items 1-5 in agreement: 19/20. Item 6 codes in agreement: 3/4.');
+  has('scorer2: item 4 differs', o, '| R01    | baseline  | 4    | 0        | 1        |');
+  has('scorer2: item 6 differs', o, '| R02    | treatment | 6    | Pass     | Hedged   |');
+  hasNot('scorer2: no warning', o, 'WARNING');
+  // one reader, one report only: both shortfalls are warned about
+  const one = A.analyseSecondScorer(first, A.parseCSV([HEAD].concat(scoreLines(['R03']).filter(l => l.includes(',baseline,'))).join('\n')));
+  has('scorer2: one report warned', one, 'WARNING: re-scored on one report only: R03.');
+  has('scorer2: two readers warned', one, 'WARNING: 1 reader(s) re-scored; D3 asks for at least two.');
+  has('scorer2: one report counts', one, 'Items 1-5 in agreement: 5/5. Item 6 codes in agreement: 1/1.');
+  // the header-only template parses to no rows
+  eq('scorer2: template', A.parseCSV(fs.readFileSync(path.join(__dirname, 'templates', 'second-scorer-scores.csv'), 'utf8')).length, 0);
+}
+
+// 19. figures.js Table 2 and 2b match analyse.js on the FAKE sample: the week columns equal analyse.js's
+//     week-by-condition table, and the item 6 counts equal its item 6 table. The caption says "the marking key".
+{
+  const F = require('./figures.js');
+  const dir = __dirname;
+  const sRows = A.parseCSV(fs.readFileSync(path.join(dir, 'sample-item-scores.csv'), 'utf8'));
+  const an = A.analyseScores(sRows);
+  const t2 = F.table2(sRows);
+  const cells = line => line.split('|').map(c => c.trim()).filter(c => c !== '');
+  const weekPart = an.split('### Item scores by week and condition')[1].split('###')[0];
+  const anWeek = weekPart.split('\n').filter(l => /^\| [1-5] /.test(l)).map(cells);
+  const t2Rows = t2.split('**Table 2b')[0].split('\n').filter(l => /^\| [1-5] \|/.test(l)).map(cells);
+  eq('fig table 2: five rows', t2Rows.length, 5);
+  eq('fig table 2: week columns match analyse', JSON.stringify(t2Rows.map(r => [r[0]].concat(r.slice(3)))), JSON.stringify(anWeek));
+  has('fig table 2: week header', t2, '| Item | Baseline (no names) | Treatment (names) | W1 baseline | W1 treatment | W2 baseline | W2 treatment |');
+  // item 6 (hand-worked in test 8): baseline Pass 2, Hedged 1, Over-claim 1; treatment 2, 0, 2
+  has('fig table 2b: pass', t2, '| Pass | 2/4 | 2/4 |');
+  has('fig table 2b: hedged', t2, '| Hedged | 1/4 | 0/4 |');
+  has('fig table 2b: over-claim', t2, '| Over-claim | 1/4 | 2/4 |');
+  const t1 = F.table1(A.parseCSV(fs.readFileSync(path.join(dir, 'sample-need-classifications.csv'), 'utf8')),
+    A.parseCSV(fs.readFileSync(path.join(dir, 'sample-marking-key.csv'), 'utf8')));
+  has('fig table 1: caption', t1, 'the marking key and readers matching it');
+  hasNot('fig table 1: no first person', t1, 'my key');
+}
+
+// 20. Table 3 uses final_code when the resolve step set one. R01 S02 is d1 in pass 1, d3 in pass 2,
+//     resolved to d3: d3 counts 2 (S02, S03) and d1 counts 0. Long layout accepts pass = final.
+{
+  const F = require('./figures.js');
+  const rows = A.parseCSV([WIDE, 'S01,R01,,,x,a2,,a2,,,', 'S02,R01,,,x,d1,,d3,,d3,read the quote again', 'S03,R02,,,x,d3,,,,,'].join('\n'));
+  const t3 = F.table3(rows);
+  has('final: d3 counted twice', t3, '| d3 | Reasoning about Design | Why was this code implemented this way? | 2 |');
+  hasNot('final: d1 not counted', t3, '| d1 |');
+  has('final: caption', t3, 'final code after resolution, else pass 1 code; 1 segment(s) with a final code');
+  const lng = F.table3(A.parseCSV(['segment_id,participant,timestamp,pass,code', 'S01,R01,,1,d1', 'S01,R01,,2,d3', 'S01,R01,,final,d3'].join('\n')));
+  has('final long: d3', lng, '| d3 | Reasoning about Design | Why was this code implemented this way? | 1 |');
+  // agreement still uses pass 1 and pass 2 only
+  has('final: agreement unchanged', A.analyseCodes(rows), 'Agreement: 1/2 (50%)');
+}
+
 console.log(`${pass} checks passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

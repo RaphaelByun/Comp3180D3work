@@ -191,15 +191,15 @@ file it touched, each with its status letter and the category ChangeLens assigne
 named `<export name>-changelens-report.md`. That file is what you paste into the proposal.
 
 One has already been produced for you from the sample, so you can read it without opening Unity:
-`Working folder/a2-final-sprint-17-sep-2026/prototype-data/ss3d-week-changelens-report.md`.
+`prototype-data/ss3d-week-changelens-report.md` (in this repository).
 
 ---
 
 ## 6. Running the tests
 
-The package ships with 27 tests (about 60 individual assertions) across three test files, all checking a small hand-written
+At A2 the package shipped with 27 tests (about 60 individual assertions) across three test files, all checking a small hand-written
 sample log that contains the three awkward cases: a rename, a `.meta` with a sibling asset, and a
-deletion.
+deletion. On 17 Oct 2026 it has 76 tests across seven test files.
 
 **In the Editor:**
 

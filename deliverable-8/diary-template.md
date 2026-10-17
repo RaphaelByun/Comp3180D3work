@@ -73,4 +73,4 @@ One short summary for the report. Source material: `fact-log-weeks-1-8.md` (star
 
 ## From diary to report (Week 13)
 
-For each week keep: the roadblock or breakthrough, one concrete achievement, any plan change. Cut everything else. Target about 70 words per week and about 70 for the break and "up to Week 8" together, to land near 500 words. Cross-check with the hour variances in `deliverable-9/` so the story is the same in both places.
+For each week keep: the roadblock or breakthrough, one concrete achievement, any plan change. Cut everything else. Target about 80 words per week (five weeks, about 400) and about 100 for the break and "up to Week 8" together, to land near 500 words. Cross-check with the hour variances in `deliverable-9/` so the story is the same in both places.

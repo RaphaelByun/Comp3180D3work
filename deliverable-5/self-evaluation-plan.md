@@ -4,7 +4,7 @@ Status: **plan for Raphael to approve** (drafted 17 Oct 2026, Saturday of Week 1
 
 This plan replaces the people study in `deliverable-3/session-protocol.md` and the session kit in this folder. It keeps as much of the A2 method as one reader can keep.
 
-Revised 17 Oct 2026 after an adversarial review against the A3 spec and rubric, the A2 method, and the repo files named here (every path was checked on its branch).
+Revised 17 Oct 2026 after an adversarial review against the A3 spec and rubric, the A2 method, and the repo files named here (every path was checked on its branch). Checked again across the six local branches the same night (activity names, CSV headers, dates, paths, links, test counts); the status lines in section 12 are as of that check.
 
 ## 1. Decision
 
@@ -330,16 +330,16 @@ A2 budgeted Deliverable 5 at 18 hours (7 sessions, 4 recruiting, 7 coding). This
 Both branches are read-only today. Nothing below has been done.
 
 **D3 (`deliverable-3-instruments`)**
-1. `README.md`: new status line (17 Oct decision: no sessions, no pilot); "What Raphael must do" items 5 to 7 (consent brackets, pilot, second human scorer) marked not needed; point to this plan.
+1. `README.md`: new status line (17 Oct decision: no sessions, no pilot); the last line of "How this meets the A2 measure" (it says the measure is met only when the pilot has run); in "What Raphael must do", the Ethics paragraph (it still says classmates and consent safeguards), the last sentence of item 2 (it says not to start sessions) and items 5 to 7 (consent brackets, pilot, second human scorer) marked not needed; open decisions 3 to 5 (think-aloud report, withdrawal date, participant floor) marked void; point to this plan.
 2. New files `items-reserve-2020-12-14.md` and `items-reserve-2021-09-27.md`: question sheets only, same slot plan. Keys in separate files, kept out of the repository until SE2 answers are committed, then added with their hash checked. If you prefer D3 untouched, these can live in `deliverable-5/solo/` instead.
-3. `ten-need-sheet.md`: add a short section D, "Solo use": the R/U reading of the key, the rule choice, and the date accepted.
+3. `ten-need-sheet.md`: add a short section D, "Solo use": the R/U reading of the key, the rule choice, and the date accepted. Also change the status line ("The pilot may still use either set") and the two instructions in section B that say to date the key or choose the rule "before reading any participant's sheet" and "before seeing any sheets" to "before SE2".
 4. `answer-key-and-scoring.md`: the second-scorer check becomes the optional AI scorer for SE2, disclosed.
-5. `session-protocol.md`, `participant-info-and-consent.md`, `proxy-scenario.md`, `pilot-plan.md`: status line "Not used (17 Oct 2026 decision); kept as the A2 plan record". The proxy scenario stays the source of the SE3 persona.
-6. `ethics/report-ethics-points.md`: mark points 1 and 2 as not applicable (no participants); add the contributor-email question to point 4.
-7. The reserve-week `study/reserve/*/report-*.md` on this branch are the older pages; the pages SE2 reads are on `deliverable-2-changelens` at `d9fa4bf`. Either update or add a line saying so.
+5. `session-protocol.md`, `participant-info-and-consent.md`, `proxy-scenario.md`, `pilot-plan.md`: status line "Not used (17 Oct 2026 decision); kept as the A2 plan record". The proxy scenario stays the source of the SE3 persona. `items-week1-2021-02-08.md` and `items-week2-2021-07-19.md`: status line "Not used in the solo evaluation (SE2 reads the reserve weeks); kept as the pattern for the reserve items".
+6. `ethics/report-ethics-points.md`: mark points 1 and 2 as not applicable (no participants), and change the decision paragraph that says testing with classmates is how the unit is run; add the contributor-email question to point 4. `ethics/README.md`: one line in its top note that there are no participants.
+7. `study/reserve/` on this branch holds older copies of nine files than `d9fa4bf`: both `report-B-treatment.md`, both `naming.md`, both `fidelity-A.md`, both `fidelity-B.md` and `2021-09-27/export/guids.txt`. The pages SE2 reads are on `deliverable-2-changelens` at `d9fa4bf`. Copy the nine files from `d9fa4bf` (an agent does it; Raphael does not open them), or add a `study/reserve/README.md` line saying the D2 copies are the ones used.
 
 **D4 (`deliverable-4-fidelity-check`)**
-1. Regenerate `study/reserve/2020-12-14/fidelity-A.md`, `fidelity-B.md`, `study/reserve/2021-09-27/fidelity-A.md`, `fidelity-B.md` from the pages frozen at `d9fa4bf`. All four templates on this branch differ from the D2 versions (both reserve B pages were re-frozen on 17 Oct).
+1. Bring `study/reserve/` up to `d9fa4bf`. Nine files on this branch differ from the D2 versions: both `report-B-treatment.md`, both `naming.md`, `fidelity-A.md` and `fidelity-B.md` for both weeks, and `2021-09-27/export/guids.txt` (three lines short, and it is SE1 ground truth for that week). The D2 fidelity templates at `d9fa4bf` are already regenerated, so copying them is enough.
 2. Score the reserve weeks only after SE2 is scored (AI scorer, Raphael hand-checks C verdicts), and add a `FIDELITY-RESULT.md` per reserve week.
 3. `study/week1-2021-02-08/FIDELITY-RESULT.md`, section "Before this counts": once the hand-check is done, record its result and point to `deliverable-6/data/se1-fidelity-handcheck.csv`.
 4. July has one AI scorer only. Say so in a July result note, since February had two.
@@ -353,6 +353,8 @@ Both branches are read-only today. Nothing below has been done.
 3. After SE3 and SE4: fix what you choose to fix, list each fix with its CW or CL id in `prototype/CHANGELOG.md`, and say in the report which commit was evaluated and which was fixed after.
 4. `README.md` and the package README: say the evaluation is a solo evaluation (17 Oct), with a link to this plan.
 
+Status 17 Oct night (local commits): items 2 and 4 done, and the root README changes table now also covers D6 and D7. Item 1 is kept (no `study/reserve/` file has changed since `d9fa4bf`) but the tag is not made yet. Item 3 waits for SE3 and SE4.
+
 **D5 (`deliverable-5-sessions`, this branch)**: done 17 Oct 2026, local commits only.
 1. Add this plan. Done (`125a9bb`, revised `8bb1800`).
 2. `README.md`: new status and purpose (solo evaluation kit); the catch-up plan, checkpoints and open questions replaced by section 4 of this plan. Done.
@@ -362,17 +364,21 @@ Both branches are read-only today. Nothing below has been done.
 6. `deliverable-5/solo/` for the SE2 answer-sheet template and the SE3 task card. Done, with run sheets for SE1 to SE4, `how-to-score.md`, the dated schedule and the nine header-only logs (`solo/logs/`, checked against section 3 by `solo/logs.test.js`). The D6 templates in item 1 below should copy these headers.
 
 **D6 (`deliverable-6-evaluation-report`)**
-1. `analysis/templates/`: add header-only `se1-fidelity-handcheck.csv`, `se2-reads.csv`, `se2-item-scores.csv`, `se2-need-answers.csv`, `se2-needs-log.csv`, `se2-second-scorer.csv`, `se3-walkthrough.csv`, `se4-heuristic-problems.csv`, `se4-task-outcomes.csv` with the columns in section 3.
-2. `analysis/`: a solo analysis script (for example `solo-analyse.js`) that prints Tables A to H from those CSVs, with tests on FAKE data, as `analyse.js` does. `analyse.js` cannot be reused for SE2: its design checks need two readers' weeks to differ, and its week and role values reject the reserve weeks and `SELF`.
+1. `analysis/templates/`: add `se1-fidelity-handcheck.csv`, `se2-reads.csv`, `se2-item-scores.csv`, `se2-need-answers.csv`, `se2-needs-log.csv`, `se2-second-scorer.csv`, `se3-walkthrough.csv`, `se4-heuristic-problems.csv`, `se4-task-outcomes.csv` with the columns in section 3 (each file also has `#` comment lines saying what goes in each column; the tools skip them).
+2. `analysis/`: a solo analysis script that prints Tables A to H from those CSVs, with tests on FAKE data. The reader-study `analyse.js` could not be reused for SE2: its design checks needed two readers' weeks to differ, and its week and role values rejected the reserve weeks and `SELF`. It was rewritten in place (no `solo-analyse.js`); the old version is in git history.
 3. `analysis/figures.js`: a time-and-confidence figure instead of the paired-differences plot; keep the Figure 5 number.
 4. `evaluation-section-skeleton.md`: rewrite Method rows (Design, Participant = the developer, Instruments, Procedure, Ethics points 3 to 5, Fidelity, Scoring check, Analysis, Deviations) and the five Results blocks around Tables B, C, F and G. Replace the trap "say plainly it had human readers" with "say plainly it had one reader, the developer".
 5. `appendix-plan.md`: B becomes the SE2 raw data, C the key against observed, D the needs-log coding, G becomes the SE3 and SE4 sheets (recruitment removed).
 6. `README.md`: "What Raphael must do" rewritten for the solo study.
 
+Status 17 Oct night (local commits): items 1 to 6 done. `node deliverable-6/analysis/test.js` passes 220 checks.
+
 **D7 (`deliverable-7-portfolio-video`)**
 1. `storyboard.md` beat 6: the result slot shows an SE2 table or the time-and-confidence figure, with "one reader, the developer" on screen.
 2. `README.md` figure list: Figure 5 is the new figure; Tables 1 to 3 renamed to the solo tables.
 3. `feedback-form.md`: the A2 measure names two outside viewers for the video. That is a check of the video, not of ChangeLens, but it does involve other people. Under the 17 Oct decision the default is to drop it and report it as a variance, unless Raphael says otherwise. Nothing in this plan depends on it.
+
+Status 17 Oct night (local commits): items 1 to 3 done. `feedback-form.md` is now `deliverable-7/retired/feedback-form.md`, and the README has an optional self-check in its place.
 
 **D8 (`deliverable-8-dev-diary`)**
 1. A dated diary entry for 17 Oct on the evaluation decision, in Raphael's own words.
@@ -380,10 +386,14 @@ Both branches are read-only today. Nothing below has been done.
 3. `hours-entries.csv`: log SE1 to SE4 time against Deliverable 5.
 4. `fact-log-weeks-9-10.md`: add the 17 Oct decision and the reserve re-freeze at `d9fa4bf`.
 
+Status 17 Oct night (local commits): items 2 to 4 done. Item 1 is a bracketed prompt in the Week 10 draft and a slot in the diary template, because the entry must be in Raphael's own words.
+
 **D9 (`deliverable-9-reflection`)**
 1. `README.md` item 1: the reserve week for the Create entry must be used only after SE2 (it currently suggests a reserve week with no timing).
 2. `reflection-skeleton.md`: Evaluate goal evidence points to Tables B and C; Apply and Analyse goal evidence may add SE4 as Raphael's own hand pass (D1's pass was an AI evaluator), but it does not replace the A2 measure (four tools coded, one inspection-against-interview reconciliation).
 3. `variance-table.js` and its input: D3 (no pilot), D5 (18 h planned, about 6.5 h, sessions replaced by the solo evaluation) and D6 rows with the reason.
+
+Status 17 Oct night (local commits): items 1 to 3 done. The "why" cells stay blank for Raphael.
 
 ## References
 

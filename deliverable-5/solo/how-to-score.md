@@ -86,4 +86,4 @@ The A-against-B comparison is the two first reads (`RX-A1` against `RY-B1`). Tha
 | Table H. Stand-up and ratings | `se2-reads.csv` |
 | Scoring check | `se2-second-scorer.csv` |
 
-The script that prints these tables is a D6 change (plan section 12). Until it exists, count by hand from the CSVs.
+`node deliverable-6/analysis/analyse.js` (D6 branch) prints Tables A to H and the scoring check from the CSVs, and `deliverable-6/analysis/figures.js` draws the figure. The commands are in `deliverable-6/README.md`. Check each table against the CSVs by hand.

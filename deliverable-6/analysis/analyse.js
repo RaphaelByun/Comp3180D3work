@@ -35,7 +35,7 @@
  * rows with pilot = yes are dropped from every section. Think-aloud segments are keyed by
  * participant + segment_id. Every pass 1, pass 2 and final code is checked against the codebook (21 Ko et al.
  * types plus none, other, unclear); any other code is named and its pass 1 / pass 2 pair is left out of agreement.
- * Design checks: every row of one report gives one week and one order, and a reader's two reports
+ * Design checks: every row of one reader gives one role, every row of one report gives one week and one order, and a reader's two reports
  * differ in both week and order; a reader failing this is left out and named. Weeks are read in upper
  * case and roles in lower case; weeks other than W1/W2 and roles other than producer/proxy are warned about.
  * Order is read as 1 or 2 (01, 1st, first; 02, 2nd, second); any other order is warned about and the reader left out.
@@ -295,6 +295,9 @@ function prepareScores(rowsAll) {
       if (per.baseline.week === per.treatment.week) reasons.push(`baseline and treatment both ${per.baseline.week || '(blank week)'}`);
       if (per.baseline.order === per.treatment.order && validOrder(per.baseline.order)) reasons.push(`baseline and treatment both order ${per.baseline.order || '(blank)'}, likely an order error`);
     }
+    // one reader has one role: rows that disagree would put the reader in the wrong group of the role split
+    const roles = Array.from(new Set(mine.map(r => r.role || '(blank)'))).sort();
+    if (roles.length > 1) reasons.push(`rows give more than one role (${roles.join(', ')})`);
     const other = mine.filter(r => !CONDS.includes(r.cond));
     if (other.length) reasons.push(`condition not baseline/treatment or A/B (${Array.from(new Set(other.map(r => r.cond || '(blank)'))).join(', ')})`);
     if (reasons.length) excluded.push({ p, reasons });

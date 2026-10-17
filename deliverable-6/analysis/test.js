@@ -694,6 +694,17 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   hasNot('blank scores: no nameless reader', so, '(blank code)');
 }
 
+// 25. Mixed role (r5): R01's baseline rows say producer and its treatment rows say proxy. R01 is named and
+//     left out; the mean is over R02, R03, R04, R05: 4, 2, -2, 1 -> 5/4 = 1.25. Roles: R04 producer alone
+//     (one reader), so the role split is not made.
+{
+  const o = run(scoreLines().map(l => (l.startsWith('R01,producer,treatment,') ? l.replace('R01,producer,', 'R01,proxy,') : l)));
+  has('mixed role: reason', o, 'R01 (rows give more than one role (producer, proxy))');
+  has('mixed role: four readers', o, 'Readers: 4. Higher with names: 3. Same: 0. Lower with names: 1.');
+  has('mixed role: mean', o, 'Mean difference 1.25 points out of 10');
+  hasNot('mixed role: R01 not counted as producer', o, 'producer n=2');
+}
+
 // 22. The tracker's five-reader sequences (deliverable-5/booking-tracker.csv): R01 S1, R02 S2, R03 S3, R04 S4,
 //     R05 S2. S1 = W1-B then W2-A; S2 = W2-A then W1-B; S3 = W1-A then W2-B; S4 = W2-B then W1-A.
 //     So treatment is W1 for R01, R02, R05 (3) and W2 for R03, R04 (2); order 2 for R02, R03, R05 (3).

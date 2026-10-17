@@ -57,5 +57,5 @@ Prods, term replies and what not to say are all in D3 (2.2 for content and term 
 | Reader asks what a term means | Use the reply in D3 script 2.2 (term list only). Note which term (it is a finding about the page) |
 | Reader recognises the game | Note it; keep the data and say so in Method |
 | Wrong report order given | Note it, finish the session, mark the reader `order error`, and decide with the sequence counts in mind whether to recruit a replacement |
-| Reader withdraws | Delete their sheets; update the tracker; the next person takes the next unused row (D3 section 3) |
+| Reader withdraws | Delete their paper sheets and their rows in `deliverable-6/data/item-scores.csv`, `deliverable-6/data/need-classifications.csv` and `deliverable-5/think-aloud-coding-sheet.csv`; mark the tracker status `withdrawn`; the next person takes the next unused row (D3 section 3) |
 | Fewer than five readers | Think-alouds run first and the quantitative arm is reported as descriptive only (floor: five readers in total, `deliverable-3/README.md` decision 5). Decide on Mon 26 Oct (fallback date in `README.md`, catch-up plan); the pilot never counts |

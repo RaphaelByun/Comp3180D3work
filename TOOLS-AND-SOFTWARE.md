@@ -44,7 +44,7 @@ Used as objects of study, not to build anything. Plans and dates are from `deliv
 | --- | --- | --- | --- |
 | SS3D (Space Station 3D), https://github.com/RE-SS3D/SS3D | Git history of four weeks (two study weeks, two reserves) and A2 corpus figures | MIT for code; CC BY-NC-SA 4.0 for assets. Details in `study/SOURCE-AND-LICENCE.md` | `study/`, `corpus/`, `figures/`, `prototype-data/` |
 | Unity Experiment Framework (UXF), https://github.com/immersivecognition/unity-experiment-framework | A2 corpus repository. D1: one week of history and issues (9 to 15 Nov 2020) for the needs check | MIT | `corpus/`; `deliverable-1/needs-catalogue.md` section 4 |
-| Open Brush, VRTK and jynew (https://github.com/icosa-foundation/open-brush, https://github.com/ExtendRealityLtd/VRTK, https://github.com/jynew/jynew) | A2 corpus repositories: file-type counts only | Each repository's own licence: not yet checked | `corpus/corpus.py`, `corpus/results.md` |
+| Open Brush, VRTK and jynew (https://github.com/icosa-foundation/open-brush, https://github.com/ExtendRealityLtd/VRTK, https://github.com/jynew/jynew) | A2 corpus repositories: file-type counts only. No code or assets from them are copied into this repository | Open Brush: Apache-2.0. VRTK: MIT. jynew: its own licence, which reads "The use of any resources or code of this project is not permitted unless authorized by the public statement of this project. Any unauthorized commercial use of the code or resources of this project is strictly prohibited". Some of its folders carry a further community licence (`COMMUNITY_LICENSE_FOR_JYX2/README.md`). Each repository's `LICENSE` file, read on 17 Oct 2026 | `corpus/corpus.py`, `corpus/results.md` |
 
 ## APA 7 software references
 
@@ -58,6 +58,8 @@ Atlassian. (n.d.). *Jira* [Web application]. Retrieved October 14, 2026, from ht
 
 Atlassian. (n.d.). *Trello* [Web application]. Retrieved October 14, 2026, from https://trello.com/
 
+Extend Reality Ltd. (2022). *VRTK* [Computer software]. GitHub. https://github.com/ExtendRealityLtd/VRTK
+
 Git for Windows. (2025). *Git for Windows* (Version 2.48.1.windows.1) [Computer software]. https://gitforwindows.org/
 
 GitHub. (n.d.). *GitHub Projects* [Web application]. Retrieved October 14, 2026, from https://github.com/features/issues
@@ -66,7 +68,11 @@ Google. (2026). *Google Chrome* (Version 155.0.8059.82) [Computer software]. htt
 
 HacknPlan. (n.d.). *HacknPlan* [Web application]. Retrieved October 14, 2026, from https://hacknplan.com/
 
+Icosa Foundation. (2026). *Open Brush* [Computer software]. GitHub. https://github.com/icosa-foundation/open-brush
+
 Immersive Cognition. (2026). *Unity Experiment Framework* [Computer software]. GitHub. https://github.com/immersivecognition/unity-experiment-framework
+
+jynew. (2026). *jynew* [Computer software]. GitHub. https://github.com/jynew/jynew
 
 Microsoft. (2024). *Microsoft.NET.Test.Sdk* (Version 17.11.1) [Computer software]. NuGet. https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/17.11.1
 
@@ -99,6 +105,5 @@ Unity Technologies. (2026). *Unity* (Version 6000.4.10f1) [Computer software]. h
 ## Still open
 
 - The Unity plan tier (Personal or another).
-- The licences of Open Brush, VRTK and jynew, if their counts appear in the A3 report.
 - Video recording and editing tools for D7, once the video is made.
 - The Microsoft Word, Chrome, Python and Matplotlib versions are what was installed on 17 Oct 2026. An older version may have been used in September.

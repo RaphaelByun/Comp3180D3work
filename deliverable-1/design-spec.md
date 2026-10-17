@@ -55,6 +55,8 @@ The ten that D1 raises most often (NC §5): N01, N03, N07, N08, N09, N12, N17, N
 
 Version A (baseline) and Version B (treatment) share every section except RS5, which only B shows (A2 Study design; TRY-CHANGELENS.md on the D2 branch).
 
+**Status note (17 October 2026).** This table is the design. The frozen study pages built less of it. They have no RS1 summary sentence (only a "Largest area this week" line), no ticket-citation share, no RS7 and no RS8. RS8 is left off the study pages on purpose: a line saying the page shows no tracker would give away comprehension item 6, which is unanswerable by design (`deliverable-3` items files, slot 6). What is built is listed row by row in §10.
+
 | Need | Section | Version | Design requirement | Evidence |
 |---|---|---|---|---|
 | N01 Each discipline's changes | RS2 regrouped; RS1 | A and B | Name disciplines in a producer's words (code, art, audio, scenes), not "ScenePrefab" or "DataConfig" (H2); show them as text, never colour alone | T1 partly ×4; TR-07; GP-05; P4 |
@@ -76,11 +78,43 @@ Rows dropped for want of evidence beyond A2: none. N20, N21 and N22 stay on the 
 3. **RS5 named scenes and prefabs** (B only), then **RS4 commits** for checking against the board (N03, N26).
 4. **RS8 last but always shown:** the needs the page cannot answer, so silence is not read as "nothing blocked" (reconciliation point 1). This feeds the *Create* diary entry.
 
+*Status, 17 October 2026:* the study pages follow decision 2 fully and decision 3 partly. Decision 1 is partly built and decision 4 is not built (§10).
+
 ## 9. Out of scope, and why
 
 - **A live tracker connection** (A2). Eight of the ten need the tracker or a person, so this is the largest gap; it is named in RS8, not hidden.
 - **A language-model prose layer** (A2): it could not pass the fidelity check.
 - **Needs no artefact fully answers:** none of the 25 is N for all three sources, but nine are P in the tracker and N elsewhere (N07, N08, N09, N16, N17, N18, N23, N24, N27); the page cannot help with them beyond naming them in RS8.
+
+## 10. Status in ChangeLens on 17 October 2026
+
+Added 17 October 2026 by Claude Code (AI), as facts for Raphael to check. Evidence is the four frozen study pages on branch `deliverable-2-changelens` (`study/week1-2021-02-08/` and `study/week2-2021-07-19/`, files `report-A-baseline.md` and `report-B-treatment.md`) and `ProducerReport.cs` on the same branch.
+
+The study pages were frozen and fidelity-checked on 12 and 13 October. This spec was drafted on 15 October. So the pages were not built from the spec. Any new section on the study pages would mean redoing the D3 items and answer key and the D4 fidelity check.
+
+| Requirement (§7, §8) | On the study pages | Evidence |
+|---|---|---|
+| N01 disciplines in words, as text not colour | Yes | "Where the work went" table: Code, Scenes and prefabs, Art, Audio |
+| N12 Added and Removed per discipline | No | The area table gives file changes and share only |
+| N03 commits with dates | Yes | "Changes, newest first", Date column |
+| N03 commits with authors | No | No author per change. The header gives only a count ("7 changes by 2 people") |
+| N26 share of commits citing a ticket | No | Not computed |
+| N25 summary sentence (RS1) | Partly | "Largest area this week: ..." line under the area table |
+| N25 export as a file readable without an account | Yes | Pages are written as Markdown files (`StudyExport.WriteStudyFiles`) |
+| N05 names first, paths second (RS5, B only) | Yes | "Scenes and prefabs changed": name in bold, folder in brackets. Not on Version A |
+| N05 unresolved names shown as path and flagged | Not seen | No flagged path on the study pages |
+| N14 build result (RS6, stretch) | No | Not on the page. A BuildReport probe exists from A2 scoping (`BatchTools.cs`) |
+| N19 gone quiet (RS7, challenge) | No | Not built |
+| N07 to N27 "What this page cannot tell you" (RS8) | No | Left off on purpose; see the §7 status note |
+| §8.1 summary sentence first | No | The header and area table come first; the "Largest area" line follows the table |
+| §8.2 disciplines next, in words | Yes | Second block on every page |
+| §8.3 RS5 (B only), then RS4 commits | Partly | Both are there, but RS4 comes before RS5 |
+| §8.4 RS8 last, always shown | No | Not built |
+| A and B share every section except RS5 | Yes | A and B differ only in "Scenes and prefabs changed" and the footer line |
+
+**For Raphael to decide.** Whether to build RS8 (and the other "No" rows) into ChangeLens for the report and video, keeping the study pages as they are, or to report them as future work. Record the choice in the *Create* diary entry.
+
+**Conflict to settle.** The N03 row asks for authors per change. The ethics points for the report (`deliverable-3/ethics/report-ethics-points.md`, point 3) say the page describes changes to the project, not each person's output, with no per-person counts. These pull against each other. Raphael to choose one and change the other.
 
 ## References
 

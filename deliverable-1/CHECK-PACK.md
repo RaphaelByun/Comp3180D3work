@@ -638,6 +638,9 @@ How to check: Read it through once and fix any number or ID that steps 1–14 ch
 - [ ] RS1–RS8 are not defined in the spec itself; the key is in design-spec-outline.md (marked superseded). Add a one-line key before quoting any RS code in A3
 - [ ] §8 Layout order: summary sentence first, then disciplines in words, then RS5 (B only) and RS4 commits, then RS8 last but always shown
 - [ ] §9 Out of scope: live tracker connection; language-model prose layer; nine needs are P in T and N elsewhere (N07, N08, N09, N16, N17, N18, N23, N24, N27)
+- [ ] §10 Status (added 17 Oct): check each row against the study pages on `deliverable-2-changelens`. The study pages have no RS1 summary sentence, no ticket share, no RS7 and no RS8; RS8 is left off so it does not give away item 6
+- [ ] §10 decision: build RS8 (and other "No" rows) into ChangeLens for the report and video, or report them as future work. Record it in the *Create* diary entry
+- [ ] §10 conflict: the N03 row asks for authors per change, but ethics point 3 (`deliverable-3/ethics/report-ethics-points.md`) says no per-person reporting. Choose one and change the other
 
 ### Step 16: Write the GenAI statement lines for A3 (10 min)
 

@@ -1,5 +1,7 @@
 # Think-aloud coding: codebook and procedure
 
+**Solo use (17 Oct 2026 decision).** There are no think-aloud sessions with other people. Raphael evaluates ChangeLens himself (`self-evaluation-plan.md`). This codebook now codes the **SE2 needs log**: the typed notes Raphael writes during each reserve-week read, one line per thing the page left him needing (plan section 3, SE2 step 5). The log is `deliverable-6/data/se2-needs-log.csv` with this file's columns unchanged. `participant` = `SELF`, and `report_condition` = the SE2 `read_id` (`RX-A1`, `RX-B2`, `RY-B1`, `RY-A2`). The file name is kept because the plan and the A2 record name it. The notes are typed, not spoken; say so in the report.
+
 Source for the types: Ko, A. J., DeLine, R., & Venolia, G. (2007). Information needs in collocated software development teams. *Proceedings of the 29th International Conference on Software Engineering (ICSE '07)*, 344-353. https://doi.org/10.1109/ICSE.2007.45 (the 21 types are in Section 5, printed pp. 347-349, summarised in Figure 3 on p. 350).
 
 ## The 21 information types: confirmed
@@ -41,7 +43,7 @@ Code-label warning: the paper's own Figure 4 repeats two labels (it shows c3 twi
 
 ## Extra codes (mine, not Ko et al.'s: say so in the report)
 
-Ko et al. studied developers. Producers may ask things none of the 21 types cover, and that gap is itself a finding.
+Ko et al. studied developers. A producer's needs may fit none of the 21 types, and that gap is itself a finding.
 
 | Code | Use for |
 |---|---|
@@ -51,27 +53,29 @@ Ko et al. studied developers. Producers may ask things none of the 21 types cove
 
 ## How to code
 
-1. Unit of analysis: one utterance that states or implies one thing the reader wants to know or says the page leaves out. Split an utterance carrying two needs into two rows (the tool allows one code per row). Give the new row its own segment_id (for example S05 and S05b). Every segment_id must be unique across the whole sheet.
+1. Unit of analysis: one needs-log line that states one thing you wanted to know and the page did not give. Split a line carrying two needs into two rows (the tool allows one code per row). Give the new row its own segment_id (for example S05 and S05b). Every segment_id must be unique across the whole sheet.
 2. Code the question behind the words, not the words. "Who did the airlock work?" is a2 (what have my coworkers been doing?). "Why did they change the airlocks?" is d3.
-3. When two types fit, pick the one nearer the reader's purpose (drafting a stand-up update) and write the other in `resolution_rule` only if it was a close call.
-4. Keep a running memo of every rule you invent ("name of person asked for = a2") in the section below. Apply it to all readers.
-5. Never code a segment from a reader's tone. Verbatim note first, code second.
+3. When two types fit, pick the one nearer the purpose of the read (answering the ten needs and drafting a stand-up update) and write the other in `resolution_rule` only if it was a close call.
+4. Keep a running memo of every rule you invent ("name of person asked for = a2") in the section below. Apply it to every line, in both weeks.
+5. Code the line as written, not what you remember meaning. Note first, code second.
 6. Use the type codes in lower case in the CSV (`a2`, `d3`).
 
 ## Procedure
 
 | Step | When | Do | File |
 |---|---|---|---|
-| 1. Capture | During or right after each session | One row per utterance, timestamp from the notes, which report was open (A or B), quote as noted | `think-aloud-coding-sheet.csv` |
-| 2. Pass 1 | Separate sitting, after sessions | Fill `pass1_code` and `pass1_date` for every row (pilot rows may be coded for practice but are excluded from analysis) | same |
-| 3. Wait | At least 7 days | Do something else. Note the date in the diary. A3 is due 8 Nov, so finish pass 1 by Fri 30 Oct (catch-up plan in `README.md`) | |
-| 4. Draw | After the wait | `node deliverable-5/recode-sample.js draw --in deliverable-5/think-aloud-coding-sheet.csv --out deliverable-5/recode-blind.csv`. It picks a seeded random quarter (rounded up) of the pass-1 rows, pilot excluded, and writes them without the pass-1 codes. Write the printed seed and count in your diary | `recode-blind.csv` |
-| 5. Pass 2 | Same day as the draw | Code the blind file from the quote_note alone, without opening the main sheet | `recode-blind.csv` |
-| 6. Merge | After pass 2 | `node deliverable-5/recode-sample.js merge --in deliverable-5/think-aloud-coding-sheet.csv --blind deliverable-5/recode-blind.csv --out deliverable-5/think-aloud-coding-sheet.csv`. Pass-1 codes are not changed. The old sheet is kept as `think-aloud-coding-sheet.csv.bak`, and nothing is written if a row or pass-1 code would change | main sheet |
-| 7. Agreement | After merge | `node deliverable-6/analysis/analyse.js --codes deliverable-5/think-aloud-coding-sheet.csv` (the tool reads the wide layout). Report agreement as a raw count and kappa, with the sample size | analysis output |
+| 1. Capture | During each SE2 read (Tue 20 and Wed 21 Oct) | One row per need, clock time, `read_id` in `report_condition`, the note as typed. Commit with the answers, before the git log is opened | `deliverable-6/data/se2-needs-log.csv` |
+| 2. Pass 1 | Thu 22 Oct, a separate sitting after both weeks are read | Fill `pass1_code` and `pass1_date` for every row | same |
+| 3. Wait | At least 7 days | Do something else. Note the date in the diary | |
+| 4. Draw | Thu 29 Oct | `node deliverable-5/recode-sample.js draw --in deliverable-6/data/se2-needs-log.csv --out deliverable-6/data/recode-blind.csv`. It picks a seeded random quarter (rounded up) of the pass-1 rows and writes them without the pass-1 codes. `SELF` rows are kept. Write the printed seed and count in your diary | `recode-blind.csv` |
+| 5. Pass 2 | Same day as the draw | Code the blind file from the `quote_note` alone, without opening the main sheet | `recode-blind.csv` |
+| 6. Merge | After pass 2 | `node deliverable-5/recode-sample.js merge --in deliverable-6/data/se2-needs-log.csv --blind deliverable-6/data/recode-blind.csv --out deliverable-6/data/se2-needs-log.csv`. Pass-1 codes are not changed. The old sheet is kept as `se2-needs-log.csv.bak`, and nothing is written if a row or pass-1 code would change | main sheet |
+| 7. Agreement | After merge | `node deliverable-5/recode-sample.js agree --in deliverable-6/data/se2-needs-log.csv`. It prints "x of n re-coded segments matched" and the ids that differ. Raw count only, no kappa (plan section 6, Table G) | console output; copy it into the diary |
 | 8. Resolve | After agreement is recorded | For each disagreement, re-read the quote, choose `final_code`, and write the rule in `resolution_rule`. Never overwrite pass 1 or pass 2 | main sheet |
 
-Report: "n of m re-coded segments matched (kappa x)". With a quarter of a few dozen segments the sample is small, so state that limit.
+Report: "x of n re-coded segments matched", one coder against himself a week later. With a handful of re-coded lines and 24 code options, a kappa would mean nothing, so do not give one. State that limit.
+
+Run the commands from a checkout that has both `deliverable-5/` and `deliverable-6/data/` (the D5 and D6 branches side by side or merged).
 
 ## Rules memo (fill as you go)
 
@@ -81,4 +85,4 @@ Report: "n of m re-coded segments matched (kappa x)". With a quarter of a few do
 
 ## Sheet columns
 
-`segment_id, participant, timestamp, report_condition, quote_note, pass1_code, pass1_date, pass2_code, pass2_date, final_code, resolution_rule`. The file `think-aloud-coding-sheet.csv` has the header only.
+`segment_id, participant, timestamp, report_condition, quote_note, pass1_code, pass1_date, pass2_code, pass2_date, final_code, resolution_rule`. The file `think-aloud-coding-sheet.csv` has the header only; `solo/logs/se2-needs-log.csv` is the same header under the SE2 name.

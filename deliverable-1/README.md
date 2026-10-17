@@ -62,7 +62,7 @@ A2 planned 600 minutes for D1. After the AI work on 14 and 15 October, about 177
 | 7 | Accept or change the seven recodes and the cap of 2 | published-sources.md §3, §5 | 10 | Sources |
 | 8 | Accept or rewrite the three-point reconciliation | published-sources.md §6.1 | 10 | Sources |
 | 9 | ~~Confirm with the convenor that coding public sources needs no ethics approval~~ Dropped 17 Oct 2026: no ethics application or convenor email (`deliverable-3/README.md`) | — | 0 | Sources |
-| 10 | Accept the seven Ko et al. fixes | needs-catalogue.md §1 | 5 | Needs (3 h) |
+| 10 | Accept the six Ko et al. changes (four misstatements, one figure citation, three softer readings kept with a note) | needs-catalogue.md §1 | 5 | Needs (3 h) |
 | 11 | Accept or change the merges, additions and rewordings | needs-catalogue.md §3, §7 | 10 | Needs |
 | 12 | Accept or change the 75 marks and the three rejected-artefact cases (N07, N10, N27) | needs-catalogue.md §3, §3.1 | 20 | Needs |
 | 13 | Accept the UXF week and six verdicts | needs-catalogue.md §4 | 5 | Needs |
@@ -85,7 +85,7 @@ Minutes check: 5 + 45 + 5 + 2 + 15 + 10 + 10 + 10 + 0 + 5 + 10 + 20 + 5 + 5 + 20
 | 12 Oct 2026: picked four tools; built the coding sheet, task script and seed; found 10 ads and 5 reviews; extracted Ko et al.'s 21 types; drafted 25 needs; outlined the spec | Glance at the pricing pages |
 | 14 Oct 2026: ran and coded the heuristic pass (61 problems); coded six published sources in place of interviews; drafted the reconciliation; added pass evidence to the catalogue | Hand-check the severity 3–4 findings; confirm the trials lapse |
 | 15 Oct 2026 (web agent): re-verified free tiers; verified 10 ads, reviews V1–V4 and every source quote on the live pages; recounted the ad codes; settled P1, P4, P6 | Spot-check the verified ads and reviews; decide on V5 |
-| 15 Oct 2026 (analysis agent): checked Ko et al. against the PDF (7 fixes); recoded the sources and set the cap; tightened the reconciliation; edited and marked the 25 needs; picked N07, N10, N27 as rejected-artefact cases; UXF week check (9–15 Nov 2020); ranked the needs; wrote design-spec.md and HANDOFF-TO-D3.md | Accept or change every judgement in needs-catalogue.md §8; edit the spec; GenAI statement |
+| 15 Oct 2026 (analysis agent): checked Ko et al. against the PDF (6 changes, items 1 to 6 of the step 10 log); recoded the sources and set the cap; tightened the reconciliation; edited and marked the 25 needs; picked N07, N10, N27 as rejected-artefact cases; UXF week check (9–15 Nov 2020); ranked the needs; wrote design-spec.md and HANDOFF-TO-D3.md | Accept or change every judgement in needs-catalogue.md §8; edit the spec; GenAI statement |
 
 ## Network limits in this session (why some things are unverified)
 

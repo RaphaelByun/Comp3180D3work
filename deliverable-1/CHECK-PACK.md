@@ -541,7 +541,7 @@ How to check: Once step 2 is done, confirm that HP-25, HP-27, HP-24, GP-09, GP-1
 - [ ] Accept that the substitution ('inspection and the published sources' in place of 'inspection and interviews') is stated wherever the measure is reported
 - [ ] The severity 3 findings the points rest on are HP-25, HP-27 and HP-24 (the file's own sentence named TR-13 in place of HP-24 until 17 Oct 2026; TR-13 is not cited in §6.1). TR-14, GP-09 and GP-10 are severity 2. HP-24, HP-25 and HP-27 are part of step 2. No point rests on a provisional finding
 
-### Step 10: Accept the seven Ko et al. fixes (5 min)
+### Step 10: Accept the six Ko et al. changes (5 min)
 
 Where: needs-catalogue.md §1 (Step 10 check log)
 
@@ -553,7 +553,7 @@ How to check: Open the Ko PDF at §4, §5.1, §5.6, §5.7 and Figure 4 and compa
 - [ ] Fix 4, d2 to N23 was wrong in direction. d2 is about intent; it now feeds N10. N23 is seeded by Endsley L3 only and gets no Ko point
 - [ ] Fix 5, the worded list is Figure 4, not Figure 3. Cite the §5 wording, not Figure 4's (Figure 4 words s3/d4/c3/r2 differently and mislabels c2 and b1)
 - [ ] Fix 6, softer readings kept as 'Partly': s1 (author's pre-check, here asked afterwards), b2 (one bug's cost widened to the backlog), d1 (purpose, not name)
-- [ ] Fix 7, confirmed correct: 17 developers, Microsoft, 21 types, 7 categories, §5 wording for the other 18 types
+- [ ] Item 7 (not a fix), confirmed correct: 17 developers, Microsoft, 21 types, 7 categories, §5 wording for the other 18 types
 - [ ] Result: 14 of 21 types kept fully or partly; 7 dropped (c1, c2, c3, s2, u1, u3, a3)
 
 ### Step 11: Accept or change the merges, additions and rewordings (10 min)

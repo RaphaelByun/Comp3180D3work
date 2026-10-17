@@ -444,6 +444,56 @@ namespace ChangeLens.Editor.Tests
             StringAssert.Contains("S / C / U", report.FidelityChecklistMarkdown());
         }
 
+        // Found by the February fidelity check (Wet Floor Sign, #609, an open
+        // repair item): a prefab moved into a subfolder and rewritten. Git paired
+        // only the .meta, so the page listed it as both added and deleted.
+        [Test]
+        public void MovedAndRebuiltAsset_IsListedOnceAsMoved()
+        {
+            const string hash = "f68b6a3d00000000000000000000000000000000";
+            var export = new WeekExport
+            {
+                LogText =
+                    "commit " + hash + "\n" +
+                    "Author: Dev <dev@example.com>\n" +
+                    "Date:   2021-02-12 10:00:00 +0000\n\n" +
+                    "    Make floor sign openable/closeable  (#609)\n\n" +
+                    "A\tAssets/Custodial/Floor Sign/Wet Floor Sign.prefab\n" +
+                    "R100\tAssets/Custodial/Wet Floor Sign.prefab.meta\tAssets/Custodial/Floor Sign/Wet Floor Sign.prefab.meta\n" +
+                    "D\tAssets/Custodial/Wet Floor Sign.prefab\n",
+                PatchText =
+                    "commit " + hash + "\n" +
+                    "diff --git a/Assets/Custodial/Floor Sign/Wet Floor Sign.prefab b/Assets/Custodial/Floor Sign/Wet Floor Sign.prefab\n" +
+                    "new file mode 100644\n" +
+                    "--- /dev/null\n" +
+                    "+++ b/Assets/Custodial/Floor Sign/Wet Floor Sign.prefab\t\n" +
+                    "@@ -0,0 +1,3 @@\n" +
+                    "+--- !u!1 &1\n" +
+                    "+GameObject:\n" +
+                    "+  m_Name: Wet Floor Sign 2\n" +
+                    "diff --git a/Assets/Custodial/Wet Floor Sign.prefab b/Assets/Custodial/Wet Floor Sign.prefab\n" +
+                    "deleted file mode 100644\n" +
+                    "--- a/Assets/Custodial/Wet Floor Sign.prefab\t\n" +
+                    "+++ /dev/null\n" +
+                    "@@ -1,3 +0,0 @@\n" +
+                    "---- !u!1 &1\n" +
+                    "-GameObject:\n" +
+                    "-  m_Name: Wet Floor Sign\n"
+            };
+            ProducerReport b = export.BuildReport(ReportCondition.Treatment, "t");
+            string page = b.ToMarkdown();
+            StringAssert.Contains("1 scene or prefab changed", page);
+            StringAssert.Contains("**Wet Floor Sign** (prefab, in `Assets/Custodial/Floor Sign`)", page);
+            StringAssert.Contains("(#609)\": moved from `Assets/Custodial` and rebuilt.", page);
+            StringAssert.DoesNotContain("prefab deleted", page);
+            StringAssert.DoesNotContain("new prefab added", page);
+            StringAssert.Contains(" of 1", StudyExport.NamingSummary(b));
+
+            // Without the .meta rename the two files stay separate.
+            export.LogText = export.LogText.Replace("R100\tAssets/Custodial/Wet Floor Sign.prefab.meta\t", "A\t");
+            StringAssert.Contains("2 scenes and prefabs changed", export.BuildReport(ReportCondition.Treatment, "t").ToMarkdown());
+        }
+
         // The strict measure counts the asset's own root name, which the page
         // never shows, so a third line counts only names a reader sees.
         [Test]

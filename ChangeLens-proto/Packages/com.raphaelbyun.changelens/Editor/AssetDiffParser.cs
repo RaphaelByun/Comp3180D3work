@@ -73,6 +73,12 @@ namespace ChangeLens.Editor
         /// <summary>The old path when git reported the file as moved or renamed; otherwise null.</summary>
         public string RenamedFrom;
 
+        /// <summary>
+        /// True when the asset was moved and its content rewritten in the same
+        /// commit, so git showed a delete and an add (see <see cref="AssetDiffParser.PairMovedAssets"/>).
+        /// </summary>
+        public bool Rebuilt;
+
         /// <summary>The asset's own name: file name without folder or extension.</summary>
         public string AssetName
         {
@@ -276,6 +282,43 @@ namespace ChangeLens.Editor
 
             FinishBlocks(current, blocks);
             return result;
+        }
+
+        /// <summary>
+        /// Joins an asset that was moved AND rewritten in one commit. Git cannot
+        /// pair the two files when the text changed too much, so the patch shows
+        /// "D X.prefab" and "A Y.prefab". But the .meta file keeps the asset's
+        /// guid and usually moves unchanged, so the name-status log has
+        /// "R X.prefab.meta Y.prefab.meta" in the same commit (Wet Floor Sign,
+        /// #609). When all three are there, the added Y is marked as moved from X
+        /// and rebuilt, and the deleted X is dropped, so the asset counts once.
+        /// </summary>
+        public static void PairMovedAssets(List<AssetChange> assets, List<CommitRecord> commits)
+        {
+            if (assets == null || commits == null) return;
+            foreach (CommitRecord commit in commits)
+            {
+                foreach (FileChange f in commit.Changes)
+                {
+                    if (f.Status != ChangeStatus.Renamed || f.OldPath == null) continue;
+                    if (!f.OldPath.EndsWith(".meta", StringComparison.Ordinal) ||
+                        !f.Path.EndsWith(".meta", StringComparison.Ordinal)) continue;
+                    string from = f.OldPath.Substring(0, f.OldPath.Length - ".meta".Length);
+                    string to = f.Path.Substring(0, f.Path.Length - ".meta".Length);
+                    if (!IsSceneOrPrefab(from) || !IsSceneOrPrefab(to)) continue;
+
+                    AssetChange added = assets.Find(a => a.CommitHash == commit.Hash && a.Path == to && a.FileAdded);
+                    AssetChange deleted = assets.Find(a => a.CommitHash == commit.Hash && a.Path == from && a.FileDeleted);
+                    if (added == null || deleted == null) continue;
+
+                    added.FileAdded = false;
+                    added.RenamedFrom = from;
+                    added.Rebuilt = true;
+                    foreach (string n in deleted.ObjectNames) AddUnique(added.ObjectNames, n);
+                    added.LinesRemoved += deleted.LinesRemoved;
+                    assets.Remove(deleted);
+                }
+            }
         }
 
         /// <summary>One "--- !u!" block that a diff shows as wholly added or removed.</summary>

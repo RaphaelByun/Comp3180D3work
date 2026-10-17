@@ -487,12 +487,16 @@ namespace ChangeLens.Editor
             {
                 bool sameFolder = FolderOf(a.RenamedFrom) == FolderOf(a.Path);
                 bool sameName = AssetDiffParser.AssetNameOf(a.RenamedFrom) == a.AssetName;
-                if (sameName && !sameFolder) parts.Add("moved from `" + FolderOf(a.RenamedFrom) + "`");
-                else if (sameFolder) parts.Add("renamed from " + AssetDiffParser.AssetNameOf(a.RenamedFrom));
-                else parts.Add("moved and renamed from `" + a.RenamedFrom + "`");
+                string moved;
+                if (sameName && !sameFolder) moved = "moved from `" + FolderOf(a.RenamedFrom) + "`";
+                else if (sameFolder) moved = "renamed from " + AssetDiffParser.AssetNameOf(a.RenamedFrom);
+                else moved = "moved and renamed from `" + a.RenamedFrom + "`";
+                parts.Add(a.Rebuilt ? moved + " and rebuilt" : moved);
             }
 
-            if (!a.FileAdded && !a.FileDeleted)
+            // A rebuilt asset's diff shows every block as new, so it says nothing
+            // about what changed inside.
+            if (!a.FileAdded && !a.FileDeleted && !a.Rebuilt)
             {
                 var added = new List<string>();
                 foreach (string t in a.AddedTypes.Where(t => t != "MonoBehaviour" && t != "GameObject"))

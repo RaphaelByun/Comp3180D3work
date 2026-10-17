@@ -223,6 +223,7 @@ namespace ChangeLens.Editor
             GitLogParser.AttachMerged(commits, GitLogParser.ParseMerged(MergedText));
             ChangeReport counts = ChangeReport.Build(commits, title);
             List<AssetChange> assets = AssetDiffParser.Parse(PatchText);
+            AssetDiffParser.PairMovedAssets(assets, commits);
             GuidIndex index = GuidIndex.Parse(GuidText);
             IGuidResolver resolver = extraResolver == null
                 ? (IGuidResolver)index

@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using UnityEditor;
@@ -45,8 +46,19 @@ namespace ChangeLens.Editor
         public static WeekExport FromGit(string repoPath, string since, string until)
         {
             var export = new WeekExport();
-            export.LogText = RunGit(repoPath, LogArgs(since, until));
-            export.PatchText = RunGit(repoPath, PatchArgs(since, until));
+            List<string> week = WeekCommits(repoPath, since, until, export.Warnings);
+            if (week == null)
+            {
+                // Bounds only git can read ("2.weeks.ago"): git picks the week.
+                export.LogText = RunGit(repoPath, LogArgs(since, until));
+                export.PatchText = RunGit(repoPath, PatchArgs(since, until));
+            }
+            else if (week.Count > 0)
+            {
+                string listed = string.Join("\n", week) + "\n";
+                export.LogText = RunGit(repoPath, LogArgsListed(), listed);
+                export.PatchText = RunGit(repoPath, PatchArgsListed(), listed);
+            }
 
             List<CommitRecord> commits = GitLogParser.Parse(export.LogText);
             if (commits.Count > 0)
@@ -113,6 +125,97 @@ namespace ChangeLens.Editor
         {
             return "log --first-parent --diff-merges=first-parent --pretty=medium --no-color --name-status --date=iso " +
                    Range(since, until);
+        }
+
+        /// <summary>
+        /// <see cref="LogArgs"/> for an exact list of commits, read from standard
+        /// input in the order given (see <see cref="WeekCommits"/>).
+        /// </summary>
+        public static string LogArgsListed()
+        {
+            return "log --no-walk=unsorted --stdin --first-parent --diff-merges=first-parent --pretty=medium --no-color " +
+                   "--name-status --date=iso";
+        }
+
+        /// <summary><see cref="PatchArgs"/> for an exact list of commits, read from standard input.</summary>
+        public static string PatchArgsListed()
+        {
+            return "log -p --no-walk=unsorted --stdin --first-parent --diff-merges=first-parent --pretty=medium --no-color " +
+                   "--src-prefix=a/ --dst-prefix=b/ --no-ext-diff --no-textconv --date=iso -- \"*.prefab\" \"*.unity\"";
+        }
+
+        /// <summary>The git arguments for every main-line commit: hash, author date, tab-separated.</summary>
+        public const string MainLineArgs = "log --first-parent --no-color \"--format=%H%x09%aI\"";
+
+        /// <summary>
+        /// The week's main-line commits, newest first, picked by AUTHOR date,
+        /// which is the date the page shows. Git's own --since and --until use
+        /// the committer date, so a commit rebased or cherry-picked into a later
+        /// week was left out of its own week and shown in the later one with a
+        /// date outside it. Git also stops walking at the first commit older
+        /// than --since, so one commit with a wrong clock could empty the week.
+        /// Here the whole main line is listed and filtered in code. A commit
+        /// dated earlier than its parent is reported in <paramref name="warnings"/>.
+        /// Returns null when a bound is not a date this code can read.
+        /// </summary>
+        public static List<string> WeekCommits(string repoPath, string since, string until, List<string> warnings)
+        {
+            DateTimeOffset from, to;
+            if (!TryReadBound(DateBound(since), out from) || !TryReadBound(UntilBound(until), out to)) return null;
+            return PickWeek(RunGit(repoPath, MainLineArgs), from, to, warnings);
+        }
+
+        /// <summary>The filtering half of <see cref="WeekCommits"/>, on the output of <see cref="MainLineArgs"/>.</summary>
+        public static List<string> PickWeek(string mainLine, DateTimeOffset from, DateTimeOffset to, List<string> warnings)
+        {
+            var hashes = new List<string>();
+            var dates = new List<DateTimeOffset>();
+            foreach (string line in (mainLine ?? "").Replace("\r\n", "\n").Split('\n'))
+            {
+                string[] parts = line.Split('\t');
+                DateTimeOffset when;
+                if (parts.Length < 2 || !DateTimeOffset.TryParse(parts[1], CultureInfo.InvariantCulture,
+                                                                 DateTimeStyles.None, out when)) continue;
+                hashes.Add(parts[0]);
+                dates.Add(when);
+            }
+
+            var week = new List<string>();
+            for (int i = 0; i < hashes.Count; i++)
+            {
+                bool inWeek = dates[i] >= from && dates[i] <= to;
+                if (inWeek) week.Add(hashes[i]);
+                // The next line down is this commit's first parent.
+                if (warnings != null && i + 1 < hashes.Count && dates[i] < dates[i + 1] &&
+                    (inWeek || (dates[i + 1] >= from && dates[i + 1] <= to)))
+                    warnings.Add("commit " + Short(hashes[i]) + " is dated " + dates[i].ToString("u", CultureInfo.InvariantCulture) +
+                                 ", earlier than its parent " + Short(hashes[i + 1]) + " (" +
+                                 dates[i + 1].ToString("u", CultureInfo.InvariantCulture) + "); check the week's dates.");
+            }
+            return week;
+        }
+
+        /// <summary>
+        /// Reads a bound as handed to git: "2021-07-19T00:00:00+0000" or any ISO
+        /// date and time. A time with no zone is read as local time, as git does.
+        /// </summary>
+        public static bool TryReadBound(string bound, out DateTimeOffset value)
+        {
+            string text = (bound ?? "").Trim();
+            // "+0000" -> "+00:00", which .NET reads.
+            if (text.Length > 5 && (text[text.Length - 5] == '+' || text[text.Length - 5] == '-') &&
+                char.IsDigit(text[text.Length - 1]) && text.IndexOf('T') > 0)
+                text = text.Substring(0, text.Length - 2) + ":" + text.Substring(text.Length - 2);
+            return DateTimeOffset.TryParseExact(text,
+                new[] { "yyyy-MM-dd'T'HH:mm:sszzz", "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm", "yyyy-MM-dd" },
+                CultureInfo.InvariantCulture,
+                text.EndsWith("Z", StringComparison.Ordinal) ? DateTimeStyles.AssumeUniversal : DateTimeStyles.AssumeLocal,
+                out value);
+        }
+
+        private static string Short(string hash)
+        {
+            return hash.Length >= 7 ? hash.Substring(0, 7) : hash;
         }
 
         /// <summary>
@@ -231,13 +334,15 @@ namespace ChangeLens.Editor
             return ProducerReport.Build(counts, assets, resolver, condition, title);
         }
 
-        public static string RunGit(string repoPath, string args)
+        /// <summary>Runs git with <paramref name="input"/>, if any, on its standard input.</summary>
+        public static string RunGit(string repoPath, string args, string input = null)
         {
             var psi = new ProcessStartInfo("git", GitArguments(args))
             {
                 WorkingDirectory = repoPath,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
+                RedirectStandardInput = input != null,
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 StandardOutputEncoding = Encoding.UTF8
@@ -248,6 +353,12 @@ namespace ChangeLens.Editor
                 var err = new StringBuilder();
                 p.ErrorDataReceived += (s, e) => { if (e.Data != null) err.AppendLine(e.Data); };
                 p.BeginErrorReadLine();
+                if (input != null)
+                {
+                    // Hashes only, so the input is far smaller than a pipe buffer.
+                    p.StandardInput.Write(input);
+                    p.StandardInput.Close();
+                }
                 string output = p.StandardOutput.ReadToEnd();
                 p.WaitForExit();
                 // git grep exits 1 when nothing matches; that is not an error here.

@@ -191,6 +191,7 @@ namespace ChangeLens.Editor
 
             EditorUtility.DisplayProgressBar("ChangeLens", "Running git log for the week...", 0.3f);
             _export = WeekExport.FromGit(_repoPath, _weekStart.Trim(), until);
+            foreach (string warning in _export.Warnings) Debug.LogWarning("[ChangeLens] " + warning);
             _title = Path.GetFileName(_repoPath.TrimEnd('/', '\\')) + " week of " + _weekStart.Trim();
             EditorPrefs.SetString(RepoKey, _repoPath);
             EditorPrefs.SetString(WeekKey, _weekStart.Trim());

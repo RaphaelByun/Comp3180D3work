@@ -71,6 +71,7 @@ namespace ChangeLens.Editor
             try
             {
                 WeekExport export = WeekExport.FromGit(repo, since, until);
+                foreach (string warning in export.Warnings) Console.WriteLine("[ChangeLens batch] warning: " + warning);
                 export.SaveTo(Path.Combine(output, "export"));
                 string summary = StudyExport.WriteStudyFiles(export, output, title);
                 Console.WriteLine("[ChangeLens batch] " + summary);

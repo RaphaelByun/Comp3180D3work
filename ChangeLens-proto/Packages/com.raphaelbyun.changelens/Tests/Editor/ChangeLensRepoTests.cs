@@ -54,7 +54,8 @@ namespace ChangeLens.Editor.Tests
         }
 
         /// <summary>Runs git for SETUP only, with the user's own config switched off.</summary>
-        public string Git(string args, string who = "Setup", string date = "2021-03-01T12:00:00+0000")
+        public string Git(string args, string who = "Setup", string date = "2021-03-01T12:00:00+0000",
+                          string committerDate = null)
         {
             var psi = new ProcessStartInfo("git", "-c commit.gpgsign=false " + args)
             {
@@ -72,7 +73,7 @@ namespace ChangeLens.Editor.Tests
             psi.EnvironmentVariables["GIT_COMMITTER_NAME"] = who;
             psi.EnvironmentVariables["GIT_COMMITTER_EMAIL"] = who.ToLowerInvariant() + "@example.com";
             psi.EnvironmentVariables["GIT_AUTHOR_DATE"] = date;
-            psi.EnvironmentVariables["GIT_COMMITTER_DATE"] = date;
+            psi.EnvironmentVariables["GIT_COMMITTER_DATE"] = committerDate ?? date;
             using (Process p = Process.Start(psi))
             {
                 string err = p.StandardError.ReadToEndAsync().Result;
@@ -95,10 +96,10 @@ namespace ChangeLens.Editor.Tests
             File.Delete(Path.Combine(Dir, relativePath));
         }
 
-        public void Commit(string who, string date, string message)
+        public void Commit(string who, string date, string message, string committerDate = null)
         {
             Git("add -A", who, date);
-            Git("commit -q -m \"" + message + "\"", who, date);
+            Git("commit -q -m \"" + message + "\"", who, date, committerDate);
         }
 
         public void Dispose()
@@ -398,6 +399,72 @@ namespace ChangeLens.Editor.Tests
             StringAssert.Contains("--src-prefix=a/ --dst-prefix=b/ --no-ext-diff --no-textconv",
                                   WeekExport.PatchArgs(WeekStart, WeekEnd));
             StringAssert.StartsWith("grep --no-color -I -G -e ", WeekExport.GuidArgs("HEAD"));
+        }
+
+        // ---- Which commits make up the week ---------------------------------------
+
+        // Written in one week, rebased onto main in the next. Git's --since and
+        // --until read the committer date, so the commit used to land in the
+        // later week with a header date outside it.
+        [Test]
+        public void Week_IsPickedByTheAuthorDateThePageShows()
+        {
+            RequireGit();
+            using (var repo = new TempRepo())
+            {
+                repo.Write("README.md", "start\n");
+                repo.Commit("Setup", "2021-03-01T12:00:00+0000", "Start");
+                repo.Write("Assets/Scripts/Door.cs", "class Door {}\n");
+                repo.Commit("Dev", "2021-03-09T10:00:00+0000", "Add door", "2021-03-16T10:00:00+0000");
+
+                WeekExport export;
+                string page = PageB(repo, out export);
+                StringAssert.Contains("**9 March 2021 · 1 change by 1 person", page);
+                string later = WeekExport.FromGit(repo.Dir, "2021-03-15", "2021-03-22")
+                                         .BuildReport(ReportCondition.Baseline, "t").ToMarkdown();
+                StringAssert.Contains("(no dates) · 0 changes", later);
+            }
+        }
+
+        // Git stops walking at the first commit older than --since, so one commit
+        // with a wrong clock on top of the week used to empty it.
+        [Test]
+        public void Week_SurvivesACommitWithAWrongClockAndKeepsItsBounds()
+        {
+            RequireGit();
+            using (var repo = new TempRepo())
+            {
+                repo.Write("README.md", "start\n");
+                repo.Commit("Setup", "2021-03-01T12:00:00+0000", "Start");
+                repo.Write("a.txt", "1\n");
+                repo.Commit("Dev", "2021-03-08T00:00:00+0000", "First second of the week");
+                repo.Write("a.txt", "2\n");
+                repo.Commit("Dev", "2021-03-14T23:59:59+0000", "Last second of the week");
+                repo.Write("a.txt", "3\n");
+                repo.Commit("Dev", "2021-03-07T23:59:59+0000", "Wrong clock");
+                repo.Write("a.txt", "4\n");
+                repo.Commit("Dev", "2021-03-15T00:00:00+0000", "Next week");
+
+                WeekExport export;
+                string page = PageB(repo, out export);
+                StringAssert.Contains("8 March 2021 to 14 March 2021 · 2 changes", page);
+                StringAssert.DoesNotContain("Wrong clock", page);
+                StringAssert.DoesNotContain("Next week", page);
+                Assert.AreEqual(1, export.Warnings.Count, string.Join("\n", export.Warnings));
+                StringAssert.Contains("earlier than its parent", export.Warnings[0]);
+            }
+        }
+
+        [Test]
+        public void Bounds_AreReadTheWayGitReadsThem()
+        {
+            DateTimeOffset d;
+            Assert.IsTrue(WeekExport.TryReadBound("2021-07-25T23:59:59+0000", out d));
+            Assert.AreEqual(new DateTimeOffset(2021, 7, 25, 23, 59, 59, TimeSpan.Zero), d);
+            Assert.IsTrue(WeekExport.TryReadBound("2021-07-19T10:00:00+1000", out d));
+            Assert.AreEqual(new DateTimeOffset(2021, 7, 19, 0, 0, 0, TimeSpan.Zero), d.ToUniversalTime());
+            Assert.IsFalse(WeekExport.TryReadBound("2.weeks.ago", out d));
+            Assert.IsNull(WeekExport.WeekCommits(".", "2.weeks.ago", "2021-07-26", null));
         }
 
         // ---- The fidelity checklist ----------------------------------------------

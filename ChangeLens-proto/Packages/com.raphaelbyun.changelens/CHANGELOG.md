@@ -5,6 +5,11 @@ Built from the repository's commit history. Hashes are on the `deliverable-2-cha
 ## Unreleased (A3 committed tier)
 
 ### 17 October 2026
+- Every git call also pins the diff algorithm (myers), context lines (3), hunk joining, the indent heuristic and `diff.relative`. The earlier pinning (`038551b`) missed these, so a user's `diff.algorithm=histogram` or `diff.context=1` could change Version B on a week generated from a repository. With the fix, both settings give the same July and 27 Sep 2021 pages as the defaults. Frozen exports are unaffected (`1114e5c`).
+- Object names Unity writes in YAML quotes are unquoted: the page shows `[UI] Canvas`, not `'[UI] Canvas'`, and a quoted root name still matches its own asset in the naming measure. No frozen study or reserve page changes; the one quoted name in the exports sits in a block that only moved (`49bb706`).
+- The Frozen study week field also finds a typed relative path such as `study/week2-2021-07-19` from the repository root. Unity runs in `ChangeLens-proto`, one level below `study/`, so the hinted path used to fail (`1d1911f`).
+- Shares round a half up: 1 of 8 file changes shows 13%, as a reader checking by hand gets. .NET's default rounded it to 12%. No frozen week has a half share, so no page changes (`d86cff9`).
+- The .NET harness has 81 tests after these fixes, all passing. They have not been re-run in Unity yet.
 - The EditMode tests were run in Unity 6000.4.10f1: 76 of 76 pass (`prototype-logs/a3-tests-2026-10-17.xml`). Captures of Version A and Version B on the July study week are in `figures/a3-producer-page-*.png`, made with `Editor/ProducerPageScreenshotBootstrap.cs` (`f3f195f`).
 - A test rebuilds every frozen study and reserve week from its `export/` folder and compares the result with the committed reports, checklists and naming measures (`035e55e`).
 - Both reserve weeks were re-frozen with the current tool. The 27 Sep 2021 reserve now names the scripts deleted during the week (VisibleContainer, AttachedContainerGenerator), and its Version B has 34 claims, not 33. The 14 Dec 2020 reserve's pages did not change. `assets.patch` was kept in both: a new export differs only in the length of abbreviated hashes on `index` lines, which the parser skips. Nothing had been scored on either reserve (`d9fa4bf`).

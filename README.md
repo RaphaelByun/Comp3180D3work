@@ -57,7 +57,7 @@ node deliverable-6/analysis/test.js
 node deliverable-6/analysis/analyse.js
 ```
 
-The analysis tool's checks, then a demo on its labelled fake sample data (branch `deliverable-6-evaluation-report`; 203 checks pass on 17 Oct 2026). `deliverable-6/README.md` gives the command for the real data.
+The analysis tool's checks, then a demo on its labelled fake sample data (branch `deliverable-6-evaluation-report`; 273 checks pass on 17 Oct 2026). `deliverable-6/README.md` gives the command for the real data.
 
 ```
 node deliverable-9/test.js

@@ -234,13 +234,16 @@ namespace ChangeLens.Editor
         /// Settings passed with every git call so the output does not depend on
         /// the user's git config. Each one, if set the other way, changes text
         /// the parsers read: diff prefixes, grep line numbers and columns,
-        /// colour codes, signature lines, short hashes, rename detection and
-        /// the output encoding.
+        /// colour codes, signature lines, short hashes, rename detection,
+        /// the output encoding, and how the patch is cut into hunks (diff
+        /// algorithm, context lines, hunk joining and the indent heuristic).
         /// </summary>
         public const string PinnedConfig =
             "-c core.quotepath=false -c diff.noprefix=false -c diff.mnemonicPrefix=false " +
             "-c grep.lineNumber=false -c grep.column=false -c color.ui=false -c log.showSignature=false " +
-            "-c log.abbrevCommit=false -c diff.renames=true -c i18n.logOutputEncoding=UTF-8";
+            "-c log.abbrevCommit=false -c diff.renames=true -c i18n.logOutputEncoding=UTF-8 " +
+            "-c diff.algorithm=myers -c diff.context=3 -c diff.interHunkContext=0 " +
+            "-c diff.indentHeuristic=true -c diff.relative=false";
 
         /// <summary>The full argument string handed to git: <see cref="PinnedConfig"/> then the command.</summary>
         public static string GitArguments(string args)

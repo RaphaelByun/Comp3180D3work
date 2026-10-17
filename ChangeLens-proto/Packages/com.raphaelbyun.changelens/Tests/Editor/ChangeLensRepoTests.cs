@@ -369,7 +369,8 @@ namespace ChangeLens.Editor.Tests
                          {
                              "format.pretty fuller", "diff.noprefix true", "diff.mnemonicPrefix true",
                              "grep.lineNumber true", "grep.column true", "color.ui always", "log.abbrevCommit true",
-                             "color.grep always", "grep.patternType fixed"
+                             "color.grep always", "grep.patternType fixed", "diff.algorithm histogram",
+                             "diff.context 1", "diff.interHunkContext 5", "diff.indentHeuristic false"
                          })
                     repo.Git("config " + setting);
                 WeekExport export;
@@ -389,7 +390,9 @@ namespace ChangeLens.Editor.Tests
                      {
                          "-c core.quotepath=false", "-c diff.noprefix=false", "-c diff.mnemonicPrefix=false",
                          "-c grep.lineNumber=false", "-c grep.column=false", "-c color.ui=false",
-                         "-c log.showSignature=false", "-c log.abbrevCommit=false"
+                         "-c log.showSignature=false", "-c log.abbrevCommit=false",
+                         "-c diff.algorithm=myers", "-c diff.context=3", "-c diff.interHunkContext=0",
+                         "-c diff.indentHeuristic=true", "-c diff.relative=false"
                      })
                 StringAssert.Contains(pinned, args);
             StringAssert.EndsWith(" log", args);

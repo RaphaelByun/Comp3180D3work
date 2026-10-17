@@ -45,8 +45,8 @@ The export follows the main line only. Work done on a branch shows up in the wee
 
 ## 4. Run the tests
 
-- In Unity: **Window → General → Test Runner → EditMode → Run All**. Expect 76 passing.
-- Without Unity: `dotnet test tools/changelens-dotnet/tests/tests.csproj` (also 76). One test rebuilds every frozen study and reserve week from its `export/` folder and compares the result with the committed pages, so it fails if a code change alters a page readers see. The February week is checked against the two repaired rows listed above.
+- In Unity: **Window → General → Test Runner → EditMode → Run All**. Expect 85 passing. The last Unity run, earlier on 17 Oct 2026, passed 76 (`prototype-logs/a3-tests-2026-10-17.xml`); nine tests were added after it and have run only in the .NET harness so far.
+- Without Unity: `dotnet test tools/changelens-dotnet/tests/tests.csproj` (85 pass on 17 Oct 2026). One test rebuilds every frozen study and reserve week from its `export/` folder and compares the result with the committed pages, so it fails if a code change alters a page readers see. The February week is checked against the two repaired rows listed above.
 
 ## 5. Things worth trying to break
 

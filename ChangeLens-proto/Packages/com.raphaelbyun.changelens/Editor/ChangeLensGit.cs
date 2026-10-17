@@ -488,7 +488,7 @@ namespace ChangeLens.Editor
             sb.AppendLine("# Deliverable 2 measures: " + b.Title);
             sb.AppendLine();
             sb.AppendLine("- Changed-file entries categorised (not Other): " + (total - other) + " of " + total +
-                          (total > 0 ? " (" + Math.Round(100.0 * (total - other) / total) + "%)" : "") + " — target 90%");
+                          (total > 0 ? " (" + ProducerReport.RoundedPercent(total - other, total) + "%)" : "") + " — target 90%");
             sb.AppendLine("- Changed scenes/prefabs with an object name in the change (strict, A2 measure): " +
                           strictCount + " of " + strict.Count + " — target 60%");
             sb.AppendLine("- Changed scenes/prefabs the page describes inside (object, component or add/delete): " +

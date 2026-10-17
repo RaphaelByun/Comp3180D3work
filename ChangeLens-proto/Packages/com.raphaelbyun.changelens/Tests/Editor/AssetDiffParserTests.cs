@@ -453,6 +453,25 @@ namespace ChangeLens.Editor.Tests
                                         GuidIndex.Parse(SamplePatch.Guids), condition, "Sample game");
         }
 
+        // A reader checking by hand rounds 12.5% up to 13%. .NET's default
+        // Math.Round rounds a half to the even number, which gave 12%.
+        [Test]
+        public void Shares_RoundAHalfUp()
+        {
+            var log = new System.Text.StringBuilder(
+                "commit 1111111111111111111111111111111111111111\n" +
+                "Author: Dev One <one@example.com>\n" +
+                "Date:   2021-02-14 21:42:42 +0100\n\n    Add art (#1)\n\n" +
+                "M\tAssets/Scripts/Light.cs\n");
+            for (int i = 0; i < 7; i++) log.Append("A\tAssets/Art/bulb" + i + ".png\n");
+            ChangeReport counts = ChangeReport.Build(GitLogParser.Parse(log.ToString()), "sample");
+            Assert.AreEqual(8, counts.TotalFileEntries);
+            string page = ProducerReport.Build(counts, new List<AssetChange>(), null,
+                                               ReportCondition.Baseline, "t").ToMarkdown();
+            StringAssert.Contains("| Code | 1 | 13% |", page);
+            StringAssert.Contains(" | 7 | 88% |", page);
+        }
+
         [Test]
         public void Baseline_NeverNamesScenesOrPrefabs()
         {

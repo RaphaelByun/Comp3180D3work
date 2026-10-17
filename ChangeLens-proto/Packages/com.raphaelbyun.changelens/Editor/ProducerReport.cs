@@ -620,7 +620,18 @@ namespace ChangeLens.Editor
         private static string Percent(int n, int total)
         {
             if (total == 0) return "0%";
-            return Math.Round(100.0 * n / total).ToString("0", CultureInfo.InvariantCulture) + "%";
+            return RoundedPercent(n, total).ToString(CultureInfo.InvariantCulture) + "%";
+        }
+
+        /// <summary>
+        /// n of total as a whole percent, with a half rounded up (1 of 8 is 13%),
+        /// the way a reader checking by hand rounds. Math.Round's default rounds
+        /// a half to the even number (12%). Integer maths, so no float error.
+        /// </summary>
+        public static long RoundedPercent(int n, int total)
+        {
+            if (total <= 0) return 0;
+            return (200L * n + total) / (2L * total);
         }
 
         private static string FolderOf(string path)

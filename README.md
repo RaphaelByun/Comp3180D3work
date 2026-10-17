@@ -43,6 +43,7 @@ The analysis tool's checks, then a demo on its labelled fake sample data (branch
 
 - Study data: taken from SS3D (github.com/RE-SS3D/SS3D). Source commits and licences: `study/SOURCE-AND-LICENCE.md`.
 - Generative AI use: `GENAI-EVIDENCE.md` (A2 and A3).
+- Tools and software: `TOOLS-AND-SOFTWARE.md` (versions, licences, where each is used, and APA 7 references).
 
 ---
 

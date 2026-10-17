@@ -232,7 +232,7 @@ Run by Claude Code on the `deliverable-2-changelens` branch, after the 17 Oct re
 2. Producer Page captures (`a3-screenshot-2026-10-17.log`), with `Editor/ProducerPageScreenshotBootstrap.cs`
    and no `-batchmode`. They show the July study week (`study/week2-2021-07-19`), which the current code
    rebuilds byte for byte. The February week was not used: the window rebuilds it with the 17 Oct repairs,
-   so two rows would differ from the frozen page readers see.
+   so two rows would differ from the frozen committed page.
    - `figures/a3-producer-page-A.png`: Version A.
    - `figures/a3-producer-page-B.png`: Version B, top of the page.
    - `figures/a3-producer-page-B-scenes.png`: Version B, scrolled to "Scenes and prefabs changed".

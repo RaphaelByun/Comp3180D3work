@@ -1,1 +1,3 @@
-need_id,class
+# need_id is the N-number from deliverable-3/ten-need-sheet.md section B (N01, N03, N07, N08, N09, N12, N17, N19, N25, N26), not the printed row number.
+# row is optional: the row number printed on the participant sheet (1 to 10). With it, reader sheets typed by row number are mapped to the N-number.
+row,need_id,class

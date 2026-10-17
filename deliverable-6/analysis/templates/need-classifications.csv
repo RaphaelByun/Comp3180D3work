@@ -1,1 +1,4 @@
+# need_id must be the N-number from deliverable-3/ten-need-sheet.md section B, not the printed row number.
+# Printed row to need_id (section B on 17 Oct 2026; follow section B if it changes): 1 N01, 2 N03, 3 N07, 4 N08, 5 N09, 6 N12, 7 N17, 8 N19, 9 N25, 10 N26.
+# A reader with any need_id not in the key is left out of the analysis until fixed.
 participant,need_id,class,records

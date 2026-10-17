@@ -38,6 +38,8 @@
  * differ in both week and order; a reader failing this is left out and named. Weeks are read in upper
  * case and roles in lower case; weeks other than W1/W2 and roles other than producer/proxy are warned about.
  * Ten-need sheet: duplicate (reader, need) rows and classes other than D, P or N are named and left out.
+ * need_id is the key N-number (n1, N1 and n01 read as N01); a bare number maps through the key's optional
+ * `row` column. A reader with any need_id not in the key is named and left out of every need table.
  * CSV: RFC 4180 quoting (a quote opens a quoted field only at the start of a field); an unclosed quote
  * and a row with more filled cells than the header are warned about.
  */
@@ -493,21 +495,49 @@ function analyseSecondScorer(rows1All, rows2All) {
 // A class is D, P or N. Blank means not classified. Anything else (e.g. "D/P" for two circles, a word)
 // is named in a warning and left out, as is every row of a duplicated (reader, need) pair.
 const NEED_CLASSES = ['D', 'P', 'N'];
+// need_id is the key's N-number (deliverable-3/ten-need-sheet.md section B: N01, N03, N07 ...), not the
+// row number printed on the participant sheet (1 to 10). Case, spaces and zero-padding are normalised
+// (n1, N1, n01 -> N01). A bare number is a printed row number: it is mapped through the key's optional
+// `row` column when the key has one, and is otherwise left unmatched.
+function normNeedId(s) {
+  const t = (s || '').trim().toUpperCase();
+  const m = /^N\s*0*(\d+)$/.exec(t);
+  return m ? 'N' + m[1].padStart(2, '0') : t;
+}
 function prepareNeeds(needRows, keyRows) {
   const warnings = csvWarnings(keyRows).concat(csvWarnings(needRows));
-  const key = {}, keyCount = {}, badKey = [];
-  keyRows.forEach(r => { keyCount[r.need_id] = (keyCount[r.need_id] || 0) + 1; });
+  const key = {}, keyCount = {}, badKey = [], rowMap = {};
+  keyRows.forEach(r => { const id = normNeedId(r.need_id); keyCount[id] = (keyCount[id] || 0) + 1; });
   keyRows.forEach(r => {
+    const id = normNeedId(r.need_id);
+    const row = (r.row || '').trim();
+    if (/^\d+$/.test(row)) rowMap[String(parseInt(row, 10))] = id;
     const c = (r.class || '').trim().toUpperCase();
-    if (keyCount[r.need_id] > 1) return;
-    if (!NEED_CLASSES.includes(c)) { badKey.push(`${r.need_id} ("${r.class || ''}")`); return; }
-    key[r.need_id] = c;
+    if (keyCount[id] > 1) return;
+    if (!NEED_CLASSES.includes(c)) { badKey.push(`${id} ("${r.class || ''}")`); return; }
+    key[id] = c;
   });
   const keyDups = Object.keys(keyCount).filter(id => keyCount[id] > 1);
   if (keyDups.length) warnings.push(`WARNING: need listed more than once in the key, left out: ${keyDups.join(', ')}.`);
   if (badKey.length) warnings.push(`WARNING: key class not D, P or N, need left out: ${badKey.join(', ')}.`);
   const needIds = Object.keys(key);
-  const rows = needRows.filter(r => !isPilot(r));
+  const nid = s => {
+    const t = (s || '').trim();
+    return /^\d+$/.test(t) && rowMap[String(parseInt(t, 10))] ? rowMap[String(parseInt(t, 10))] : normNeedId(t);
+  };
+  const rowsIn = needRows.filter(r => !isPilot(r)).map(r => Object.assign({}, r, { need_id: nid(r.need_id) }));
+  // A reader row whose need_id is not in the key means the sheet was typed with other ids (often the
+  // printed row numbers). Matching the rest would compare answers against the wrong needs, so the
+  // reader is named and left out of every need table until the sheet is fixed.
+  const unmatched = {};
+  rowsIn.forEach(r => { if (!keyCount[r.need_id]) (unmatched[r.participant] = unmatched[r.participant] || []).push(r.need_id || '(blank)'); });
+  const excluded = Object.keys(unmatched).sort().map(p => ({ p, ids: unmatched[p] }));
+  if (excluded.length) {
+    warnings.push('WARNING: need_id not in the key, reader left out of the agreement table until fixed: ' +
+      excluded.map(x => `${x.p || '(blank code)'} rows ${x.ids.join(', ')} not in the key`).join('; ') + '. ' +
+      'need_id must be the key\'s N-number from deliverable-3/ten-need-sheet.md section B, not the printed row number (or give the key a `row` column).');
+  }
+  const rows = rowsIn.filter(r => !unmatched[r.participant]);
   const seen = {};
   rows.forEach(r => { const k = `${r.participant}|${r.need_id}`; seen[k] = (seen[k] || 0) + 1; });
   const dups = Object.keys(seen).filter(k => seen[k] > 1);
@@ -534,14 +564,15 @@ function prepareNeeds(needRows, keyRows) {
     const by = people.filter(p => sheets[p][id]);
     return { id, key: key[id], classified: by.length, matching: by.filter(p => sheets[p][id] === key[id]).length };
   });
-  return { key, needIds, rows, people, sheets, perNeed, warnings };
+  return { key, needIds, rows, people, sheets, perNeed, warnings, excluded };
 }
 
 function analyseNeeds(needRows, keyRows) {
   const N = prepareNeeds(needRows, keyRows);
   const { key, needIds, rows, people, sheets } = N;
   const out = [];
-  out.push(`Key has ${needIds.length} needs; readers analysed: ${people.length} (pilot excluded).`);
+  out.push(`Key has ${needIds.length} needs; readers analysed: ${people.length} (pilot excluded` +
+    (N.excluded.length ? `; ${N.excluded.length} left out for need_ids not in the key` : '') + ').');
   N.warnings.forEach(w => out.push(w));
   const t = [], miss = {};
   const per = [];
@@ -705,6 +736,6 @@ function main() {
 module.exports = {
   parseCSV, readCSV, agreement, cohenKappa, analyseScores, analyseNeeds, analyseCodes, mean, median,
   prepareScores, prepareNeeds, prepareCodes, pairedDiffs, fullMarkCounts, item6Counts, sequenceCounts,
-  secondScorer, analyseSecondScorer, footer, isPilot, FLOOR,
+  secondScorer, analyseSecondScorer, footer, isPilot, FLOOR, normNeedId,
 };
 if (require.main === module) main();

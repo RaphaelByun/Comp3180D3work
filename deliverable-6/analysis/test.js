@@ -525,5 +525,48 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   has('final: agreement unchanged', A.analyseCodes(rows), 'Agreement: 1/2 (50%)');
 }
 
+// 21. need_id typed wrong. The real key (deliverable-3/ten-need-sheet.md section B) has ids N01, N03, N07,
+//     N08, N09, N12, N17, N19, N25, N26 on printed rows 1-10; classes below are test values, not the key.
+//     Every reader gives the key's class on every printed row, so a correct reading is 10/10 for each.
+{
+  const ids = L('N01 N03 N07 N08 N09 N12 N17 N19 N25 N26'), cls = L('D D P P P D P P P P');
+  const keyNoRow = A.parseCSV(['need_id,class'].concat(ids.map((id, i) => `${id},${cls[i]}`)).join('\n'));
+  const keyRow = A.parseCSV(['row,need_id,class'].concat(ids.map((id, i) => `${i + 1},${id},${cls[i]}`)).join('\n'));
+  const sheet = (p, idOf) => cls.map((c, i) => `${p},${idOf(i)},${c}`);
+  const pad = i => `N${String(i + 1).padStart(2, '0')}`;
+  // 21a. R01 typed by printed row as N01-N10, R02 typed 1-10, R03 correct. R01 and R02 are named and left
+  //      out (their N01, N03 and N07 rows would otherwise match by chance); only R03 is analysed, 10/10.
+  const lines = ['participant,need_id,class'].concat(sheet('R01', pad), sheet('R02', i => String(i + 1)), sheet('R03', i => ids[i]));
+  const o = A.analyseNeeds(A.parseCSV(lines.join('\n')), keyNoRow);
+  has('need id: R01 named', o, 'R01 rows N02, N04, N05, N06, N10 not in the key');
+  has('need id: R02 named', o, 'R02 rows 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 not in the key');
+  has('need id: readers', o, 'readers analysed: 1 (pilot excluded; 2 left out for need_ids not in the key)');
+  has('need id: R03 10/10', o, '| R03    | 10/10 (100%)');
+  hasNot('need id: R01 not in table', o, '| R01 ');
+  hasNot('need id: no false departure', o, 'R01:');
+  has('need id: no departures', o, 'None: every reader matched the key on every need.');
+  // figures.js Table 1 uses the same check: N03 is 1/1 (R03 only), not 2/2 with R01's row 2
+  const t1 = require('./figures.js').table1(A.parseCSV(lines.join('\n')), keyNoRow);
+  has('need id: table 1 N03', t1, '| N03 | D | 1/1 |');
+  // 21b. lower case and unpadded ids are read as the key's ids: 10/10 each, no warning
+  const o2 = A.analyseNeeds(A.parseCSV(['participant,need_id,class'].concat(
+    sheet('R04', i => ids[i].toLowerCase()), sheet('R05', i => 'N' + parseInt(ids[i].slice(1), 10)), sheet('R06', i => ' n' + parseInt(ids[i].slice(1), 10))).join('\n')), keyNoRow);
+  has('need id: lower case', o2, '| R04    | 10/10 (100%)');
+  has('need id: unpadded', o2, '| R05    | 10/10 (100%)');
+  has('need id: lower unpadded', o2, '| R06    | 10/10 (100%)');
+  hasNot('need id: case no warning', o2, 'WARNING');
+  eq('need id: norm', A.normNeedId(' n7 '), 'N07');
+  // 21c. A key with a row column maps printed row numbers: R02 typed 1-10 is 10/10. R01 typed N01-N10 is
+  //      still named, since N02 etc. are ids, not row numbers.
+  const o3 = A.analyseNeeds(A.parseCSV(lines.join('\n')), keyRow);
+  has('need id: row map', o3, '| R02    | 10/10 (100%)');
+  has('need id: row map R01 still named', o3, 'R01 rows N02, N04, N05, N06, N10 not in the key');
+  // the templates carry the row column and the warning about printed row numbers
+  const tk = fs.readFileSync(path.join(__dirname, 'templates', 'marking-key.csv'), 'utf8');
+  eq('need id: key template parses empty', A.parseCSV(tk).length, 0);
+  has('need id: key template row column', tk, 'row,need_id,class');
+  has('need id: sheet template note', fs.readFileSync(path.join(__dirname, 'templates', 'need-classifications.csv'), 'utf8'), 'not the printed row number');
+}
+
 console.log(`${pass} checks passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

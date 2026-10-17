@@ -49,7 +49,7 @@ Staff pointed to the Echo 360 folder of past portfolio videos, and two transcrip
 
 ## Where the sources sit
 
-The study reports (`study/week1-2021-02-08/report-A-baseline.md` and `report-B-treatment.md`) and the Producer Page (`Window > ChangeLens Producer Page`, with its Version A / Version B flip; see `TRY-CHANGELENS.md`) are on the Deliverable 2 branch (`deliverable-2-changelens`), not on `main`. Record beats 3 to 5 from that branch. The A2 Figure 2 docked window is the older file-sorting prototype; do not use it for beat 3. Figures are in `figures/` on `main`: Figure 1 in A2 (code share) is `fig4-code-file-percentage.png`; the A2 Figure 2 (docked window) and Figure 3 (prefab hunk) are `fig2-changelens-docked-2021.png` and `fig3-prefab-yaml-hunk.png`. File numbers differ from the A2 figure numbers.
+The frozen study-week pages (`study/week1-2021-02-08/report-A-baseline.md` and `report-B-treatment.md`) and the Producer Page (`Window > ChangeLens Producer Page`, with its Version A / Version B flip; see `TRY-CHANGELENS.md`) are on the Deliverable 2 branch (`deliverable-2-changelens`), not on `main`. Record beats 3 to 5 from that branch. The A2 Figure 2 docked window is the older file-sorting prototype; do not use it for beat 3. Figures are in `figures/` on `main`: Figure 1 in A2 (code share) is `fig4-code-file-percentage.png`; the A2 Figure 2 (docked window) and Figure 3 (prefab hunk) are `fig2-changelens-docked-2021.png` and `fig3-prefab-yaml-hunk.png`. File numbers differ from the A2 figure numbers.
 
 ## Figure and table numbers in the A3 report
 
@@ -61,7 +61,12 @@ The video stills are reused in the report, and the D6 figure tool also calls its
 | Figure 2 | The ChangeLens Producer Page in the Unity Editor | New capture, still 2 |
 | Figure 3 | Version A (baseline), "Where the work went" table | New capture, still 3 |
 | Figure 4 | Version B (treatment), a naming section | New capture, still 4 |
-| Figure 5 | Paired differences per reader | `deliverable-6/analysis/figures.js` (Deliverable 6 branch). It titles the plot "Figure 1" and writes `figure-1-paired-differences.*`; renumber there or in the caption |
-| Tables 1, 2, 2b, 3 | Ten needs; full marks by condition and week; item 6 codes; think-aloud segments | `figures.js` as now. No other tables are planned, so these numbers stand |
+| Figure 5 | Time and confidence (SE2): minutes per read, and confidence against the git-log result, one reader, the developer | `deliverable-6/analysis/figures.js` (Deliverable 6 branch), once it replaces the A2 paired-differences plot (plan section 12, D6 item 3). Until then `figures.js` still draws the old plot as "Figure 1"; do not use it |
+| Table 1 | Ten needs by read (solo Table B) | Solo analysis script on the Deliverable 6 branch (plan section 12, D6 item 2; not written yet), from `se2-need-answers.csv` |
+| Table 2 | Key against observed, SQ1 (solo Table C) | Same script, first reads of Table B |
+| Table 3 | Heuristic problems for ChangeLens beside the four D1 tools (solo Table F) | Same script, from `se4-heuristic-problems.csv`, `se4-task-outcomes.csv` and the D1 tables |
+| Table 4 | What the page left unmet, by Ko et al. type (solo Table G) | Same script, from `se2-needs-log.csv` |
+
+The report's Results are built around solo Tables B, C, F and G (plan section 12, D6 item 4), so those are Tables 1 to 4 here. The other solo tables (A fidelity, D items, E walkthrough, H stand-up and ratings) go to the appendices as the plan suggests, or take Table 5 upward in order of first mention if you put them in the body. The old Tables 1, 2, 2b and 3 (full marks by condition, item 6 codes, think-aloud segments) came from the reader study and are not used.
 
 If a figure is dropped, renumber the rest in order and update this list.

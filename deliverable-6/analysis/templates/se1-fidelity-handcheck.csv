@@ -1,0 +1,3 @@
+# SE1. One row per checklist row hand-checked. week: W1-2021-02-08, W2-2021-07-19, RX-2020-12-14, RY-2021-09-27. version: A or B.
+# Verdicts S, C or U; blank where that scorer did not score the row. Write raphael_verdict before opening any scored file.
+week,version,row,raphael_verdict,ai_scorer1_verdict,ai_scorer2_verdict,ai_rescore_verdict,agree_with_ai,minutes,note

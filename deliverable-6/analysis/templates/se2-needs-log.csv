@@ -1,0 +1,2 @@
+# SE2 needs log, in the deliverable-5/think-aloud-coding-sheet.csv layout so recode-sample.js works on it. participant SELF. report_condition: the read_id.
+segment_id,participant,timestamp,report_condition,quote_note,pass1_code,pass1_date,pass2_code,pass2_date,final_code,resolution_rule

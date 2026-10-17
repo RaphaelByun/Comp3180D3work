@@ -1,51 +1,42 @@
 #!/usr/bin/env node
 'use strict';
 /*
- * ChangeLens evaluation analysis (COMP3180 A3, Deliverable 6).
+ * ChangeLens solo evaluation analysis (COMP3180 A3, Deliverable 6).
  * Plain Node.js, no dependencies.
  *
+ * The evaluation is a solo one (Raphael's decision, 17 Oct 2026): one reader, the developer.
+ * The plan is deliverable-5/self-evaluation-plan.md on deliverable-5-sessions (SE1 to SE4, sections 3 and 6).
+ * This tool replaces the reader-study analysis (paired differences across readers, reader floor,
+ * counterbalanced sequences, per-reader kappa). That version is in the git history before 17 Oct 2026.
+ *
  * Usage:
- *   node analyse.js                       (runs on the FAKE sample-*.csv files beside this script)
- *   node analyse.js --scores item-scores.csv --needs need-classifications.csv \
- *                   --key marking-key.csv --codes think-aloud-codes.csv [--scores2 second-scorer-scores.csv]
- *                   [--out results.md]
+ *   node analyse.js                      (runs on the FAKE sample-*.csv files beside this script)
+ *   node analyse.js --se1 se1-fidelity-handcheck.csv --reads se2-reads.csv --needs se2-need-answers.csv
+ *                   --items se2-item-scores.csv --log se2-needs-log.csv --scorer2 se2-second-scorer.csv
+ *                   --walk se3-walkthrough.csv --heur se4-heuristic-problems.csv --tasks se4-task-outcomes.csv
+ *                   [--d1 d1-problems.csv] [--d1tasks d1-task-outcomes.csv] [--out analysis-output.md]
  *
- * Any input may be left out; that section is skipped. Input formats are in README.md
- * (header-only templates are in ../analysis/templates/).
+ * Any input may be left out; its table is skipped. Columns are in the plan, section 3, and in the
+ * header-only templates in templates/.
  *
- * Scoring follows deliverable-3/answer-key-and-scoring.md: items 1-5 score 0, 1 or 2 (a full mark is 2,
- * each report is out of 10); item 6 is coded Pass / Hedged / Over-claim and is never numeric.
- * Optional columns: item-scores `specific` (specificity tick on items 4-5), need-classifications
- * `records` (the T / R / U sources the reader circled). Both are reported as counts only.
+ * What it prints (raw counts first, no percentage without its count, no p-values):
+ *   Table A. Fidelity hand-check (SE1): per week and version, S / C / U by hand, the A2 pass rule,
+ *            and agreement with each AI scorer as x of n.
+ *   Table B. Ten needs by read (SE2): the 10 x 4 grid of C / PC / W / NA beside key_ru_class and
+ *            record_could_answer; per read: correct x of n, answers that needed Version B, wrong answers by cause.
+ *   Table C. Key against observed (SQ1, first reads): observed class per need, then agreement x of n for
+ *            key against observed, key against record, record against observed. Kappa only as indicative.
+ *   Table D. Items (SQ2), if items exist: item scores per read, item 6 code, specificity ticks.
+ *   Figure data. Minutes per read and confidence against git-log result (figures.js draws it).
+ *   Table E. Cognitive walkthrough (SE3): steps per task, N answers per question, failure stories by severity.
+ *   Table F. Heuristic problems (SE4): ChangeLens by severity and heuristic, beside the D1 tools if given;
+ *            T1 to T7 outcomes.
+ *   Table G. Needs log (SE2): entries by Ko et al. (2007) type; pass 1 against pass 2 as x of n only.
+ *   Table H. Ratings and stand-up per read (SE2).
+ *   Scoring check. AI second scorer against Raphael's scores, x of n.
  *
- * What it reports (small n: raw counts first, whole-number percentages only, no p-values):
- *   1. Item scores: per-condition and per-week item means with raw counts (items 1-5 scored 0-2,
- *      item 6 is the unanswerable item and is reported as category counts per version).
- *   2. Paired treatment-minus-baseline difference per participant over the five scored items (out of 10).
- *   3. Per-week baseline scores (week difficulty is the rival explanation).
- *   4. Ten-need sheet: percentage agreement and Cohen's kappa for each reader against the key,
- *      plus which needs readers disagreed with the key on.
- *   5. Think-aloud coding: percentage agreement and kappa between coding pass 1 and pass 2.
- *   6. Second scorer (optional --scores2, item-scores layout): items in agreement out of items scored,
- *      items 1-5 and item 6 apart, and the items where the two scorers differ.
- *
- * Data checks: sections 1-3 use complete readers only (both conditions, items 1-5 each scored once
- * with 0, 1 or 2). Any other reader is named with the reason and left out of every table. Fewer than
- * five complete readers prints the A2 fallback notice. Pilot codes (P followed by digits, e.g. P0) and
- * rows with pilot = yes are dropped from every section. Think-aloud segments are keyed by
- * participant + segment_id. Every pass 1, pass 2 and final code is checked against the codebook (21 Ko et al.
- * types plus none, other, unclear); any other code is named and its pass 1 / pass 2 pair is left out of agreement.
- * Design checks: every row of one reader gives one role, every row of one report gives one week and one order, and a reader's two reports
- * differ in both week and order; a reader failing this is left out and named. Weeks are read in upper
- * case and roles in lower case; weeks other than W1/W2 and roles other than producer/proxy are warned about.
- * Order is read as 1 or 2 (01, 1st, first; 02, 2nd, second); any other order is warned about and the reader left out.
- * Participant codes are normalised before grouping (r3, R3 -> R03; p00 -> P0) and any changed code is warned about.
- * A row with a blank participant (in any file that has the column) is named and left out: it may be pilot data.
- * Ten-need sheet: duplicate (reader, need) rows and classes other than D, P or N are named and left out.
- * need_id is the key N-number (n1, N1 and n01 read as N01); a bare number maps through the key's optional
- * `row` column. A reader with any need_id not in the key is named and left out of every need table.
- * CSV: RFC 4180 quoting (a quote opens a quoted field only at the start of a field); an unclosed quote
- * and a row with more filled cells than the header are warned about.
+ * Read order is fixed by the plan: RX-A1 (14 Dec 2020, A first), RX-B2, RY-B1 (27 Sep 2021, B first), RY-A2.
+ * First reads are compared only with each other; first and second reads are never added together.
  */
 
 const fs = require('fs');
@@ -103,47 +94,13 @@ function parseCSV(text) {
     if (r.slice(head.length).some(c => c.trim() !== '')) {
       warnings.push(`WARNING: line ${lines[i]} has ${r.length} cells but the header has ${head.length}; the extra cells are ignored. An unquoted comma in a note does this: put the note in double quotes.`);
     }
-    const o = {};
+    const o = { _line: lines[i] };
     head.forEach((h, k) => { o[h] = (r[k] === undefined ? '' : r[k]).trim(); });
     out.push(o);
   }
   return out;
 }
 const csvWarnings = rows => (rows && rows.warnings) || [];
-// A blank participant cell (code typed only on a block's first row) could hide pilot rows, so those
-// rows are left out until filled in. A file with no participant column at all is still read.
-const isBlankP = r => !isPilot(r) && r.participant !== undefined && r.participant === '';
-// Participant codes are typed by hand: case, spaces and zero-padding are normalised before grouping, so one
-// mistyped row does not split a reader in two. R plus digits reads as R and two digits (r3, R3, r03 -> R03);
-// P plus digits reads as P and the number (p00, P00 -> P0), as in the tracker codes. Anything else is kept
-// trimmed and upper case. A blank code stays blank.
-function normParticipant(s) {
-  const t = (s || '').trim().toUpperCase();
-  let m = /^R\s*0*(\d+)$/.exec(t);
-  if (m) return 'R' + m[1].padStart(2, '0');
-  m = /^P\s*0*(\d+)$/.exec(t);
-  if (m) return 'P' + m[1];
-  return t;
-}
-// Returns copies of the rows with participant normalised (the CSV warnings list kept), and a warning
-// naming each typed code that differs from its normalised form. Rows with no participant column are left as they are.
-function normParticipants(rowsIn) {
-  const changed = {};
-  const rows = rowsIn.map(r => {
-    if (r.participant === undefined) return r;
-    const p = normParticipant(r.participant);
-    if (p !== r.participant) { const k = `"${r.participant}" read as ${p}`; changed[k] = (changed[k] || 0) + 1; }
-    return Object.assign({}, r, { participant: p });
-  });
-  rows.warnings = csvWarnings(rowsIn);
-  const keys = Object.keys(changed).sort();
-  const warning = keys.length
-    ? `WARNING: participant code typed differently from the tracker form, read as normalised: ${keys.map(k => `${k} (${changed[k]} row${changed[k] === 1 ? '' : 's'})`).join('; ')}. Check the sheet and fix the code.`
-    : null;
-  return { rows, warning };
-}
-const BLANK_P_NOTE = 'Fill participant on every row: a blank row under a pilot row may be pilot data.';
-
 function readCSV(file) {
   return parseCSV(fs.readFileSync(file, 'utf8'));
 }
@@ -156,8 +113,8 @@ function agreement(a, b) {
   return { agree, n: a.length };
 }
 
-// Cohen's kappa for two raters over nominal labels. NaN when chance agreement is 1
-// (one rater, or both raters, used a single label throughout) or there are no items.
+// Cohen's kappa for two sets of nominal labels. NaN when chance agreement is 1
+// (one side, or both, used a single label throughout) or there are no items.
 function cohenKappa(a, b) {
   if (a.length !== b.length) throw new Error('cohenKappa: length mismatch');
   const n = a.length;
@@ -176,16 +133,9 @@ function cohenKappa(a, b) {
   return { kappa, po, pe, n };
 }
 
-function mean(xs) { return xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : NaN; }
-function median(xs) {
-  if (!xs.length) return NaN;
-  const s = xs.slice().sort((p, q) => p - q), m = Math.floor(s.length / 2);
-  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
-}
-
 // ---------- formatting ----------
 const f2 = x => (Number.isNaN(x) ? 'n/a' : x.toFixed(2));
-const pct = (k, n) => (n ? `${k}/${n} (${Math.round((100 * k) / n)}%)` : '0/0');
+const xofn = (k, n) => `${k} of ${n}`;
 const kfmt = k => (Number.isNaN(k) ? 'undefined (no variation in labels)' : k.toFixed(2));
 function table(head, rows) {
   const all = [head].concat(rows).map(r => r.map(String));
@@ -194,21 +144,44 @@ function table(head, rows) {
   return [line(all[0]), '| ' + w.map(x => '-'.repeat(x)).join(' | ') + ' |']
     .concat(all.slice(1).map(line)).join('\n');
 }
+const lineOf = r => (r && r._line ? `line ${r._line}` : 'a row');
 
-// ---------- 1-3. item scores ----------
-const FLOOR = 5; // five readers in total (deliverable-3/README.md decision 5, 14 Oct 2026); the pilot never counts
-function isPilot(r) {
-  return /^(y|yes|true|1)$/i.test(r.pilot || '') || /^P\d+$/i.test(r.participant || '');
-}
-function normCond(c) {
-  // Version A = baseline (no names), Version B = treatment (names), as in study/*/report-A-baseline.md.
-  c = (c || '').toLowerCase();
-  if (c === 'a' || c.startsWith('base')) return 'baseline';
-  if (c === 'b' || c.startsWith('treat')) return 'treatment';
-  return c;
-}
-// Item 6 is coded, not scored (deliverable-3/answer-key-and-scoring.md): Pass / Hedged / Over-claim.
+// ---------- shared values (plan section 3) ----------
+const READS = {
+  'RX-A1': { week: 'RX', version: 'A', order: '1', label: '14 Dec 2020, Version A, first read' },
+  'RX-B2': { week: 'RX', version: 'B', order: '2', label: '14 Dec 2020, Version B, second read' },
+  'RY-B1': { week: 'RY', version: 'B', order: '1', label: '27 Sep 2021, Version B, first read' },
+  'RY-A2': { week: 'RY', version: 'A', order: '2', label: '27 Sep 2021, Version A, second read' },
+};
+const READ_IDS = Object.keys(READS);
+const FIRST_READS = ['RX-A1', 'RY-B1'];
+const WEEK_FIRST = { RX: 'RX-A1', RY: 'RY-B1' };
+// The ten needs in deliverable-3/ten-need-sheet.md section B order.
+const NEED_IDS = ['N01', 'N03', 'N07', 'N08', 'N09', 'N12', 'N17', 'N19', 'N25', 'N26'];
+const SE1_WEEKS = ['W1-2021-02-08', 'W2-2021-07-19', 'RX-2020-12-14', 'RY-2021-09-27'];
+const CLASSES = ['D', 'P', 'N'];
+const RESULTS = ['C', 'PC', 'W', 'NA'];
+const CAUSES = ['misread', 'overclaim', 'page-wrong'];
 const CODES6 = ['Pass', 'Hedged', 'Over-claim'];
+
+// read_id typed by hand: rx-a1, RXA1 and RX A1 read as RX-A1. Anything else is kept upper case.
+function normReadId(s) {
+  const t = (s || '').trim().toUpperCase();
+  const m = /^(R[XY])[\s_-]*([AB])[\s_-]*([12])$/.exec(t);
+  return m ? `${m[1]}-${m[2]}${m[3]}` : t;
+}
+// need_id: n1, N1 and n01 read as N01.
+function normNeedId(s) {
+  const t = (s || '').trim().toUpperCase();
+  const m = /^N\s*0*(\d+)$/.exec(t);
+  return m ? 'N' + m[1].padStart(2, '0') : t;
+}
+function normVersion(s) {
+  const t = (s || '').trim().toLowerCase();
+  if (t === 'a' || t.startsWith('base')) return 'A';
+  if (t === 'b' || t.startsWith('treat')) return 'B';
+  return (s || '').trim();
+}
 function normCode6(s) {
   const t = (s || '').toLowerCase().replace(/[\s_]+/g, '-');
   if (t === 'pass') return 'Pass';
@@ -216,520 +189,479 @@ function normCode6(s) {
   if (t === 'over-claim' || t === 'overclaim') return 'Over-claim';
   return null;
 }
-const isTick = s => /^(y|yes|true|1|s|x)$/i.test((s || '').trim());
-const SCORED = ['1', '2', '3', '4', '5'];
-const CONDS = ['baseline', 'treatment'];
-const validScore = s => s === 0 || s === 1 || s === 2;
-// Reading order is typed by hand: 1, 01, 1st and first read as '1'; 2, 02, 2nd and second as '2'.
-// Anything else is kept as typed, warned about, and the reader is left out.
-function normOrder(s) {
-  const t = (s || '').trim().toLowerCase();
-  if (/^0*1$|^1st$|^first$/.test(t)) return '1';
-  if (/^0*2$|^2nd$|^second$/.test(t)) return '2';
-  return (s || '').trim();
-}
-const validOrder = o => o === '1' || o === '2';
+const isYes = s => /^(y|yes|true|1|x)$/i.test((s || '').trim());
+const isNo = s => /^(n|no|false|0)$/i.test((s || '').trim());
+const intIn = (s, lo, hi) => { const t = (s || '').trim(); if (!/^\d+$/.test(t)) return null; const v = Number(t); return v >= lo && v <= hi ? v : null; };
+const num = s => { const t = (s || '').trim(); return t === '' || Number.isNaN(Number(t)) ? null : Number(t); };
 
-// Sorts readers into complete (both conditions, items 1-5 each scored once with 0, 1 or 2) and
-// excluded (with the reason). Every table and statistic uses complete readers only, so baseline
-// and treatment always cover the same people and every total is out of 10.
-function prepareScores(rowsTyped) {
-  const np = normParticipants(rowsTyped), rowsAll = np.rows;
-  const pilotRows = rowsAll.filter(isPilot);
-  const blankP = rowsAll.filter(isBlankP);
-  const rows = rowsAll.filter(r => !isPilot(r) && !isBlankP(r)).map(r => {
-    // item is 1-6 (01 reads as 1); anything else (Q1, 7, blank) is kept as typed and warned about below
-    const itemRaw = (r.item || '').trim();
-    const item = /^0*[1-6]$/.test(itemRaw) ? String(parseInt(itemRaw, 10)) : itemRaw;
-    const raw = (r.score || '').trim();
+// Checks a row's read_id and, when the row also gives them, its week, version and read order.
+// Returns the normalised read_id, or null (with a warning) if it is not one of the four reads.
+function checkRead(r, warnings, what) {
+  const id = normReadId(r.read_id);
+  if (!READS[id]) {
+    warnings.push(`WARNING: ${what} ${lineOf(r)}: read_id "${r.read_id || ''}" is not RX-A1, RX-B2, RY-B1 or RY-A2. Row left out.`);
+    return null;
+  }
+  const want = READS[id], bad = [];
+  if (r.week !== undefined && r.week !== '' && !r.week.toUpperCase().startsWith(want.week)) bad.push(`week "${r.week}"`);
+  if (r.version !== undefined && r.version !== '' && normVersion(r.version) !== want.version) bad.push(`version "${r.version}"`);
+  if (r.read_order !== undefined && r.read_order !== '' && r.read_order.replace(/^0+/, '') !== want.order) bad.push(`read_order "${r.read_order}"`);
+  if (bad.length) warnings.push(`WARNING: ${what} ${lineOf(r)}: ${bad.join(', ')} does not match read_id ${id}. The read_id is used; fix the row.`);
+  return id;
+}
+
+// ---------- Table A. Fidelity hand-check (SE1) ----------
+function normVerdict(s) { const t = (s || '').trim().toUpperCase(); return t === '' ? '' : (['S', 'C', 'U'].includes(t) ? t : null); }
+
+function prepareSE1(rowsIn) {
+  const warnings = csvWarnings(rowsIn).slice();
+  const seen = {}, rows = [];
+  for (const r of rowsIn) {
+    const week = (r.week || '').trim().toUpperCase();
+    const version = normVersion(r.version);
+    const row = intIn(r.row, 1, 9999);
+    if (!SE1_WEEKS.includes(week)) { warnings.push(`WARNING: SE1 ${lineOf(r)}: week "${r.week}" is not ${SE1_WEEKS.join(', ')}. Row left out.`); continue; }
+    if (version !== 'A' && version !== 'B') { warnings.push(`WARNING: SE1 ${lineOf(r)}: version "${r.version}" is not A or B. Row left out.`); continue; }
+    if (row === null) { warnings.push(`WARNING: SE1 ${lineOf(r)}: row "${r.row}" is not a checklist row number. Row left out.`); continue; }
+    const v = { week, version, row, line: r._line, minutes: num(r.minutes) };
+    for (const [k, col] of [['me', 'raphael_verdict'], ['s1', 'ai_scorer1_verdict'], ['s2', 'ai_scorer2_verdict'], ['re', 'ai_rescore_verdict']]) {
+      const x = normVerdict(r[col]);
+      if (x === null) { warnings.push(`WARNING: SE1 ${lineOf(r)}: ${col} "${r[col]}" is not S, C or U. Read as blank.`); v[k] = ''; } else v[k] = x;
+    }
+    v.agreeTyped = (r.agree_with_ai || '').trim().toLowerCase();
+    const k = `${week}|${version}|${row}`;
+    (seen[k] = seen[k] || []).push(v);
+    rows.push(v);
+  }
+  const dups = Object.keys(seen).filter(k => seen[k].length > 1);
+  if (dups.length) warnings.push(`WARNING: SE1 row listed more than once, left out until fixed: ${dups.map(k => k.split('|').join(' ')).join('; ')}.`);
+  const used = rows.filter(v => seen[`${v.week}|${v.version}|${v.row}`].length === 1);
+  // agree_with_ai is typed by hand; check it against the verdicts
+  const mism = [];
+  for (const v of used) {
+    if (!v.me) continue;
+    const ai = [v.s1, v.s2, v.re].filter(Boolean);
+    if (!ai.length) continue;
+    const want = ai.every(x => x === v.me) ? 'y' : 'n';
+    if (v.agreeTyped && v.agreeTyped !== want) mism.push(`${v.week} ${v.version} row ${v.row} (typed ${v.agreeTyped}, verdicts give ${want})`);
+  }
+  if (mism.length) warnings.push(`WARNING: SE1 agree_with_ai does not match the verdicts: ${mism.join('; ')}. The table uses the verdicts.`);
+  return { rows: used, warnings };
+}
+
+function tableA(rowsIn) {
+  const P = prepareSE1(rowsIn);
+  const groups = [];
+  for (const w of SE1_WEEKS) for (const ver of ['A', 'B']) {
+    const g = P.rows.filter(v => v.week === w && v.version === ver);
+    if (!g.length) continue;
+    const mine = g.filter(v => v.me);
+    const S = mine.filter(v => v.me === 'S').length, C = mine.filter(v => v.me === 'C').length, U = mine.filter(v => v.me === 'U').length;
+    const ag = col => { const b = mine.filter(v => v[col]); return { agree: b.filter(v => v[col] === v.me).length, n: b.length }; };
+    const mins = g.map(v => v.minutes).filter(x => x !== null);
+    groups.push({
+      week: w, version: ver, listed: g.length, checked: mine.length, S, C, U,
+      // A2: "passes when none is contradicted and 90% are supported" (by Raphael's hand verdicts)
+      rule: !mine.length ? 'n/a' : (C === 0 && S * 10 >= 9 * mine.length ? 'met' : 'not met'),
+      s1: ag('s1'), s2: ag('s2'), re: ag('re'),
+      minutes: mins.length ? mins.reduce((a, b) => a + b, 0) : null,
+    });
+  }
+  const cell = a => (a.n ? xofn(a.agree, a.n) : '–');
+  return {
+    id: 'A', title: 'Table A. Fidelity check by hand (SE1): Raphael\'s verdicts, and rows where he agrees with each AI scorer (x of n rows both scored)',
+    head: ['Week', 'Version', 'Rows listed', 'Hand-checked', 'S', 'C', 'U', 'A2 rule (no C, 90% S)', 'Agree scorer 1', 'Agree scorer 2', 'Agree re-score', 'Minutes'],
+    rows: groups.map(g => [g.week, g.version, String(g.listed), String(g.checked), String(g.S), String(g.C), String(g.U), g.rule, cell(g.s1), cell(g.s2), cell(g.re), g.minutes === null ? '' : String(g.minutes)]),
+    notes: ['A row with a blank raphael_verdict is listed but not hand-checked. Say in the report which rows were done (D4 minimum: every Version B row and every row an AI scorer marked C).'],
+    warnings: P.warnings, groups,
+  };
+}
+
+// ---------- SE2 need answers (Tables B and C) ----------
+function prepareNeeds(rowsIn) {
+  const warnings = csvWarnings(rowsIn).slice();
+  const rows = [], seen = {};
+  for (const r of rowsIn) {
+    const read = checkRead(r, warnings, 'need answer');
+    if (!read) continue;
+    const need = normNeedId(r.need_id);
+    if (!NEED_IDS.includes(need)) { warnings.push(`WARNING: need answer ${lineOf(r)}: need_id "${r.need_id}" is not one of the ten (${NEED_IDS.join(', ')}). Row left out.`); continue; }
+    const fpn = (r.page_gave_fpn || '').trim().toUpperCase();
+    const res = (r.gitlog_result || '').trim().toUpperCase();
+    const cause = (r.error_cause || '').trim().toLowerCase();
+    const key = (r.key_ru_class || '').trim().toUpperCase();
+    const rec = (r.record_could_answer || '').trim().toUpperCase();
+    const chg = (r.changed_on_second_read || '').trim().toLowerCase();
+    const v = { read, need, line: r._line, fpn, res, cause, key, rec, chg, onlyB: (r.only_in_b || '').trim().toLowerCase(),
+      conf: intIn(r.confidence_1to5, 1, 5), seconds: num(r.seconds) };
+    const where = `${read} ${need}`;
+    if (fpn && !['F', 'P', 'N'].includes(fpn)) { warnings.push(`WARNING: ${where}: page_gave_fpn "${r.page_gave_fpn}" is not F, P or N. Read as blank.`); v.fpn = ''; }
+    if (res && !RESULTS.includes(res)) { warnings.push(`WARNING: ${where}: gitlog_result "${r.gitlog_result}" is not C, PC, W or NA. Read as not scored.`); v.res = ''; }
+    if (cause && !CAUSES.includes(cause)) { warnings.push(`WARNING: ${where}: error_cause "${r.error_cause}" is not misread, overclaim or page-wrong. Read as blank.`); v.cause = ''; }
+    if (v.res === 'W' && !v.cause) warnings.push(`WARNING: ${where}: scored W with no error_cause. Name the cause (misread, overclaim or page-wrong).`);
+    if (v.cause && v.res !== 'W') warnings.push(`WARNING: ${where}: error_cause "${v.cause}" on an answer not scored W.`);
+    if (key && !CLASSES.includes(key)) { warnings.push(`WARNING: ${where}: key_ru_class "${r.key_ru_class}" is not D, P or N. Read as blank.`); v.key = ''; }
+    if (rec && !CLASSES.includes(rec)) { warnings.push(`WARNING: ${where}: record_could_answer "${r.record_could_answer}" is not D, P or N. Read as blank.`); v.rec = ''; }
+    if (v.onlyB && !isYes(v.onlyB) && !isNo(v.onlyB)) warnings.push(`WARNING: ${where}: only_in_b "${r.only_in_b}" is not y or n.`);
+    if (r.confidence_1to5 && v.conf === null) warnings.push(`WARNING: ${where}: confidence_1to5 "${r.confidence_1to5}" is not 1 to 5. Read as blank.`);
+    if (chg && !['new', 'changed', 'lost', 'same'].includes(chg)) warnings.push(`WARNING: ${where}: changed_on_second_read "${r.changed_on_second_read}" is not new, changed, lost or same.`);
+    if (chg && FIRST_READS.includes(read)) warnings.push(`WARNING: ${where}: changed_on_second_read is filled on a first read. It belongs on second reads only.`);
+    const k = `${read}|${need}`;
+    (seen[k] = seen[k] || []).push(v);
+    rows.push(v);
+  }
+  const dups = Object.keys(seen).filter(k => seen[k].length > 1);
+  if (dups.length) warnings.push(`WARNING: need answer listed more than once for one read, left out until fixed: ${dups.map(k => k.replace('|', ' ')).join('; ')}.`);
+  const used = rows.filter(v => seen[`${v.read}|${v.need}`].length === 1);
+  // key_ru_class is fixed before SE2 (plan section 5): one value per need across every read
+  const key = {}, rec = {};
+  for (const n of NEED_IDS) {
+    const ks = Array.from(new Set(used.filter(v => v.need === n && v.key).map(v => v.key)));
+    if (ks.length > 1) warnings.push(`WARNING: ${n}: key_ru_class differs between rows (${ks.join(', ')}). The key is fixed before SE2; fix the rows. Shown as "?".`);
+    key[n] = ks.length === 1 ? ks[0] : (ks.length ? '?' : '');
+    // record_could_answer is per week: one value across both reads of a week
+    for (const w of ['RX', 'RY']) {
+      const rs = Array.from(new Set(used.filter(v => v.need === n && READS[v.read].week === w && v.rec).map(v => v.rec)));
+      if (rs.length > 1) warnings.push(`WARNING: ${n} week ${w}: record_could_answer differs between the two reads (${rs.join(', ')}). It describes the git log of the week; fix the rows. Shown as "?".`);
+      rec[`${w}|${n}`] = rs.length === 1 ? rs[0] : (rs.length ? '?' : '');
+    }
+  }
+  return { rows: used, warnings, key, rec };
+}
+
+function tableB(rowsIn) {
+  const P = prepareNeeds(rowsIn);
+  const get = (read, n) => P.rows.find(v => v.read === read && v.need === n);
+  const cell = (read, n) => { const v = get(read, n); return !v ? '–' : (v.res || '?'); };
+  const grid = NEED_IDS.map(n => [n, P.key[n] || '', cell('RX-A1', n), cell('RX-B2', n), P.rec[`RX|${n}`] || '', cell('RY-B1', n), cell('RY-A2', n), P.rec[`RY|${n}`] || '']);
+  const per = READ_IDS.map(read => {
+    const mine = P.rows.filter(v => v.read === read);
+    const c = x => mine.filter(v => v.res === x).length;
+    const w = mine.filter(v => v.res === 'W');
     return {
-      participant: r.participant, role: (r.role || '').toLowerCase(), cond: normCond(r.condition),
-      week: (r.week || '').toUpperCase(), order: normOrder(r.order), item,
-      // items 1-5: number 0, 1 or 2. item 6: a category word, never a number.
-      score: item === '6' ? null : (raw === '' ? NaN : Number(raw)),
-      code6: item === '6' ? normCode6(r.score) : null,
-      specific: (r.specific || '').trim(),
+      read, n: mine.length, C: c('C'), PC: c('PC'), W: c('W'), NA: c('NA'), unscored: mine.filter(v => !v.res).length,
+      onlyB: mine.filter(v => isYes(v.onlyB)).length,
+      misread: w.filter(v => v.cause === 'misread').length, overclaim: w.filter(v => v.cause === 'overclaim').length,
+      pageWrong: w.filter(v => v.cause === 'page-wrong').length, noCause: w.filter(v => !v.cause).length,
     };
   });
-  const warnings = csvWarnings(rowsAll).slice();
-  if (np.warning) warnings.push(np.warning);
-  if (blankP.length) {
-    warnings.push(`WARNING: ${blankP.length} row(s) with a blank participant, left out until filled in: ` +
-      blankP.map(r => `${normCond(r.condition) || '(blank condition)'} item ${(r.item || '').trim() || '(blank)'}`).join('; ') + '. ' + BLANK_P_NOTE);
-  }
-  const bad = rows.filter(r => SCORED.includes(r.item) && !validScore(r.score));
-  if (bad.length) {
-    warnings.push(`WARNING: ${bad.length} row(s) for items 1-5 with a score that is not 0, 1 or 2: ` +
-      bad.map(r => `${r.participant} ${r.cond} item ${r.item} ("${Number.isNaN(r.score) ? '' : r.score}")`).join('; ') + '.');
-  }
-  const badItem = rows.filter(r => !/^[1-6]$/.test(r.item));
-  if (badItem.length) {
-    warnings.push(`WARNING: ${badItem.length} row(s) with an item that is not 1 to 6: ` +
-      badItem.map(r => `${r.participant} ${r.cond} item "${r.item}"`).join('; ') + '. Fix the item column.');
-  }
-  const bad6 = rows.filter(r => r.item === '6' && !r.code6);
-  if (bad6.length) {
-    warnings.push(`WARNING: ${bad6.length} row(s) for item 6 not coded Pass, Hedged or Over-claim: ` +
-      bad6.map(r => `${r.participant} ${r.cond}`).join('; ') + '.');
-  }
-  // duplicate (participant, condition, item) rows
-  const seen = {};
-  for (const r of rows) { const k = `${r.participant}|${r.cond}|${r.item}`; seen[k] = (seen[k] || 0) + 1; }
-  const dups = Object.keys(seen).filter(k => seen[k] > 1);
-  if (dups.length) {
-    warnings.push('WARNING: duplicate rows (same reader, condition and item): ' +
-      dups.map(k => { const [p, c, it] = k.split('|'); return `${p} ${c} item ${it} (${seen[k]} rows)`; }).join('; ') + '.');
-  }
-
-  // weeks and roles are typed by hand: case is normalised above, anything else is named here
-  const weekSet = Array.from(new Set(rows.map(r => r.week))).sort();
-  if (rows.length && weekSet.join(',') !== 'W1,W2') {
-    warnings.push(`WARNING: weeks found are ${weekSet.map(w => w || '(blank)').join(', ')}; expected exactly W1 and W2. Fix the week column.`);
-  }
-  const badRoles = Array.from(new Set(rows.filter(r => r.role !== 'producer' && r.role !== 'proxy').map(r => r.role || '(blank)'))).sort();
-  if (badRoles.length) warnings.push(`WARNING: role not producer or proxy: ${badRoles.join(', ')}. Fix the role column.`);
-  const badOrd = Array.from(new Set(rows.filter(r => !validOrder(r.order)).map(r => `${r.participant} "${r.order}"`))).sort();
-  if (badOrd.length) warnings.push(`WARNING: order not 1 or 2 (1st, first and 01 are read as 1): ${badOrd.join(', ')}. Those readers are left out. Fix the order column.`);
-
-  const people = Array.from(new Set(rows.map(r => r.participant))).sort();
-  const complete = [], excluded = [];
-  const tot = {}; // tot[p][cond] = {sum, week, order, role}, complete readers only
-  for (const p of people) {
-    const reasons = [];
-    const mine = rows.filter(r => r.participant === p);
-    const per = {};
-    for (const c of CONDS) {
-      const cr = mine.filter(r => r.cond === c);
-      if (!cr.length) { reasons.push(`no ${c} rows`); continue; }
-      const missing = [], badIt = [], dupIt = [];
-      for (const it of SCORED) {
-        const ir = cr.filter(r => r.item === it);
-        if (!ir.length) missing.push(it);
-        else if (ir.length > 1) dupIt.push(it);
-        else if (!validScore(ir[0].score)) badIt.push(it);
-      }
-      if (missing.length) reasons.push(`${c} item ${missing.join(', ')} missing`);
-      if (dupIt.length) reasons.push(`${c} item ${dupIt.join(', ')} duplicated`);
-      if (badIt.length) reasons.push(`${c} item ${badIt.join(', ')} score not 0, 1 or 2`);
-      const oddIt = cr.filter(r => !/^[1-6]$/.test(r.item)).map(r => `"${r.item}"`);
-      if (oddIt.length) reasons.push(`${c} item ${oddIt.join(', ')} not 1 to 6`);
-      // every row of one report must give the same week and the same order
-      const wks = Array.from(new Set(cr.map(r => r.week))), ords = Array.from(new Set(cr.map(r => r.order)));
-      if (wks.length > 1) reasons.push(`${c} rows give more than one week (${wks.join(', ')})`);
-      if (ords.length > 1) reasons.push(`${c} rows give more than one order (${ords.join(', ')})`);
-      const badO = ords.filter(o => !validOrder(o));
-      if (badO.length) reasons.push(`${c} order not 1 or 2 (${badO.map(o => `"${o}"`).join(', ')})`);
-      const sr = cr.filter(r => SCORED.includes(r.item) && validScore(r.score));
-      per[c] = { sum: sr.reduce((s, r) => s + r.score, 0), week: cr[0].week, order: cr[0].order, role: cr[0].role };
-    }
-    // counterbalanced design: the two reports are different weeks and were read in different orders
-    if (per.baseline && per.treatment) {
-      if (per.baseline.week === per.treatment.week) reasons.push(`baseline and treatment both ${per.baseline.week || '(blank week)'}`);
-      if (per.baseline.order === per.treatment.order && validOrder(per.baseline.order)) reasons.push(`baseline and treatment both order ${per.baseline.order || '(blank)'}, likely an order error`);
-    }
-    // one reader has one role: rows that disagree would put the reader in the wrong group of the role split
-    const roles = Array.from(new Set(mine.map(r => r.role || '(blank)'))).sort();
-    if (roles.length > 1) reasons.push(`rows give more than one role (${roles.join(', ')})`);
-    const other = mine.filter(r => !CONDS.includes(r.cond));
-    if (other.length) reasons.push(`condition not baseline/treatment or A/B (${Array.from(new Set(other.map(r => r.cond || '(blank)'))).join(', ')})`);
-    if (reasons.length) excluded.push({ p, reasons });
-    else { complete.push(p); tot[p] = per; }
-  }
-  const inc = new Set(complete);
-  return { rowsAll, pilotRows, blankRows: blankP, rows, used: rows.filter(r => inc.has(r.participant)), warnings, people, complete, excluded, tot };
-}
-
-function floorNotice(n) {
-  return n < FLOOR
-    ? `**Below the five-reader floor (${n} complete reader${n === 1 ? '' : 's'}): A2 fallback. Report this arm as descriptive only and the think-alouds first.**`
-    : null;
-}
-
-function analyseScores(rowsAll) {
-  const S = prepareScores(rowsAll);
-  const out = [];
-  const notice = floorNotice(S.complete.length);
-  if (notice) out.push(notice + '\n');
-  out.push(`Rows read: ${S.rowsAll.length}; pilot rows excluded: ${S.pilotRows.length}; ` +
-    (S.blankRows.length ? `blank participant rows left out: ${S.blankRows.length}; ` : '') + `analysed: ${S.rows.length}.`);
-  out.push(`Complete readers (both reports, items 1-5 each scored once): ${S.complete.length}${S.complete.length ? ' (' + S.complete.join(', ') + ')' : ''}. Every table below uses these readers only.`);
-  S.warnings.forEach(w => out.push(w));
-  if (S.excluded.length) {
-    out.push(`WARNING: ${S.excluded.length} reader(s) left out of every table and statistic: ` +
-      S.excluded.map(x => `${x.p || '(blank code)'} (${x.reasons.join('; ')})`).join('; ') + '. Report them and the reason in Method.');
-  }
-
-  const rows = S.used, tot = S.tot, people = S.complete;
-  if (people.length) out.push('Readers per sequence (week and order of the treatment report): ' + sequenceCounts(S).map(x => `${x.week} order ${x.order}: ${x.n}`).join('; ') + '. Uneven or empty cells weaken the counterbalance.');
-  const weeks = Array.from(new Set(rows.map(r => r.week))).sort();
-  const sel = f => rows.filter(f);
-
-  function cellStats(list) {
-    // list: score rows for one scored item -> n (valid rows only), full marks (2), mean score 0-2
-    const v = list.filter(r => validScore(r.score));
-    return { n: v.length, full: v.filter(r => r.score === 2).length, mean: mean(v.map(r => r.score)) };
-  }
-
-  // 1a. per condition, per item (items 1-5)
-  out.push('\n### Item scores by condition (full-mark count / readers, mean score 0-2)\n');
-  const t1 = [];
-  for (const it of SCORED) {
-    const row = [it];
-    for (const c of CONDS) {
-      const s = cellStats(sel(r => r.cond === c && r.item === it));
-      row.push(`${s.full}/${s.n}`, f2(s.mean));
-    }
-    t1.push(row);
-  }
-  out.push(table(['Item', 'Baseline full', 'Baseline mean', 'Treatment full', 'Treatment mean'], t1));
-
-  // 1b. per week x condition x item
-  out.push('\n### Item scores by week and condition (full-mark count / readers)\n');
-  const t2 = [];
-  for (const it of SCORED) {
-    const row = [it];
-    for (const w of weeks) for (const c of CONDS) {
-      const s = cellStats(sel(r => r.week === w && r.cond === c && r.item === it));
-      row.push(`${s.full}/${s.n}`);
-    }
-    t2.push(row);
-  }
-  const head2 = ['Item'];
-  for (const w of weeks) for (const c of CONDS) head2.push(`${w} ${c}`);
-  out.push(table(head2, t2));
-
-  // 1c. item 6: category counts per version, never a number
-  out.push('\n### Item 6 (unanswerable): category counts per version\n');
-  const t6 = item6Counts(S).map(x => [x.code].concat(x.cells.map(c => `${c.k}/${c.n}`)));
-  out.push(table(['Code', 'Baseline', 'Treatment'], t6));
-  out.push('\nItem 6 is answerable only by saying the report does not tell you. Over-claim is the count that matters; Hedged is shown beside it, not merged. It is not part of the /10 total.');
-
-  // 1d. optional specificity tick (items 4 and 5): descriptive only
-  const specRows = rows.filter(r => (r.item === '4' || r.item === '5') && r.specific !== '');
-  if (specRows.length) {
-    out.push('\n### Specificity tick on items 4 and 5 (answer used a name only Version B shows; descriptive, not scored)\n');
-    const ts = ['4', '5'].map(it => [it].concat(CONDS.map(c => {
-      const all = specRows.filter(r => r.cond === c && r.item === it);
-      return `${all.filter(r => isTick(r.specific)).length}/${all.length}`;
-    })));
-    out.push(table(['Item', 'Baseline ticked', 'Treatment ticked'], ts));
-  }
-
-  // 2. paired differences
-  out.push('\n### Paired difference per reader (treatment minus baseline, summed over items 1-5; each report is out of 10, so the difference runs from -10 to +10)\n');
-  const diffs = pairedDiffs(S), t3 = [];
-  for (const x of diffs) {
-    const b = tot[x.p].baseline, t = tot[x.p].treatment;
-    t3.push([x.p, x.role || '', `${b.week} (order ${b.order})`, f2(b.sum), `${t.week} (order ${t.order})`, f2(t.sum), (x.d > 0 ? '+' : '') + f2(x.d)]);
-  }
-  out.push(table(['Reader', 'Role', 'Baseline week', 'Baseline /10', 'Treatment week', 'Treatment /10', 'Difference'], t3));
-  const ds = diffs.map(x => x.d);
-  if (ds.length) {
-    const up = ds.filter(x => x > 0).length, dn = ds.filter(x => x < 0).length, z = ds.length - up - dn;
-    out.push(`\nReaders: ${ds.length}. Higher with names: ${up}. Same: ${z}. Lower with names: ${dn}.`);
-    out.push(`Mean difference ${f2(mean(ds))} points out of 10 (median ${f2(median(ds))}, range ${f2(Math.min(...ds))} to ${f2(Math.max(...ds))}; possible range -10 to +10).`);
-    // Week balance: if more readers had their treatment report in one week, week difficulty leaks into
-    // the plain mean. The mean per treatment week, averaged, weights both weeks equally.
-    const wb = weekBalanced(S);
-    if (wb.otherWeeks.length) {
-      out.push(`Week-balanced difference: not computed: weeks are not W1/W2 (${wb.otherWeeks.map(w => w || '(blank)').join(', ')}). Fix the week column.`);
-    } else if (wb.balanced === null) {
-      out.push('Week-balanced difference: not computed, because every treatment report was in one week. The names effect and the week cannot be told apart.');
-    } else {
-      out.push('By week of the treatment report: ' + wb.groups.map(g => `${g.week} n=${g.n}, mean ${f2(g.mean)}`).join('; ') +
-        `. Week-balanced difference (the average of the two): ${f2(wb.balanced)} points out of 10.` +
-        (wb.groups[0].n !== wb.groups[1].n ? ' The two groups differ in size, so the plain mean above is unbalanced: it leans toward the bigger group\'s week. Report the week-balanced figure beside it.' : ''));
-    }
-    const roles = Array.from(new Set(diffs.map(x => x.role))).sort();
-    if (roles.length > 1) {
-      const byRole = roles.map(r => ({ r, x: diffs.filter(d => d.role === r).map(d => d.d) }));
-      if (byRole.some(g => g.x.length < 2)) {
-        out.push('By role: not split. ' + byRole.map(g => `${g.r || '(none)'} n=${g.x.length}`).join('; ') + '. A role with one reader gives one person\'s score, not a group mean.');
-      } else {
-        out.push('By role: ' + byRole.map(g => `${g.r || '(none)'} n=${g.x.length}, mean ${f2(mean(g.x))}`).join('; ') + '. Proxies stand in for producers, so their difference is an upper bound.');
-      }
-    }
-    out.push('With this few readers the figures show direction and where it fails, not significance.');
-  }
-
-  // 3. per-week baseline
-  out.push('\n### Per-week baseline scores (rival explanation: some weeks are harder)\n');
-  const t4 = [];
-  for (const w of weeks) {
-    for (const c of CONDS) {
-      const sums = people.filter(p => tot[p][c].week === w).map(p => tot[p][c].sum);
-      t4.push([w, c, String(sums.length), sums.length ? f2(mean(sums)) : 'n/a', sums.join(', ')]);
-    }
-  }
-  out.push(table(['Week', 'Condition', 'Readers', 'Mean /10', 'Individual totals'], t4));
-  const bw = weeks.map(w => people.filter(p => tot[p].baseline.week === w).map(p => tot[p].baseline.sum));
-  if (bw.length === 2 && bw[0].length && bw[1].length) {
-    out.push(`\nBaseline mean gap between weeks: ${f2(Math.abs(mean(bw[0]) - mean(bw[1])))} points out of 10. Compare this with the treatment effect before crediting the names.`);
-  }
-
-  // order check, within each condition: pooling the conditions mixes the order effect with the
-  // condition imbalance whenever the sequences are uneven (five readers on S1, S2, S3, S4, S2).
-  if (people.length) {
-    out.push('\nMean total /10 by reading order within each condition (first report vs second): ' +
-      orderByCondition(S).map(x => `${x.cond}: ` + x.orders.map(o => `order ${o.order} ${o.n ? f2(o.mean) : 'n/a'} (n=${o.n})`).join(', ')).join('; ') +
-      '. Compare order 1 with order 2 inside one condition only.');
-  }
-  return out.join('\n');
-}
-
-// Mean total per reading order inside each condition, complete readers only.
-function orderByCondition(S) {
-  return CONDS.map(c => ({
-    cond: c,
-    orders: ['1', '2'].map(o => {
-      const xs = S.complete.filter(p => S.tot[p][c].order === o).map(p => S.tot[p][c].sum);
-      return { order: o, n: xs.length, mean: mean(xs) };
-    }),
-  }));
-}
-
-// Mean paired difference per week of the treatment report, and their average (null when a week is empty).
-function weekBalanced(S) {
-  const diffs = pairedDiffs(S);
-  const groups = ['W1', 'W2'].map(w => {
-    const xs = diffs.filter(d => S.tot[d.p].treatment.week === w).map(d => d.d);
-    return { week: w, n: xs.length, mean: mean(xs) };
-  });
-  // weeks typed as anything but W1/W2 ('Week 1') fall in neither group; say so rather than "one week"
-  const otherWeeks = Array.from(new Set(diffs.map(d => S.tot[d.p].treatment.week).filter(w => w !== 'W1' && w !== 'W2'))).sort();
-  return { groups, otherWeeks, balanced: !otherWeeks.length && groups.every(g => g.n) ? (groups[0].mean + groups[1].mean) / 2 : null };
-}
-
-// Treatment-minus-baseline difference for each complete reader (used by the report and by figures.js).
-function pairedDiffs(S) {
-  return S.complete.map(p => {
-    const b = S.tot[p].baseline, t = S.tot[p].treatment;
-    return { p, d: t.sum - b.sum, role: b.role || t.role };
-  });
-}
-
-// Complete readers per sequence cell, keyed by the treatment report's week and order. The four
-// design cells (W1/W2 x order 1/2) are always listed, empty ones as 0.
-function sequenceCounts(S) {
-  const cnt = {};
-  for (const w of ['W1', 'W2']) for (const o of ['1', '2']) cnt[`${w}|${o}`] = 0;
-  for (const p of S.complete) { const t = S.tot[p].treatment; const k = `${t.week}|${t.order}`; cnt[k] = (cnt[k] || 0) + 1; }
-  return Object.keys(cnt).sort().map(k => { const [week, order] = k.split('|'); return { week, order, n: cnt[k] }; });
-}
-
-// Full-mark counts per item and condition over complete readers (Table 2 in figures.js).
-// With byWeek, each condition is split by the week of that report (W1 and W2 cells).
-function fullMarkCounts(S, byWeek) {
-  const weeks = byWeek ? Array.from(new Set(S.used.map(r => r.week))).sort() : [null];
-  return SCORED.map(it => ({
-    item: it,
-    cells: [].concat(...weeks.map(w => CONDS.map(c => {
-      const v = S.used.filter(r => r.cond === c && r.item === it && validScore(r.score) && (w === null || r.week === w));
-      return { cond: c, week: w, full: v.filter(r => r.score === 2).length, n: v.length };
-    }))),
-  }));
-}
-
-// Item 6 code counts per condition over complete readers: { code, cells: [{cond, k, n}] }.
-function item6Counts(S) {
-  return CODES6.map(code => ({
-    code,
-    cells: CONDS.map(c => {
-      const all = S.used.filter(r => r.cond === c && r.item === '6');
-      return { cond: c, k: all.filter(r => r.code6 === code).length, n: all.length };
-    }),
-  }));
-}
-
-// ---------- 1e. second-scorer check ----------
-// deliverable-3/answer-key-and-scoring.md: after sessions a second scorer re-scores at least two readers'
-// sheets (both reports); agreement is items in agreement out of items scored. scores2 uses the
-// item-scores layout and holds only the re-scored readers. Each (reader, condition, item) in scores2 is
-// matched to the first scorer's row. Items 1-5 compare the 0/1/2 score; item 6 compares the code.
-function secondScorer(rows1All, rows2All) {
-  const S1 = prepareScores(rows1All), S2 = prepareScores(rows2All);
-  const warnings = csvWarnings(rows2All).map(w => 'Second-scorer file: ' + w);
-  const key = r => `${r.participant}|${r.cond}|${r.item}`;
-  const group = rows => { const g = {}; rows.forEach(r => { (g[key(r)] = g[key(r)] || []).push(r); }); return g; };
-  const g1 = group(S1.rows), g2 = group(S2.rows);
-  const pairs = [], dup = [], noMatch = [], invalid = [];
-  for (const k of Object.keys(g2).sort()) {
-    const a = g1[k] || [], b = g2[k];
-    if (a.length > 1 || b.length > 1) { dup.push(k); continue; }
-    if (!a.length) { noMatch.push(k); continue; }
-    const x = a[0], y = b[0];
-    if (x.item === '6') {
-      if (!x.code6 || !y.code6) { invalid.push(k); continue; }
-      pairs.push({ p: x.participant, cond: x.cond, item: '6', s1: x.code6, s2: y.code6 });
-    } else if (SCORED.includes(x.item)) {
-      if (!validScore(x.score) || !validScore(y.score)) { invalid.push(k); continue; }
-      pairs.push({ p: x.participant, cond: x.cond, item: x.item, s1: String(x.score), s2: String(y.score) });
-    }
-  }
-  const fmt = k => { const [p, c, it] = k.split('|'); return `${p} ${c} item ${it}`; };
-  if (dup.length) warnings.push(`WARNING: duplicate rows in either file, left out: ${dup.map(fmt).join('; ')}.`);
-  if (noMatch.length) warnings.push(`WARNING: second-scorer rows with no first-scorer row, left out: ${noMatch.map(fmt).join('; ')}.`);
-  if (invalid.length) warnings.push(`WARNING: rows with a score not 0, 1 or 2 (items 1-5) or a code not Pass, Hedged or Over-claim (item 6) in either file, left out: ${invalid.map(fmt).join('; ')}.`);
-  const readers = Array.from(new Set(pairs.map(x => x.p))).sort();
-  const oneReport = readers.filter(p => CONDS.some(c => !pairs.some(x => x.p === p && x.cond === c)));
-  if (oneReport.length) warnings.push(`WARNING: re-scored on one report only: ${oneReport.join(', ')}. D3 asks for both reports.`);
-  if (readers.length < 2) warnings.push(`WARNING: ${readers.length} reader(s) re-scored; D3 asks for at least two.`);
-  const s15 = pairs.filter(x => x.item !== '6'), s6 = pairs.filter(x => x.item === '6');
   return {
-    readers, warnings, pairs,
-    items15: { agree: s15.filter(x => x.s1 === x.s2).length, n: s15.length },
-    item6: { agree: s6.filter(x => x.s1 === x.s2).length, n: s6.length },
-    differ: pairs.filter(x => x.s1 !== x.s2),
+    id: 'B', title: 'Table B. Ten needs by read (SE2): git-log result per need (C correct, PC partly correct, W wrong, NA left blank; ? not scored yet; – no row)',
+    head: ['Need', 'Key (R/U)', 'RX-A1', 'RX-B2', 'RX log could answer', 'RY-B1', 'RY-A2', 'RY log could answer'],
+    rows: grid,
+    summary: {
+      title: 'Table B (continued). Per read: correct answers out of the needs answered, answers that needed Version B, wrong answers by cause',
+      head: ['Read', 'Correct (C)', 'PC', 'W', 'NA', 'Not scored', 'Needed B (only_in_b)', 'W: misread', 'W: overclaim', 'W: page-wrong', 'W: no cause'],
+      rows: per.map(p => [p.read, xofn(p.C, p.n), String(p.PC), String(p.W), String(p.NA), String(p.unscored), String(p.onlyB), String(p.misread), String(p.overclaim), String(p.pageWrong), String(p.noCause)]),
+    },
+    notes: ['Second reads (RX-B2, RY-A2) record change only and are never clean. Compare RX-A1 with RY-B1 only, and say that this mixes version with week. Never add first and second reads together.',
+      'A page-wrong cause goes to the SE1 hand-check.'],
+    warnings: P.warnings, per, prepared: P,
   };
 }
 
-function analyseSecondScorer(rows1All, rows2All) {
-  const R = secondScorer(rows1All, rows2All);
-  const out = [];
-  out.push(`Readers re-scored by the second scorer: ${R.readers.length}${R.readers.length ? ' (' + R.readers.join(', ') + ')' : ''}. Pilot excluded.`);
-  R.warnings.forEach(w => out.push(w));
-  out.push(`Items 1-5 in agreement: ${R.items15.agree}/${R.items15.n}. Item 6 codes in agreement: ${R.item6.agree}/${R.item6.n}.`);
-  out.push('\n### Items where the scorers differ (settle each with a written rule in the answer key)\n');
-  out.push(R.differ.length ? table(['Reader', 'Condition', 'Item', 'Scorer 1', 'Scorer 2'], R.differ.map(x => [x.p, x.cond, x.item, x.s1, x.s2])) : 'None.');
-  return out.join('\n');
+// Observed class for one need on a first read (plan section 6, Table C), fixed before any data:
+//   N = the page gave N, or the answer is W or NA.
+//   D = the page gave F and the answer is C.
+//   P = the page gave F or P and the answer is C or PC (any other mix of these).
+// Returns '' when the answer is not scored or page_gave_fpn is blank.
+function observedClass(fpn, res) {
+  if (!fpn || !res) return '';
+  if (fpn === 'N' || res === 'W' || res === 'NA') return 'N';
+  if (fpn === 'F' && res === 'C') return 'D';
+  return 'P';
 }
 
-// ---------- 4. ten-need sheet ----------
-// Per reader: the needs they classified. Per need: how many readers classified it and how many matched the key.
-// A class is D, P or N. Blank means not classified. Anything else (e.g. "D/P" for two circles, a word)
-// is named in a warning and left out, as is every row of a duplicated (reader, need) pair.
-const NEED_CLASSES = ['D', 'P', 'N'];
-// need_id is the key's N-number (deliverable-3/ten-need-sheet.md section B: N01, N03, N07 ...), not the
-// row number printed on the participant sheet (1 to 10). Case, spaces and zero-padding are normalised
-// (n1, N1, n01 -> N01). A bare number is a printed row number: it is mapped through the key's optional
-// `row` column when the key has one, and is otherwise left unmatched.
-function normNeedId(s) {
-  const t = (s || '').trim().toUpperCase();
-  const m = /^N\s*0*(\d+)$/.exec(t);
-  return m ? 'N' + m[1].padStart(2, '0') : t;
-}
-function prepareNeeds(needTyped, keyRows) {
-  const np = normParticipants(needTyped), needRows = np.rows;
-  const warnings = csvWarnings(keyRows).concat(csvWarnings(needRows));
-  if (np.warning) warnings.push(np.warning);
-  const key = {}, keyCount = {}, badKey = [], rowMap = {};
-  keyRows.forEach(r => { const id = normNeedId(r.need_id); keyCount[id] = (keyCount[id] || 0) + 1; });
-  keyRows.forEach(r => {
-    const id = normNeedId(r.need_id);
-    const row = (r.row || '').trim();
-    if (/^\d+$/.test(row)) rowMap[String(parseInt(row, 10))] = id;
-    const c = (r.class || '').trim().toUpperCase();
-    if (keyCount[id] > 1) return;
-    if (!NEED_CLASSES.includes(c)) { badKey.push(`${id} ("${r.class || ''}")`); return; }
-    key[id] = c;
+function tableC(rowsIn) {
+  const P = prepareNeeds(rowsIn);
+  const obs = {};
+  const overclaims = [];
+  for (const w of ['RX', 'RY']) for (const n of NEED_IDS) {
+    const v = P.rows.find(x => x.read === WEEK_FIRST[w] && x.need === n);
+    obs[`${w}|${n}`] = v ? observedClass(v.fpn, v.res) : '';
+    if (v && v.fpn === 'F' && v.res === 'W') overclaims.push(`${WEEK_FIRST[w]} ${n}`);
+  }
+  const rows = NEED_IDS.map(n => {
+    const show = w => { const v = P.rows.find(x => x.read === WEEK_FIRST[w] && x.need === n); return v ? `${obs[`${w}|${n}`] || '?'} (${v.fpn || '-'}/${v.res || '-'})` : '–'; };
+    return [n, P.key[n] || '', P.rec[`RX|${n}`] || '', show('RX'), P.rec[`RY|${n}`] || '', show('RY')];
   });
-  const keyDups = Object.keys(keyCount).filter(id => keyCount[id] > 1);
-  if (keyDups.length) warnings.push(`WARNING: need listed more than once in the key, left out: ${keyDups.join(', ')}.`);
-  if (badKey.length) warnings.push(`WARNING: key class not D, P or N, need left out: ${badKey.join(', ')}.`);
-  const needIds = Object.keys(key);
-  const nid = s => {
-    const t = (s || '').trim();
-    return /^\d+$/.test(t) && rowMap[String(parseInt(t, 10))] ? rowMap[String(parseInt(t, 10))] : normNeedId(t);
-  };
-  const blankP = needRows.filter(isBlankP);
-  if (blankP.length) {
-    warnings.push(`WARNING: ${blankP.length} row(s) with a blank participant, left out until filled in: need ${blankP.map(r => r.need_id || '(blank)').join(', ')}. ` + BLANK_P_NOTE);
-  }
-  const rowsIn = needRows.filter(r => !isPilot(r) && !isBlankP(r)).map(r => Object.assign({}, r, { need_id: nid(r.need_id) }));
-  // A reader row whose need_id is not in the key means the sheet was typed with other ids (often the
-  // printed row numbers). Matching the rest would compare answers against the wrong needs, so the
-  // reader is named and left out of every need table until the sheet is fixed.
-  const unmatched = {};
-  rowsIn.forEach(r => { if (!keyCount[r.need_id]) (unmatched[r.participant] = unmatched[r.participant] || []).push(r.need_id || '(blank)'); });
-  const excluded = Object.keys(unmatched).sort().map(p => ({ p, ids: unmatched[p] }));
-  if (excluded.length) {
-    warnings.push('WARNING: need_id not in the key, reader left out of the agreement table until fixed: ' +
-      excluded.map(x => `${x.p || '(blank code)'} rows ${x.ids.join(', ')} not in the key`).join('; ') + '. ' +
-      'need_id must be the key\'s N-number from deliverable-3/ten-need-sheet.md section B, not the printed row number (or give the key a `row` column).');
-  }
-  const rows = rowsIn.filter(r => !unmatched[r.participant]);
-  const seen = {};
-  rows.forEach(r => { const k = `${r.participant}|${r.need_id}`; seen[k] = (seen[k] || 0) + 1; });
-  const dups = Object.keys(seen).filter(k => seen[k] > 1);
-  if (dups.length) {
-    warnings.push('WARNING: duplicate rows (same reader and need), left out until fixed: ' +
-      dups.map(k => { const [p, id] = k.split('|'); return `${p} ${id} (${seen[k]} rows)`; }).join('; ') + '.');
-  }
-  const badCls = [];
-  const people = Array.from(new Set(rows.map(r => r.participant))).sort();
-  const sheets = {};
-  for (const p of people) {
-    const mine = {};
-    rows.filter(r => r.participant === p).forEach(r => {
-      if (seen[`${p}|${r.need_id}`] > 1) return;
-      const c = (r.class || '').trim().toUpperCase();
-      if (c === '') return;
-      if (!NEED_CLASSES.includes(c)) { badCls.push(`${p} ${r.need_id} ("${r.class}")`); return; }
-      mine[r.need_id] = c;
-    });
-    sheets[p] = mine;
-  }
-  if (badCls.length) warnings.push(`WARNING: class not D, P or N, left out: ${badCls.join('; ')}.`);
-  const perNeed = needIds.map(id => {
-    const by = people.filter(p => sheets[p][id]);
-    return { id, key: key[id], classified: by.length, matching: by.filter(p => sheets[p][id] === key[id]).length };
-  });
-  return { key, needIds, rows, people, sheets, perNeed, warnings, excluded };
-}
-
-function analyseNeeds(needRows, keyRows) {
-  const N = prepareNeeds(needRows, keyRows);
-  const { key, needIds, rows, people, sheets } = N;
-  const out = [];
-  out.push(`Key has ${needIds.length} needs; readers analysed: ${people.length} (pilot excluded` +
-    (N.excluded.length ? `; ${N.excluded.length} left out for need_ids not in the key` : '') + ').');
-  N.warnings.forEach(w => out.push(w));
-  const t = [], miss = {};
-  const per = [];
-  for (const p of people) {
-    const mine = sheets[p];
-    const ids = needIds.filter(id => mine[id]);
-    if (ids.length !== needIds.length) out.push(`WARNING: ${p} classified ${ids.length} of ${needIds.length} needs; analysed on those only.`);
-    const a = ids.map(id => key[id]), b = ids.map(id => mine[id]);
-    const ag = agreement(a, b), k = cohenKappa(a, b);
-    per.push({ p, ag, k });
-    t.push([p, pct(ag.agree, ag.n), kfmt(k.kappa)]);
-    ids.forEach(id => { if (mine[id] !== key[id]) (miss[id] = miss[id] || []).push(`${p}:${mine[id]}`); });
-  }
-  out.push('\n### Each reader against the marking key\n');
-  out.push(table(['Reader', 'Agreement with key', "Cohen's kappa"], t));
-  if (per.length) {
-    const ks = per.map(x => x.k.kappa).filter(x => !Number.isNaN(x));
-    // lowest and highest by proportion, each as the reader's own raw count
-    const sorted = per.filter(x => x.ag.n).slice().sort((x, y) => x.ag.agree / x.ag.n - y.ag.agree / y.ag.n);
-    const lo = sorted[0], hi = sorted[sorted.length - 1];
-    const range = sorted.length ? `${lo.ag.agree}/${lo.ag.n} to ${hi.ag.agree}/${hi.ag.n}` : 'n/a';
-    const short = per.filter(x => x.ag.n !== needIds.length);
-    out.push(`\nAgreement ranged ${range} across ${per.length} readers; kappa ${ks.length ? f2(Math.min(...ks)) + ' to ' + f2(Math.max(...ks)) : 'n/a'}.` +
-      (short.length ? ` ${short.length} reader(s) classified fewer than ${needIds.length} needs: ${short.map(x => `${x.p} (${x.ag.n})`).join(', ')}.` : ''));
-    out.push('Over ten items these are indicative, not inferential.');
-  }
-  const recRows = rows.filter(r => (r.records || '').trim() !== '');
-  if (recRows.length) {
-    out.push('\n### Sources readers circled (T tracker, R repository, U Unity files; counts only, no key)\n');
-    const t5 = [];
-    for (const id of Array.from(new Set(recRows.map(r => r.need_id))).sort()) {
-      const mine = recRows.filter(r => r.need_id === id);
-      const cnt = { T: 0, R: 0, U: 0 };
-      mine.forEach(r => new Set((r.records.toUpperCase().match(/[TRU]/g) || [])).forEach(l => cnt[l]++));
-      t5.push([id, String(cnt.T), String(cnt.R), String(cnt.U), `${mine.length}/${people.length}`]);
+  const pairs = {};
+  const compare = (w, fa, fb) => {
+    const a = [], b = [];
+    for (const n of NEED_IDS) {
+      const x = fa(w, n), y = fb(w, n);
+      if (CLASSES.includes(x) && CLASSES.includes(y)) { a.push(x); b.push(y); }
     }
-    out.push(table(['Need', 'T', 'R', 'U', 'Readers recording'], t5));
+    return { ag: agreement(a, b), k: cohenKappa(a, b) };
+  };
+  const K = (w, n) => P.key[n], R = (w, n) => P.rec[`${w}|${n}`], O = (w, n) => obs[`${w}|${n}`];
+  const agreeRows = [];
+  for (const w of ['RX', 'RY']) {
+    pairs[w] = { keyObs: compare(w, K, O), keyRec: compare(w, K, R), recObs: compare(w, R, O) };
+    const c = x => `${xofn(x.ag.agree, x.ag.n)} (kappa ${kfmt(x.k.kappa)})`;
+    agreeRows.push([`${w} (${WEEK_FIRST[w]})`, c(pairs[w].keyObs), c(pairs[w].keyRec), c(pairs[w].recObs)]);
   }
-  out.push('\n### Needs where readers departed from the key (each is a finding about what the artefacts cannot say; denominator = readers who classified that need)\n');
-  const classifiedBy = {};
-  N.perNeed.forEach(x => { classifiedBy[x.id] = x.classified; });
-  const dis = needIds.filter(id => miss[id]).map(id => [id, key[id], `${miss[id].length}/${classifiedBy[id]}`, miss[id].join(', ')]);
-  out.push(dis.length ? table(['Need', 'Key', 'Readers differing', 'Reader:their label'], dis) : 'None: every reader matched the key on every need.');
-  return out.join('\n');
+  return {
+    id: 'C', title: 'Table C. Key against observed (SQ1, first reads only): the key\'s R/U class, what the git log could answer, and the observed class (page gave / git-log result)',
+    head: ['Need', 'Key (R/U)', 'RX log', 'RX observed', 'RY log', 'RY observed'],
+    rows,
+    summary: {
+      title: 'Table C (continued). Agreement per week, needs in agreement out of needs with both labels. Kappa (Cohen, 1960) is indicative only: with ten needs it is unstable',
+      head: ['Week', 'Key against observed', 'Key against log', 'Log against observed (what the page lost from the records)'],
+      rows: agreeRows,
+    },
+    notes: ['Observed class, fixed before SE2: N = page gave N, or the answer is W or NA; D = page gave F and the answer is C; P = any other mix of F or P with C or PC.',
+      `Over-claims (page gave F, answer W): ${overclaims.length ? overclaims.join(', ') : 'none'}.`],
+    warnings: P.warnings, obs, pairs, overclaims,
+  };
 }
 
-// ---------- 5. think-aloud coding ----------
+// ---------- Table D. Items (SE2, only if the reserve items exist) ----------
+function prepareItems(rowsIn) {
+  const warnings = csvWarnings(rowsIn).slice();
+  const rows = [], seen = {};
+  for (const r of rowsIn) {
+    const read = checkRead(r, warnings, 'item');
+    if (!read) continue;
+    const it = (r.item || '').trim();
+    if (!/^0*[1-6]$/.test(it)) { warnings.push(`WARNING: item ${lineOf(r)}: item "${r.item}" is not 1 to 6. Row left out.`); continue; }
+    const item = String(parseInt(it, 10));
+    const raw = (r.score || '').trim();
+    const v = { read, item, level: (r.level || '').trim().toUpperCase(), conf: intIn(r.confidence_1to5, 1, 5), seconds: num(r.seconds),
+      specific: (r.specific || '').trim(), chg: (r.changed_on_second_read || '').trim().toLowerCase(), raw };
+    if (item === '6') {
+      v.code6 = raw === '' ? '' : normCode6(raw);
+      if (v.code6 === null) { warnings.push(`WARNING: ${read} item 6: "${raw}" is not Pass, Hedged or Over-claim. Read as not scored.`); v.code6 = ''; }
+    } else {
+      v.score = raw === '' ? null : (/^[012]$/.test(raw) ? Number(raw) : NaN);
+      if (Number.isNaN(v.score)) { warnings.push(`WARNING: ${read} item ${item}: score "${raw}" is not 0, 1 or 2. Read as not scored.`); v.score = null; }
+    }
+    if (v.level && !['L1', 'L2', 'L3', 'U'].includes(v.level)) warnings.push(`WARNING: ${read} item ${item}: level "${r.level}" is not L1, L2, L3 or U.`);
+    const k = `${read}|${item}`;
+    (seen[k] = seen[k] || []).push(v);
+    rows.push(v);
+  }
+  const dups = Object.keys(seen).filter(k => seen[k].length > 1);
+  if (dups.length) warnings.push(`WARNING: item listed more than once for one read, left out until fixed: ${dups.map(k => k.replace('|', ' item ')).join('; ')}.`);
+  return { rows: rows.filter(v => seen[`${v.read}|${v.item}`].length === 1), warnings };
+}
+
+function tableD(rowsIn) {
+  const P = prepareItems(rowsIn);
+  const get = (read, it) => P.rows.find(v => v.read === read && v.item === it);
+  const rows = ['1', '2', '3', '4', '5', '6'].map(it => {
+    const lv = Array.from(new Set(P.rows.filter(v => v.item === it && v.level).map(v => v.level)));
+    return [it, lv.join('/')].concat(READ_IDS.map(read => {
+      const v = get(read, it);
+      if (!v) return '–';
+      return it === '6' ? (v.code6 || '?') : (v.score === null ? '?' : String(v.score));
+    }));
+  });
+  const tot = READ_IDS.map(read => {
+    const s = ['1', '2', '3', '4', '5'].map(it => get(read, it)).filter(v => v && v.score !== null);
+    return s.length === 5 ? `${s.reduce((a, v) => a + v.score, 0)} of 10` : `${s.length} of 5 scored`;
+  });
+  rows.push(['1-5', 'total'].concat(tot));
+  const spec = READ_IDS.map(read => {
+    const s = ['4', '5'].map(it => get(read, it)).filter(v => v && v.specific);
+    return s.length ? xofn(s.filter(v => isYes(v.specific)).length, s.length) : '–';
+  });
+  rows.push(['4-5', 'specific (y)'].concat(spec));
+  return {
+    id: 'D', title: 'Table D. Items per read (SE2, SQ2): items 1-5 scored 0, 1 or 2; item 6 coded Pass, Hedged or Over-claim',
+    head: ['Item', 'Level', 'RX-A1', 'RX-B2', 'RY-B1', 'RY-A2'], rows,
+    notes: ['Second reads record change only. Never add first and second reads together.'],
+    warnings: P.warnings,
+  };
+}
+
+// ---------- Table H and the figure: reads ----------
+function hhmm(s) { const m = /^(\d{1,2}):(\d{2})$/.exec((s || '').trim()); return m ? Number(m[1]) * 60 + Number(m[2]) : null; }
+
+function prepareReads(rowsIn) {
+  const warnings = csvWarnings(rowsIn).slice();
+  const rows = [], seen = {};
+  for (const r of rowsIn) {
+    const read = checkRead(r, warnings, 'read');
+    if (!read) continue;
+    const v = { read, line: r._line, date: (r.date || '').trim(), seen: (r.seen_before || '').trim().toLowerCase(), why: (r.rating_why || '').trim(),
+      interruptions: (r.interruptions || '').trim(), note: (r.note || '').trim() };
+    for (const k of ['ease_1to5', 'useful_1to5', 'would_send_1to5']) {
+      v[k] = intIn(r[k], 1, 5);
+      if (r[k] && v[k] === null) warnings.push(`WARNING: ${read}: ${k} "${r[k]}" is not 1 to 5. Read as blank.`);
+    }
+    if (v.seen && !['y', 'n', 'unsure'].includes(v.seen)) warnings.push(`WARNING: ${read}: seen_before "${r.seen_before}" is not y, n or unsure.`);
+    const parts = ['minutes_items', 'minutes_needs', 'minutes_standup'].map(k => num(r[k]));
+    const st = hhmm(r.start_time), en = hhmm(r.end_time);
+    v.parts = parts;
+    if (parts.some(x => x !== null)) v.minutes = parts.reduce((a, x) => a + (x || 0), 0);
+    else if (st !== null && en !== null) v.minutes = en >= st ? en - st : en + 1440 - st;
+    else v.minutes = null;
+    v.standup = ['standup_s', 'standup_c', 'standup_u'].map(k => num(r[k]));
+    const first = FIRST_READS.includes(read);
+    if (!first && (v.standup.some(x => x !== null) || num(r.minutes_standup) !== null)) warnings.push(`WARNING: ${read}: stand-up columns are filled on a second read. The stand-up draft is written on first reads only.`);
+    (seen[read] = seen[read] || []).push(v);
+    rows.push(v);
+  }
+  const dups = Object.keys(seen).filter(k => seen[k].length > 1);
+  if (dups.length) warnings.push(`WARNING: read listed more than once, left out until fixed: ${dups.join(', ')}.`);
+  return { rows: rows.filter(v => seen[v.read].length === 1), warnings };
+}
+
+function tableH(rowsIn) {
+  const P = prepareReads(rowsIn);
+  const s = x => (x === null || x === undefined ? '' : String(x));
+  return {
+    id: 'H', title: 'Table H. Ratings and stand-up per read (SE2): ratings 1 (low) to 5 (high), written before scoring; one reader\'s opinion',
+    head: ['Read', 'Date', 'Seen before', 'Minutes', 'Ease', 'Useful', 'Would send', 'Why', 'Stand-up S', 'Stand-up C', 'Stand-up U'],
+    rows: READ_IDS.map(read => {
+      const v = P.rows.find(x => x.read === read);
+      if (!v) return [read, '–', '', '', '', '', '', '', '', '', ''];
+      return [read, v.date, v.seen, s(v.minutes), s(v.ease_1to5), s(v.useful_1to5), s(v.would_send_1to5), v.why.replace(/\|/g, '/')].concat(v.standup.map(s));
+    }),
+    notes: ['Stand-up claims are checked against the git log on first reads only (S supported, C contradicted, U unclear).'],
+    warnings: P.warnings,
+  };
+}
+
+// Data for the time-and-confidence figure: minutes per read, and need answers counted by confidence (1-5)
+// and git-log result. High-confidence wrong answers are confidence 4 or 5 scored W.
+function timeConfidence(readRows, needRows) {
+  const R = readRows ? prepareReads(readRows) : { rows: [], warnings: [] };
+  const N = needRows ? prepareNeeds(needRows) : { rows: [], warnings: [] };
+  const reads = READ_IDS.map(read => { const v = R.rows.find(x => x.read === read); return { read, first: FIRST_READS.includes(read), minutes: v ? v.minutes : null }; });
+  const grid = {};
+  RESULTS.forEach(res => { grid[res] = [0, 0, 0, 0, 0]; });
+  let n = 0;
+  N.rows.forEach(v => { if (v.conf !== null && RESULTS.includes(v.res)) { grid[v.res][v.conf - 1]++; n++; } });
+  const highWrong = grid.W[3] + grid.W[4];
+  return { reads, grid, n, highWrong, warnings: R.warnings.concat(N.warnings) };
+}
+
+function tableTime(readRows, needRows) {
+  const T = timeConfidence(readRows, needRows);
+  return {
+    id: 'T', title: 'Figure data. Minutes per read, and need answers by confidence (1 a guess to 5 certain) and git-log result',
+    head: ['Result', 'Conf 1', 'Conf 2', 'Conf 3', 'Conf 4', 'Conf 5'],
+    rows: RESULTS.map(res => [res].concat(T.grid[res].map(String))),
+    notes: ['Minutes per read: ' + T.reads.map(r => `${r.read} ${r.minutes === null ? 'n/a' : r.minutes}`).join('; ') + '.',
+      `Answers with a confidence and a result: ${T.n}. Wrong at confidence 4 or 5: ${T.highWrong}.`],
+    warnings: T.warnings, data: T,
+  };
+}
+
+// ---------- Table E. Cognitive walkthrough (SE3) ----------
+function tableE(rowsIn) {
+  const warnings = csvWarnings(rowsIn).slice();
+  const rows = [];
+  const seen = {};
+  for (const r of rowsIn) {
+    const task = (r.task_id || '').trim().toUpperCase();
+    if (!/^CW[1-5]$/.test(task)) { warnings.push(`WARNING: SE3 ${lineOf(r)}: task_id "${r.task_id}" is not CW1 to CW5. Row left out.`); continue; }
+    const k = `${task}|${(r.step_no || '').trim()}`;
+    if (seen[k]) { warnings.push(`WARNING: SE3 ${task} step ${r.step_no}: listed more than once. Second row left out.`); continue; }
+    seen[k] = true;
+    const q = ['q1_right_effect', 'q2_notice_action', 'q3_associate_action', 'q4_see_progress'].map(c => {
+      const t = (r[c] || '').trim().toUpperCase();
+      if (t !== 'Y' && t !== 'N') { if (t || r.correct_action) warnings.push(`WARNING: SE3 ${task} step ${r.step_no}: ${c} "${r[c]}" is not Y or N.`); return ''; }
+      return t;
+    });
+    const sev = intIn(r.severity_0to4, 0, 4);
+    const fail = q.includes('N');
+    if (fail && !(r.failure_story || '').trim()) warnings.push(`WARNING: SE3 ${task} step ${r.step_no}: an N answer with no failure story.`);
+    if (fail && sev === null) warnings.push(`WARNING: SE3 ${task} step ${r.step_no}: an N answer with no severity 0 to 4.`);
+    rows.push({ task, q, sev, fail });
+  }
+  const tasks = ['CW1', 'CW2', 'CW3', 'CW4', 'CW5'];
+  const out = tasks.map(t => {
+    const s = rows.filter(v => v.task === t);
+    const sevs = [0, 1, 2, 3, 4].map(x => s.filter(v => v.fail && v.sev === x).length);
+    return [t, String(s.length)].concat([0, 1, 2, 3].map(i => String(s.filter(v => v.q[i] === 'N').length)), [String(s.filter(v => v.fail).length)], sevs.map(String));
+  });
+  const all = rows;
+  out.push(['All', String(all.length)].concat([0, 1, 2, 3].map(i => String(all.filter(v => v.q[i] === 'N').length)), [String(all.filter(v => v.fail).length)],
+    [0, 1, 2, 3, 4].map(x => String(all.filter(v => v.fail && v.sev === x).length))));
+  return {
+    id: 'E', title: 'Table E. Cognitive walkthrough of the Producer Page window (SE3; Wharton et al., 1994): N answers per question and failure stories by severity',
+    head: ['Task', 'Steps', 'Q1 N', 'Q2 N', 'Q3 N', 'Q4 N', 'Steps failing', 'Sev 0', 'Sev 1', 'Sev 2', 'Sev 3', 'Sev 4'],
+    rows: out,
+    notes: ['One evaluator, who built the tool. The walkthrough is usually a group method.'],
+    warnings,
+  };
+}
+
+// ---------- Table F. Heuristic problems (SE4), beside D1 ----------
+const HEURISTICS = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'H10'];
+function prepareProblems(rowsIn, who) {
+  const warnings = csvWarnings(rowsIn).slice();
+  const rows = [], seen = {};
+  for (const r of rowsIn) {
+    const tool = who || (r.tool || '').trim();
+    const id = (r.id || '').trim().toUpperCase();
+    const h = (r.heuristic || '').trim().toUpperCase();
+    const sev = intIn(r.severity_0to4, 0, 4);
+    const where = `${who ? 'SE4' : 'D1'} ${tool ? tool + ' ' : ''}${id || lineOf(r)}`;
+    if (!who && !tool) { warnings.push(`WARNING: D1 ${lineOf(r)}: blank tool. Row left out.`); continue; }
+    if (!HEURISTICS.includes(h)) warnings.push(`WARNING: ${where}: heuristic "${r.heuristic}" is not H1 to H10.`);
+    if (sev === null) { warnings.push(`WARNING: ${where}: severity "${r.severity_0to4}" is not 0 to 4. Row left out of the severity counts.`); }
+    const k = `${tool}|${id}`;
+    if (id && seen[k]) { warnings.push(`WARNING: ${where}: id listed more than once. Second row left out.`); continue; }
+    seen[k] = true;
+    rows.push({ tool, id, h, sev, checked: isYes(r.raphael_checked_yn) });
+  }
+  return { rows, warnings };
+}
+
+function tableF(heurRows, taskRows, d1Rows, d1TaskRows) {
+  const warnings = [];
+  const CL = heurRows ? prepareProblems(heurRows, 'ChangeLens') : { rows: [], warnings: [] };
+  const D1 = d1Rows ? prepareProblems(d1Rows, null) : { rows: [], warnings: [] };
+  warnings.push(...CL.warnings, ...D1.warnings);
+  const tools = ['ChangeLens'].concat(Array.from(new Set(D1.rows.map(v => v.tool))));
+  const all = CL.rows.concat(D1.rows);
+  const cell = (tool, f) => {
+    const s = all.filter(v => v.tool === tool && f(v));
+    if (tool === 'ChangeLens') return String(s.length);
+    return `${s.length} (${s.filter(v => v.checked).length} checked)`;
+  };
+  const sevRows = [0, 1, 2, 3, 4].map(x => [`Severity ${x}`].concat(tools.map(t => cell(t, v => v.sev === x))));
+  sevRows.push(['Total'].concat(tools.map(t => cell(t, () => true))));
+  const hRows = HEURISTICS.map(h => [h].concat(tools.map(t => cell(t, v => v.h === h))));
+  // task outcomes T1 to T7
+  const tOut = {};
+  const tWarn = [];
+  const addTasks = (rowsIn, who) => {
+    tWarn.push(...csvWarnings(rowsIn));
+    for (const r of rowsIn) {
+      const tool = who || (r.tool || '').trim();
+      const task = (r.task || '').trim().toUpperCase();
+      if (!/^T[1-7]$/.test(task)) { tWarn.push(`WARNING: task outcome ${lineOf(r)}: task "${r.task}" is not T1 to T7. Row left out.`); continue; }
+      const c = (r.completed || '').trim();
+      const cv = /^y(es)?$/i.test(c) ? 'Y' : /^n(o)?$/i.test(c) ? 'N' : /^partly$/i.test(c) ? 'partly' : c;
+      if (!['Y', 'N', 'partly'].includes(cv)) tWarn.push(`WARNING: task outcome ${tool} ${task}: completed "${c}" is not Y, partly or N (D1's values). Kept as typed.`);
+      const sec = num(r.seconds);
+      tOut[`${tool}|${task}`] = cv + (who && sec !== null ? ` (${sec} s)` : '');
+    }
+  };
+  if (taskRows) addTasks(taskRows, 'ChangeLens');
+  if (d1TaskRows) addTasks(d1TaskRows, null);
+  warnings.push(...tWarn);
+  const tTools = ['ChangeLens'].concat(Array.from(new Set(Object.keys(tOut).map(k => k.split('|')[0]).filter(t => t !== 'ChangeLens'))));
+  const taskTable = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'].map(t => [t].concat(tTools.map(tool => tOut[`${tool}|${t}`] || '–')));
+  return {
+    id: 'F', title: 'Table F. Heuristic problems by severity (SE4; Nielsen, 1994, on the D1 scale): ChangeLens beside the D1 tools',
+    head: ['Severity'].concat(tools), rows: sevRows,
+    extra: [
+      { title: 'Table F (continued). Problems by primary heuristic', head: ['Heuristic'].concat(tools), rows: hRows },
+      { title: 'Table F (continued). Tasks T1 to T7: completed Y, partly or N', head: ['Task'].concat(tTools), rows: taskTable },
+    ],
+    notes: ['D1\'s pass was run by an AI evaluator. Use a D1 rating only where Raphael has checked it ("checked"), and say which.',
+      'One evaluator found the ChangeLens problems, and he built the tool (Nielsen & Molich, 1990; Hertzum & Jacobsen, 2001).'],
+    warnings,
+  };
+}
+
+// ---------- Table G. Needs log (SE2), D5 coding layout ----------
 // The 21 types, from deliverable-5/think-aloud-coding-sheet.md (checked against Ko et al., 2007,
 // Section 5 and Figure 3, on 13 Oct 2026). The last three codes are Raphael's own, not Ko et al.'s.
 const KO_TYPES = {
@@ -761,148 +693,184 @@ const EXTRA_CODES = {
   unclear: ['Cannot tell from the note (extra code, not Ko et al.)', ''],
 };
 const inCodebook = c => Object.prototype.hasOwnProperty.call(KO_TYPES, c) || Object.prototype.hasOwnProperty.call(EXTRA_CODES, c);
-// Two accepted layouts: long (segment_id, participant, pass, code) or wide (segment_id, participant,
-// pass1_code, pass2_code, as in deliverable-5/think-aloud-coding-sheet.csv). Segments are keyed by
-// participant + segment_id, so ids that restart for each reader do not merge. Pilot rows are dropped.
-function prepareCodes(codeTyped) {
-  const np = normParticipants(codeTyped), codeRows = np.rows;
-  const warnings = csvWarnings(codeRows).slice();
-  if (np.warning) warnings.push(np.warning);
-  const pilot = codeRows.filter(isPilot);
-  const blankP = codeRows.filter(isBlankP);
-  if (blankP.length) {
-    warnings.push(`WARNING: ${blankP.length} row(s) with a blank participant, left out until filled in: segment ${blankP.map(r => r.segment_id || '(blank)').join(', ')}. ` + BLANK_P_NOTE);
-  }
-  const rows = codeRows.filter(r => !isPilot(r) && !blankP.includes(r));
-  const by = {}, label = {}, count = {};
-  const owners = {}, badPass = [];
-  rows.forEach(r => {
-    const p = r.participant || '';
-    const k = `${p}|${r.segment_id}`;
-    label[k] = { seg: r.segment_id, p };
-    (owners[r.segment_id] = owners[r.segment_id] || new Set()).add(p);
-    const seg = (by[k] = by[k] || {});
-    if (r.pass !== undefined && r.code !== undefined) {
-      // pass is 1, 2 or final; 'pass 2', 'p2' and 'Pass2' read by their last number, 'f' and 'final' as final
-      const pt = (r.pass || '').trim().toLowerCase(), num = /(\d+)\s*$/.exec(pt);
-      const pass = /^f/.test(pt) ? 'f' : (num ? String(parseInt(num[1], 10)) : '');
-      if (pass !== '1' && pass !== '2' && pass !== 'f') { badPass.push(`${fmtSeg(label[k])} ("${r.pass}")`); return; }
-      const ck = `${k}|${pass}`; count[ck] = (count[ck] || 0) + 1;
-      if (r.code) seg[pass] = r.code.toLowerCase();
-    } else {
-      count[k] = (count[k] || 0) + 1;
-      if (r.pass1_code) seg['1'] = r.pass1_code.toLowerCase();
-      if (r.pass2_code) seg['2'] = r.pass2_code.toLowerCase();
-      if (r.final_code) seg.f = r.final_code.toLowerCase();
-    }
-  });
-  if (badPass.length) warnings.push(`WARNING: pass not 1, 2 or final, row left out until fixed: ${badPass.join('; ')}.`);
-  // a segment listed twice (twice in one pass for the long layout) cannot be trusted: leave it out
-  const dupKeys = new Set(Object.keys(count).filter(c => count[c] > 1).map(c => c.split('|').slice(0, 2).join('|')));
-  if (dupKeys.size) {
-    warnings.push('WARNING: segment listed more than once for the same reader' + (rows.some(r => r.pass !== undefined) ? ' and pass' : '') +
-      ', left out until fixed: ' + Array.from(dupKeys).sort().map(k => fmtSeg(label[k])).join(', ') + '.');
-    dupKeys.forEach(k => delete by[k]);
-  }
-  // every code must be in the codebook; a typo ('a 2', 'dl') or two codes in one cell ('a2/d3') is named here
-  // and the segment's pass 1 / pass 2 pair is left out of agreement (analyseCodes) until it is fixed
-  const badCode = [];
-  Object.keys(by).sort().forEach(k => {
-    for (const [ps, name] of [['1', 'pass 1'], ['2', 'pass 2'], ['f', 'final']]) {
-      const c = by[k][ps];
-      if (c && !inCodebook(c)) badCode.push(`${fmtSeg(label[k])} ${name} "${c}"`);
-    }
-  });
-  if (badCode.length) {
-    warnings.push(`WARNING: code not in the codebook (the 21 Ko et al. types, none, other, unclear): ${badCode.join('; ')}. ` +
-      'Pass 1 / pass 2 pairs with such a code are left out of agreement until fixed.');
-  }
-  const shared = Object.keys(owners).filter(s => owners[s].size > 1).sort();
-  if (shared.length) {
-    warnings.push(`WARNING: segment_id used for more than one reader: ${shared.map(s => `${s} (${Array.from(owners[s]).sort().join(', ')})`).join('; ')}. ` +
-      'Analysed per reader here, but deliverable-5/recode-sample.js merge keys by segment_id alone. Make every segment_id unique across the sheet before the draw.');
-  }
-  return { by, label, pilotRows: pilot.length, warnings };
-}
-const fmtSeg = l => (l.p ? `${l.p} ${l.seg}` : l.seg);
 
-function analyseCodes(codeRows) {
-  const out = [];
-  const C = prepareCodes(codeRows);
-  const by = C.by;
-  if (C.pilotRows) out.push(`Pilot rows excluded: ${C.pilotRows}.`);
-  C.warnings.forEach(w => out.push(w));
-  const ids = Object.keys(by).sort();
-  const first = ids.filter(id => by[id]['1']);
-  const recoded = ids.filter(id => by[id]['1'] && by[id]['2']);
-  const both = recoded.filter(id => inCodebook(by[id]['1']) && inCodebook(by[id]['2']));
-  out.push(`Segments with pass 1: ${first.length}. Re-coded in pass 2: ${recoded.length} (${first.length ? Math.round(100 * recoded.length / first.length) : 0}% of pass 1; A2 plans about a quarter).`);
-  if (recoded.length > both.length) out.push(`Re-coded pairs left out of agreement for a code not in the codebook: ${recoded.length - both.length}. Fix them and run again.`);
-  if (!both.length) return out.join('\n');
-  const a = both.map(id => by[id]['1']), b = both.map(id => by[id]['2']);
-  const ag = agreement(a, b), k = cohenKappa(a, b);
-  out.push(`Agreement: ${pct(ag.agree, ag.n)}. Cohen's kappa: ${kfmt(k.kappa)}.`);
-  const d = both.filter(id => by[id]['1'] !== by[id]['2']).map(id => [C.label[id].seg, C.label[id].p, by[id]['1'], by[id]['2']]);
-  out.push('\n### Segments where the passes differ (settle by reading the quote, then record the rule you applied)\n');
-  out.push(d.length ? table(['Segment', 'Reader', 'Pass 1', 'Pass 2'], d) : 'None.');
-  const cnt = {};
-  first.forEach(id => { const c = by[id]['1']; cnt[c] = (cnt[c] || 0) + 1; });
-  out.push('\n### Pass 1 code counts (all coded segments)\n');
-  out.push(table(['Code', 'Segments'], Object.keys(cnt).sort().map(c => [c, String(cnt[c])])));
-  out.push('\nA quarter-sample of a few dozen segments gives a rough check on coding, not a precise reliability figure.');
+function prepareLog(rowsIn) {
+  const warnings = csvWarnings(rowsIn).slice();
+  const count = {};
+  rowsIn.forEach(r => { const s = (r.segment_id || '').trim(); count[s] = (count[s] || 0) + 1; });
+  const dup = Object.keys(count).filter(s => s && count[s] > 1).sort();
+  if (dup.length) warnings.push(`WARNING: needs-log segment_id used on more than one row, left out until fixed: ${dup.join(', ')}. deliverable-5/recode-sample.js stops on this too.`);
+  const rows = [];
+  const others = new Set(), badCond = [], badCode = [];
+  for (const r of rowsIn) {
+    const seg = (r.segment_id || '').trim();
+    if (!seg) { warnings.push(`WARNING: needs log ${lineOf(r)}: blank segment_id. Row left out.`); continue; }
+    if (count[seg] > 1) continue;
+    const p = (r.participant || '').trim().toUpperCase();
+    if (p !== 'SELF') others.add(r.participant || '(blank)');
+    const cond = normReadId(r.report_condition);
+    if (!READS[cond]) badCond.push(`${seg} ("${r.report_condition || ''}")`);
+    const v = { seg, cond: READS[cond] ? cond : '', p1: (r.pass1_code || '').trim().toLowerCase(), p2: (r.pass2_code || '').trim().toLowerCase(), fin: (r.final_code || '').trim().toLowerCase() };
+    for (const [k, name] of [['p1', 'pass 1'], ['p2', 'pass 2'], ['fin', 'final']]) if (v[k] && !inCodebook(v[k])) badCode.push(`${seg} ${name} "${v[k]}"`);
+    rows.push(v);
+  }
+  if (others.size) warnings.push(`WARNING: needs-log participant is not SELF: ${Array.from(others).sort().join(', ')}. The solo study has one participant code, SELF. Rows kept; fix the code.`);
+  if (badCond.length) warnings.push(`WARNING: needs-log report_condition is not a read_id (RX-A1, RX-B2, RY-B1, RY-A2): ${badCond.join('; ')}. Counted in the total only.`);
+  if (badCode.length) warnings.push(`WARNING: code not in the codebook (the 21 Ko et al. types, none, other, unclear): ${badCode.join('; ')}. Pass 1 / pass 2 pairs with such a code are left out of agreement until fixed.`);
+  return { rows, warnings };
+}
+
+function tableG(rowsIn) {
+  const P = prepareLog(rowsIn);
+  const cnt = {}, byRead = {};
+  let resolved = 0;
+  P.rows.forEach(v => {
+    const c = v.fin || v.p1;
+    if (v.fin) resolved++;
+    if (!c) return;
+    cnt[c] = (cnt[c] || 0) + 1;
+    const k = `${c}|${v.cond}`;
+    byRead[k] = (byRead[k] || 0) + 1;
+  });
+  const codes = Object.keys(cnt).sort((p, q) => cnt[q] - cnt[p] || p.localeCompare(q));
+  const rows = codes.map(c => {
+    const t = KO_TYPES[c] || EXTRA_CODES[c] || ['NOT IN CODEBOOK: check the sheet', ''];
+    return [c, t[0], t[1]].concat(READ_IDS.map(r => String(byRead[`${c}|${r}`] || 0)), [String(cnt[c])]);
+  });
+  const total = codes.reduce((a, c) => a + cnt[c], 0);
+  const coded = P.rows.filter(v => v.p1);
+  const recoded = coded.filter(v => v.p2);
+  const both = recoded.filter(v => inCodebook(v.p1) && inCodebook(v.p2));
+  const ag = agreement(both.map(v => v.p1), both.map(v => v.p2));
+  const differ = both.filter(v => v.p1 !== v.p2).map(v => `${v.seg} (${v.p1} / ${v.p2})`);
+  const never = Object.keys(KO_TYPES).filter(c => !cnt[c]);
+  return {
+    id: 'G', title: `Table G. What the page left unmet (SE2 needs log): entries by Ko et al. (2007) information type (final code after resolution, else pass 1; ${resolved} with a final code; ${total} entries)`,
+    head: ['Code', 'Category', 'Information type'].concat(READ_IDS, ['Total']), rows,
+    notes: [`Types never coded: ${never.length ? never.join(', ') : 'none'}.`,
+      `Entries with pass 1: ${coded.length}. Re-coded blind in pass 2: ${recoded.length}. Pass 1 against pass 2: ${xofn(ag.agree, ag.n)} in agreement` +
+        (recoded.length > both.length ? ` (${recoded.length - both.length} pair(s) left out for a code not in the codebook)` : '') + '. No kappa: with a handful of re-coded lines and 24 codes it would mean nothing.',
+      `Entries where the passes differ: ${differ.length ? differ.join('; ') : 'none'}.`,
+      'The log holds typed notes written alone after reading, not spoken think-aloud comments.'],
+    warnings: P.warnings, agreement: ag, counts: cnt,
+  };
+}
+
+// ---------- Scoring check (optional AI second scorer) ----------
+function scoringCheck(needRows, itemRows, s2Rows) {
+  const warnings = csvWarnings(s2Rows).map(w => 'Second-scorer file: ' + w);
+  const N = needRows ? prepareNeeds(needRows) : { rows: [] };
+  const I = itemRows ? prepareItems(itemRows) : { rows: [] };
+  const res = { need: { agree: 0, n: 0 }, item: { agree: 0, n: 0 } }, differ = [], noMatch = [], scorers = new Set();
+  const seen = {};
+  for (const r of s2Rows) {
+    const read = checkRead(r, warnings, 'second scorer');
+    if (!read) continue;
+    const kind = (r.kind || '').trim().toLowerCase();
+    if (kind !== 'need' && kind !== 'item') { warnings.push(`WARNING: second scorer ${lineOf(r)}: kind "${r.kind}" is not need or item. Row left out.`); continue; }
+    const id = kind === 'need' ? normNeedId(r.id) : String(parseInt((r.id || '').trim(), 10));
+    const k = `${read}|${kind}|${id}`;
+    if (seen[k]) { warnings.push(`WARNING: second scorer ${read} ${kind} ${id}: listed more than once. Second row left out.`); continue; }
+    seen[k] = true;
+    if ((r.scorer || '').trim()) scorers.add(r.scorer.trim());
+    let mine = null, theirs = (r.score || '').trim();
+    if (kind === 'need') {
+      const v = N.rows.find(x => x.read === read && x.need === id);
+      mine = v && v.res ? v.res : null;
+      theirs = theirs.toUpperCase();
+    } else {
+      const v = I.rows.find(x => x.read === read && x.item === id);
+      if (v) mine = id === '6' ? (v.code6 || null) : (v.score === null ? null : String(v.score));
+      if (id === '6') theirs = normCode6(theirs) || theirs;
+    }
+    if (mine === null) { noMatch.push(`${read} ${kind} ${id}`); continue; }
+    res[kind].n++;
+    if (mine === theirs) res[kind].agree++; else differ.push([read, kind, id, mine, theirs]);
+  }
+  if (noMatch.length) warnings.push(`WARNING: second-scorer rows with no scored answer of Raphael's to compare, left out: ${noMatch.join('; ')}.`);
+  return {
+    id: 'S', title: 'Scoring check. AI second scorer against Raphael\'s scores (answers in agreement out of answers scored)',
+    head: ['Read', 'Kind', 'Id', 'Raphael', 'Second scorer'], rows: differ,
+    notes: [`Scorer: ${scorers.size ? Array.from(scorers).join(', ') : 'not named'}. Need answers in agreement: ${xofn(res.need.agree, res.need.n)}. Item answers in agreement: ${xofn(res.item.agree, res.item.n)}.`,
+      'Disclose the AI second scorer in the GenAI statement. The table lists only the answers where the two differ.'],
+    warnings, result: res,
+  };
+}
+
+// ---------- output ----------
+function render(t, fmt) {
+  fmt = fmt || table;
+  const out = [`\n### ${t.title}\n`];
+  out.push(t.rows.length ? fmt(t.head, t.rows) : 'No rows.');
+  if (t.summary) out.push(`\n**${t.summary.title}**\n`, fmt(t.summary.head, t.summary.rows));
+  (t.extra || []).forEach(x => out.push(`\n**${x.title}**\n`, fmt(x.head, x.rows)));
+  if (t.notes && t.notes.length) out.push('', t.notes.join('\n'));
+  if (t.warnings && t.warnings.length) out.push('', t.warnings.join('\n'));
   return out.join('\n');
 }
 
-// ---------- main ----------
 function args(argv) {
   const o = {};
   for (let i = 0; i < argv.length; i++) if (argv[i].startsWith('--')) o[argv[i].slice(2)] = argv[++i];
   return o;
 }
 
-// Closing line of the output, with the real number of complete readers (pilot excluded).
-function footer(n) {
-  if (n === null || n === undefined) return 'Report raw counts and limits.';
-  return `Report raw counts and limits. ${n} complete reader${n === 1 ? '' : 's'} (pilot excluded) show direction and failure points, not significance.` +
-    (n < FLOOR ? ' Below the five-reader floor: A2 fallback applies.' : '');
+const INPUTS = {
+  se1: 'sample-se1-fidelity-handcheck.csv', reads: 'sample-se2-reads.csv', needs: 'sample-se2-need-answers.csv',
+  items: 'sample-se2-item-scores.csv', log: 'sample-se2-needs-log.csv', scorer2: 'sample-se2-second-scorer.csv',
+  walk: 'sample-se3-walkthrough.csv', heur: 'sample-se4-heuristic-problems.csv', tasks: 'sample-se4-task-outcomes.csv',
+  d1: 'sample-d1-problems.csv', d1tasks: 'sample-d1-task-outcomes.csv',
+};
+// Input files from the command line, or every FAKE sample when none is given.
+function inputFiles(a, dir) {
+  const useSample = !Object.keys(INPUTS).some(k => a[k]);
+  const f = {};
+  for (const k of Object.keys(INPUTS)) f[k] = a[k] || (useSample ? path.join(dir, INPUTS[k]) : null);
+  return f;
 }
+const isFake = f => Object.values(f).some(x => x && path.basename(x).startsWith('sample-'));
+
+function buildAll(f) {
+  const rd = k => (f[k] ? readCSV(f[k]) : null);
+  const d = {};
+  for (const k of Object.keys(INPUTS)) d[k] = rd(k);
+  const t = [];
+  if (d.se1) t.push(tableA(d.se1));
+  if (d.needs) { t.push(tableB(d.needs)); t.push(tableC(d.needs)); }
+  if (d.items) t.push(tableD(d.items));
+  if (d.reads || d.needs) t.push(tableTime(d.reads, d.needs));
+  if (d.walk) t.push(tableE(d.walk));
+  if (d.heur || d.tasks) t.push(tableF(d.heur, d.tasks, d.d1, d.d1tasks));
+  if (d.log) t.push(tableG(d.log));
+  if (d.reads) t.push(tableH(d.reads));
+  if (d.scorer2) {
+    if (d.needs || d.items) t.push(scoringCheck(d.needs, d.items, d.scorer2));
+    else t.push({ id: 'S', title: 'Scoring check', head: [], rows: [], notes: ['Needs --needs or --items beside --scorer2; skipped.'] });
+  }
+  return t;
+}
+
+const FOOTER = 'One reader, the developer. Raw counts only, no p-values. These tables show what the page holds and where it fails for this reader, not how producers would do.';
 
 function main() {
   const a = args(process.argv.slice(2));
-  const dir = __dirname;
-  const useSample = !a.scores && !a.needs && !a.key && !a.codes && !a.scores2;
-  const f = {
-    scores: a.scores || (useSample ? path.join(dir, 'sample-item-scores.csv') : null),
-    needs: a.needs || (useSample ? path.join(dir, 'sample-need-classifications.csv') : null),
-    key: a.key || (useSample ? path.join(dir, 'sample-marking-key.csv') : null),
-    codes: a.codes || (useSample ? path.join(dir, 'sample-think-aloud-codes.csv') : null),
-  };
-  if (a.scores2) f.scores2 = a.scores2;
-  const out = [];
-  const fake = Object.values(f).some(x => x && path.basename(x).startsWith('sample-'));
-  out.push('# ChangeLens evaluation analysis');
-  if (fake) out.push('\n**FAKE DATA: one or more inputs are sample-*.csv files. Nothing below is a result.**');
+  const f = inputFiles(a, __dirname);
+  const out = ['# ChangeLens solo evaluation analysis'];
+  if (isFake(f)) out.push('\n**FAKE DATA: one or more inputs are sample-*.csv files. Nothing below is a result.**');
   out.push('\nInputs: ' + Object.entries(f).filter(([, v]) => v).map(([k, v]) => `${k}=${path.basename(v)}`).join(', '));
-  let nReaders = null;
-  if (f.scores) {
-    const sRows = readCSV(f.scores);
-    nReaders = prepareScores(sRows).complete.length;
-    out.push('\n## 1. Item scores'); out.push(analyseScores(sRows));
-    if (a.scores2) { out.push('\n## 1b. Second-scorer agreement'); out.push(analyseSecondScorer(sRows, readCSV(a.scores2))); }
-  } else if (a.scores2) out.push('\n## 1b. Second-scorer agreement\nNeeds both --scores and --scores2; skipped.');
-  if (f.needs && f.key) { out.push('\n## 2. Ten-need sheet'); out.push(analyseNeeds(readCSV(f.needs), readCSV(f.key))); }
-  else if (f.needs || f.key) out.push('\n## 2. Ten-need sheet\nNeeds both --needs and --key; skipped.');
-  if (f.codes) { out.push('\n## 3. Think-aloud coding agreement'); out.push(analyseCodes(readCSV(f.codes))); }
-  out.push('\n---\n' + footer(nReaders));
+  buildAll(f).forEach(t => out.push(render(t)));
+  out.push('\n---\n' + FOOTER);
   const text = out.join('\n') + '\n';
   if (a.out) fs.writeFileSync(a.out, text);
   process.stdout.write(text);
 }
 
 module.exports = {
-  parseCSV, readCSV, agreement, cohenKappa, analyseScores, analyseNeeds, analyseCodes, mean, median,
-  prepareScores, prepareNeeds, prepareCodes, pairedDiffs, fullMarkCounts, item6Counts, sequenceCounts,
-  secondScorer, analyseSecondScorer, footer, isPilot, FLOOR, normNeedId, orderByCondition, weekBalanced,
-  KO_TYPES, EXTRA_CODES, inCodebook, normParticipant,
+  parseCSV, readCSV, agreement, cohenKappa, table, render, f2,
+  READS, READ_IDS, FIRST_READS, NEED_IDS, SE1_WEEKS, KO_TYPES, EXTRA_CODES, inCodebook,
+  normReadId, normNeedId, observedClass,
+  prepareSE1, prepareNeeds, prepareItems, prepareReads, prepareLog,
+  tableA, tableB, tableC, tableD, tableE, tableF, tableG, tableH, tableTime, timeConfidence, scoringCheck,
+  INPUTS, inputFiles, isFake, buildAll, FOOTER,
 };
 if (require.main === module) main();

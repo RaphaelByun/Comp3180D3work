@@ -1,0 +1,3 @@
+# Optional, for Table F. The D1 problems from deliverable-1/heuristic-coding-sheet.md section 5, one row each.
+# raphael_checked_yn: y only for a finding Raphael has repeated by hand (CHECK-PACK). D1's pass was an AI evaluator.
+tool,id,heuristic,severity_0to4,raphael_checked_yn

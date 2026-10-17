@@ -1,0 +1,3 @@
+# SE2 items (only if the reserve items exist). item 1 to 6. level L1, L2, L3 or U. score 0, 1 or 2 (items 1-5); Pass, Hedged or Over-claim (item 6).
+# specific y/n for items 4 and 5. changed_on_second_read: new, changed, lost, same; blank on a first read.
+read_id,week,version,read_order,item,level,confidence_1to5,seconds,changed_on_second_read,score,specific,scored_date

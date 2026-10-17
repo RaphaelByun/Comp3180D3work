@@ -1,0 +1,5 @@
+# FAKE DATA. Invented tools and rows.
+tool,task,completed
+FakeToolA,T1,partly
+FakeToolA,T2,Y
+FakeToolB,T1,N

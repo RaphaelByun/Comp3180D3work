@@ -1,32 +1,29 @@
 #!/usr/bin/env node
 'use strict';
 /*
- * Figure 1 and Tables 1-3 for the A3 Evaluation section (COMP3180 A3, Deliverable 6).
- * Plain Node.js, no dependencies. Reads the same CSVs as analyse.js and uses its checks
- * (complete readers only, pilot excluded, think-aloud segments keyed by reader + segment_id).
+ * The time-and-confidence figure and the report tables for the A3 Evaluation section
+ * (COMP3180 A3, Deliverable 6, solo evaluation decided 17 Oct 2026).
+ * Plain Node.js, no dependencies. Reads the same CSVs as analyse.js and uses its checks.
  *
  * Usage:
  *   node figures.js                                  (FAKE sample-*.csv data, tables printed only)
- *   node figures.js --scores item-scores.csv --needs need-classifications.csv --key marking-key.csv \
- *                   --codes think-aloud-coding-sheet.csv --outdir deliverable-6/data/figures
+ *   node figures.js --reads se2-reads.csv --needs se2-need-answers.csv --log se2-needs-log.csv \
+ *                   --heur se4-heuristic-problems.csv --tasks se4-task-outcomes.csv [--d1 d1-problems.csv] \
+ *                   [--d1tasks d1-task-outcomes.csv] --outdir deliverable-6/data/figures --figure 5
  *
- * --figure N sets the plot's figure number in its title and in tables.md (default 1). The report-wide
- * numbering list in deliverable-7/README.md makes this plot Figure 5, so give --figure 5 for the report.
- * The file names keep figure-1 whatever the number.
+ * --figure N sets the figure's number in its title and in tables.md (default 1). The report-wide
+ * numbering list in deliverable-7/README.md makes this Figure 5, so give --figure 5 for the report.
  *
- * With --outdir it writes figure-1-paired-differences.svg and tables.md there, and a PNG copy of the
- * figure (figure-1-paired-differences.png, at twice the SVG size) for the Word builder, which embeds
- * PNG or JPG only. The PNG is made by an installed Chrome or Edge in headless mode (no npm package):
- * set CHROME_PATH if it is not found, or give --png no to skip it. Without --outdir, the tables are
- * printed and no image is written. Anything built from a sample-*.csv file is stamped FAKE.
+ * With --outdir it writes figure-time-confidence.svg and tables.md there, and a PNG copy of the figure
+ * (figure-time-confidence.png, at twice the SVG size) for the Word builder, which embeds PNG or JPG only.
+ * The PNG is made by an installed Chrome or Edge in headless mode (no npm package): set CHROME_PATH if it
+ * is not found, or give --png no to skip it. Without --outdir, the tables are printed and no image is
+ * written. Anything built from a sample-*.csv file is stamped FAKE.
  *
- *   Figure 1: dot plot, one dot per complete reader, treatment minus baseline (-10 to +10).
- *             Producers are filled circles, proxies hollow squares (shape, not colour, so it prints).
- *   Table 1:  all ten needs, the key class, readers matching the key n/N (N = readers who classified it).
- *   Table 2:  full-mark counts by item and condition, and by week within condition (complete readers only).
- *   Table 2b: item 6 Pass / Hedged / Over-claim counts per version (complete readers only).
- *   Table 3:  segment counts per Ko et al. (2007) information type, with the type's question. A segment
- *             counts under its final_code when the D5 resolve step set one, else under its pass 1 code.
+ *   Figure:  top, minutes per read (four bars: first reads filled, second reads hollow, so it prints in grey);
+ *            bottom, need answers counted by confidence (1 to 5) and git-log result (C, PC, W, NA), with
+ *            the wrong answers at confidence 4 or 5 outlined. It replaces the A2 paired-differences plot.
+ *   Tables:  B (ten needs by read), C (key against observed), F (heuristic problems beside D1), G (needs log).
  */
 const fs = require('fs');
 const path = require('path');
@@ -35,104 +32,94 @@ const cp = require('child_process');
 const { pathToFileURL } = require('url');
 const A = require('./analyse.js');
 
-// The codebook (21 Ko et al. types plus none, other, unclear) lives in analyse.js, which checks codes against it.
-const { KO_TYPES, EXTRA_CODES } = A;
-
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 function mdTable(head, rows) {
   return ['| ' + head.join(' | ') + ' |', '|' + head.map(() => '---').join('|') + '|']
     .concat(rows.map(r => '| ' + r.join(' | ') + ' |')).join('\n');
 }
 
-// ---------- Figure 1 ----------
-function figure1Svg(diffs, opts) {
+// ---------- the figure ----------
+// T is analyse.js timeConfidence(): { reads: [{read, first, minutes}], grid: {C|PC|W|NA: [n at conf 1..5]}, n, highWrong }.
+function figureSvg(T, opts) {
   const fake = opts && opts.fake;
   const num = (opts && opts.number) || 1;
-  const W = 640, left = 90, right = 30, top = fake ? 74 : 54, rowH = 26;
-  const plotH = Math.max(1, diffs.length) * rowH;
-  const H = top + plotH + 70;
-  const x = d => left + ((d + 10) / 20) * (W - left - right);
+  const W = 640, left = 110, right = 40;
   const ink = '#1F3A5F', grey = '#404040', grid = '#D0D0D0';
+  let y = fake ? 40 : 14;
   const o = [];
-  o.push(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="Calibri, Arial, sans-serif" role="img" aria-labelledby="t d">`);
-  o.push(`<title id="t">Figure ${num}: paired difference per reader</title>`);
-  o.push(`<desc id="d">Treatment score minus baseline score out of 10 for each of ${diffs.length} readers. ` +
-    esc(diffs.map(r => `${r.p} (${r.role || 'no role'}) ${r.d > 0 ? '+' : ''}${r.d}`).join('; ')) + '.</desc>');
-  o.push(`<rect width="${W}" height="${H}" fill="#FFFFFF"/>`);
-  if (fake) o.push(`<text x="${W / 2}" y="22" text-anchor="middle" font-size="16" font-weight="bold" fill="#B00020">FAKE DATA: sample files, not a result</text>`);
-  o.push(`<text x="${left}" y="${top - 26}" font-size="14" font-weight="bold" fill="${grey}">Treatment minus baseline, points out of 10 (n = ${diffs.length})</text>`);
-  // grid and axis
-  for (let t = -10; t <= 10; t += 2) {
-    o.push(`<line x1="${x(t)}" y1="${top - 8}" x2="${x(t)}" y2="${top + plotH}" stroke="${t === 0 ? grey : grid}" stroke-width="${t === 0 ? 1.5 : 1}"/>`);
-    o.push(`<text x="${x(t)}" y="${top + plotH + 18}" text-anchor="middle" font-size="12" fill="${grey}">${t > 0 ? '+' : ''}${t}</text>`);
-  }
-  o.push(`<text x="${x(-5)}" y="${top + plotH + 36}" text-anchor="middle" font-size="12" fill="${grey}">lower with names</text>`);
-  o.push(`<text x="${x(5)}" y="${top + plotH + 36}" text-anchor="middle" font-size="12" fill="${grey}">higher with names</text>`);
-  diffs.forEach((r, i) => {
-    const cy = top + i * rowH + rowH / 2, cx = x(r.d);
-    o.push(`<text x="${left - 12}" y="${cy + 4}" text-anchor="end" font-size="12" fill="${grey}">${esc(r.p)}</text>`);
-    if (/^prod/i.test(r.role)) o.push(`<circle cx="${cx}" cy="${cy}" r="6" fill="${ink}"><title>${esc(r.p)} producer ${r.d > 0 ? '+' : ''}${r.d}</title></circle>`);
-    else o.push(`<rect x="${cx - 5.5}" y="${cy - 5.5}" width="11" height="11" fill="#FFFFFF" stroke="${ink}" stroke-width="2"><title>${esc(r.p)} ${esc(r.role || 'no role')} ${r.d > 0 ? '+' : ''}${r.d}</title></rect>`);
+  const body = [];
+  // panel 1: minutes per read
+  const maxMin = Math.max(10, ...T.reads.map(r => r.minutes || 0));
+  const top = Math.ceil(maxMin / 10) * 10;
+  const bx = m => left + (m / top) * (W - left - right);
+  body.push(`<text x="${left}" y="${y + 16}" font-size="14" font-weight="bold" fill="${grey}">Minutes per read (filled: first read; hollow: second read)</text>`);
+  y += 30;
+  const barTop = y;
+  T.reads.forEach((r, i) => {
+    const cy = barTop + i * 26;
+    body.push(`<text x="${left - 10}" y="${cy + 15}" text-anchor="end" font-size="12" fill="${grey}">${esc(r.read)}</text>`);
+    if (r.minutes === null) {
+      body.push(`<text x="${left + 6}" y="${cy + 15}" font-size="12" fill="${grey}">no time recorded</text>`);
+      return;
+    }
+    const wdt = Math.max(0, bx(r.minutes) - left);
+    body.push(`<rect class="bar" x="${left}" y="${cy + 3}" width="${wdt.toFixed(1)}" height="16" fill="${r.first ? ink : '#FFFFFF'}" stroke="${ink}" stroke-width="2"><title>${esc(r.read)} ${r.minutes} minutes</title></rect>`);
+    body.push(`<text x="${(left + wdt + 6).toFixed(1)}" y="${cy + 15}" font-size="12" fill="${grey}">${r.minutes}</text>`);
   });
-  // legend
-  const ly = top + plotH + 56;
-  o.push(`<circle cx="${left + 6}" cy="${ly - 4}" r="6" fill="${ink}"/><text x="${left + 18}" y="${ly}" font-size="12" fill="${grey}">producer</text>`);
-  o.push(`<rect x="${left + 100}" y="${ly - 9.5}" width="11" height="11" fill="#FFFFFF" stroke="${ink}" stroke-width="2"/><text x="${left + 118}" y="${ly}" font-size="12" fill="${grey}">proxy</text>`);
+  y = barTop + T.reads.length * 26 + 4;
+  for (let t = 0; t <= top; t += top / 5) {
+    body.push(`<line x1="${bx(t)}" y1="${y}" x2="${bx(t)}" y2="${y + 4}" stroke="${grey}"/>`);
+    body.push(`<text x="${bx(t)}" y="${y + 18}" text-anchor="middle" font-size="11" fill="${grey}">${t}</text>`);
+  }
+  y += 40;
+  // panel 2: confidence against git-log result
+  body.push(`<text x="${left}" y="${y}" font-size="14" font-weight="bold" fill="${grey}">Need answers by confidence and git-log result (n = ${T.n})</text>`);
+  y += 18;
+  const cw = (W - left - right) / 5, rh = 34, maxC = Math.max(1, ...Object.values(T.grid).reduce((a, r) => a.concat(r), []));
+  ['C', 'PC', 'W', 'NA'].forEach((res, ri) => {
+    const cy = y + ri * rh + rh / 2;
+    const name = { C: 'C correct', PC: 'PC partly', W: 'W wrong', NA: 'NA blank' }[res];
+    body.push(`<text x="${left - 10}" y="${cy + 4}" text-anchor="end" font-size="12" fill="${grey}">${name}</text>`);
+    body.push(`<line x1="${left}" y1="${cy}" x2="${W - right}" y2="${cy}" stroke="${grid}"/>`);
+    T.grid[res].forEach((k, ci) => {
+      const cx = left + ci * cw + cw / 2;
+      if (res === 'W' && ci >= 3) body.push(`<rect class="highwrong" x="${cx - cw / 2 + 3}" y="${cy - rh / 2 + 2}" width="${cw - 6}" height="${rh - 4}" fill="none" stroke="${grey}" stroke-width="2" stroke-dasharray="5 3"/>`);
+      if (!k) return;
+      const r = 4 + 9 * Math.sqrt(k / maxC);
+      body.push(`<circle class="dot" cx="${cx}" cy="${cy}" r="${r.toFixed(1)}" fill="${ink}"><title>${res} at confidence ${ci + 1}: ${k}</title></circle>`);
+      body.push(`<text x="${(cx + r + 4).toFixed(1)}" y="${cy + 4}" font-size="11" fill="${grey}">${k}</text>`);
+    });
+  });
+  y += 4 * rh + 4;
+  for (let c = 1; c <= 5; c++) body.push(`<text x="${left + (c - 1) * cw + cw / 2}" y="${y + 12}" text-anchor="middle" font-size="12" fill="${grey}">${c}</text>`);
+  body.push(`<text x="${left + 2.5 * cw}" y="${y + 30}" text-anchor="middle" font-size="12" fill="${grey}">confidence: 1 a guess, 5 certain. Dashed box: wrong at confidence 4 or 5 (${T.highWrong})</text>`);
+  y += 44;
+  const H = Math.round(y);
+  o.push(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="Calibri, Arial, sans-serif" role="img" aria-labelledby="t d">`);
+  o.push(`<title id="t">Figure ${num}: time and confidence, one reader</title>`);
+  o.push(`<desc id="d">One reader, the developer. Minutes per read: ${esc(T.reads.map(r => `${r.read} ${r.minutes === null ? 'n/a' : r.minutes}`).join('; '))}. ` +
+    `Need answers by confidence and result: ${esc(['C', 'PC', 'W', 'NA'].map(k => `${k} ${T.grid[k].join('/')}`).join('; '))}.</desc>`);
+  o.push(`<rect width="${W}" height="${H}" fill="#FFFFFF"/>`);
+  if (fake) o.push(`<text x="${W / 2}" y="24" text-anchor="middle" font-size="16" font-weight="bold" fill="#B00020">FAKE DATA: sample files, not a result</text>`);
+  o.push(...body);
   o.push('</svg>');
   return o.join('\n') + '\n';
 }
 
-// ---------- Tables ----------
-function table1(needRows, keyRows) {
-  const N = A.prepareNeeds(needRows, keyRows);
-  const rows = N.perNeed.map(x => [x.id, x.key, `${x.matching}/${x.classified}`]);
-  const out = ['**Table 1. The ten needs: the marking key and readers matching it** (D derivable, P partly, N not; n/N = readers matching / readers who classified that need)\n\n' +
-    mdTable(['Need', 'Key', 'Readers matching'], rows)];
-  N.warnings.forEach(w => out.push('', w));
+// ---------- tables (report subset; analyse.js prints them all) ----------
+function tablesMd(f) {
+  const rd = k => (f[k] ? A.readCSV(f[k]) : null);
+  const out = [];
+  const needs = rd('needs');
+  if (needs) { out.push(A.render(A.tableB(needs), mdTable)); out.push(A.render(A.tableC(needs), mdTable)); }
+  const heur = rd('heur'), tasks = rd('tasks');
+  if (heur || tasks) out.push(A.render(A.tableF(heur, tasks, rd('d1'), rd('d1tasks')), mdTable));
+  const log = rd('log');
+  if (log) out.push(A.render(A.tableG(log), mdTable));
   return out.join('\n');
 }
 
-// Table 2: full-mark counts by condition, then by week within condition (W1/W2 columns).
-// Table 2b: item 6 codes per version. Both use the same analyse.js helpers as analyse.js's own tables.
-function table2(scoreRows) {
-  const S = A.prepareScores(scoreRows);
-  const all = A.fullMarkCounts(S), wk = A.fullMarkCounts(S, true);
-  const weekHead = wk.length ? wk[0].cells.map(c => `${c.week} ${c.cond === 'baseline' ? 'baseline' : 'treatment'}`) : [];
-  const rows = all.map((x, i) => [x.item].concat(x.cells.map(c => `${c.full}/${c.n}`), wk[i].cells.map(c => `${c.full}/${c.n}`)));
-  const six = A.item6Counts(S).map(x => [x.code].concat(x.cells.map(c => `${c.k}/${c.n}`)));
-  return [`**Table 2. Full marks (2 of 2) per item by condition, and by week within condition** (complete readers only, n = ${S.complete.length})`, '',
-    mdTable(['Item', 'Baseline (no names)', 'Treatment (names)'].concat(weekHead), rows), '',
-    `**Table 2b. Item 6 (unanswerable) codes per version** (complete readers only, n = ${S.complete.length}; Over-claim is the count that matters, Hedged is shown beside it)`, '',
-    mdTable(['Code', 'Baseline (no names)', 'Treatment (names)'], six)].join('\n');
-}
-
-// Table 3 counts each segment by its final code where the D5 resolve step set one, else by its pass 1 code.
-function table3(codeRows) {
-  const C = A.prepareCodes(codeRows);
-  const cnt = {};
-  let resolved = 0;
-  Object.values(C.by).forEach(s => {
-    const c = s.f || s['1'];
-    if (s.f) resolved++;
-    if (c) cnt[c] = (cnt[c] || 0) + 1;
-  });
-  const total = Object.values(cnt).reduce((a, b) => a + b, 0);
-  const codes = Object.keys(cnt).sort((p, q) => cnt[q] - cnt[p] || p.localeCompare(q));
-  const unknown = codes.filter(c => !KO_TYPES[c] && !EXTRA_CODES[c]);
-  const rows = codes.map(c => {
-    const t = KO_TYPES[c] || EXTRA_CODES[c] || ['UNKNOWN CODE: check the sheet', ''];
-    return [c, t[0], t[1], String(cnt[c])];
-  });
-  const never = Object.keys(KO_TYPES).filter(c => !cnt[c]);
-  const out = [`**Table 3. Think-aloud segments by information type** (final code after resolution, else pass 1 code; ${resolved} segment(s) with a final code; pilot excluded, ${total} segments; types from Ko et al., 2007)`, '',
-    mdTable(['Code', 'Category', 'Information type', 'Segments'], rows)];
-  out.push('', `Types never coded: ${never.length ? never.join(', ') : 'none'}.`);
-  if (unknown.length) out.push(`WARNING: codes not in the codebook: ${unknown.join(', ')}.`);
-  C.warnings.forEach(w => out.push(w));
-  return out.join('\n');
-}
-
-// ---------- PNG copy of Figure 1 ----------
+// ---------- PNG copy of the figure ----------
 // The Word builder (build-docx-v2.js) embeds .png/.jpg only. Chrome or Edge in headless mode renders the
 // SVG to a PNG, so the tool keeps no npm dependencies. CHROME_PATH wins over the usual install places.
 function findChrome(env) {
@@ -185,36 +172,25 @@ function args(argv) {
 
 function build(f, opts) {
   const num = (opts && opts.number) || 1;
-  const fake = Object.values(f).some(x => x && path.basename(x).startsWith('sample-'));
-  const md = [`# ChangeLens evaluation: Figure ${num} and Tables 1-3`];
+  const fake = A.isFake(f);
+  const md = [`# ChangeLens solo evaluation: Figure ${num} and Tables B, C, F and G`];
   if (fake) md.push('', '**FAKE DATA: one or more inputs are sample-*.csv files. Nothing below is a result.**');
   md.push('', 'Inputs: ' + Object.entries(f).filter(([, v]) => v).map(([k, v]) => `${k}=${path.basename(v)}`).join(', '));
   let svg = null;
-  if (f.scores) {
-    const sRows = A.readCSV(f.scores);
-    const S = A.prepareScores(sRows);
-    svg = figure1Svg(A.pairedDiffs(S), { fake, number: num });
-    md.push('', `Figure ${num} uses ${S.complete.length} complete reader(s).` +
-      (S.excluded.length ? ` Left out: ${S.excluded.map(x => `${x.p} (${x.reasons.join('; ')})`).join('; ')}.` : ''));
-    S.warnings.forEach(w => md.push('', w));
-    if (S.complete.length < A.FLOOR) md.push('**Below the five-reader floor: A2 fallback. Report this arm as descriptive only and the think-alouds first.**');
+  if (f.reads || f.needs) {
+    const T = A.timeConfidence(f.reads ? A.readCSV(f.reads) : null, f.needs ? A.readCSV(f.needs) : null);
+    svg = figureSvg(T, { fake, number: num });
+    md.push('', `Figure ${num}: time and confidence, one reader (the developer). ${T.n} need answer(s) with a confidence and a result; ${T.highWrong} wrong at confidence 4 or 5.`);
+    T.warnings.forEach(w => md.push('', w));
   }
-  if (f.needs && f.key) md.push('', table1(A.readCSV(f.needs), A.readCSV(f.key)));
-  if (f.scores) md.push('', table2(A.readCSV(f.scores)));
-  if (f.codes) md.push('', table3(A.readCSV(f.codes)));
+  md.push('', tablesMd(f));
+  md.push('', '---', A.FOOTER);
   return { md: md.join('\n') + '\n', svg, fake };
 }
 
 function main() {
   const a = args(process.argv.slice(2));
-  const dir = __dirname;
-  const useSample = !a.scores && !a.needs && !a.key && !a.codes;
-  const f = {
-    scores: a.scores || (useSample ? path.join(dir, 'sample-item-scores.csv') : null),
-    needs: a.needs || (useSample ? path.join(dir, 'sample-need-classifications.csv') : null),
-    key: a.key || (useSample ? path.join(dir, 'sample-marking-key.csv') : null),
-    codes: a.codes || (useSample ? path.join(dir, 'sample-think-aloud-codes.csv') : null),
-  };
+  const f = A.inputFiles(a, __dirname);
   if (a.figure !== undefined && !/^[1-9]\d*$/.test(a.figure)) {
     process.stderr.write(`--figure must be a whole number from 1 (got "${a.figure}").\n`);
     process.exit(1);
@@ -227,7 +203,7 @@ function main() {
     const written = [`${stem}tables.md`];
     let note = '';
     if (r.svg) {
-      const svgFile = path.join(a.outdir, `${stem}figure-1-paired-differences.svg`);
+      const svgFile = path.join(a.outdir, `${stem}figure-time-confidence.svg`);
       fs.writeFileSync(svgFile, r.svg);
       written.push(path.basename(svgFile));
       if (a.png !== 'no') {
@@ -246,5 +222,5 @@ function main() {
   }
 }
 
-module.exports = { figure1Svg, table1, table2, table3, build, KO_TYPES, findChrome, pngSize, svgToPng };
+module.exports = { figureSvg, tablesMd, build, findChrome, pngSize, svgToPng, mdTable };
 if (require.main === module) main();

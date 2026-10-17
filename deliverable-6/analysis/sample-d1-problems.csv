@@ -1,0 +1,5 @@
+# FAKE DATA. Invented tools and rows; the real D1 rows are in deliverable-1/heuristic-coding-sheet.md section 5.
+tool,id,heuristic,severity_0to4,raphael_checked_yn
+FakeToolA,FA-01,H1,3,y
+FakeToolA,FA-02,H1,2,n
+FakeToolB,FB-01,H5,4,n

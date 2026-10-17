@@ -1,0 +1,9 @@
+# FAKE DATA for testing the analysis tool. Invented values. Not a result.
+task,completed,seconds,looked_first,note
+T1,Y,40,FAKE,
+T2,N,60,FAKE,FAKE by design
+T3,partly,300,FAKE,
+T4,N,30,FAKE,
+T5,Y,90,FAKE,
+T6,partly,120,FAKE,
+T7,Y,20,FAKE,

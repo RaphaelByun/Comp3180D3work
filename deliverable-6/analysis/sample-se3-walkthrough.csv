@@ -1,0 +1,7 @@
+# FAKE DATA for testing the analysis tool. Invented values. Not a result.
+task_id,step_no,correct_action,q1_right_effect,q2_notice_action,q3_associate_action,q4_see_progress,failure_story,severity_0to4,heuristic_link,fix_idea
+CW1,1,FAKE open the window,Y,N,Y,Y,FAKE story,3,CL-01,FAKE
+CW1,2,FAKE type the path,Y,Y,N,N,FAKE story,2,,FAKE
+CW1,3,FAKE press the button,Y,Y,Y,Y,,,,
+CW2,1,FAKE scroll,Y,Y,Y,Y,,,,
+CW5,1,FAKE retype the date,Y,Y,N,Y,FAKE story,2,CL-02,FAKE

@@ -1,11 +1,14 @@
 'use strict';
 /*
- * Tests for analyse.js against hand-computed values. Run: node deliverable-6/analysis/test.js
- * Every expected number below was worked out on paper first (working shown in comments).
+ * Tests for the solo evaluation tools (analyse.js and figures.js) against hand-computed values.
+ * Run: node deliverable-6/analysis/test.js
+ * Every expected number below was worked out by hand from the FAKE sample files first (working in comments).
  */
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 const A = require('./analyse.js');
+const F = require('./figures.js');
 
 let pass = 0, fail = 0;
 function eq(name, got, want, tol) {
@@ -19,8 +22,16 @@ function hasNot(name, text, needle) {
   if (!text.includes(needle)) pass++; else { fail++; console.log(`FAIL ${name}: output should not contain "${needle}"`); }
 }
 const L = s => s.split(' ');
+const dir = __dirname;
+const sample = k => A.readCSV(path.join(dir, A.INPUTS[k]));
+const csv = (head, lines) => A.parseCSV([head].concat(lines).join('\r\n') + '\r\n');
+const HEAD = {};
+for (const f of fs.readdirSync(path.join(dir, 'templates'))) {
+  const lines = fs.readFileSync(path.join(dir, 'templates', f), 'utf8').split(/\r?\n/).filter(l => l && !l.startsWith('#'));
+  HEAD[f.replace(/\.csv$/, '')] = lines[0];
+}
 
-// 1. Binary textbook case. 50 items: both yes 20, A yes/B no 5, A no/B yes 10, both no 15.
+// 1. Cohen's kappa, binary textbook case. 50 items: both yes 20, A yes/B no 5, A no/B yes 10, both no 15.
 //    po = 35/50 = 0.70; pe = (25/50)(30/50) + (25/50)(20/50) = 0.30 + 0.20 = 0.50; kappa = 0.20/0.50 = 0.40.
 {
   const a = [], b = [];
@@ -34,759 +45,367 @@ const L = s => s.split(' ');
   eq('binary kappa', k.kappa, 0.4, 1e-12);
   eq('binary agree count', A.agreement(a, b).agree, 35);
 }
-
-// 2. Three labels, ten needs. key = D D D D P P P N N N; reader = D D D P P P N N N D.
-//    Agree on items 1,2,3,5,6,8,9 = 7 of 10, po = 0.7.
-//    Key shares D .4 P .3 N .3; reader shares D .4 P .3 N .3 -> pe = .16+.09+.09 = .34.
-//    kappa = (0.7-0.34)/0.66 = 6/11 = 0.545454...
+// 2. Three labels over ten needs. key = D D D D P P P N N N; other = D D D P P P N N N D: 7 of 10 agree.
+//    pe = .4*.4 + .3*.3 + .3*.3 = .34; kappa = (0.7 - 0.34)/0.66 = 6/11.
 {
   const key = L('D D D D P P P N N N'), r = L('D D D P P P N N N D');
-  const k = A.cohenKappa(key, r);
   eq('three-label agree', A.agreement(key, r).agree, 7);
-  eq('three-label kappa', k.kappa, 6 / 11, 1e-12);
+  eq('three-label kappa', A.cohenKappa(key, r).kappa, 6 / 11, 1e-12);
 }
-
-// 3. One slip: reader labels item 1 as P. Agreement 9/10. Reader shares D .3 P .4 N .3.
-//    pe = .4*.3 + .3*.4 + .3*.3 = .33; kappa = (0.9-0.33)/0.67 = 0.850746...
-{
-  const key = L('D D D D P P P N N N'), r = L('P D D D P P P N N N');
-  eq('one-slip kappa', A.cohenKappa(key, r).kappa, 0.57 / 0.67, 1e-12);
-}
-
-// 4. Perfect agreement = 1. Chance-level agreement = 0 (AABB vs ABAB: po .5, pe .5).
+// 3. Perfect = 1, chance = 0 (AABB vs ABAB), systematic disagreement = -1, no variation = NaN (undefined, not 1).
 eq('perfect kappa', A.cohenKappa(L('a b c a'), L('a b c a')).kappa, 1, 1e-12);
 eq('chance kappa', A.cohenKappa(L('A A B B'), L('A B A B')).kappa, 0, 1e-12);
-
-// 5. Systematic disagreement is negative: AABB vs BBAA: po 0, pe .5, kappa -1.
 eq('negative kappa', A.cohenKappa(L('A A B B'), L('B B A A')).kappa, -1, 1e-12);
-
-// 6. No variation in labels: pe = 1, kappa is undefined, returned as NaN (not a crash, not 1).
 eq('undefined kappa is NaN', Number.isNaN(A.cohenKappa(L('A A A A'), L('A A A A')).kappa), true);
 
-// 7. CSV parser: quotes, commas inside quotes, CRLF, comment lines, BOM.
+// 4. CSV parser (RFC 4180): quotes, commas inside quotes, CRLF, comment lines, BOM, line numbers.
 {
   const rows = A.parseCSV('﻿# comment\r\nid,quote\r\nS1,"said ""hi"", twice"\r\nS2,plain\r\n');
   eq('csv rows', rows.length, 2);
   eq('csv quoted', rows[0].quote, 'said "hi", twice');
   eq('csv plain', rows[1].id, 'S2');
-}
-
-// 8. Whole pipeline on the FAKE sample files. Items 1-5 are scored 0/1/2, each report is out of 10.
-//    Expected values worked out by hand from the sample data:
-//    Readers F01-F04, items 1-5 totals (baseline / treatment): F01 6/9, F02 4/8, F03 8/9, F04 7/6.
-//    (F01 baseline 2+2+1+0+1 = 6; treatment 2+2+2+2+1 = 9; F02 2+1+0+1+0 = 4 and 2+2+2+1+1 = 8;
-//     F03 2+2+2+1+1 = 8 and 2+2+2+1+2 = 9; F04 2+2+2+0+1 = 7 and 2+2+1+1+0 = 6.)
-//    Differences +3, +4, +1, -1: mean 7/4 = 1.75, median (1+3)/2 = 2.00, range -1 to +4, three up and one down.
-//    By role: producers F01, F03 (+3, +1) mean 2.00; proxies F02, F04 (+4, -1) mean 1.50.
-//    Baseline totals by week: W1 = F01 6 + F04 7 -> mean 6.50; W2 = F02 4 + F03 8 -> mean 6.00; gap 0.50.
-//    Item 4 (scores base 0,1,1,0; treatment 2,1,1,1): full marks (=2) 0 of 4 and 1 of 4; means 0.50 and 1.25.
-//    Item 2 (base 2,1,2,2; treatment all 2): full marks 3 of 4 and 4 of 4; means 1.75 and 2.00.
-//    Item 6 categories (not numeric): baseline Pass 2 (F01, F04), Hedged 1 (F03), Over-claim 1 (F02);
-//    treatment Pass 2 (F01, F02), Hedged 0, Over-claim 2 (F03, F04).
-//    Specificity ticks, items 4/5: baseline 1/4 and 0/4 (only F03 ticks item 4); treatment 3/4 and 2/4
-//    (item 4 F01, F02, F04; item 5 F01, F03).
-//    Pilot rows (P0) must be dropped from every section.
-{
-  const dir = __dirname;
-  const sc = A.analyseScores(A.parseCSV(fs.readFileSync(path.join(dir, 'sample-item-scores.csv'), 'utf8')));
-  has('pilot excluded', sc, 'pilot rows excluded: 12; analysed: 48');
-  has('diff F01', sc, '| F01    | producer | W1 (order 1)  | 6.00         | W2 (order 2)   | 9.00          | +3.00      |');
-  has('diff F02', sc, '| F02    | proxy    | W2 (order 2)  | 4.00         | W1 (order 1)   | 8.00          | +4.00      |');
-  has('diff F04', sc, '| F04    | proxy    | W1 (order 2)  | 7.00         | W2 (order 1)   | 6.00          | -1.00      |');
-  has('totals are /10', sc, 'Baseline /10');
-  has('diff summary', sc, 'Higher with names: 3. Same: 0. Lower with names: 1.');
-  has('mean diff', sc, 'Mean difference 1.75 points out of 10 (median 2.00, range -1.00 to 4.00; possible range -10 to +10)');
-  has('by role', sc, 'producer n=2, mean 2.00; proxy n=2, mean 1.50');
-  has('item 2 counts', sc, '| 2    | 3/4           | 1.75          | 4/4            | 2.00           |');
-  has('item 4 counts', sc, '| 4    | 0/4           | 0.50          | 1/4            | 1.25           |');
-  has('full mark is 2', sc, 'mean score 0-2');
-  has('week baseline W1', sc, '| W1   | baseline  | 2       | 6.50     | 6, 7              |');
-  has('week baseline W2', sc, '| W2   | baseline  | 2       | 6.00     | 4, 8              |');
-  has('week gap', sc, 'Baseline mean gap between weeks: 0.50 points out of 10');
-  // item 6: category counts per version, not a numeric row
-  has('item 6 pass', sc, '| Pass       | 2/4      | 2/4       |');
-  has('item 6 hedged', sc, '| Hedged     | 1/4      | 0/4       |');
-  has('item 6 over-claim', sc, '| Over-claim | 1/4      | 2/4       |');
-  hasNot('item 6 not in numeric tables', sc, '| 6 (unanswerable)');
-  // optional specificity tick
-  has('specific item 4', sc, '| 4    | 1/4             | 3/4              |');
-  has('specific item 5', sc, '| 5    | 0/4             | 2/4              |');
-
-  const keyRows = A.parseCSV(fs.readFileSync(path.join(dir, 'sample-marking-key.csv'), 'utf8'));
-  const needRows = A.parseCSV(fs.readFileSync(path.join(dir, 'sample-need-classifications.csv'), 'utf8'));
-  const nd = A.analyseNeeds(needRows, keyRows);
-  has('needs pilot dropped', nd, 'readers analysed: 4 (pilot excluded)');
-  has('needs F01', nd, '| F01    | 7/10 (70%)         | 0.55          |');
-  has('needs F02', nd, '| F02    | 10/10 (100%)       | 1.00          |');
-  has('needs F03', nd, '| F03    | 9/10 (90%)         | 0.85          |');
-  // F04: key D D D D P P P N N N, reader D D P P N N P D N N -> 5 agree; marginals reader D3 P3 N4;
-  // pe = .4*.3 + .3*.3 + .3*.4 = .33; kappa = (0.5-0.33)/0.67 = 0.2537 -> 0.25
-  has('needs F04', nd, '| F04    | 5/10 (50%)         | 0.25          |');
-  has('needs departures', nd, '| N04  | D   | 2/4               | F01:P, F04:P       |');
-  // optional records column: N01 circled R by all four (F03 also U); N02 T by F01-F03, R by F04.
-  has('records N01', nd, '| N01  | 0 | 4 | 1 | 4/4               |');
-  has('records N02', nd, '| N02  | 3 | 1 | 0 | 4/4               |');
-
-  // Coding passes: 8 segments in both passes, 6 agree (S03 d3/d4 and S06 a3/d1 differ).
-  // po = 0.75; sum of marginal products: a2 1*1, d1 2*3, u3 1*1, s3 1*1, c1 1*1 = 10; pe = 10/64 = 0.15625;
-  // kappa = (0.75-0.15625)/(1-0.15625) = 19/27 = 0.7037.
-  const co = A.analyseCodes(A.parseCSV(fs.readFileSync(path.join(dir, 'sample-think-aloud-codes.csv'), 'utf8')));
-  has('coding overlap', co, 'Segments with pass 1: 16. Re-coded in pass 2: 8');
-  has('coding agreement', co, 'Agreement: 6/8 (75%). Cohen\'s kappa: 0.70.');
-  has('coding differences', co, '| S06     | F01    | a3     | d1     |');
-  hasNot('coding ignores single-pass segments', co, '| S09     |');
-}
-
-// 8b. Validation. A score of 3 on an item 1-5 row is flagged by reader and item; a numeric item 6 is flagged;
-//     item 6 words are accepted in any case/spelling; a file with no specific or records columns still works.
-{
-  const csv = ['participant,role,condition,week,order,item,score',
-    'X1,proxy,A,W1,1,1,3', 'X1,proxy,A,W1,1,2,2', 'X1,proxy,A,W1,1,6,1', 'X1,proxy,B,W2,2,6,over claim', 'X1,proxy,B,W2,2,1,2'].join('\n');
-  const v = A.analyseScores(A.parseCSV(csv));
-  has('flags score 3', v, 'WARNING: 1 row(s) for items 1-5 with a score that is not 0, 1 or 2: X1 baseline item 1 ("3").');
-  has('flags numeric item 6', v, 'WARNING: 1 row(s) for item 6 not coded Pass, Hedged or Over-claim: X1 baseline.');
-  // X1 has only items 1, 2 and 6, so X1 is incomplete and left out of the tables (see 10a-10e)
-  has('incomplete X1 named', v, 'X1 (baseline item 3, 4, 5 missing; baseline item 1 score not 0, 1 or 2; treatment item 2, 3, 4, 5 missing)');
-  hasNot('no specificity section without column', v, 'Specificity tick');
-  // item 6 spelling, on a complete reader (items 1-5 in both conditions)
-  const ok = ['participant,role,condition,week,order,item,score'];
-  for (const [c, w, o] of [['A', 'W1', 1], ['B', 'W2', 2]]) for (let i = 1; i <= 5; i++) ok.push(`X3,proxy,${c},${w},${o},${i},2`);
-  ok.push('X3,proxy,A,W1,1,6,PASS', 'X3,proxy,B,W2,2,6,over claim');
-  const v6 = A.analyseScores(A.parseCSV(ok.join('\n')));
-  has('item 6 spelling', v6, '| Over-claim | 0/1      | 1/1       |');
-  has('item 6 upper case', v6, '| Pass       | 1/1      | 0/1       |');
-  const half = A.analyseScores(A.parseCSV('participant,role,condition,week,order,item,score\nX2,proxy,A,W1,1,1,0.5'));
-  has('flags half mark', half, 'WARNING: 1 row(s) for items 1-5');
-}
-
-// 9. Wide layout (as used by deliverable-5/think-aloud-coding-sheet.csv) gives the same answer as long layout.
-{
-  const wide = A.analyseCodes(A.parseCSV(['segment_id,pass1_code,pass2_code', 'S1,a2,a2', 'S2,d1,d1', 'S3,d3,d4', 'S4,u3,'].join('\n')));
-  // S1-S3 in both passes, 2 of 3 agree
-  has('wide layout overlap', wide, 'Re-coded in pass 2: 3');
-  has('wide layout agreement', wide, 'Agreement: 2/3 (67%)');
-}
-
-// 10. Edge cases the real study can hit. Base set: five readers R01-R05 plus a pilot P0.
-//     Items 1-5 (baseline / treatment), worked by hand:
-//     R01 producer  base W1 o1 2,2,1,0,1 = 6   treat W2 o2 2,2,2,2,1 = 9   diff +3
-//     R02 proxy     base W2 o2 2,1,0,1,0 = 4   treat W1 o1 2,2,2,1,1 = 8   diff +4
-//     R03 proxy     base W1 o1 2,2,1,1,0 = 6   treat W2 o2 2,2,2,1,1 = 8   diff +2
-//     R04 producer  base W2 o1 2,2,2,1,1 = 8   treat W1 o2 2,2,1,1,0 = 6   diff -2
-//     R05 proxy     base W1 o2 1,1,1,1,1 = 5   treat W2 o1 2,1,1,1,1 = 6   diff +1
-//     Item 6 is Pass everywhere. P0 copies R01 and must never count.
-const BASE = {
-  R01: ['producer', ['W1', 1, [2, 2, 1, 0, 1]], ['W2', 2, [2, 2, 2, 2, 1]]],
-  R02: ['proxy', ['W2', 2, [2, 1, 0, 1, 0]], ['W1', 1, [2, 2, 2, 1, 1]]],
-  R03: ['proxy', ['W1', 1, [2, 2, 1, 1, 0]], ['W2', 2, [2, 2, 2, 1, 1]]],
-  R04: ['producer', ['W2', 1, [2, 2, 2, 1, 1]], ['W1', 2, [2, 2, 1, 1, 0]]],
-  R05: ['proxy', ['W1', 2, [1, 1, 1, 1, 1]], ['W2', 1, [2, 1, 1, 1, 1]]],
-  P0: ['proxy', ['W1', 1, [2, 2, 1, 0, 1]], ['W2', 2, [2, 2, 2, 2, 1]]],
-};
-function scoreLines(only) {
-  const lines = [];
-  for (const p of Object.keys(BASE)) {
-    if (only && !only.includes(p)) continue;
-    const [role, b, t] = BASE[p];
-    for (const [cond, [w, o, s]] of [['baseline', b], ['treatment', t]]) {
-      s.forEach((x, i) => lines.push(`${p},${role},${cond},${w},${o},${i + 1},${x},`));
-      lines.push(`${p},${role},${cond},${w},${o},6,Pass,`);
-    }
-  }
-  return lines;
-}
-const HEAD = 'participant,role,condition,week,order,item,score,specific';
-const run = lines => A.analyseScores(A.parseCSV([HEAD].concat(lines).join('\r\n') + '\r\n'));
-
-// 10a. All five complete: diffs 3, 4, 2, -2, 1 -> mean 8/5 = 1.60, median 2.00; no floor notice.
-//      Roles: producers R01, R04 (3, -2) mean 0.50; proxies R02, R03, R05 (4, 2, 1) mean 7/3 = 2.33.
-{
-  const o = run(scoreLines());
-  has('five: summary', o, 'Readers: 5. Higher with names: 4. Same: 0. Lower with names: 1.');
-  has('five: mean', o, 'Mean difference 1.60 points out of 10 (median 2.00, range -2.00 to 4.00');
-  has('five: roles', o, 'producer n=2, mean 0.50; proxy n=3, mean 2.33');
-  has('five: pilot dropped', o, 'pilot rows excluded: 12; analysed: 60');
-  hasNot('five: no floor notice', o, 'Below the five-reader floor');
-  eq('five: footer', A.footer(A.prepareScores(A.parseCSV([HEAD].concat(scoreLines()).join('\n'))).complete.length),
-    'Report raw counts and limits. 5 complete readers (pilot excluded) show direction and failure points, not significance.');
-}
-
-// 10b. Blank score: R03 treatment item 4 left blank. R03 is left out and named; the mean is over
-//      R01, R02, R04, R05: 3, 4, -2, 1 -> 6/4 = 1.50, median (1+3)/2 = 2.00. No NaN anywhere.
-//      Item 4 treatment over the four: 2, 1, 1, 1 -> full 1/4, mean 1.25.
-{
-  const o = run(scoreLines().map(l => (l === 'R03,proxy,treatment,W2,2,4,1,' ? 'R03,proxy,treatment,W2,2,4,,' : l)));
-  has('blank: warning names row', o, 'R03 treatment item 4 ("")');
-  has('blank: reader excluded', o, 'R03 (treatment item 4 score not 0, 1 or 2)');
-  has('blank: mean over 4', o, 'Mean difference 1.50 points out of 10 (median 2.00, range -2.00 to 4.00');
-  has('blank: counts', o, 'Readers: 4. Higher with names: 3. Same: 0. Lower with names: 1.');
-  has('blank: item 4', o, '| 4    | 0/4           | 0.75          | 1/4            | 1.25           |');
-  hasNot('blank: no NaN', o, 'NaN');
-  hasNot('blank: no n/a', o, 'n/a');
-  hasNot('blank: R03 not in paired table', o, '| R03 ');
-}
-
-// 10c. Missing row: R03 treatment item 4 row deleted. Same exclusion and the same mean, 1.50.
-{
-  const o = run(scoreLines().filter(l => l !== 'R03,proxy,treatment,W2,2,4,1,'));
-  has('missing: reader excluded', o, 'R03 (treatment item 4 missing)');
-  has('missing: mean over 4', o, 'Mean difference 1.50 points out of 10');
-}
-
-// 10d. Duplicate row: an extra R02 treatment item 3 row. R02 is left out and the duplicate is named.
-//      Remaining R01, R03, R04, R05: 3, 2, -2, 1 -> mean 4/4 = 1.00, median (1+2)/2 = 1.50, range -2 to 3.
-{
-  const o = run(scoreLines().concat(['R02,proxy,treatment,W1,1,3,2,']));
-  has('dup: warning', o, 'WARNING: duplicate rows (same reader, condition and item): R02 treatment item 3 (2 rows).');
-  has('dup: reader excluded', o, 'R02 (treatment item 3 duplicated)');
-  has('dup: mean', o, 'Mean difference 1.00 points out of 10 (median 1.50, range -2.00 to 3.00');
-}
-
-// 10e. One condition only: R05's treatment rows removed. R05 is out of the paired table and of every
-//      condition table. Item 1: baseline R01-R04 all 2 -> 4/4; treatment 4/4.
-//      Order within condition: baseline order 1 = R01 6, R03 6, R04 8 -> 6.67 (n=3); baseline order 2 = R02 4 (n=1);
-//      treatment order 1 = R02 8 (n=1); treatment order 2 = R01 9, R03 8, R04 6 -> 7.67 (n=3).
-{
-  const o = run(scoreLines().filter(l => !l.startsWith('R05,proxy,treatment')));
-  has('one-cond: reason', o, 'R05 (no treatment rows)');
-  has('one-cond: item 1', o, '| 1    | 4/4           | 2.00          | 4/4            | 2.00           |');
-  has('one-cond: item 6', o, '| Pass       | 4/4      | 4/4       |');
-  has('one-cond: order', o, 'baseline: order 1 6.67 (n=3), order 2 4.00 (n=1); treatment: order 1 8.00 (n=1), order 2 7.67 (n=3).');
-}
-
-// 10f. Three readers (R01-R03): floor notice at the top, role split withheld (one producer).
-{
-  const o = run(scoreLines(['R01', 'R02', 'R03', 'P0']));
-  has('floor: notice', o, '**Below the five-reader floor (3 complete readers): A2 fallback. Report this arm as descriptive only and the think-alouds first.**');
-  eq('floor: notice comes first', o.indexOf('Below the five-reader floor'), 2);
-  has('floor: role split withheld', o, 'By role: not split. producer n=1; proxy n=2.');
-  has('floor: footer', A.footer(3), '3 complete readers (pilot excluded)');
-  has('floor: footer fallback', A.footer(3), 'Below the five-reader floor: A2 fallback applies.');
-}
-
-// 10g. Excel blank rows (",,,,,,,") are dropped, not counted and not warned about.
-{
-  const o = run(scoreLines().concat([',,,,,,,', ' , ,,,,,,']));
-  has('excel: rows read', o, 'Rows read: 72; pilot rows excluded: 12; analysed: 60.');
-  hasNot('excel: no warning', o, 'WARNING');
-}
-
-// 11. Think-aloud codes with the real D5 wide header, CRLF and a quoted note with a comma.
-const WIDE = 'segment_id,participant,timestamp,report_condition,quote_note,pass1_code,pass1_date,pass2_code,pass2_date,final_code,resolution_rule';
-const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') + '\r\n'));
-// 11a. Four pilot rows (P0, a2) and four reader rows; two re-coded (S05 a2/a2, S06 d1/d3).
-//      Pilot out: 4 segments, 2 re-coded = 50%, agreement 1/2, pass 1 a2 = 2 (S05, S07).
-{
-  const o = wide([
-    'S01,P0,00:01,A,"practice, pilot",a2,2026-10-20,,,,', 'S02,P0,00:02,A,x,a2,2026-10-20,,,,',
-    'S03,P0,00:03,A,x,a2,2026-10-20,,,,', 'S04,P0,00:04,A,x,a2,2026-10-20,,,,',
-    'S05,R01,00:01,B,"who did it, and when",a2,2026-10-28,a2,2026-11-04,,', 'S06,R01,00:02,B,x,d1,2026-10-28,d3,2026-11-04,,',
-    'S07,R02,00:01,A,x,a2,2026-10-28,,,,', 'S08,R02,00:02,A,x,u1,2026-10-28,,,,',
-  ]);
-  has('codes pilot: count', o, 'Pilot rows excluded: 4.');
-  has('codes pilot: segments', o, 'Segments with pass 1: 4. Re-coded in pass 2: 2 (50% of pass 1');
-  has('codes pilot: agreement', o, 'Agreement: 1/2 (50%)');
-  has('codes pilot: a2 count', o, '| a2   | 2        |');
-}
-// 11b. segment_id restarting per reader: S01/S02 for R01 and for R02. Keyed by reader, nothing merges:
-//      4 segments, 2 re-coded (R01 S01 a2/a2, R02 S01 d3/d4), agreement 1/2; a warning names the shared ids.
-{
-  const o = wide(['S01,R01,,,,a2,,a2,,,', 'S02,R01,,,,d1,,,,,', 'S01,R02,,,,d3,,d4,,,', 'S02,R02,,,,u1,,,,,']);
-  has('collision: segments', o, 'Segments with pass 1: 4. Re-coded in pass 2: 2');
-  has('collision: agreement', o, 'Agreement: 1/2 (50%)');
-  has('collision: warning', o, 'segment_id used for more than one reader: S01 (R01, R02); S02 (R01, R02)');
-  has('collision: diff row', o, '| S01     | R02    | d3     | d4     |');
-}
-// 11c. The same reader and segment twice: left out and named.
-{
-  const o = wide(['S01,R01,,,,a2,,a2,,,', 'S01,R01,,,,d1,,d1,,,', 'S02,R01,,,,u1,,u1,,,']);
-  has('seg dup: warning', o, 'left out until fixed: R01 S01.');
-  has('seg dup: counts', o, 'Segments with pass 1: 1. Re-coded in pass 2: 1');
-}
-// 11d. All codes identical: agreement 4/4 but kappa undefined, not 1 and not a crash.
-{
-  const o = wide(['S1,R01,,,,a2,,a2,,,', 'S2,R01,,,,a2,,a2,,,', 'S3,R02,,,,a2,,a2,,,', 'S4,R02,,,,a2,,a2,,,']);
-  has('identical: agreement', o, 'Agreement: 4/4 (100%)');
-  has('identical: kappa', o, "Cohen's kappa: undefined (no variation in labels).");
-}
-// 11f. Codes not in the codebook (D5 wide header, CRLF). Pass 2 typos 'a 2' (S01), 'dl' (S02) and two codes
-//      in one cell 'a2/d3' (S04). Each is named with reader, segment and pass; the three pairs are left out,
-//      so agreement is over S03 only (d3/d3): 1/1, not 1/4. S05 has no pass 2. figures.js Table 3 shows it too.
-{
-  const rows = ['S01,R01,,,,a2,,a 2,,,', 'S02,R01,,,,d1,,dl,,,', 'S03,R02,,,,d3,,d3,,,', 'S04,R02,,,,u1,,a2/d3,,,', 'S05,R03,,,,a2,,,,,'];
-  const o = wide(rows);
-  has('codebook: warning', o, 'WARNING: code not in the codebook (the 21 Ko et al. types, none, other, unclear): R01 S01 pass 2 "a 2"; R01 S02 pass 2 "dl"; R02 S04 pass 2 "a2/d3".');
-  has('codebook: counts', o, 'Segments with pass 1: 5. Re-coded in pass 2: 4');
-  has('codebook: left out', o, 'Re-coded pairs left out of agreement for a code not in the codebook: 3.');
-  has('codebook: agreement', o, 'Agreement: 1/1 (100%)');
-  hasNot('codebook: typo not a disagreement', o, '| a 2');
-  const F = require('./figures.js');
-  has('codebook: table 3 warns', F.table3(A.parseCSV([WIDE].concat(rows).join('\r\n'))), 'R01 S02 pass 2 "dl"');
-  // a pass 1 typo is named too, and none / other / unclear are accepted
-  const p1 = wide(['S01,R01,,,,A2 ,,a2,,,', 'S02,R01,,,,none,,other,,,', 'S03,R01,,,,unclear,,unclear,,,', 'S04,R01,,,,dl,,,,,']);
-  has('codebook: pass 1 typo', p1, 'R01 S04 pass 1 "dl"');
-  hasNot('codebook: extra codes accepted', p1, '"none"');
-  has('codebook: case and spaces read', p1, 'Agreement: 2/3 (67%)');
-}
-// 11g. Blank participant cells under a pilot row (reader code typed on a block's first row only).
-//      S01 P0 a2; S02, S03 blank a2; S04 R01 d1/d1; S05 blank d3. The pilot row is dropped, the three blank
-//      rows are named and left out, so only S04 is analysed: 1 segment, a2 never counted. Table 3 agrees.
-{
-  const rows = ['S01,P0,,,,a2,,,,,', 'S02,,,,,a2,,,,,', 'S03,,,,,a2,,,,,', 'S04,R01,,,,d1,,d1,,,', 'S05,,,,,d3,,,,,'];
-  const o = wide(rows);
-  has('blank participant: warning', o, 'WARNING: 3 row(s) with a blank participant, left out until filled in: segment S02, S03, S05.');
-  has('blank participant: pilot', o, 'Pilot rows excluded: 1.');
-  has('blank participant: segments', o, 'Segments with pass 1: 1. Re-coded in pass 2: 1');
-  hasNot('blank participant: a2 not counted', o, '| a2 ');
-  const F = require('./figures.js');
-  has('blank participant: table 3', F.table3(A.parseCSV([WIDE].concat(rows).join('\r\n'))), 'pilot excluded, 1 segments');
-}
-// 11e. Long layout (templates/think-aloud-codes.csv header), pass typed "pass 2" and "p1": read as 2 and 1.
-//      S01 1/2 a2/a2, S02 1/2 d1/d1: 2 segments, both re-coded, agreement 2/2, no warning.
-//      A pass of 3 is named with reader, segment and the raw value, and that row is left out.
-{
-  const LONG = 'segment_id,participant,timestamp,pass,code';
-  const lng = rows => A.analyseCodes(A.parseCSV([LONG].concat(rows).join('\r\n') + '\r\n'));
-  const o = lng(['S01,R01,,1,a2', 'S01,R01,,pass 2,a2', 'S02,R01,,p1,d1', 'S02,R01,,2,d1']);
-  has('pass words: counts', o, 'Segments with pass 1: 2. Re-coded in pass 2: 2');
-  has('pass words: agreement', o, 'Agreement: 2/2 (100%)');
-  hasNot('pass words: no warning', o, 'WARNING');
-  const bad = lng(['S01,R01,,1,a2', 'S01,R01,,3,a2', 'S02,R01,,1,d1', 'S02,R01,,2,d1']);
-  has('pass 3: warning', bad, 'WARNING: pass not 1, 2 or final, row left out until fixed: R01 S01 ("3").');
-  has('pass 3: counts', bad, 'Segments with pass 1: 2. Re-coded in pass 2: 1');
-}
-
-// 12. Ten-need sheet with a blank need. Key N01-N10 = D D D D P P P N N N.
-//     R01 and R03 match all ten. R02 labels N10 as D (9/10). R04 labels N09 as P and leaves N10 blank (8/9).
-//     Lowest by proportion is R04 8/9 (0.89), highest 10/10. N10 was classified by three readers, so its
-//     departure count is 1/3; N09 by four, 1/4.
-{
-  const keyL = L('D D D D P P P N N N');
-  const id = i => `N${String(i + 1).padStart(2, '0')}`;
-  const keyRows = A.parseCSV(['need_id,class'].concat(keyL.map((c, i) => `${id(i)},${c}`)).join('\n'));
-  const lines = ['participant,need_id,class'];
-  for (const p of ['R01', 'R02', 'R03', 'R04']) keyL.forEach((c, i) => {
-    let x = c;
-    if (p === 'R02' && i === 9) x = 'D';
-    if (p === 'R04' && i === 8) x = 'P';
-    if (p === 'R04' && i === 9) x = '';
-    lines.push(`${p},${id(i)},${x}`);
-  });
-  const o = A.analyseNeeds(A.parseCSV(lines.join('\n')), keyRows);
-  has('needs blank: summary', o, 'Agreement ranged 8/9 to 10/10 across 4 readers');
-  has('needs blank: short reader', o, '1 reader(s) classified fewer than 10 needs: R04 (9).');
-  has('needs blank: N10 denominator', o, '| N10  | N   | 1/3               | R02:D              |');
-  has('needs blank: N09 denominator', o, '| N09  | N   | 1/4               | R04:P              |');
-}
-
-// 13. figures.js on the FAKE sample: Figure 1 has one mark per complete reader and the FAKE stamp;
-//     Table 1 lists all ten needs (N04: F02, F03 match the key D -> 2/4); Table 2 matches the item table
-//     in test 8 (item 2: 3/4 and 4/4); Table 3 names the Ko et al. type (d1: 3 segments, S02, S08, S14).
-{
-  const F = require('./figures.js');
-  const dir = __dirname;
-  const r = F.build({
-    scores: path.join(dir, 'sample-item-scores.csv'), needs: path.join(dir, 'sample-need-classifications.csv'),
-    key: path.join(dir, 'sample-marking-key.csv'), codes: path.join(dir, 'sample-think-aloud-codes.csv'),
-  });
-  eq('fig: fake flag', r.fake, true);
-  has('fig: svg fake stamp', r.svg, 'FAKE DATA');
-  has('fig: tables fake stamp', r.md, '**FAKE DATA');
-  eq('fig: producer dots', (r.svg.match(/<circle [^>]*><title>/g) || []).length, 2);
-  eq('fig: proxy squares', (r.svg.match(/<rect [^>]*><title>/g) || []).length, 2);
-  has('fig: F04 at -1', r.svg, 'F04 proxy -1');
-  has('fig: F02 at +4', r.svg, 'F02 proxy +4');
-  eq('table 1: ten needs', (r.md.match(/^\| N\d\d \|/gm) || []).length, 10);
-  has('table 1: N04', r.md, '| N04 | D | 2/4 |');
-  has('table 2: item 2', r.md, '| 2 | 3/4 | 4/4 |');
-  has('table 3: d1 named', r.md, '| d1 | Reasoning about Design | What is the purpose of this code? | 3 |');
-  has('table 3: total', r.md, 'pilot excluded, 16 segments');
-  // real (non-sample) file names are not stamped
-  const tmp = path.join(require('os').tmpdir(), `cl-fig-${process.pid}.csv`);
-  fs.writeFileSync(tmp, [HEAD].concat(scoreLines()).join('\n'));
-  const real = F.build({ scores: tmp });
-  fs.unlinkSync(tmp);
-  eq('fig: real not fake', real.fake, false);
-  hasNot('fig: real svg not stamped', real.svg, 'FAKE');
-  has('fig: real n', real.svg, '(n = 5)');
-  // the figure number follows the report (deliverable-7/README.md makes the plot Figure 5); default stays 1
-  has('fig: default number', r.svg, '<title id="t">Figure 1: paired difference per reader</title>');
-  const r5 = F.build({ scores: path.join(dir, 'sample-item-scores.csv') }, { number: 5 });
-  has('fig: number 5 title', r5.svg, '<title id="t">Figure 5: paired difference per reader</title>');
-  has('fig: number 5 tables', r5.md, '# ChangeLens evaluation: Figure 5 and Tables 1-3');
-  has('fig: number 5 count line', r5.md, 'Figure 5 uses 4 complete reader(s).');
-  hasNot('fig: number 5 no Figure 1', r5.svg + r5.md, 'Figure 1');
-}
-
-// 14. CSV quotes (RFC 4180). A quote opens a quoted field only as the first character of a field.
-// 14a. Unclosed quote typed inside a quote_note (wide sheet, CRLF, four segments): all four segments
-//      are read, the quote is kept as a literal, and no warning is needed.
-{
-  const o = wide(['S01,R01,00:01,A,reads the title then says "who did #588,a2,,a2,,,', 'S02,R01,00:02,A,x,d1,,,,,',
-    'S03,R02,00:01,B,x,u1,,,,,', 'S04,R02,00:02,B,x,d3,,,,,']);
-  has('stray quote: all segments read', o, 'Segments with pass 1: 4. Re-coded in pass 2: 1');
-  hasNot('stray quote: no warning', o, 'WARNING');
+  eq('csv line number', rows[1]._line, 4);
   const r = A.parseCSV('id,q\r\nS1,reads the title then says "who did #588\r\nS2,x\r\n');
   eq('stray quote: kept literal', r[0].q, 'reads the title then says "who did #588');
   eq('stray quote: next row intact', r[1].id, 'S2');
-}
-// 14b. A comment line holding an unclosed quote is skipped whole: the five readers are all read.
-{
-  const o = A.analyseScores(A.parseCSV(['# R03 said "the airlock bit, then stopped', HEAD].concat(scoreLines()).join('\n')));
-  has('comment quote: rows read', o, 'Rows read: 72;');
-  has('comment quote: five complete', o, 'Complete readers (both reports, items 1-5 each scored once): 5');
-}
-// 14c. A balanced quote in the middle of a field keeps its quote marks. With a comma inside it, the
-//      row splits and a warning names the line (the note should have been quoted as a whole).
-{
   eq('mid quote: kept', A.parseCSV('id,q\nS1,said "is this the art one" twice\n')[0].q, 'said "is this the art one" twice');
-  const r = A.parseCSV('id,q\nS1,said "is this, the art one" twice\n');
-  eq('mid quote comma: warning', r.warnings[0], 'WARNING: line 2 has 3 cells but the header has 2; the extra cells are ignored. An unquoted comma in a note does this: put the note in double quotes.');
+  eq('mid quote comma: warning', A.parseCSV('id,q\nS1,said "is this, the art one" twice\n').warnings[0],
+    'WARNING: line 2 has 3 cells but the header has 2; the extra cells are ignored. An unquoted comma in a note does this: put the note in double quotes.');
   eq('quoted note: no warning', A.parseCSV('id,q\nS1,"said ""is this, the art one"" twice"\n').warnings.length, 0);
-}
-// 14d. A quoted field that is never closed is warned about in the analysis output, with its line.
-{
-  const o = wide(['S01,R01,,,"who did it,a2,,,,,', 'S02,R01,,,x,d1,,,,,']);
-  has('unclosed field: warning', o, 'WARNING: the file ends inside a quoted field opened on line 2.');
+  has('unclosed quote: warning', A.parseCSV('id,q\nS1,"who did it\nS2,x\n').warnings[0], 'the file ends inside a quoted field opened on line 2');
+  eq('excel blank rows dropped', A.parseCSV('a,b\n1,2\n,,\n,\n').length, 1);
 }
 
-// 15. Counterbalanced design checks. Base set as in 10.
-//     Treatment cells: R01 W2 o2, R02 W1 o1, R03 W2 o2, R04 W1 o2, R05 W2 o1.
+// 5. Templates: one per plan section 3 file (nine) plus the two optional D1 files, header only, columns exact.
 {
-  const o = run(scoreLines());
-  has('sequence counts', o, 'Readers per sequence (week and order of the treatment report): W1 order 1: 1; W1 order 2: 1; W2 order 1: 1; W2 order 2: 2.');
-}
-// 15a. Same week: R05 treatment typed W1 order 1 (baseline W1 order 2). R05 is left out and named.
-//      Remaining R01-R04: 3, 4, 2, -2 -> mean 7/4 = 1.75.
-{
-  const o = run(scoreLines().map(l => l.replace(/^R05,proxy,treatment,W2,1,/, 'R05,proxy,treatment,W1,1,')));
-  has('same week: reason', o, 'R05 (baseline and treatment both W1)');
-  has('same week: mean over 4', o, 'Mean difference 1.75 points out of 10');
-}
-// 15b. Same order: R05 treatment typed W2 order 2 (baseline W1 order 2). Left out as a likely order error.
-{
-  const o = run(scoreLines().map(l => l.replace(/^R05,proxy,treatment,W2,1,/, 'R05,proxy,treatment,W2,2,')));
-  has('same order: reason', o, 'R05 (baseline and treatment both order 2, likely an order error)');
-  hasNot('same order: not in paired table', o, '| R05 ');
-}
-// 15c. One-row week typo: R01 baseline item 3 typed W2 while R01's other baseline rows are W1.
-{
-  const o = run(scoreLines().map(l => (l === 'R01,producer,baseline,W1,1,3,1,' ? 'R01,producer,baseline,W2,1,3,1,' : l)));
-  has('week typo: reason', o, 'R01 (baseline rows give more than one week (W1, W2))');
-  has('week typo: mean over 4', o, 'Readers: 4.');
-}
-// 15d. Order typed 1st/2nd on every row (and 02 on R05): read as 1 and 2, so the output matches the base set
-//      (sequence cells and the order-within-condition line), with no warning.
-{
-  const base = run(scoreLines());
-  const o = run(scoreLines().map(l => {
-    const c = l.split(',');
-    c[4] = c[0] === 'R05' ? '0' + c[4] : (c[4] === '1' ? '1st' : '2nd');
-    return c.join(',');
-  }));
-  hasNot('order 1st/2nd: no warning', o, 'WARNING');
-  has('order 1st/2nd: sequences', o, 'W1 order 1: 1; W1 order 2: 1; W2 order 1: 1; W2 order 2: 2.');
-  hasNot('order 1st/2nd: no extra cells', o, 'order 1st');
-  const line = t => t.split('\n').find(x => x.startsWith('Mean total /10 by reading order'));
-  eq('order 1st/2nd: order line as base', line(o), line(base));
-  hasNot('order 1st/2nd: no n=0 cells', line(o), 'n=0');
-}
-// 15e. Order 3: R05 treatment typed order 3. Warned with the raw value, R05 left out with the reason,
-//      R01-R04 remain: 3, 4, 2, -2 -> mean 1.75.
-{
-  const o = run(scoreLines().map(l => l.replace(/^R05,proxy,treatment,W2,1,/, 'R05,proxy,treatment,W2,3,')));
-  has('order 3: warning', o, 'WARNING: order not 1 or 2 (1st, first and 01 are read as 1): R05 "3".');
-  has('order 3: reason', o, 'R05 (treatment order not 1 or 2 ("3"))');
-  has('order 3: mean over 4', o, 'Mean difference 1.75 points out of 10');
-  hasNot('order 3: no extra cell', o, 'order 3:');
-}
-// 15g. Item typed Q1: R03 treatment item 1 typed "Q1". The Q1 row is named with its raw value, and R03 is
-//      left out with both reasons (item 1 missing, item "Q1" not 1 to 6). R01, R02, R04, R05: 3, 4, -2, 1 -> 1.50.
-//      Item 01 still reads as item 1 (R01 baseline item 1 typed 01; no warning about it).
-{
-  const o = run(scoreLines().map(l => (l === 'R03,proxy,treatment,W2,2,1,2,' ? 'R03,proxy,treatment,W2,2,Q1,2,' :
-    l === 'R01,producer,baseline,W1,1,1,2,' ? 'R01,producer,baseline,W1,1,01,2,' : l)));
-  has('item Q1: warning', o, 'WARNING: 1 row(s) with an item that is not 1 to 6: R03 treatment item "Q1".');
-  has('item Q1: reason', o, 'R03 (treatment item 1 missing; treatment item "Q1" not 1 to 6)');
-  has('item Q1: mean over 4', o, 'Mean difference 1.50 points out of 10');
-  hasNot('item 01: not warned', o, '"01"');
-}
-// 15f. Weeks typed 'Week 1'/'Week 2': the week warning fires, and the week-balanced line says the weeks
-//      are not W1/W2 instead of claiming every treatment report was in one week.
-{
-  const o = run(scoreLines().map(l => l.replace(/,W([12]),/, ',Week $1,')));
-  has('week words: week warning', o, 'WARNING: weeks found are WEEK 1, WEEK 2; expected exactly W1 and W2.');
-  has('week words: balanced not computed', o, 'Week-balanced difference: not computed: weeks are not W1/W2 (WEEK 1, WEEK 2).');
-  hasNot('week words: no one-week claim', o, 'every treatment report was in one week');
-}
-
-// 16. Week and role case. All R05 rows with week w1/w2 and role Proxy give the same output as test 10a.
-{
-  const o = run(scoreLines().map(l => l.startsWith('R05,') ? l.replace('R05,proxy,', 'R05,Proxy,').replace(/,W([12]),/, ',w$1,') : l));
-  has('case: roles merged', o, 'producer n=2, mean 0.50; proxy n=3, mean 2.33');
-  has('case: week gap kept', o, 'Baseline mean gap between weeks');
-  hasNot('case: no warning', o, 'WARNING');
-  const bad = run(scoreLines().map(l => l.startsWith('R05,') ? l.replace('R05,proxy,', 'R05,prod,').replace(/,W2,/, ',W3,') : l));
-  has('case: odd week warned', bad, 'WARNING: weeks found are W1, W2, W3; expected exactly W1 and W2.');
-  has('case: odd role warned', bad, 'WARNING: role not producer or proxy: prod.');
-}
-
-// 17. Ten-need data checks. Key N01-N10 = D D D D P P P N N N; every reader matches it unless changed.
-{
-  const keyL = L('D D D D P P P N N N');
-  const id = i => `N${String(i + 1).padStart(2, '0')}`;
-  const keyCsv = ['need_id,class'].concat(keyL.map((c, i) => `${id(i)},${c}`));
-  const lines = ['participant,need_id,class'];
-  for (const p of ['R01', 'R02']) keyL.forEach((c, i) => {
-    let x = c;
-    if (p === 'R02' && i === 0) x = 'derivable';
-    if (p === 'R02' && i === 4) x = 'D/P';
-    lines.push(`${p},${id(i)},${x}`);
-  });
-  // R01 lists N04 twice, P then D: both rows are left out, so R01 is 9/9 either way round.
-  const o1 = A.analyseNeeds(A.parseCSV(lines.concat(['R01,N04,P']).join('\n')), A.parseCSV(keyCsv.join('\n')));
-  has('needs dup: warning', o1, 'WARNING: duplicate rows (same reader and need), left out until fixed: R01 N04 (2 rows).');
-  has('needs dup: R01 9/9', o1, '| R01    | 9/9 (100%)');
-  // R02's two invalid cells are left out and named: 8/8, no departure rows for them.
-  has('needs invalid: warning', o1, 'WARNING: class not D, P or N, left out: R02 N01 ("derivable"); R02 N05 ("D/P").');
-  has('needs invalid: R02 8/8', o1, '| R02    | 8/8 (100%)');
-  hasNot('needs invalid: not a departure', o1, 'R02:DERIVABLE');
-  // a key class outside D/P/N: that need is left out of the key and named
-  const o2 = A.analyseNeeds(A.parseCSV(lines.join('\n')), A.parseCSV(keyCsv.map(l => (l === 'N10,N' ? 'N10,X' : l)).join('\n')));
-  has('key invalid: warning', o2, 'WARNING: key class not D, P or N, need left out: N10 ("X").');
-  has('key invalid: nine needs', o2, 'Key has 9 needs');
-}
-
-// 18. Second scorer. First scorer: the base set. Second scorer re-scores R01 and R02 (both reports) and
-//     differs on R01 baseline item 4 (0 -> 1) and R02 treatment item 6 (Pass -> Hedged).
-//     Items 1-5: 2 readers x 2 reports x 5 items = 20, 19 agree. Item 6: 4 codes, 3 agree. Pilot rows dropped.
-{
-  const first = A.parseCSV([HEAD].concat(scoreLines()).join('\n'));
-  const second = scoreLines(['R01', 'R02', 'P0']).map(l => {
-    if (l === 'R01,producer,baseline,W1,1,4,0,') return 'R01,producer,baseline,W1,1,4,1,';
-    if (l === 'R02,proxy,treatment,W1,1,6,Pass,') return 'R02,proxy,treatment,W1,1,6,Hedged,';
-    return l;
-  });
-  const o = A.analyseSecondScorer(first, A.parseCSV([HEAD].concat(second).join('\n')));
-  has('scorer2: readers', o, 'Readers re-scored by the second scorer: 2 (R01, R02). Pilot excluded.');
-  has('scorer2: agreement', o, 'Items 1-5 in agreement: 19/20. Item 6 codes in agreement: 3/4.');
-  has('scorer2: item 4 differs', o, '| R01    | baseline  | 4    | 0        | 1        |');
-  has('scorer2: item 6 differs', o, '| R02    | treatment | 6    | Pass     | Hedged   |');
-  hasNot('scorer2: no warning', o, 'WARNING');
-  // one reader, one report only: both shortfalls are warned about
-  const one = A.analyseSecondScorer(first, A.parseCSV([HEAD].concat(scoreLines(['R03']).filter(l => l.includes(',baseline,'))).join('\n')));
-  has('scorer2: one report warned', one, 'WARNING: re-scored on one report only: R03.');
-  has('scorer2: two readers warned', one, 'WARNING: 1 reader(s) re-scored; D3 asks for at least two.');
-  has('scorer2: one report counts', one, 'Items 1-5 in agreement: 5/5. Item 6 codes in agreement: 1/1.');
-  // the header-only template parses to no rows
-  eq('scorer2: template', A.parseCSV(fs.readFileSync(path.join(__dirname, 'templates', 'second-scorer-scores.csv'), 'utf8')).length, 0);
-}
-
-// 19. figures.js Table 2 and 2b match analyse.js on the FAKE sample: the week columns equal analyse.js's
-//     week-by-condition table, and the item 6 counts equal its item 6 table. The caption says "the marking key".
-{
-  const F = require('./figures.js');
-  const dir = __dirname;
-  const sRows = A.parseCSV(fs.readFileSync(path.join(dir, 'sample-item-scores.csv'), 'utf8'));
-  const an = A.analyseScores(sRows);
-  const t2 = F.table2(sRows);
-  const cells = line => line.split('|').map(c => c.trim()).filter(c => c !== '');
-  const weekPart = an.split('### Item scores by week and condition')[1].split('###')[0];
-  const anWeek = weekPart.split('\n').filter(l => /^\| [1-5] /.test(l)).map(cells);
-  const t2Rows = t2.split('**Table 2b')[0].split('\n').filter(l => /^\| [1-5] \|/.test(l)).map(cells);
-  eq('fig table 2: five rows', t2Rows.length, 5);
-  eq('fig table 2: week columns match analyse', JSON.stringify(t2Rows.map(r => [r[0]].concat(r.slice(3)))), JSON.stringify(anWeek));
-  has('fig table 2: week header', t2, '| Item | Baseline (no names) | Treatment (names) | W1 baseline | W1 treatment | W2 baseline | W2 treatment |');
-  // item 6 (hand-worked in test 8): baseline Pass 2, Hedged 1, Over-claim 1; treatment 2, 0, 2
-  has('fig table 2b: pass', t2, '| Pass | 2/4 | 2/4 |');
-  has('fig table 2b: hedged', t2, '| Hedged | 1/4 | 0/4 |');
-  has('fig table 2b: over-claim', t2, '| Over-claim | 1/4 | 2/4 |');
-  const t1 = F.table1(A.parseCSV(fs.readFileSync(path.join(dir, 'sample-need-classifications.csv'), 'utf8')),
-    A.parseCSV(fs.readFileSync(path.join(dir, 'sample-marking-key.csv'), 'utf8')));
-  has('fig table 1: caption', t1, 'the marking key and readers matching it');
-  hasNot('fig table 1: no first person', t1, 'my key');
-}
-
-// 20. Table 3 uses final_code when the resolve step set one. R01 S02 is d1 in pass 1, d3 in pass 2,
-//     resolved to d3: d3 counts 2 (S02, S03) and d1 counts 0. Long layout accepts pass = final.
-{
-  const F = require('./figures.js');
-  const rows = A.parseCSV([WIDE, 'S01,R01,,,x,a2,,a2,,,', 'S02,R01,,,x,d1,,d3,,d3,read the quote again', 'S03,R02,,,x,d3,,,,,'].join('\n'));
-  const t3 = F.table3(rows);
-  has('final: d3 counted twice', t3, '| d3 | Reasoning about Design | Why was this code implemented this way? | 2 |');
-  hasNot('final: d1 not counted', t3, '| d1 |');
-  has('final: caption', t3, 'final code after resolution, else pass 1 code; 1 segment(s) with a final code');
-  const lng = F.table3(A.parseCSV(['segment_id,participant,timestamp,pass,code', 'S01,R01,,1,d1', 'S01,R01,,2,d3', 'S01,R01,,final,d3'].join('\n')));
-  has('final long: d3', lng, '| d3 | Reasoning about Design | Why was this code implemented this way? | 1 |');
-  // agreement still uses pass 1 and pass 2 only
-  has('final: agreement unchanged', A.analyseCodes(rows), 'Agreement: 1/2 (50%)');
-}
-
-// 21. need_id typed wrong. The real key (deliverable-3/ten-need-sheet.md section B) has ids N01, N03, N07,
-//     N08, N09, N12, N17, N19, N25, N26 on printed rows 1-10; classes below are test values, not the key.
-//     Every reader gives the key's class on every printed row, so a correct reading is 10/10 for each.
-{
-  const ids = L('N01 N03 N07 N08 N09 N12 N17 N19 N25 N26'), cls = L('D D P P P D P P P P');
-  const keyNoRow = A.parseCSV(['need_id,class'].concat(ids.map((id, i) => `${id},${cls[i]}`)).join('\n'));
-  const keyRow = A.parseCSV(['row,need_id,class'].concat(ids.map((id, i) => `${i + 1},${id},${cls[i]}`)).join('\n'));
-  const sheet = (p, idOf) => cls.map((c, i) => `${p},${idOf(i)},${c}`);
-  const pad = i => `N${String(i + 1).padStart(2, '0')}`;
-  // 21a. R01 typed by printed row as N01-N10, R02 typed 1-10, R03 correct. R01 and R02 are named and left
-  //      out (their N01, N03 and N07 rows would otherwise match by chance); only R03 is analysed, 10/10.
-  const lines = ['participant,need_id,class'].concat(sheet('R01', pad), sheet('R02', i => String(i + 1)), sheet('R03', i => ids[i]));
-  const o = A.analyseNeeds(A.parseCSV(lines.join('\n')), keyNoRow);
-  has('need id: R01 named', o, 'R01 rows N02, N04, N05, N06, N10 not in the key');
-  has('need id: R02 named', o, 'R02 rows 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 not in the key');
-  has('need id: readers', o, 'readers analysed: 1 (pilot excluded; 2 left out for need_ids not in the key)');
-  has('need id: R03 10/10', o, '| R03    | 10/10 (100%)');
-  hasNot('need id: R01 not in table', o, '| R01 ');
-  hasNot('need id: no false departure', o, 'R01:');
-  has('need id: no departures', o, 'None: every reader matched the key on every need.');
-  // figures.js Table 1 uses the same check: N03 is 1/1 (R03 only), not 2/2 with R01's row 2
-  const t1 = require('./figures.js').table1(A.parseCSV(lines.join('\n')), keyNoRow);
-  has('need id: table 1 N03', t1, '| N03 | D | 1/1 |');
-  // 21b. lower case and unpadded ids are read as the key's ids: 10/10 each, no warning
-  const o2 = A.analyseNeeds(A.parseCSV(['participant,need_id,class'].concat(
-    sheet('R04', i => ids[i].toLowerCase()), sheet('R05', i => 'N' + parseInt(ids[i].slice(1), 10)), sheet('R06', i => ' n' + parseInt(ids[i].slice(1), 10))).join('\n')), keyNoRow);
-  has('need id: lower case', o2, '| R04    | 10/10 (100%)');
-  has('need id: unpadded', o2, '| R05    | 10/10 (100%)');
-  has('need id: lower unpadded', o2, '| R06    | 10/10 (100%)');
-  hasNot('need id: case no warning', o2, 'WARNING');
-  eq('need id: norm', A.normNeedId(' n7 '), 'N07');
-  // 21c. A key with a row column maps printed row numbers: R02 typed 1-10 is 10/10. R01 typed N01-N10 is
-  //      still named, since N02 etc. are ids, not row numbers.
-  const o3 = A.analyseNeeds(A.parseCSV(lines.join('\n')), keyRow);
-  has('need id: row map', o3, '| R02    | 10/10 (100%)');
-  has('need id: row map R01 still named', o3, 'R01 rows N02, N04, N05, N06, N10 not in the key');
-  // the templates carry the row column and the warning about printed row numbers
-  const tk = fs.readFileSync(path.join(__dirname, 'templates', 'marking-key.csv'), 'utf8');
-  eq('need id: key template parses empty', A.parseCSV(tk).length, 0);
-  has('need id: key template row column', tk, 'row,need_id,class');
-  has('need id: sheet template note', fs.readFileSync(path.join(__dirname, 'templates', 'need-classifications.csv'), 'utf8'), 'not the printed row number');
-}
-
-// 24. Blank participant under a pilot row (r5). Ten-need sheet: P0 typed on its first row only, the
-//     other nine rows blank, then R01 and R02 in full (CRLF). Only R01 and R02 are analysed, and every need
-//     is classified by 2 readers, so Table 1 denominators are /2. Item scores: the pilot's rows after the
-//     first are blank too; they are named and left out, and the five readers are unchanged (mean 1.60).
-{
-  const ids = ['N01', 'N03', 'N07', 'N08', 'N09', 'N12', 'N17', 'N19', 'N25', 'N26'];
-  const keyL = L('D D D D P P P N N N');
-  const keyRows = A.parseCSV(['need_id,class'].concat(ids.map((id, i) => `${id},${keyL[i]}`)).join('\r\n'));
-  const lines = ['participant,need_id,class'];
-  ids.forEach((id, i) => lines.push(`${i ? '' : 'P0'},${id},${keyL[i]}`));
-  for (const p of ['R01', 'R02']) ids.forEach((id, i) => lines.push(`${p},${id},${keyL[i]}`));
-  const needRows = A.parseCSV(lines.join('\r\n') + '\r\n');
-  const o = A.analyseNeeds(needRows, keyRows);
-  has('blank needs: readers', o, 'readers analysed: 2 (pilot excluded)');
-  has('blank needs: warning', o, 'WARNING: 9 row(s) with a blank participant, left out until filled in: need N03, N07, N08, N09, N12, N17, N19, N25, N26. Fill participant on every row');
-  hasNot('blank needs: no nameless reader', o, 'classified 9 of 10');
-  const N = A.prepareNeeds(needRows, keyRows);
-  eq('blank needs: people', N.people.join(','), 'R01,R02');
-  eq('blank needs: N03 classified by 2', N.perNeed.find(x => x.id === 'N03').classified, 2);
-  const F = require('./figures.js');
-  has('blank needs: table 1 N03', F.table1(needRows, keyRows), '| N03 | D | 2/2 |');
-  // item scores: keep P0 on each block's first row only
-  let first = true;
-  const sl = scoreLines().map(l => {
-    if (!l.startsWith('P0,')) return l;
-    if (first) { first = false; return l; }
-    return l.slice(2);
-  });
-  const so = run(sl);
-  has('blank scores: rows read', so, 'Rows read: 72; pilot rows excluded: 1; blank participant rows left out: 11; analysed: 60.');
-  has('blank scores: warning', so, 'WARNING: 11 row(s) with a blank participant, left out until filled in: baseline item 2;');
-  has('blank scores: five readers', so, 'Readers: 5. Higher with names: 4.');
-  has('blank scores: mean', so, 'Mean difference 1.60 points out of 10');
-  hasNot('blank scores: no nameless reader', so, '(blank code)');
-}
-
-// 25. Mixed role (r5): R01's baseline rows say producer and its treatment rows say proxy. R01 is named and
-//     left out; the mean is over R02, R03, R04, R05: 4, 2, -2, 1 -> 5/4 = 1.25. Roles: R04 producer alone
-//     (one reader), so the role split is not made.
-{
-  const o = run(scoreLines().map(l => (l.startsWith('R01,producer,treatment,') ? l.replace('R01,producer,', 'R01,proxy,') : l)));
-  has('mixed role: reason', o, 'R01 (rows give more than one role (producer, proxy))');
-  has('mixed role: four readers', o, 'Readers: 4. Higher with names: 3. Same: 0. Lower with names: 1.');
-  has('mixed role: mean', o, 'Mean difference 1.25 points out of 10');
-  hasNot('mixed role: R01 not counted as producer', o, 'producer n=2');
-}
-
-// 26. Participant codes typed by hand (r5). r3, R3 and r03 read as R03; p00 reads as P0 (pilot).
-//     Ten-need sheet: R01, R02, R03 all ten needs at the key, one R03 row typed r03 and one typed R3:
-//     3 readers, R03 10/10, a warning names both typed forms. Item scores: one R03 row typed r03 still
-//     gives five complete readers (mean 1.60). Think-aloud: S01 typed r01 and S02 typed R01 are one reader;
-//     S03 typed p00 is the pilot.
-{
-  eq('participant: r3', A.normParticipant('r3'), 'R03');
-  eq('participant: R003', A.normParticipant(' R003 '), 'R03');
-  eq('participant: R12', A.normParticipant('R12'), 'R12');
-  eq('participant: p00', A.normParticipant('p00'), 'P0');
-  eq('participant: blank', A.normParticipant(''), '');
-  const ids = ['N01', 'N03', 'N07', 'N08', 'N09', 'N12', 'N17', 'N19', 'N25', 'N26'];
-  const keyL = L('D D D D P P P N N N');
-  const keyRows = A.parseCSV(['need_id,class'].concat(ids.map((id, i) => `${id},${keyL[i]}`)).join('\n'));
-  const lines = ['participant,need_id,class'];
-  for (const p of ['R01', 'R02', 'R03']) ids.forEach((id, i) => lines.push(`${p === 'R03' && i === 0 ? 'r03' : p === 'R03' && i === 2 ? 'R3' : p},${id},${keyL[i]}`));
-  const o = A.analyseNeeds(A.parseCSV(lines.join('\n')), keyRows);
-  has('participant: needs readers', o, 'readers analysed: 3 (pilot excluded)');
-  has('participant: needs R03 whole', o, '| R03    | 10/10 (100%)');
-  hasNot('participant: needs no split', o, '1/1 (100%)');
-  has('participant: needs warning', o, 'WARNING: participant code typed differently from the tracker form, read as normalised: "R3" read as R03 (1 row); "r03" read as R03 (1 row).');
-  const so = run(scoreLines().map(l => (l === 'R03,proxy,treatment,W2,2,4,1,' ? 'r03,proxy,treatment,W2,2,4,1,' : l)));
-  has('participant: scores five', so, 'Readers: 5. Higher with names: 4.');
-  has('participant: scores mean', so, 'Mean difference 1.60 points out of 10');
-  has('participant: scores warning', so, '"r03" read as R03 (1 row)');
-  const co = wide(['S01,r01,,,,a2,,a2,,,', 'S02,R01,,,,d1,,d1,,,', 'S03,p00,,,,d3,,d3,,,']);
-  has('participant: codes pilot', co, 'Pilot rows excluded: 1.');
-  has('participant: codes one reader', co, 'Segments with pass 1: 2. Re-coded in pass 2: 2');
-  has('participant: codes warning', co, '"p00" read as P0 (1 row); "r01" read as R01 (1 row)');
-}
-
-// 22. The tracker's five-reader sequences (deliverable-5/booking-tracker.csv): R01 S1, R02 S2, R03 S3, R04 S4,
-//     R05 S2. S1 = W1-B then W2-A; S2 = W2-A then W1-B; S3 = W1-A then W2-B; S4 = W2-B then W1-A.
-//     So treatment is W1 for R01, R02, R05 (3) and W2 for R03, R04 (2); order 2 for R02, R03, R05 (3).
-{
-  const SEQ = { S1: [['W2', 2], ['W1', 1]], S2: [['W2', 1], ['W1', 2]], S3: [['W1', 1], ['W2', 2]], S4: [['W1', 2], ['W2', 1]] };
-  const READERS = [['R01', 'S1'], ['R02', 'S2'], ['R03', 'S3'], ['R04', 'S4'], ['R05', 'S2']];
-  const build = scoreOf => {
-    const lines = [];
-    for (const [p, s] of READERS) {
-      const [[bw, bo], [tw, to]] = SEQ[s];
-      for (const [cond, w, o] of [['baseline', bw, bo], ['treatment', tw, to]]) {
-        scoreOf(cond, w).forEach((x, i) => lines.push(`${p},proxy,${cond},${w},${o},${i + 1},${x},`));
-        lines.push(`${p},proxy,${cond},${w},${o},6,Pass,`);
-      }
-    }
-    return lines;
+  const want = {
+    'se1-fidelity-handcheck': 'week,version,row,raphael_verdict,ai_scorer1_verdict,ai_scorer2_verdict,ai_rescore_verdict,agree_with_ai,minutes,note',
+    'se2-reads': 'read_id,date,week,version,read_order,seen_before,start_time,end_time,minutes_items,minutes_needs,minutes_standup,ease_1to5,useful_1to5,would_send_1to5,rating_why,standup_S,standup_C,standup_U,interruptions,note',
+    'se2-item-scores': 'read_id,week,version,read_order,item,level,confidence_1to5,seconds,changed_on_second_read,score,specific,scored_date',
+    'se2-need-answers': 'read_id,week,version,read_order,need_id,page_gave_fpn,confidence_1to5,seconds,changed_on_second_read,gitlog_result,error_cause,only_in_b,key_ru_class,record_could_answer,scored_date,note',
+    'se2-needs-log': 'segment_id,participant,timestamp,report_condition,quote_note,pass1_code,pass1_date,pass2_code,pass2_date,final_code,resolution_rule',
+    'se2-second-scorer': 'read_id,kind,id,score,scorer,scored_date',
+    'se3-walkthrough': 'task_id,step_no,correct_action,q1_right_effect,q2_notice_action,q3_associate_action,q4_see_progress,failure_story,severity_0to4,heuristic_link,fix_idea',
+    'se4-heuristic-problems': 'id,heuristic,task_location,problem,severity_0to4,screenshot_file,cross_check_yn,se3_link',
+    'se4-task-outcomes': 'task,completed,seconds,looked_first,note',
+    'd1-problems': 'tool,id,heuristic,severity_0to4,raphael_checked_yn',
+    'd1-task-outcomes': 'tool,task,completed',
   };
-  // 22a. Every treatment report 8/10 (2,2,2,1,1), every baseline 5/10 (1,1,1,1,1): no order effect, no week effect.
-  //      Within each condition the order means are equal; both week groups are +3, so the week-balanced figure is 3.00.
-  const a = run(build(c => (c === 'treatment' ? [2, 2, 2, 1, 1] : [1, 1, 1, 1, 1])));
-  has('tracker five: sequences', a, 'W1 order 1: 1; W1 order 2: 2; W2 order 1: 1; W2 order 2: 1.');
-  has('tracker five: order within condition', a, 'baseline: order 1 5.00 (n=3), order 2 5.00 (n=2); treatment: order 1 8.00 (n=2), order 2 8.00 (n=3).');
-  hasNot('tracker five: no pooled order line', a, 'order 1: 6.20 (n=5)');
-  has('tracker five: by week', a, 'By week of the treatment report: W1 n=3, mean 3.00; W2 n=2, mean 3.00. Week-balanced difference (the average of the two): 3.00 points out of 10.');
-  has('tracker five: unbalanced note', a, 'the plain mean above is unbalanced');
-  // 22b. Week only: every W1 report 7/10 (2,2,1,1,1), every W2 report 5/10, whatever the version. No names effect.
-  //      Treatment W1 readers: 7 - 5 = +2 (x3); treatment W2 readers: 5 - 7 = -2 (x2). Plain mean (6 - 4)/5 = 0.40,
-  //      week-balanced (2 + -2)/2 = 0.00.
-  const b = run(build((c, w) => (w === 'W1' ? [2, 2, 1, 1, 1] : [1, 1, 1, 1, 1])));
-  has('week only: plain mean', b, 'Mean difference 0.40 points out of 10');
-  has('week only: balanced', b, 'By week of the treatment report: W1 n=3, mean 2.00; W2 n=2, mean -2.00. Week-balanced difference (the average of the two): 0.00 points out of 10.');
-  eq('week only: helper', A.weekBalanced(A.prepareScores(A.parseCSV([HEAD].concat(build((c, w) => (w === 'W1' ? [2, 2, 1, 1, 1] : [1, 1, 1, 1, 1]))).join('\n')))).balanced, 0, 1e-12);
-  // With four readers one per sequence the groups are 2 and 2, so no unbalanced note.
-  const four = run(build(c => (c === 'treatment' ? [2, 2, 2, 1, 1] : [1, 1, 1, 1, 1])).filter(l => !l.startsWith('R05,')));
-  hasNot('four sequences: no unbalanced note', four, 'the plain mean above is unbalanced');
-  // every treatment report in one week (R02 and R04 of the base set, both treatment W1): no week-balanced figure
-  const one = run(scoreLines(['R02', 'R04']));
-  has('one week: not computed', one, 'Week-balanced difference: not computed');
+  eq('templates: count', Object.keys(HEAD).length, 11);
+  for (const k of Object.keys(want)) {
+    eq(`template ${k}: header`, HEAD[k], want[k]);
+    eq(`template ${k}: no data rows`, A.parseCSV(fs.readFileSync(path.join(dir, 'templates', k + '.csv'), 'utf8')).length, 0);
+    // every sample file has the template's header
+    const s = fs.readFileSync(path.join(dir, 'sample-' + k + '.csv'), 'utf8').split(/\r?\n/).filter(l => l && !l.startsWith('#'))[0];
+    eq(`sample ${k}: header`, s, want[k]);
+  }
+  // the needs log keeps the D5 coding layout, so deliverable-5/recode-sample.js reads it unchanged
+  eq('needs log = D5 layout', HEAD['se2-needs-log'], 'segment_id,participant,timestamp,report_condition,quote_note,pass1_code,pass1_date,pass2_code,pass2_date,final_code,resolution_rule');
 }
 
-// 23. PNG copy of Figure 1 for the Word builder (build-docx-v2.js embeds .png/.jpg only).
+// 6. Table A on the FAKE sample.
+//    W1 B: rows 1, 2, 3, 19 all hand-checked: S S C S -> S 3, C 1, U 0; a C, so the A2 rule is not met.
+//      Scorer 1 S S S C against S S C S: rows 1, 2 agree -> 2 of 4. Scorer 2 S S C C: rows 1, 2, 3 -> 3 of 4.
+//      Re-score row 19 S = S -> 1 of 1. Minutes 1 + 1 + 2 + 2 = 6.
+//    W2 A: row 2 has no hand verdict -> listed 2, checked 1 (S); 1 of 1 is 100% S and no C -> met; scorer 1 1 of 1.
+//    W2 B: S and U -> no C, but 1 of 2 S is under 90% -> not met; scorer 1 S S against S U -> 1 of 2.
+{
+  const t = A.tableA(sample('se1'));
+  const md = A.render(t);
+  has('A: W1 B', md, '| W1-2021-02-08 | B       | 4           | 4            | 3 | 1 | 0 | not met               | 2 of 4         | 3 of 4         | 1 of 1         | 6       |');
+  has('A: W2 A', md, '| W2-2021-07-19 | A       | 2           | 1            | 1 | 0 | 0 | met                   | 1 of 1         | –              | –              | 1       |');
+  has('A: W2 B', md, '| W2-2021-07-19 | B       | 2           | 2            | 1 | 0 | 1 | not met               | 1 of 2         | –              | –              | 2       |');
+  eq('A: three groups', t.groups.length, 3);
+  eq('A: no warnings', t.warnings.length, 0);
+  // the 90% line: 9 S of 10 is met, 8 S and 2 U of 10 is not
+  const rows = n => Array.from({ length: 10 }, (_, i) => `W1-2021-02-08,B,${i + 1},${i < n ? 'S' : 'U'},,,,,,`);
+  eq('A: 9 of 10 met', A.tableA(csv(HEAD['se1-fidelity-handcheck'], rows(9))).groups[0].rule, 'met');
+  eq('A: 8 of 10 not met', A.tableA(csv(HEAD['se1-fidelity-handcheck'], rows(8))).groups[0].rule, 'not met');
+  // checks: an unknown week, a duplicate row, a verdict typo, and agree_with_ai typed against the verdicts
+  const bad = A.tableA(csv(HEAD['se1-fidelity-handcheck'], [
+    'W3-2021-01-01,B,1,S,,,,,,', 'W1-2021-02-08,B,5,S,S,,,y,,', 'W1-2021-02-08,B,5,S,S,,,y,,',
+    'w1-2021-02-08,b,6,x,S,,,,,', 'W1-2021-02-08,B,7,S,C,,,y,,']));
+  const bw = bad.warnings.join('\n');
+  has('A: bad week', bw, 'week "W3-2021-01-01" is not');
+  has('A: duplicate', bw, 'SE1 row listed more than once, left out until fixed: W1-2021-02-08 B 5.');
+  has('A: verdict typo', bw, 'raphael_verdict "x" is not S, C or U. Read as blank.');
+  has('A: agree typed wrong', bw, 'W1-2021-02-08 B row 7 (typed y, verdicts give n)');
+  eq('A: lower-case week and version read', bad.groups[0].listed, 2);
+}
+
+// 7. Table B on the FAKE sample. Key (R/U) N01 D, N03 P, N07 N, N08 N, N09 P, N12 D, N17 N, N19 D, N25 P, N26 N.
+//    RX-A1 results C PC C C W C C C PC NA -> C 6 of 10, PC 2, W 1 (overclaim, N09), NA 1.
+//    RX-B2 rows N01 C, N09 C, N12 C (only_in_b y) -> 3 of 3, needed B 1.
+//    RY-B1 results C C C W PC C C PC PC C -> C 6 of 10, PC 3, W 1 (misread, N08); only_in_b y on N03 and N12 -> 2.
+//    RY-A2 rows N12 C, N03 PC -> 1 of 2.
+{
+  const t = A.tableB(sample('needs'));
+  const md = A.render(t);
+  has('B: N01 row', md, '| N01  | D         | C     | C     | D                   | C     | –     | D                   |');
+  has('B: N09 row', md, '| N09  | P         | W     | C     | P                   | PC    | –     | P                   |');
+  has('B: N26 row', md, '| N26  | N         | NA    | –     | N                   | C     | –     | N                   |');
+  has('B: RX-A1 sums', md, '| RX-A1 | 6 of 10     | 2  | 1 | 1  | 0          | 0                    | 0          | 1            | 0             | 0           |');
+  has('B: RX-B2 sums', md, '| RX-B2 | 3 of 3      | 0  | 0 | 0  | 0          | 1                    | 0          | 0            | 0             | 0           |');
+  has('B: RY-B1 sums', md, '| RY-B1 | 6 of 10     | 3  | 1 | 0  | 0          | 2                    | 1          | 0            | 0             | 0           |');
+  has('B: RY-A2 sums', md, '| RY-A2 | 1 of 2      | 1  | 0 | 0  | 0          | 0                    | 0          | 0            | 0             | 0           |');
+  has('B: first reads only', md, 'Compare RX-A1 with RY-B1 only');
+  eq('B: no warnings', t.warnings.length, 0);
+}
+
+// 8. Observed class rule (plan section 6, Table C), every combination of page gave and git-log result.
+{
+  const want = { 'F|C': 'D', 'F|PC': 'P', 'F|W': 'N', 'F|NA': 'N', 'P|C': 'P', 'P|PC': 'P', 'P|W': 'N', 'P|NA': 'N',
+    'N|C': 'N', 'N|PC': 'N', 'N|W': 'N', 'N|NA': 'N', '|C': '', 'F|': '' };
+  for (const k of Object.keys(want)) { const [p, r] = k.split('|'); eq(`observed ${k}`, A.observedClass(p, r), want[k]); }
+}
+
+// 9. Table C on the FAKE sample (first reads only).
+//    RX observed: N01 D (F/C), N03 P (P/PC), N07 N, N08 N, N09 N (F/W), N12 P (P/C), N17 N, N19 D, N25 P, N26 N (N/NA).
+//    Key D P N N P D N D P N; differs on N09 and N12 -> 8 of 10. Key shares D .3 P .3 N .4; observed D .2 P .3 N .5;
+//    pe = .06 + .09 + .20 = .35; kappa = (.8 - .35)/.65 = 0.6923 -> 0.69. The log column equals the key -> 10 of 10, kappa 1.
+//    RY observed: N01 D, N03 D (F/C), N07 N, N08 N (P/W), N09 P, N12 D, N17 N, N19 P (F/PC), N25 P, N26 N.
+//    Differs on N03 and N19 -> 8 of 10; observed D .3 P .3 N .4 -> pe = .09 + .09 + .16 = .34; kappa = .46/.66 = 0.6970 -> 0.70.
+//    Over-claim (page F, answer W): RX-A1 N09 only (RY-B1 N08 was page P).
+{
+  const t = A.tableC(sample('needs'));
+  const md = A.render(t);
+  has('C: N09 row', md, '| N09  | P         | P      | N (F/W)     | P      | P (P/PC)    |');
+  has('C: N03 row', md, '| N03  | P         | P      | P (P/PC)    | P      | D (F/C)     |');
+  has('C: RX agreement', md, '| RX (RX-A1) | 8 of 10 (kappa 0.69) | 10 of 10 (kappa 1.00) | 8 of 10 (kappa 0.69)                                       |');
+  has('C: RY agreement', md, '| RY (RY-B1) | 8 of 10 (kappa 0.70) | 10 of 10 (kappa 1.00) | 8 of 10 (kappa 0.70)                                       |');
+  eq('C: RX kappa exact', t.pairs.RX.keyObs.k.kappa, 0.45 / 0.65, 1e-12);
+  eq('C: RY kappa exact', t.pairs.RY.keyObs.k.kappa, 0.46 / 0.66, 1e-12);
+  has('C: over-claims', md, 'Over-claims (page gave F, answer W): RX-A1 N09.');
+  hasNot('C: second reads not used', md, 'RX-B2');
+  // an unscored need is left out of agreement, so the denominator drops to 9
+  const lines = fs.readFileSync(path.join(dir, A.INPUTS.needs), 'utf8').split(/\r?\n/).filter(l => l && !l.startsWith('#'));
+  const unscored = A.tableC(A.parseCSV(lines.map(l => (l.startsWith('RX-A1,RX,A,1,N12,') ? l.replace(',C,,n,D,D,', ',,,n,D,D,') : l)).join('\n')));
+  eq('C: unscored left out', unscored.pairs.RX.keyObs.ag.n, 9);
+  eq('C: unscored agreement', unscored.pairs.RX.keyObs.ag.agree, 8);
+}
+
+// 10. Need-answer checks (RX-A1 keeps N01 C, N03 PC, N08 W, N09 C: 2 of 4 correct, 1 PC, 1 W with no cause): read_id typed by hand, week and version that do not match, unknown need,
+//     duplicate, W with no cause, a cause on a non-W answer, a key that differs between rows, a record class
+//     that differs between the two reads of a week, a change code on a first read.
+{
+  const H = HEAD['se2-need-answers'];
+  const t = A.tableB(csv(H, [
+    'rx a1,RX,A,1,n1,F,4,30,,C,,n,D,D,,',
+    'RX-A1,RY,B,1,N03,P,3,30,,PC,,n,P,P,,',
+    'RX-A1,RX,A,1,N99,P,3,30,,PC,,n,P,P,,',
+    'RX-A1,RX,A,1,N07,N,3,30,,C,,n,N,N,,', 'RX-A1,RX,A,1,N07,N,3,30,,C,,n,N,N,,',
+    'RX-A1,RX,A,1,N08,F,3,30,,W,,n,N,N,,',
+    'RX-A1,RX,A,1,N09,F,3,30,,C,misread,n,P,P,,',
+    'RX-B2,RX,B,2,N01,F,4,30,same,C,,n,P,P,,',
+    'RY-B1,RY,B,1,N12,F,4,30,new,C,,n,D,D,,',
+    'RQ-A1,RX,A,1,N12,F,4,30,,C,,n,D,D,,']));
+  const w = t.warnings.join('\n');
+  eq('need: rx a1 and n1 read', t.prepared.rows.some(v => v.read === 'RX-A1' && v.need === 'N01'), true);
+  has('need: week/version mismatch', w, 'week "RY", version "B" does not match read_id RX-A1');
+  has('need: unknown need', w, 'need_id "N99" is not one of the ten');
+  has('need: duplicate', w, 'need answer listed more than once for one read, left out until fixed: RX-A1 N07.');
+  has('need: W with no cause', w, 'RX-A1 N08: scored W with no error_cause.');
+  has('need: cause on non-W', w, 'RX-A1 N09: error_cause "misread" on an answer not scored W.');
+  has('need: key differs', w, 'N01: key_ru_class differs between rows (D, P)');
+  has('need: record differs', w, 'N01 week RX: record_could_answer differs between the two reads (D, P)');
+  has('need: change on first read', w, 'RY-B1 N12: changed_on_second_read is filled on a first read.');
+  has('need: bad read_id', w, 'read_id "RQ-A1" is not RX-A1, RX-B2, RY-B1 or RY-A2. Row left out.');
+  has('need: W no cause counted', A.render(t), '| RX-A1 | 2 of 4      | 1  | 1 | 0  | 0          | 0                    | 0          | 0            | 0             | 1           |');
+  eq('normReadId: RXA1', A.normReadId('RXA1'), 'RX-A1');
+  eq('normReadId: ry_b1', A.normReadId(' ry_b1 '), 'RY-B1');
+  eq('normNeedId: n01', A.normNeedId('n01'), 'N01');
+}
+
+// 11. Table D on the FAKE sample.
+//     RX-A1 items 2 2 1 0 1 -> 6 of 10; item 6 Hedged; specific on items 4-5: n n -> 0 of 2.
+//     RX-B2 rows for items 4 (2) and 5 (1) only -> 2 of 5 scored; specific y y -> 2 of 2.
+//     RY-B1 items 2 1 2 2 1 -> 8 of 10; item 6 Over-claim; specific y n -> 1 of 2.
+//     RY-A2 item 4 (1) only -> 1 of 5 scored; specific n -> 0 of 1.
+{
+  const md = A.render(A.tableD(sample('items')));
+  has('D: item 4', md, '| 4    | L2           | 0       | 2             | 2          | 1             |');
+  has('D: item 6', md, '| 6    | U            | Hedged  | –             | Over-claim | –             |');
+  has('D: totals', md, '| 1-5  | total        | 6 of 10 | 2 of 5 scored | 8 of 10    | 1 of 5 scored |');
+  has('D: specific', md, '| 4-5  | specific (y) | 0 of 2  | 2 of 2        | 1 of 2     | 0 of 1        |');
+  const bad = A.tableD(csv(HEAD['se2-item-scores'], ['RX-A1,RX,A,1,1,L1,,,,3,,', 'RX-A1,RX,A,1,6,U,,,,2,,', 'RX-A1,RX,A,1,Q1,L1,,,,1,,', 'RX-A1,RX,A,1,2,L4,,,,1,,']));
+  const w = bad.warnings.join('\n');
+  has('D: score 3', w, 'RX-A1 item 1: score "3" is not 0, 1 or 2.');
+  has('D: numeric item 6', w, 'RX-A1 item 6: "2" is not Pass, Hedged or Over-claim.');
+  has('D: item Q1', w, 'item "Q1" is not 1 to 6. Row left out.');
+  has('D: level', w, 'level "L4" is not L1, L2, L3 or U.');
+}
+
+// 12. Reads, Table H and the figure data on the FAKE sample.
+//     Minutes: RX-A1 12 + 15 + 3 = 30; RX-B2 4 + 6 = 10; RY-B1 has no minute columns, so 10:00 to 10:28 = 28;
+//     RY-A2 3 + 5 = 8.
+//     Confidence by result over all 25 need answers (10 + 3 + 10 + 2):
+//       C  at 2: RX-A1 N08 = 1; at 3: RX-A1 N07, N12, RY-B1 N07, N17, RX-B2 N09, RY-A2 N12 = 6;
+//          at 4: RX-A1 N01, N17, RY-B1 N03, N26, RX-B2 N01 = 5; at 5: RX-A1 N19, RY-B1 N01, N12, RX-B2 N12 = 4.
+//       PC at 2: RX-A1 N25, RY-B1 N25 = 2; at 3: RX-A1 N03, RY-B1 N09, N19, RY-A2 N03 = 4.
+//       W  at 4: RY-B1 N08; at 5: RX-A1 N09 -> two wrong at confidence 4 or 5.  NA at 1: RX-A1 N26.
+{
+  const T = A.timeConfidence(sample('reads'), sample('needs'));
+  eq('time: minutes', T.reads.map(r => r.minutes).join(','), '30,10,28,8');
+  eq('time: C row', T.grid.C.join(','), '0,1,6,5,4');
+  eq('time: PC row', T.grid.PC.join(','), '0,2,4,0,0');
+  eq('time: W row', T.grid.W.join(','), '0,0,0,1,1');
+  eq('time: NA row', T.grid.NA.join(','), '1,0,0,0,0');
+  eq('time: n', T.n, 25);
+  eq('time: high-confidence wrong', T.highWrong, 2);
+  const md = A.render(A.tableH(sample('reads')));
+  has('H: RX-A1', md, '| RX-A1 | 2000-01-01 | n           | 30      | 3    | 3      | 2          | FAKE                | 4          | 0          | 1          |');
+  has('H: quoted why', md, '| RY-A2 | 2000-01-02 | unsure      | 8       | 2    | 2      | 1          | FAKE, a quoted note |');
+  // an end time past midnight, a rating of 6, a stand-up on a second read
+  const H = HEAD['se2-reads'];
+  const P = A.prepareReads(csv(H, ['RX-A1,,RX,A,1,n,23:50,00:20,,,,6,3,3,,,,,,', 'RX-B2,,RX,B,2,maybe,,,,,,,,,,1,,,,']));
+  eq('reads: past midnight', P.rows[0].minutes, 30);
+  const w = P.warnings.join('\n');
+  has('reads: rating 6', w, 'RX-A1: ease_1to5 "6" is not 1 to 5.');
+  has('reads: seen_before', w, 'RX-B2: seen_before "maybe" is not y, n or unsure.');
+  has('reads: stand-up on second read', w, 'RX-B2: stand-up columns are filled on a second read.');
+}
+
+// 13. Table E on the FAKE sample.
+//     CW1: 3 steps; step 1 N on Q2 (sev 3), step 2 N on Q3 and Q4 (sev 2) -> 2 failing, sev 2 = 1, sev 3 = 1.
+//     CW2: 1 step, none failing. CW3, CW4: no rows. CW5: 1 step, N on Q3, sev 2.
+//     All: 5 steps; Q2 1, Q3 2, Q4 1; 3 failing; sev 2 = 2, sev 3 = 1.
+{
+  const t = A.tableE(sample('walk'));
+  const md = A.render(t);
+  has('E: CW1', md, '| CW1  | 3     | 0    | 1    | 1    | 1    | 2             | 0     | 0     | 1     | 1     | 0     |');
+  has('E: CW3 empty', md, '| CW3  | 0     | 0    | 0    | 0    | 0    | 0             | 0     | 0     | 0     | 0     | 0     |');
+  has('E: all', md, '| All  | 5     | 0    | 1    | 2    | 1    | 3             | 0     | 0     | 2     | 1     | 0     |');
+  eq('E: no warnings', t.warnings.length, 0);
+  const bad = A.tableE(csv(HEAD['se3-walkthrough'], ['CW1,1,x,Y,N,Y,Y,,,,', 'CW6,1,x,Y,Y,Y,Y,,,,', 'CW1,1,x,Y,Y,Y,Y,,,,', 'CW2,1,x,Y,maybe,Y,Y,,,,']));
+  const w = bad.warnings.join('\n');
+  has('E: N with no story', w, 'SE3 CW1 step 1: an N answer with no failure story.');
+  has('E: N with no severity', w, 'SE3 CW1 step 1: an N answer with no severity 0 to 4.');
+  has('E: CW6', w, 'task_id "CW6" is not CW1 to CW5.');
+  has('E: duplicate step', w, 'SE3 CW1 step 1: listed more than once.');
+  has('E: not Y or N', w, 'q2_notice_action "maybe" is not Y or N.');
+}
+
+// 14. Table F on the FAKE sample. ChangeLens CL-01 H6 sev 3, CL-02 H9 sev 2, CL-03 H4 sev 1, CL-04 H6 sev 2:
+//     sev 1 1, sev 2 2, sev 3 1, total 4; H6 2. FAKE D1: FakeToolA FA-01 H1 sev 3 checked, FA-02 H1 sev 2;
+//     FakeToolB FB-01 H5 sev 4 -> FakeToolA total "2 (1 checked)". Tasks: ChangeLens T1 Y in 40 s; FakeToolA T1 partly.
+{
+  const t = A.tableF(sample('heur'), sample('tasks'), sample('d1'), sample('d1tasks'));
+  const md = A.render(t);
+  has('F: severity 2', md, '| Severity 2 | 2          | 1 (0 checked) | 0 (0 checked) |');
+  has('F: total', md, '| Total      | 4          | 2 (1 checked) | 1 (0 checked) |');
+  has('F: H6', md, '| H6        | 2          | 0 (0 checked) | 0 (0 checked) |');
+  has('F: T1', md, '| T1   | Y (40 s)       | partly    | N         |');
+  has('F: T3', md, '| T3   | partly (300 s) | –         | –         |');
+  has('F: AI evaluator note', md, 'D1\'s pass was run by an AI evaluator.');
+  // without D1 files: ChangeLens alone
+  const solo = A.render(A.tableF(sample('heur'), null, null, null));
+  has('F: ChangeLens only', solo, '| Total      | 4          |');
+  const bad = A.tableF(csv(HEAD['se4-heuristic-problems'], ['CL-01,H11,,,5,,,', 'CL-01,H1,,,2,,,']), csv(HEAD['se4-task-outcomes'], ['T8,Y,,,', 'T1,done,,,']), null, null);
+  const w = bad.warnings.join('\n');
+  has('F: H11', w, 'heuristic "H11" is not H1 to H10.');
+  has('F: severity 5', w, 'severity "5" is not 0 to 4.');
+  has('F: duplicate id', w, 'SE4 ChangeLens CL-01: id listed more than once.');
+  has('F: T8', w, 'task "T8" is not T1 to T7.');
+  has('F: completed typo', w, 'completed "done" is not Y, partly or N');
+}
+
+// 15. Table G on the FAKE sample (D5 layout, participant SELF, one comma-quoted note).
+//     Code = final_code, else pass 1: L01 a2, L02 d3, L03 d3 (final), L04 a2, L05 d3, L06 a1, L07 none.
+//     d3 3 (RX-A1 2, RY-B1 1), a2 2 (RX-A1 1, RX-B2 1), a1 1, none 1; 7 entries, 1 with a final code.
+//     Re-coded: L01 a2/a2, L03 d4/d3, L06 a1/a1 -> 2 of 3; differ L03.
+{
+  const t = A.tableG(sample('log'));
+  const md = A.render(t);
+  has('G: d3', md, '| d3   | Reasoning about Design                              | Why was this code implemented this way? | 2     | 0     | 1     | 0     | 3     |');
+  has('G: a2', md, '| a2   | Maintaining Awareness                               | What have my coworkers been doing?      | 1     | 1     | 0     | 0     | 2     |');
+  has('G: title counts', md, '1 with a final code; 7 entries');
+  has('G: agreement', md, 'Entries with pass 1: 7. Re-coded blind in pass 2: 3. Pass 1 against pass 2: 2 of 3 in agreement.');
+  has('G: differ', md, 'Entries where the passes differ: L03 (d4 / d3).');
+  hasNot('G: no kappa figure', md, 'kappa 0');
+  eq('G: no warnings', t.warnings.length, 0);
+  const H = HEAD['se2-needs-log'];
+  const bad = A.tableG(csv(H, ['S1,R01,,RX-A1,x,a2,,dl,,,', 'S2,SELF,,RX-C1,x,d1,,,,,', 'S3,SELF,,RX-A1,x,d1,,,,,', 'S3,SELF,,RX-A1,x,d3,,,,,']));
+  const w = bad.warnings.join('\n');
+  has('G: not SELF', w, 'needs-log participant is not SELF: R01.');
+  has('G: bad condition', w, 'report_condition is not a read_id (RX-A1, RX-B2, RY-B1, RY-A2): S2 ("RX-C1")');
+  has('G: code typo', w, 'S1 pass 2 "dl"');
+  has('G: duplicate segment', w, 'needs-log segment_id used on more than one row, left out until fixed: S3.');
+  has('G: typo pair left out', A.render(bad), '(1 pair(s) left out for a code not in the codebook)');
+}
+
+// 16. Scoring check on the FAKE sample.
+//     Needs: RX-A1 N01 C=C, N09 W=W, N03 PC vs C (differ), RY-B1 N19 PC=PC -> 3 of 4.
+//     Items: RX-A1 item 1 2=2, item 6 Hedged = "hedged", RY-B1 item 6 Over-claim vs Pass (differ) -> 2 of 3.
+{
+  const t = A.scoringCheck(sample('needs'), sample('items'), sample('scorer2'));
+  eq('S: needs', `${t.result.need.agree}/${t.result.need.n}`, '3/4');
+  eq('S: items', `${t.result.item.agree}/${t.result.item.n}`, '2/3');
+  const md = A.render(t);
+  has('S: differ need', md, '| RX-A1 | need | N03 | PC         | C             |');
+  has('S: differ item', md, '| RY-B1 | item | 6   | Over-claim | Pass          |');
+  has('S: scorer named', md, 'Scorer: FAKE-model.');
+  const bad = A.scoringCheck(sample('needs'), null, csv(HEAD['se2-second-scorer'], ['RX-B2,need,N26,C,m,', 'RX-A1,thing,1,C,m,']));
+  const w = bad.warnings.join('\n');
+  has('S: no match', w, 'no scored answer of Raphael\'s to compare, left out: RX-B2 need N26.');
+  has('S: bad kind', w, 'kind "thing" is not need or item.');
+}
+
+// 17. Whole run on the FAKE samples: every table, the FAKE banner, the solo footer, and no reader-study leftovers.
+{
+  const f = A.inputFiles({}, dir);
+  eq('main: fake', A.isFake(f), true);
+  const ts = A.buildAll(f);
+  eq('main: tables in order', ts.map(t => t.id).join(''), 'ABCDTEFGHS');
+  const all = ts.map(t => A.render(t)).join('\n');
+  for (const word of ['paired difference', 'floor', 'counterbalanc', 'R01', 'pilot', 'participants']) hasNot(`main: no "${word}"`, all.toLowerCase(), word.toLowerCase());
+  has('main: footer', A.FOOTER, 'One reader, the developer.');
+  hasNot('main: no p-values', all, 'p =');
+  // only some inputs given: only their tables
+  const some = A.buildAll(A.inputFiles({ walk: path.join(dir, A.INPUTS.walk) }, dir));
+  eq('main: one input, one table', some.map(t => t.id).join(''), 'E');
+  eq('main: real file not fake', A.isFake({ walk: path.join(dir, 'se3-walkthrough.csv') }), false);
+}
+
+// 18. figures.js on the FAKE samples: one bar per read (first reads filled, second hollow), one dot per non-empty
+//     confidence cell (C 4 + PC 2 + W 2 + NA 1 = 9), the high-confidence wrong boxes, the FAKE stamp, the number.
+{
+  const f = A.inputFiles({}, dir);
+  const r = F.build(f);
+  eq('fig: fake flag', r.fake, true);
+  has('fig: svg fake stamp', r.svg, 'FAKE DATA');
+  has('fig: tables fake stamp', r.md, '**FAKE DATA');
+  eq('fig: four bars', (r.svg.match(/class="bar"/g) || []).length, 4);
+  eq('fig: two filled bars', (r.svg.match(/class="bar"[^>]*fill="#1F3A5F"/g) || []).length, 2);
+  eq('fig: nine dots', (r.svg.match(/class="dot"/g) || []).length, 9);
+  eq('fig: two high-wrong boxes', (r.svg.match(/class="highwrong"/g) || []).length, 2);
+  has('fig: RY-B1 bar', r.svg, '<title>RY-B1 28 minutes</title>');
+  has('fig: C at 3', r.svg, '<title>C at confidence 3: 6</title>');
+  has('fig: n', r.svg, '(n = 25)');
+  has('fig: default number', r.svg, '<title id="t">Figure 1: time and confidence, one reader</title>');
+  has('fig: tables B C F G', r.md, 'Table B. Ten needs by read');
+  has('fig: table C', r.md, 'Table C. Key against observed');
+  has('fig: table F', r.md, 'Table F. Heuristic problems by severity');
+  has('fig: table G', r.md, 'Table G. What the page left unmet');
+  has('fig: md table form', r.md, '| N01 | D | C | C | D | C | – | D |');
+  hasNot('fig: no table A in report subset', r.md, 'Table A.');
+  const r5 = F.build(f, { number: 5 });
+  has('fig: number 5 title', r5.svg, '<title id="t">Figure 5: time and confidence, one reader</title>');
+  has('fig: number 5 heading', r5.md, '# ChangeLens solo evaluation: Figure 5 and Tables B, C, F and G');
+  hasNot('fig: number 5 no Figure 1', r5.svg + r5.md, 'Figure 1');
+  // a read with no time is labelled, not drawn
+  const tmp = path.join(os.tmpdir(), `cl-reads-${process.pid}.csv`);
+  fs.writeFileSync(tmp, HEAD['se2-reads'] + '\r\nRX-A1,,RX,A,1,n,,,,,,,,,,,,,,\r\n');
+  const real = F.build({ reads: tmp });
+  fs.unlinkSync(tmp);
+  eq('fig: real not fake', real.fake, false);
+  hasNot('fig: real not stamped', real.svg, 'FAKE');
+  eq('fig: no time, no bar', (real.svg.match(/class="bar"/g) || []).length, 0);
+  has('fig: no time label', real.svg, 'no time recorded');
+}
+
+// 19. PNG copy of the figure for the Word builder (build-docx-v2.js embeds .png/.jpg only).
 //     pngSize reads the IHDR chunk; findChrome honours CHROME_PATH; svgToPng runs when a browser is installed.
 {
-  const F = require('./figures.js');
   const hdr = Buffer.alloc(24);
   Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).copy(hdr, 0);
   hdr.writeUInt32BE(1280, 16); hdr.writeUInt32BE(496, 20);
@@ -798,16 +417,16 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   const chrome = F.findChrome();
   if (!chrome) console.log('SKIP png render: no Chrome or Edge found (set CHROME_PATH to run it)');
   else {
-    const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'cl-png-'));
-    const svg = F.build({ scores: path.join(__dirname, 'sample-item-scores.csv') }).svg;
+    const tmpd = fs.mkdtempSync(path.join(os.tmpdir(), 'cl-png-'));
+    const svg = F.build(A.inputFiles({}, dir)).svg;
     const h = Number(/<svg[^>]*\sheight="(\d+)"/.exec(svg)[1]);
-    fs.writeFileSync(path.join(dir, 'f.svg'), svg);
-    const s = F.svgToPng(path.join(dir, 'f.svg'), path.join(dir, 'f.png'), chrome);
-    const back = F.pngSize(fs.readFileSync(path.join(dir, 'f.png')));
+    fs.writeFileSync(path.join(tmpd, 'f.svg'), svg);
+    const s = F.svgToPng(path.join(tmpd, 'f.svg'), path.join(tmpd, 'f.png'), chrome);
+    const back = F.pngSize(fs.readFileSync(path.join(tmpd, 'f.png')));
     eq('png render: width is twice the SVG', back.width, 1280);
     eq('png render: height is twice the SVG', back.height, 2 * h);
     eq('png render: return value', s.width, back.width);
-    fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(tmpd, { recursive: true, force: true });
   }
 }
 

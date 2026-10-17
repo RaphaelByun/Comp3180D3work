@@ -29,7 +29,7 @@ Beat 6 is a placeholder until the Week 13 analysis is done. It must hold the rea
 
 ## Check against the unit's calibration
 
-Staff pointed to the Echo 360 folder of past portfolio videos, and `Example Final Portfolio Presentation/` holds two transcripts. Watch one or two before cutting so the length and depth match what past students did.
+Staff pointed to the Echo 360 folder of past portfolio videos, and two transcripts of past portfolio videos are in the A3 assignment folder on Raphael's PC, outside this repository. Watch one or two before cutting so the length and depth match what past students did.
 
 ## Where the sources sit
 

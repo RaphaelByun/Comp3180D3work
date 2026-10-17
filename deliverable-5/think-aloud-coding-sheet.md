@@ -4,7 +4,7 @@ Source for the types: Ko, A. J., DeLine, R., & Venolia, G. (2007). Information n
 
 ## The 21 information types: confirmed
 
-All 21 question texts below were checked against two sources on disk, 13 Oct 2026:
+All 21 question texts below were checked against two sources on disk, 13 Oct 2026. They are quoted as the paper prints them. c2 keeps the paper's "of function" with [sic], as D1 does; the intended word is probably "or". The two sources:
 
 1. `Working folder/a2-draft-2-sep-2026/verify/ko2007.md` (a 2 Sep 2026 verification that read the paper's page images and recorded all 7 categories and 21 types as verbatim);
 2. the text layer of `reading/ko2007.pdf` in the A3 repo checkout (untracked, on disk only) (each question matched after removing spaces and case, because the text layer drops spaces; the apostrophe forms "team's" and "What's" matched too).
@@ -14,7 +14,7 @@ Raphael: before you cite wording in the report, glance at Section 5 of the paper
 | Code | Category (paper section) | Question |
 |---|---|---|
 | c1 | Writing Code (5.1) | What data structures or functions can be used to implement this behavior? |
-| c2 | Writing Code (5.1) | How do I use this data structure or function? |
+| c2 | Writing Code (5.1) | How do I use this data structure of function? [sic] |
 | c3 | Writing Code (5.1) | How can I coordinate this code with this other data structure or function? |
 | s1 | Submitting a Change (5.2) | Did I make any mistakes in my new code? |
 | s2 | Submitting a Change (5.2) | Did I follow my team's conventions? |

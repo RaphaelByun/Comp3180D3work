@@ -74,10 +74,16 @@ namespace ChangeLens.Editor
             return export;
         }
 
-        /// <summary>The git arguments for every script guid line at one commit.</summary>
+        /// <summary>
+        /// The git arguments for every script guid line at one commit.
+        /// --no-color and -G (basic regex) are set here because color.grep and
+        /// grep.patternType are not covered by color.ui: with color.grep=always
+        /// the lines carry colour codes, and with grep.patternType=fixed
+        /// "^guid:" matches nothing.
+        /// </summary>
         public static string GuidArgs(string commit)
         {
-            return "grep -I -e \"^guid:\" " + commit + " -- \"*.cs.meta\"";
+            return "grep --no-color -I -G -e \"^guid:\" " + commit + " -- \"*.cs.meta\"";
         }
 
         /// <summary>

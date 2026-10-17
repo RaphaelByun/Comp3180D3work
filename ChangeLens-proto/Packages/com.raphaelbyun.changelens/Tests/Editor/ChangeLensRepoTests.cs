@@ -367,7 +367,8 @@ namespace ChangeLens.Editor.Tests
                 foreach (string setting in new[]
                          {
                              "format.pretty fuller", "diff.noprefix true", "diff.mnemonicPrefix true",
-                             "grep.lineNumber true", "grep.column true", "color.ui always", "log.abbrevCommit true"
+                             "grep.lineNumber true", "grep.column true", "color.ui always", "log.abbrevCommit true",
+                             "color.grep always", "grep.patternType fixed"
                          })
                     repo.Git("config " + setting);
                 WeekExport export;
@@ -396,6 +397,7 @@ namespace ChangeLens.Editor.Tests
                 StringAssert.Contains("--pretty=medium --no-color", a);
             StringAssert.Contains("--src-prefix=a/ --dst-prefix=b/ --no-ext-diff --no-textconv",
                                   WeekExport.PatchArgs(WeekStart, WeekEnd));
+            StringAssert.StartsWith("grep --no-color -I -G -e ", WeekExport.GuidArgs("HEAD"));
         }
 
         // ---- The fidelity checklist ----------------------------------------------

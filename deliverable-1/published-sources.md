@@ -41,7 +41,7 @@ Retrieval date for every row: 14 October 2026.
 
 ## 3. Coding table, per source
 
-**Reviewed 15 October 2026 (README step 7): AI-drafted, Raphael to accept or change.** Claude Code reviewed every row against the need definitions in needs-catalogue.md §3, recoded five rows (listed after the tables) and applied the live-page corrections from §7. Locators are section headings where the article has them; paragraph numbers were dropped because the fetch tool's counts differed between passes (§7). Need IDs follow the 15 October catalogue: NEW-1 is now N26, NEW-2 is N27, NEW-3 is folded into N14.
+**Reviewed 15 October 2026 (README step 7): AI-drafted, Raphael to accept or change.** Claude Code reviewed every row against the need definitions in needs-catalogue.md §3, recoded seven rows (listed after the tables) and applied the live-page corrections from §7. Locators are section headings where the article has them; paragraph numbers were dropped because the fetch tool's counts differed between passes (§7). Need IDs follow the 15 October catalogue: NEW-1 is now N26, NEW-2 is N27, NEW-3 is folded into N14.
 
 Ko types are those the catalogue links to the need (needs-catalogue.md §1, after its 15 October check). "none" means the catalogue links no Ko type.
 

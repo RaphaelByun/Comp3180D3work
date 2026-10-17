@@ -526,7 +526,7 @@ How to check: Read the recode table at the end of §3 against each source's rows
 - [ ] Recode 7: P6 Blocked, from Ko c3 to 'none (Ko §4)'. The catalogue no longer links c3 to N07
 - [ ] Resulting tally changes: N04 1→0, N01 2→1, N23 2→1; NEW-3 is counted under N14. Top counts: N17 5, N09/N26/N02 4, N03 3
 - [ ] Cap of 2 points per need for the source stream. Rationale: it matches A2's two interviewees, and sources are weaker than interviews. Effect: only tenth place changes (N12 with the cap, N02 without)
-- [ ] Minor: the §3 header says 'recoded five rows' but the recode table lists seven
+- [ ] Minor: the §3 header said 'recoded five rows' but the recode table lists seven; corrected to seven on 17 Oct 2026
 
 ### Step 8: Accept or rewrite the three-point reconciliation (10 min)
 

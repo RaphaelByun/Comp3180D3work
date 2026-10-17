@@ -49,7 +49,7 @@ Analysis results in brief (15 October 2026): the ten needs for the D3 sheet are 
 
 ## To do for Raphael, in order (revised 17 October 2026)
 
-A2 planned 600 minutes for D1. After the AI work on 14 and 15 October, about 177 minutes of Raphael's own work remain, almost all of it checking and accepting.
+A2 planned 600 minutes for D1. After the AI work on 14 and 15 October, about 177 minutes of Raphael's own work were budgeted (about 208 with the check pack's step 2 estimate; see below), almost all of it checking and accepting.
 
 | # | Step | File | Minutes | A2 part |
 |---|---|---|---|---|
@@ -71,7 +71,7 @@ A2 planned 600 minutes for D1. After the AI work on 14 and 15 October, about 177
 | 16 | GenAI statement lines (below) | A3 report | 10 | — |
 | | **Total** | | **177** | |
 
-Minutes check: 5 + 45 + 5 + 2 + 15 + 10 + 10 + 10 + 0 + 5 + 10 + 20 + 5 + 5 + 20 + 10 = 177. Against A2's 600: log the variance in the reflection report with the reason (time pressure) and the cost (an AI single evaluator, no interviews, AI-drafted analysis that Raphael checked rather than did).
+Minutes check: 5 + 45 + 5 + 2 + 15 + 10 + 10 + 10 + 0 + 5 + 10 + 20 + 5 + 5 + 20 + 10 = 177. Step 2 is budgeted at 45, but the check pack's cards estimate 76, because each check needs setup on a fresh free account. So allow about 208 minutes in total (76 + 132). 177 is the budget only; report the minutes actually spent. Against A2's 600: log the variance in the reflection report with the reason (time pressure) and the cost (an AI single evaluator, no interviews, AI-drafted analysis that Raphael checked rather than did).
 
 **GenAI statement lines for A3 (draft; adjust to what you actually did):**
 - "Claude (Claude Code) ran the heuristic pass through a browser on my accounts on 14 October 2026 and coded the problems and severities; I hand-checked the severity 3–4 findings on [date]."

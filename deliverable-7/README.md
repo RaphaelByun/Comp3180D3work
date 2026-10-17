@@ -4,7 +4,11 @@ Status (17 Oct 2026, Week 10): plan only, committed on this branch. Nothing is r
 
 A2 success measure (Deliverables table, row 7, 4 h, 1 in prac): **"Three to four minutes showing both conditions; two outside viewers can state its purpose and reader."** A2 timeline: analysis and video in Week 13.
 
-**The video is uploaded to Echo 360, not to this repo** (LFS limits; the unit asks for Echo 360). The repo keeps the plan and the viewer-test record. Link the Echo 360 video in the submission text box and in the report's Project Deliverables section; check the link in a private window.
+**17 Oct 2026 decision.** There is no study with other people: no recruitment, no live sessions, no online form. Raphael evaluates ChangeLens himself. The plan is `deliverable-5/self-evaluation-plan.md` on `deliverable-5-sessions`. For this folder that means:
+- The video never claims a reader study. Its result beat shows the solo evaluation, with "one reader, the developer" on screen.
+- The two-viewer test is retired (`retired/feedback-form.md`). That half of the A2 measure is a variance.
+
+**The video is uploaded to Echo 360, not to this repo** (LFS limits; the unit asks for Echo 360). The repo keeps the plan. Link the Echo 360 video in the submission text box and in the report's Project Deliverables section; check the link in a private window.
 
 ## What is here
 
@@ -12,18 +16,30 @@ A2 success measure (Deliverables table, row 7, 4 h, 1 in prac): **"Three to four
 |---|---|
 | `storyboard.md` | Nine beats with timings, what the viewer must understand, what is on screen, repo sources, cut order, rules. Covers the reader, the problem, the tool, both report conditions, a result slot and your own contribution |
 | `shot-list.md` | Eleven shots to capture, audio and edit checklist, export and upload steps, hour budget |
-| `feedback-form.md` | The two-viewer test: how to run it (with the voluntary, codes-only line), the form, the marking key, a response log. The log goes in the report as an appendix after G |
+| `retired/feedback-form.md` | Not used (17 Oct 2026 decision). The A2 two-viewer test, kept as the plan record. Do not run it, and do not give it a report appendix |
+
+## Success measure after the 17 Oct decision
+
+The first half of the A2 measure still holds and you can check it alone: three to four minutes, both conditions on screen.
+
+The second half ("two outside viewers can state its purpose and reader") needs other people, so it is dropped. Report it as a variance in the A3 report and in the Deliverable 9 variance table, with the 17 Oct decision as the reason. That is the plan's default (section 12, D7 item 3); keeping it is your call.
+
+Optional self-check in its place. It is not the same measure, so do not report it as one:
+1. Wait at least a day after the rough cut, then watch it once without pausing.
+2. Write down where the video first states its purpose and where it first names its reader (time stamps).
+3. Check both against the retired form's marking key, questions 1 and 2. The purpose must say why, not only "a Unity tool". The reader must be a producer or someone who does not code.
+4. Check that both versions are on screen long enough to read one row each (at least 6 seconds).
 
 ## The result slot
 
-Beat 6 is a placeholder until the Week 13 analysis is done. It must hold the real figure from `deliverable-6/analysis/analyse.js` output, with counts ("x of n readers") and the limits line. No result is written anywhere in this folder.
+Beat 6 is a placeholder until the solo analysis is done (plan section 4: scoring and analysis finished Fri 30 Oct). It must hold a real SE2 table or the time-and-confidence figure from the Deliverable 6 analysis, with raw counts ("x of 10 needs") and two lines on screen: "one reader, the developer" and the limits line. Never "x of n readers", "participants" or "users". No result is written anywhere in this folder.
 
 ## What Raphael must do
 
 1. Capture the screens (shot list) in Week 12 so the rough cut exists before the results.
 2. Write and record the narration yourself in your own words.
-3. Re-record beat 6 once the analysis is done (Week 13).
-4. Run the feedback form with two outside viewers; keep the responses; fix and retest if either fails.
+3. Re-record beat 6 once the solo analysis is done (after Fri 30 Oct).
+4. Run the self-check above on the rough cut, if you want it, and fix what it finds.
 5. Upload to Echo 360 at least a day before 8 Nov 2026 and put the link in both places.
 6. Log hours in `deliverable-8/hours-entries.csv`; the weekly total goes into `deliverable-8/hours-log.csv` (A2 budget 4 h, 1 in prac).
 

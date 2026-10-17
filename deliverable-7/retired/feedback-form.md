@@ -1,5 +1,11 @@
 # Outside-viewer feedback form (the A2 success measure)
 
+**Status: not used (17 Oct 2026 decision). Kept as the A2 plan record. Do not run it.**
+
+On 17 Oct 2026 Raphael decided there is no study with other people: no recruitment, no live sessions, no online form. He evaluates ChangeLens himself (`deliverable-5/self-evaluation-plan.md` on `deliverable-5-sessions`). This form asks two outside viewers to watch the video, so it falls under that decision. The two-viewer half of the A2 video measure is dropped and reported as a variance in the A3 report and the Deliverable 9 variance table. That is the plan's default (section 12, D7 item 3); Raphael can still choose to keep it. The video plan now uses a self-check instead (`deliverable-7/README.md`, "Success measure"). No response log will be kept, and no appendix is needed for it.
+
+The text below is unchanged from the A2-era plan.
+
 A2: **"two outside viewers can state its purpose and reader."**
 
 Use this with two people who are not in your project, did not take part in the study, and have not been told what ChangeLens does. Ideally not COMP3180 students, because they know the topic. One viewer may be a producer or game-industry person; one may be a general viewer.

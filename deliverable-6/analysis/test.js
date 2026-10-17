@@ -85,7 +85,7 @@ eq('undefined kappa is NaN', Number.isNaN(A.cohenKappa(L('A A A A'), L('A A A A'
 //    treatment Pass 2 (F01, F02), Hedged 0, Over-claim 2 (F03, F04).
 //    Specificity ticks, items 4/5: baseline 1/4 and 0/4 (only F03 ticks item 4); treatment 3/4 and 2/4
 //    (item 4 F01, F02, F04; item 5 F01, F03).
-//    Pilot rows (P00) must be dropped from every section.
+//    Pilot rows (P0) must be dropped from every section.
 {
   const dir = __dirname;
   const sc = A.analyseScores(A.parseCSV(fs.readFileSync(path.join(dir, 'sample-item-scores.csv'), 'utf8')));
@@ -703,6 +703,37 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   has('mixed role: four readers', o, 'Readers: 4. Higher with names: 3. Same: 0. Lower with names: 1.');
   has('mixed role: mean', o, 'Mean difference 1.25 points out of 10');
   hasNot('mixed role: R01 not counted as producer', o, 'producer n=2');
+}
+
+// 26. Participant codes typed by hand (r5). r3, R3 and r03 read as R03; p00 reads as P0 (pilot).
+//     Ten-need sheet: R01, R02, R03 all ten needs at the key, one R03 row typed r03 and one typed R3:
+//     3 readers, R03 10/10, a warning names both typed forms. Item scores: one R03 row typed r03 still
+//     gives five complete readers (mean 1.60). Think-aloud: S01 typed r01 and S02 typed R01 are one reader;
+//     S03 typed p00 is the pilot.
+{
+  eq('participant: r3', A.normParticipant('r3'), 'R03');
+  eq('participant: R003', A.normParticipant(' R003 '), 'R03');
+  eq('participant: R12', A.normParticipant('R12'), 'R12');
+  eq('participant: p00', A.normParticipant('p00'), 'P0');
+  eq('participant: blank', A.normParticipant(''), '');
+  const ids = ['N01', 'N03', 'N07', 'N08', 'N09', 'N12', 'N17', 'N19', 'N25', 'N26'];
+  const keyL = L('D D D D P P P N N N');
+  const keyRows = A.parseCSV(['need_id,class'].concat(ids.map((id, i) => `${id},${keyL[i]}`)).join('\n'));
+  const lines = ['participant,need_id,class'];
+  for (const p of ['R01', 'R02', 'R03']) ids.forEach((id, i) => lines.push(`${p === 'R03' && i === 0 ? 'r03' : p === 'R03' && i === 2 ? 'R3' : p},${id},${keyL[i]}`));
+  const o = A.analyseNeeds(A.parseCSV(lines.join('\n')), keyRows);
+  has('participant: needs readers', o, 'readers analysed: 3 (pilot excluded)');
+  has('participant: needs R03 whole', o, '| R03    | 10/10 (100%)');
+  hasNot('participant: needs no split', o, '1/1 (100%)');
+  has('participant: needs warning', o, 'WARNING: participant code typed differently from the tracker form, read as normalised: "R3" read as R03 (1 row); "r03" read as R03 (1 row).');
+  const so = run(scoreLines().map(l => (l === 'R03,proxy,treatment,W2,2,4,1,' ? 'r03,proxy,treatment,W2,2,4,1,' : l)));
+  has('participant: scores five', so, 'Readers: 5. Higher with names: 4.');
+  has('participant: scores mean', so, 'Mean difference 1.60 points out of 10');
+  has('participant: scores warning', so, '"r03" read as R03 (1 row)');
+  const co = wide(['S01,r01,,,,a2,,a2,,,', 'S02,R01,,,,d1,,d1,,,', 'S03,p00,,,,d3,,d3,,,']);
+  has('participant: codes pilot', co, 'Pilot rows excluded: 1.');
+  has('participant: codes one reader', co, 'Segments with pass 1: 2. Re-coded in pass 2: 2');
+  has('participant: codes warning', co, '"p00" read as P0 (1 row); "r01" read as R01 (1 row)');
 }
 
 // 22. The tracker's five-reader sequences (deliverable-5/booking-tracker.csv): R01 S1, R02 S2, R03 S3, R04 S4,

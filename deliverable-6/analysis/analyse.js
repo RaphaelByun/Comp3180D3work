@@ -39,6 +39,7 @@
  * differ in both week and order; a reader failing this is left out and named. Weeks are read in upper
  * case and roles in lower case; weeks other than W1/W2 and roles other than producer/proxy are warned about.
  * Order is read as 1 or 2 (01, 1st, first; 02, 2nd, second); any other order is warned about and the reader left out.
+ * Participant codes are normalised before grouping (r3, R3 -> R03; p00 -> P0) and any changed code is warned about.
  * A row with a blank participant (in any file that has the column) is named and left out: it may be pilot data.
  * Ten-need sheet: duplicate (reader, need) rows and classes other than D, P or N are named and left out.
  * need_id is the key N-number (n1, N1 and n01 read as N01); a bare number maps through the key's optional
@@ -112,6 +113,35 @@ const csvWarnings = rows => (rows && rows.warnings) || [];
 // A blank participant cell (code typed only on a block's first row) could hide pilot rows, so those
 // rows are left out until filled in. A file with no participant column at all is still read.
 const isBlankP = r => !isPilot(r) && r.participant !== undefined && r.participant === '';
+// Participant codes are typed by hand: case, spaces and zero-padding are normalised before grouping, so one
+// mistyped row does not split a reader in two. R plus digits reads as R and two digits (r3, R3, r03 -> R03);
+// P plus digits reads as P and the number (p00, P00 -> P0), as in the tracker codes. Anything else is kept
+// trimmed and upper case. A blank code stays blank.
+function normParticipant(s) {
+  const t = (s || '').trim().toUpperCase();
+  let m = /^R\s*0*(\d+)$/.exec(t);
+  if (m) return 'R' + m[1].padStart(2, '0');
+  m = /^P\s*0*(\d+)$/.exec(t);
+  if (m) return 'P' + m[1];
+  return t;
+}
+// Returns copies of the rows with participant normalised (the CSV warnings list kept), and a warning
+// naming each typed code that differs from its normalised form. Rows with no participant column are left as they are.
+function normParticipants(rowsIn) {
+  const changed = {};
+  const rows = rowsIn.map(r => {
+    if (r.participant === undefined) return r;
+    const p = normParticipant(r.participant);
+    if (p !== r.participant) { const k = `"${r.participant}" read as ${p}`; changed[k] = (changed[k] || 0) + 1; }
+    return Object.assign({}, r, { participant: p });
+  });
+  rows.warnings = csvWarnings(rowsIn);
+  const keys = Object.keys(changed).sort();
+  const warning = keys.length
+    ? `WARNING: participant code typed differently from the tracker form, read as normalised: ${keys.map(k => `${k} (${changed[k]} row${changed[k] === 1 ? '' : 's'})`).join('; ')}. Check the sheet and fix the code.`
+    : null;
+  return { rows, warning };
+}
 const BLANK_P_NOTE = 'Fill participant on every row: a blank row under a pilot row may be pilot data.';
 
 function readCSV(file) {
@@ -203,7 +233,8 @@ const validOrder = o => o === '1' || o === '2';
 // Sorts readers into complete (both conditions, items 1-5 each scored once with 0, 1 or 2) and
 // excluded (with the reason). Every table and statistic uses complete readers only, so baseline
 // and treatment always cover the same people and every total is out of 10.
-function prepareScores(rowsAll) {
+function prepareScores(rowsTyped) {
+  const np = normParticipants(rowsTyped), rowsAll = np.rows;
   const pilotRows = rowsAll.filter(isPilot);
   const blankP = rowsAll.filter(isBlankP);
   const rows = rowsAll.filter(r => !isPilot(r) && !isBlankP(r)).map(r => {
@@ -221,6 +252,7 @@ function prepareScores(rowsAll) {
     };
   });
   const warnings = csvWarnings(rowsAll).slice();
+  if (np.warning) warnings.push(np.warning);
   if (blankP.length) {
     warnings.push(`WARNING: ${blankP.length} row(s) with a blank participant, left out until filled in: ` +
       blankP.map(r => `${normCond(r.condition) || '(blank condition)'} item ${(r.item || '').trim() || '(blank)'}`).join('; ') + '. ' + BLANK_P_NOTE);
@@ -576,8 +608,10 @@ function normNeedId(s) {
   const m = /^N\s*0*(\d+)$/.exec(t);
   return m ? 'N' + m[1].padStart(2, '0') : t;
 }
-function prepareNeeds(needRows, keyRows) {
+function prepareNeeds(needTyped, keyRows) {
+  const np = normParticipants(needTyped), needRows = np.rows;
   const warnings = csvWarnings(keyRows).concat(csvWarnings(needRows));
+  if (np.warning) warnings.push(np.warning);
   const key = {}, keyCount = {}, badKey = [], rowMap = {};
   keyRows.forEach(r => { const id = normNeedId(r.need_id); keyCount[id] = (keyCount[id] || 0) + 1; });
   keyRows.forEach(r => {
@@ -730,8 +764,10 @@ const inCodebook = c => Object.prototype.hasOwnProperty.call(KO_TYPES, c) || Obj
 // Two accepted layouts: long (segment_id, participant, pass, code) or wide (segment_id, participant,
 // pass1_code, pass2_code, as in deliverable-5/think-aloud-coding-sheet.csv). Segments are keyed by
 // participant + segment_id, so ids that restart for each reader do not merge. Pilot rows are dropped.
-function prepareCodes(codeRows) {
+function prepareCodes(codeTyped) {
+  const np = normParticipants(codeTyped), codeRows = np.rows;
   const warnings = csvWarnings(codeRows).slice();
+  if (np.warning) warnings.push(np.warning);
   const pilot = codeRows.filter(isPilot);
   const blankP = codeRows.filter(isBlankP);
   if (blankP.length) {
@@ -867,6 +903,6 @@ module.exports = {
   parseCSV, readCSV, agreement, cohenKappa, analyseScores, analyseNeeds, analyseCodes, mean, median,
   prepareScores, prepareNeeds, prepareCodes, pairedDiffs, fullMarkCounts, item6Counts, sequenceCounts,
   secondScorer, analyseSecondScorer, footer, isPilot, FLOOR, normNeedId, orderByCondition, weekBalanced,
-  KO_TYPES, EXTRA_CODES, inCodebook,
+  KO_TYPES, EXTRA_CODES, inCodebook, normParticipant,
 };
 if (require.main === module) main();

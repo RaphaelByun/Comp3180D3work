@@ -241,7 +241,7 @@ namespace ChangeLens.Editor
 
                 if (trimmed.StartsWith("m_Name:", StringComparison.Ordinal))
                 {
-                    string name = trimmed.Substring("m_Name:".Length).Trim();
+                    string name = UnquoteYamlScalar(trimmed.Substring("m_Name:".Length).Trim());
                     if (name.Length > 0) AddName(current, own, name);
                 }
 
@@ -251,7 +251,7 @@ namespace ChangeLens.Editor
                 //     value: Airlock (3)
                 if (lastWasNameOverride && trimmed.StartsWith("value:", StringComparison.Ordinal))
                 {
-                    string name = trimmed.Substring("value:".Length).Trim();
+                    string name = UnquoteYamlScalar(trimmed.Substring("value:".Length).Trim());
                     if (name.Length > 0) AddName(current, own, name);
                 }
                 lastWasNameOverride = trimmed == "propertyPath: m_Name" ||
@@ -464,6 +464,60 @@ namespace ChangeLens.Editor
             if (string.IsNullOrEmpty(path)) return false;
             return path.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase) ||
                    path.EndsWith(".unity", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Unity quotes a name that YAML could misread, for example one that
+        /// starts with '[' or ends in a space: m_Name: '[UI] Canvas'. Returns
+        /// the name without the quotes. In single quotes '' stands for one
+        /// quote; in double quotes backslash escapes are decoded. A plain or
+        /// unclosed value is returned as it is.
+        /// </summary>
+        public static string UnquoteYamlScalar(string value)
+        {
+            if (value == null || value.Length < 2) return value;
+            char q = value[0];
+            if ((q != '\'' && q != '"') || value[value.Length - 1] != q) return value;
+            string inner = value.Substring(1, value.Length - 2);
+            if (q == '\'') return inner.Replace("''", "'");
+
+            var sb = new System.Text.StringBuilder(inner.Length);
+            for (int i = 0; i < inner.Length; i++)
+            {
+                char c = inner[i];
+                if (c != '\\' || i + 1 >= inner.Length) { sb.Append(c); continue; }
+                char e = inner[++i];
+                int hexLength = e == 'x' ? 2 : e == 'u' ? 4 : e == 'U' ? 8 : 0;
+                if (hexLength > 0)
+                {
+                    int code;
+                    if (i + hexLength < inner.Length &&
+                        int.TryParse(inner.Substring(i + 1, hexLength),
+                                     System.Globalization.NumberStyles.AllowHexSpecifier,
+                                     System.Globalization.CultureInfo.InvariantCulture, out code) &&
+                        (hexLength == 4 || (code <= 0x10FFFF && (code < 0xD800 || code > 0xDFFF))))
+                    {
+                        // A four-digit escape is one UTF-16 unit, so a surrogate pair written as two escapes joins up.
+                        sb.Append(hexLength == 4 ? ((char)code).ToString() : char.ConvertFromUtf32(code));
+                        i += hexLength;
+                    }
+                    else sb.Append('\\').Append(e);
+                    continue;
+                }
+                switch (e)
+                {
+                    case 'n': sb.Append('\n'); break;
+                    case 't': sb.Append('\t'); break;
+                    case 'r': sb.Append('\r'); break;
+                    case '0': sb.Append('\0'); break;
+                    case ' ': sb.Append(' '); break;
+                    case '/': sb.Append('/'); break;
+                    case '"': sb.Append('"'); break;
+                    case '\\': sb.Append('\\'); break;
+                    default: sb.Append('\\').Append(e); break;
+                }
+            }
+            return sb.ToString();
         }
 
         /// <summary>"Assets/Doors/Airlock Classic.prefab" -> "Airlock Classic".</summary>

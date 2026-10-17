@@ -136,6 +136,56 @@ namespace ChangeLens.Editor.Tests
             CollectionAssert.Contains(scene.TypesTouched, "PrefabInstance");
         }
 
+        // Unity quotes a name YAML could misread. The page shows the name, not the quotes.
+        [Test]
+        public void Parse_UnquotesQuotedNames()
+        {
+            string patch =
+                "commit abc\n" +
+                "diff --git a/Assets/Scenes/Station.unity b/Assets/Scenes/Station.unity\n" +
+                "@@ -10,6 +10,6 @@ GameObject:\n" +
+                "-  m_Name: '[C] CentCom DATA SYSTEMS'\n" +
+                "+  m_Name: 'Bob''s Desk'\n" +
+                "   m_Layer: 0\n" +
+                "-  m_Name: 'NetworkManager '\n" +
+                "+  m_Name: \"Caf\\u00E9 \\\"Sign\\\" \\\\ 1\"\n" +
+                "     - target: {fileID: 1}\n" +
+                "       propertyPath: m_Name\n" +
+                "+      value: '[101,106]'\n";
+            AssetChange scene = AssetDiffParser.Parse(patch)[0];
+            CollectionAssert.AreEquivalent(
+                new[] { "[C] CentCom DATA SYSTEMS", "Bob's Desk", "NetworkManager ", "Caf\u00E9 \"Sign\" \\ 1", "[101,106]" },
+                scene.ObjectNames);
+        }
+
+        [Test]
+        public void UnquoteYamlScalar_LeavesPlainAndUnclosedValuesAlone()
+        {
+            Assert.AreEqual("Airlock (3)", AssetDiffParser.UnquoteYamlScalar("Airlock (3)"));
+            Assert.AreEqual("'open", AssetDiffParser.UnquoteYamlScalar("'open"));
+            Assert.AreEqual("it's", AssetDiffParser.UnquoteYamlScalar("it's"));
+            Assert.AreEqual("", AssetDiffParser.UnquoteYamlScalar("''"));
+            Assert.AreEqual("\\q", AssetDiffParser.UnquoteYamlScalar("\"\\q\""));
+        }
+
+        // The asset's own root name is not an object "other than the asset itself",
+        // even when Unity had to quote it.
+        [Test]
+        public void Parse_QuotedRootNameStillMatchesTheAssetName()
+        {
+            string patch =
+                "commit abc\n" +
+                "diff --git a/Assets/UI/[UI] Canvas.prefab b/Assets/UI/[UI] Canvas.prefab\n" +
+                "@@ -10,4 +10,4 @@ GameObject:\n" +
+                "   m_Name: '[UI] Canvas'\n" +
+                "-  m_Layer: 0\n" +
+                "+  m_Layer: 5\n";
+            AssetChange prefab = AssetDiffParser.Parse(patch)[0];
+            CollectionAssert.AreEqual(new[] { "[UI] Canvas" }, prefab.ObjectNames);
+            Assert.AreEqual(prefab.AssetName, prefab.ObjectNames[0]);
+            Assert.IsFalse(prefab.ObjectNames.Exists(n => n != prefab.AssetName));
+        }
+
         [Test]
         public void Parse_FlagsNewFiles()
         {

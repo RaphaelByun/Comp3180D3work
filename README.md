@@ -97,7 +97,7 @@ Two folders in the table below are only partly in git. The downloaded PDFs in `r
 | `ANSWERS.md` | Raphael's answers to the launch questions (17 Sep). |
 | `PROMPT — A2 final sprint (paste into a fresh session).md` | Resumable mission prompt for a fresh Claude Code session. |
 | `audit/` | `FINDINGS-v1/v2/v3.md` (the three sprint marking rounds), `FINDINGS-round-1` to `-14.md` (the loop rounds; 7-10 ran on 19 Sep, 11-14 overnight 19-20 Sep), `verified-additions-round-1/4/5/6/7/8/9/10/11/12/13/14.md` (facts and measurements checked on 18-20 Sep; the round 11-14 files carry the delta fact-finders' lists, with `factfinder-round-11..14-raw.md` their full reports), `parse-round.py`, `count-and-pdf.ps1` (Word COM body/cover count plus PDF export), `EDIT-PLAN-v2.md`, raw JSON, every `apply-*.py` edit script, and the as-marked copy of each round's text. |
-| `ChangeLens-proto/` | Unity 6000.4.10f1 project; the package is `Packages/com.raphaelbyun.changelens`. 27/27 EditMode tests passed at A2 (76 on `deliverable-2-changelens` on 17 Oct 2026). Two one-off screenshot helpers sit in the Editor folder and can be deleted. |
+| `ChangeLens-proto/` | Unity 6000.4.10f1 project; the package is `Packages/com.raphaelbyun.changelens`. 27/27 EditMode tests passed at A2 (76 on `deliverable-2-changelens` on 17 Oct 2026). Three one-off screenshot helpers sit in the Editor folder and can be deleted. |
 | `prototype/` | `HOW-IT-WORKS.md` (plain-language walkthrough), `CHANGELOG.md` (commands, logs, the five screenshot passes and the batch export / build-report probe). |
 | `prototype-logs/` | Unity create, compile, test and screenshot logs; `tests.xml`. |
 | `prototype-data/` | Blobless SS3D clone and the sample week export used by the prototype. |

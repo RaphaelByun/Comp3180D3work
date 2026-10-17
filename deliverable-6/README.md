@@ -11,8 +11,8 @@ A2 success measure (Deliverables table, row 6, 6 h, 1 in prac): **"All six items
 | `evaluation-section-skeleton.md` | The A3 Evaluation section (about 1000 words): RQ, Target Audience, Method (200 or fewer), Results and Discussion (about 700), with placeholders saying what evidence goes where |
 | `appendix-plan.md` | Appendices A to G for raw data, with source files and rules |
 | `analysis/analyse.js` | Node tool (no dependencies). Reads CSVs, prints a Markdown report |
-| `analysis/figures.js` | Node tool (no dependencies). Same CSVs; writes Figure 1 (SVG dot plot of each reader's difference, producers as filled circles, proxies as hollow squares) and Tables 1 to 3 as Markdown |
-| `analysis/test.js` | 116 checks against hand-computed values, for both tools. Run `node deliverable-6/analysis/test.js` from the repo root. Result on 17 Oct: 116 passed, 0 failed |
+| `analysis/figures.js` | Node tool (no dependencies). Same CSVs; writes Figure 1 (SVG dot plot of each reader's difference, producers as filled circles, proxies as hollow squares) and Tables 1, 2, 2b and 3 as Markdown |
+| `analysis/test.js` | 167 checks against hand-computed values, for both tools. Run `node deliverable-6/analysis/test.js` from the repo root. Result on 17 Oct: 167 passed, 0 failed |
 | `analysis/sample-*.csv` | **FAKE** data (4 invented readers and a pilot row) so you can see the output. Labelled FAKE inside each file and in the tool's banner |
 | `analysis/templates/*.csv` | Header-only files to copy into `deliverable-6/data/` and fill |
 
@@ -23,10 +23,15 @@ A2 success measure (Deliverables table, row 6, 6 h, 1 in prac): **"All six items
 3. Per-week baseline scores (the week-difficulty rival explanation), plus the gap between weeks.
 4. Ten-need sheet: agreement with your key as a raw count and whole percentage, and Cohen's kappa per reader, plus a list of needs where readers departed from the key. Optional counts of the T / R / U sources readers circled (counts only, no agreement statistic).
 5. Think-aloud codes: agreement and kappa between pass 1 and pass 2 on the segments coded twice, and which segments differ.
+6. Second scorer (optional `--scores2`): items in agreement out of items scored, items 1 to 5 and item 6 apart, and the items where the two scorers differ. This is the check in `deliverable-3/answer-key-and-scoring.md` (at least two readers, both reports).
 
 It prints no p-values on purpose. The readers recruited (floor five, up to eight) show direction and failure points, not significance.
 
 Data checks. Sections 1 to 3 use complete readers only: both reports, items 1 to 5 each scored once with 0, 1 or 2. A reader with a blank, missing, duplicated or out-of-range score, or with one report only, is named with the reason and left out of every table, so baseline and treatment always cover the same people. Under five complete readers, the output starts with the A2 fallback notice. The footer gives the real number of complete readers. Rows of commas only (as Excel writes) are dropped.
+
+Design checks. Every row of one report must give one week and one order, and a reader's two reports must differ in both week and order. A reader who fails this (for example an `order error` from the session checklist, or one row typed with the wrong week) is named and left out. The output lists how many complete readers sit in each sequence (week and order of the treatment report). Weeks are read in upper case and roles in lower case, so `w1` and `Proxy` are fine; any week other than W1 or W2 and any role other than producer or proxy is warned about. In the ten-need sheet, a duplicate (reader, need) row and any class other than D, P or N (such as `D/P` for two circles) is named and left out.
+
+Quotes in notes. A double quote starts a quoted cell only when it is the first character of the cell, so a stray quote inside a note is kept as written. A note that holds a comma must be quoted as a whole. The tool warns when a quote is never closed and when a row has more filled cells than the header.
 
 ## CSV formats
 
@@ -34,8 +39,9 @@ Data checks. Sections 1 to 3 use complete readers only: both reports, items 1 to
 |---|---|---|
 | item-scores | `participant, role, condition, week, order, item, score[, specific]` | condition: `baseline`/`treatment` (or `A`/`B`; A is baseline, B is treatment). week: `W1`/`W2`. order: 1 or 2 (which report was read first). item 1 to 6. Items 1 to 5: score 0, 1 or 2 (any other value is flagged; no half marks). Item 6: the code `Pass`, `Hedged` or `Over-claim` in the score column (a number is flagged). `specific` is optional and only for items 4 and 5: `y` if the answer used a name only Version B shows, `n` otherwise, blank if not recorded. One row per item per condition per reader |
 | need-classifications | `participant, need_id, class[, records]` | class: `D` derivable, `P` partly, `N` not. `records` is optional: the source(s) circled on the sheet, from `T` tracker, `R` repository, `U` Unity files (e.g. `R U`); reported as counts only |
-| marking-key | `need_id, class` | your own marking, made before the readers' sheets are looked at |
-| think-aloud-codes | long: `segment_id, participant, timestamp, pass, code`; or wide: `segment_id, ..., pass1_code, pass2_code` | wide is the layout of `deliverable-5/think-aloud-coding-sheet.csv`. One code per segment: split an utterance that carries two needs. Segments are matched by participant + segment_id, and a segment_id used for two readers is flagged, because `deliverable-5/recode-sample.js` merge keys by segment_id alone. Keep segment_ids unique across the sheet |
+| marking-key | `need_id, class` | the ten-need key from `deliverable-3/ten-need-sheet.md` section B, accepted or changed by you before the readers' sheets are looked at |
+| second-scorer-scores | same columns as item-scores | optional. Only the readers the second scorer re-scored, both reports, scored blind to your scores. Template: `analysis/templates/second-scorer-scores.csv` |
+| think-aloud-codes | long: `segment_id, participant, timestamp, pass, code`; or wide: `segment_id, ..., pass1_code, pass2_code[, final_code]` | wide is the layout of `deliverable-5/think-aloud-coding-sheet.csv`. Table 3 counts a segment under its `final_code` when the D5 resolve step set one, else under its pass 1 code (long layout: a row with `pass` = `final`). Agreement uses pass 1 and pass 2 only. One code per segment: split an utterance that carries two needs. Segments are matched by participant + segment_id, and a segment_id used for two readers is flagged, because `deliverable-5/recode-sample.js` merge keys by segment_id alone. Keep segment_ids unique across the sheet |
 
 Lines starting with `#` are ignored. The pilot code `P0` (the tool accepts any P followed by digits), or a `pilot` column set to `yes`, is excluded from every section, think-aloud codes included. So reader codes must start with R (R01, R02 ...), never P.
 
@@ -44,7 +50,7 @@ Lines starting with `#` are ignored. The pilot code `P0` (the tool accepts any P
 ```
 node deliverable-6/analysis/test.js                       # check the tool
 node deliverable-6/analysis/analyse.js                    # demo on FAKE sample data
-node deliverable-6/analysis/analyse.js --scores deliverable-6/data/item-scores.csv --needs deliverable-6/data/need-classifications.csv --key deliverable-6/data/marking-key.csv --codes deliverable-5/think-aloud-coding-sheet.csv --out deliverable-6/data/analysis-output.md
+node deliverable-6/analysis/analyse.js --scores deliverable-6/data/item-scores.csv --needs deliverable-6/data/need-classifications.csv --key deliverable-6/data/marking-key.csv --codes deliverable-5/think-aloud-coding-sheet.csv --scores2 deliverable-6/data/second-scorer-scores.csv --out deliverable-6/data/analysis-output.md
 node deliverable-6/analysis/figures.js                    # demo tables on FAKE sample data
 node deliverable-6/analysis/figures.js --scores deliverable-6/data/item-scores.csv --needs deliverable-6/data/need-classifications.csv --key deliverable-6/data/marking-key.csv --codes deliverable-5/think-aloud-coding-sheet.csv --outdir deliverable-6/data/figures
 ```
@@ -53,13 +59,15 @@ node deliverable-6/analysis/figures.js --scores deliverable-6/data/item-scores.c
 
 ## What Raphael must do
 
-1. Write the marking key for the ten needs yourself, from Deliverable 1, before you look at any reader's sheet.
+1. Accept or change the marking key for the ten needs before you look at any reader's sheet. The key in `deliverable-3/ten-need-sheet.md` section B is AI-drafted from Deliverable 1, and the Rule 1 or Rule 2 choice there is still open.
 2. After each session, enter the scores from the paper sheets the same day (templates in `analysis/templates/`). Score against the fixed answers with `deliverable-3/answer-key-and-scoring.md` (items 1 to 5 as 0, 1 or 2; item 6 coded Pass, Hedged or Over-claim; optional specificity tick on items 4 and 5).
 3. Run the tool on the real files in Week 13, paste its output into Appendix E, and write the Results and Discussion in your own words from it. Write the opening answer last.
-4. Make Figure 1 and Tables 1 to 3 with `figures.js` (command above), check them against the `analyse.js` output, and integrate them in the text.
-5. Keep the claims modest: raw counts first, limits stated (proxy upper bound, N readers from the tracker, ten items, a quarter re-coded).
-6. If the readers recruited fall below the participant floor, use the A2 fallback and say so in Method. The floor is five readers in total (decided 14 Oct 2026; `deliverable-3/README.md` decision 5).
-7. Add the ethics row to Method (one or two sentences) from `deliverable-3/ethics/report-ethics-points.md` points 1 and 2. No ethics application was made (decided 17 Oct 2026, `deliverable-3/README.md`).
+4. After the sessions, have the second scorer re-score at least two readers' sheets (both reports) into `second-scorer-scores.csv`, and run the tool with `--scores2`.
+5. Make Figure 1 and Tables 1, 2, 2b and 3 with `figures.js` (command above), check them against the `analyse.js` output, and integrate them in the text.
+6. Keep the claims modest: raw counts first, limits stated (proxy upper bound, N readers from the tracker, ten items, a quarter re-coded).
+7. If the readers recruited fall below the participant floor, use the A2 fallback and say so in Method. The floor is five readers in total (decided 14 Oct 2026; `deliverable-3/README.md` decision 5).
+8. Add the ethics row to Method (one or two sentences) from `deliverable-3/ethics/report-ethics-points.md` points 1 and 2. No ethics application was made (decided 17 Oct 2026, `deliverable-3/README.md`). Point 4 (real SS3D contributors' work reported accurately) has no placement in that file: the skeleton puts it in the Fidelity row, with SS3D's licence stated once you have checked `study/SOURCE-AND-LICENCE.md` on `deliverable-2-changelens`.
+9. Disclose AI use in Method and the GenAI statement. The six items, the item answer key, the ten-need key and both tools here were drafted with Claude Code. Say that you accepted or changed the keys, and give the date only once that is true. Until then, do not call the ten-need key your own.
 
 ## Not done on purpose
 

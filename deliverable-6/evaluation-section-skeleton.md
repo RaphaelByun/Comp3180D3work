@@ -20,17 +20,18 @@ Word budget (template guide): RQ and opening about 60, Target Audience about 60,
 
 ### 3.2 Method (200 words or fewer)
 
-Word cap: the eight rows below share 200 words, about 25 each. Cut each row to one sentence and push the detail to the appendices (instruments to Appendix A, fidelity to Appendix F).
+Word cap: the nine rows below share 200 words, about 22 each. Cut each row to one sentence and push the detail to the appendices (instruments to Appendix A, fidelity to Appendix F).
 
 | Part | What to say | Evidence source |
 |---|---|---|
 | Design | Within-subjects. Each reader reads two ChangeLens reports for different SS3D weeks, one with names (treatment, Version B) and one without (baseline, Version A). Week and order counterbalanced across four cells. | `deliverable-5/booking-tracker.csv` (cells), `study/*/report-A-baseline.md`, `report-B-treatment.md` |
 | Participants | [PLACEHOLDER: N readers analysed, how many producers and how many proxies, which classes recruited from, pilot excluded. Real numbers only, from the tracker.] | tracker, consent log |
-| Instruments | Six items per week scored against fixed answers (Endsley's three levels; item 6 is unanswerable); ten-need sheet; think-aloud prompt. Link to the appendices. | Appendix A |
+| Instruments | Six items per week scored against fixed answers (Endsley's three levels; item 6 is unanswerable); ten-need sheet; think-aloud prompt. Link to the appendices. One line on AI: the items, the item answer key and the ten-need key were drafted with Claude Code, and Raphael accepted or changed the keys before the sessions (give the date only once that is true). Point to the GenAI statement. | Appendix A; `deliverable-3/ten-need-sheet.md` (status line); GenAI statement |
 | Procedure | 45 minutes: 5 briefing and consent, 12 per report, 6 on the ten-need sheet, 10 think-aloud for six readers. [PLACEHOLDER: when and where the sessions ran, in prac or not, remote or on campus.] | session checklist |
 | Ethics | One or two sentences: voluntary, stop or withdraw at any time, a general call-out so classmates did not feel singled out, codes not names, written notes only. No ethics application: the unit sets no requirement (decided 17 Oct 2026). | `deliverable-3/ethics/report-ethics-points.md` points 1 and 2 |
-| Fidelity check | One sentence: both weeks' reports were checked claim by claim against the diffs before any session; state the Deliverable 4 result (July: A and B pass. February: A 15 of 15; B 39 of 39 after the repair and re-score of six rows). Say who scored: an AI-assisted first pass, hand-checked by Raphael (only once that check is done). | `FIDELITY-RESULT.md` and the scored files on `deliverable-4-fidelity-check` (Appendix F) |
-| Analysis | Item means with raw counts, treatment-minus-baseline difference per reader, per-week baseline scores, percentage agreement and per-reader Cohen's kappa against my key, and think-aloud codes against Ko et al.'s (2007) 21 types with a quarter re-coded after a week. | `analysis/analyse.js` output |
+| Fidelity check | One sentence: both weeks' reports were checked claim by claim against the diffs before any session; state the Deliverable 4 result (July: A and B pass. February: A 15 of 15; B 39 of 39 after the repair and re-score of six rows). Say who scored: an AI-assisted first pass, hand-checked by Raphael (only once that check is done). This check also covers ethics point 4: SS3D is real people's work, so a wrong summary would misreport them. State SS3D's licence once Raphael has checked the D2 licence note. | `FIDELITY-RESULT.md` and the scored files on `deliverable-4-fidelity-check` (Appendix F); `deliverable-3/ethics/report-ethics-points.md` point 4; `study/SOURCE-AND-LICENCE.md` on `deliverable-2-changelens` |
+| Scoring check | [PLACEHOLDER: who the second scorer was (not a participant), how many readers' sheets they re-scored (at least two, both reports), and the agreement as items in agreement out of items scored, items 1-5 and item 6 apart. Real numbers only.] | `analyse.js --scores2` output, section 1b; `deliverable-3/answer-key-and-scoring.md` (second-scorer check) |
+| Analysis | Item means with raw counts, treatment-minus-baseline difference per reader, per-week baseline scores, percentage agreement and per-reader Cohen's kappa against the ten-need key (call it your key only once you have accepted it), and think-aloud codes against Ko et al.'s (2007) 21 types with a quarter re-coded after a week. One line on AI: the analysis script was drafted with Claude Code; point to the GenAI statement. | `analysis/analyse.js` output; GenAI statement |
 | Deviations | [PLACEHOLDER: anything that changed from A2: fewer than eight readers, a reserve week used, a session shortened. Say it here; honesty is marked.] | diary, tracker notes |
 
 ### 3.3 Results and Discussion (about 700 words)
@@ -41,7 +42,7 @@ Plan the 700 words as five short blocks, each with one piece of integrated evide
 
 2. **Sub-question 1: ten-need sheet** (about 180 words). Evidence: Table 1, my key (D / P / N) beside the count of readers who matched it for each need. [PLACEHOLDER: agreement as a raw count per reader (for example "7 of 10"), the per-reader kappa range, and the needs where readers departed from the key. Each departure is a finding about what the artefacts cannot say; name two or three.] Limit to state: over ten items these are indicative, not inferential, and kappa swings widely.
 
-3. **Sub-question 2: comprehension items** (about 220 words). Evidence: Figure 1, each reader's treatment-minus-baseline difference over the five scored items (a dot plot, one dot per reader, producers and proxies marked differently), and Table 2, full-mark counts per item by condition. [PLACEHOLDER: how many readers scored higher, the same and lower with names; which items moved (watch the Level 3 item about what to test next); item 6, how many over-claimed from the page.] Limits to state: N readers (N from the tracker) show direction and failure points, not significance; proxies strip a real producer's context, so the difference is an upper bound.
+3. **Sub-question 2: comprehension items** (about 220 words). Evidence: Figure 1, each reader's treatment-minus-baseline difference over the five scored items (a dot plot, one dot per reader, producers and proxies marked differently), Table 2, full-mark counts per item by condition and by week, and Table 2b, item 6 codes per version. [PLACEHOLDER: how many readers scored higher, the same and lower with names; which items moved (watch the Level 3 item about what to test next); item 6, how many over-claimed from the page.] Limits to state: N readers (N from the tracker) show direction and failure points, not significance; proxies strip a real producer's context, so the difference is an upper bound.
 
 4. **Rival explanation: week difficulty** (about 60 words). Evidence: per-week baseline scores from `analyse.js`. [PLACEHOLDER: baseline means for each week and the gap; say whether the gap is smaller or larger than the treatment difference.]
 
@@ -53,8 +54,9 @@ Close (about 40 words). [PLACEHOLDER: one sentence on what this means for the to
 
 - Figure 1: paired differences per reader.
 - Table 1: ten needs, key, readers matching.
-- Table 2: item full-mark counts by condition (and week).
-- Table 3: think-aloud segment counts by information type.
+- Table 2: item full-mark counts by condition and by week within condition.
+- Table 2b: item 6 Pass / Hedged / Over-claim counts per version.
+- Table 3: think-aloud segment counts by information type (final code after resolution, else pass 1).
 - Optional: the two report versions side by side (reuse the video still).
 
 ### Traps to check before submitting

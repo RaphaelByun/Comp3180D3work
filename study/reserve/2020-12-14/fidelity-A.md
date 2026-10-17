@@ -1,6 +1,6 @@
 # Fidelity checklist: SS3D week of 2020-12-14 (Version A, baseline)
 
-Open each commit's diff (`git show <hash>`) and mark every claim. Pass rule (A2): none contradicted and at least 90% supported.
+Open each commit's diff (`git show --diff-merges=first-parent <hash>`) and mark every claim. For a merge, `git log --no-merges <hash>^1..<hash>` lists the changes it brought in. Pass rule (A2): none contradicted and at least 90% supported.
 
 | # | Section | Claim | Commits | S / C / U |
 | ---: | --- | --- | --- | --- |

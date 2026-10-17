@@ -31,12 +31,12 @@ Largest area this week: **Code** (25 of 82 file changes).
 **Human** (prefab, in `Assets/Content/Entities/Humanoids/Human`)
 - "Completing container rework [ready for review] (#824)": added ContainerItemDisplay script; removed ContainerItemDisplay script; edited object setup.
   - objects named in the change: hand_r, hand_l
-- "New Container Editor, multiple container on a single game object (#798)": added Animator, AttachedContainer script, ContainerDescriptor script; removed an unidentified script; edited object setup, placed-prefab overrides.
+- "New Container Editor, multiple container on a single game object (#798)": added Animator, NetworkIdentity script, ContainerDescriptor script, AttachedContainer script; removed an unidentified script, AttachedContainer script, VisibleContainer script; edited object setup, placed-prefab overrides.
   - objects named in the change: hand_r, hand_l, DropShadowProjector
 
 **CellCharger** (prefab, in `Assets/Content/Furniture/Machines/Science`)
 - "Completing container rework [ready for review] (#824)": added ContainerItemDisplay script; removed ContainerItemDisplay script; edited object setup.
-- "New Container Editor, multiple container on a single game object (#798)": removed an unidentified script; edited object setup.
+- "New Container Editor, multiple container on a single game object (#798)": added ContainerDescriptor script, AttachedContainer script, ContainerInteractive script, ContainerSync script; removed AttachedContainer script, AttachedContainerGenerator script, ContainerSync script, VisibleContainer script and 1 more; edited object setup.
 
 **MiniStation** (scene, in `Assets/Content/Scenes/Maps`)
 - "New Container Editor, multiple container on a single game object (#798)": added new objects, placed-prefab overrides, position/rotation/scale, TileMap script; removed placed-prefab overrides, PlacedTileObject script; edited Render Settings.
@@ -50,29 +50,29 @@ Largest area this week: **Code** (25 of 82 file changes).
 - "New Container Editor, multiple container on a single game object (#798)": new prefab added.
 
 **microwave** (prefab, in `Assets/Content/Furniture/Machines/Kitchen/Microwave`)
-- "New Container Editor, multiple container on a single game object (#798)": added Light, Microwave script; removed ContainerInteractive script, Microwave script; edited object setup.
+- "New Container Editor, multiple container on a single game object (#798)": added Light, ContainerDescriptor script, AttachedContainer script, ContainerInteractive script and 1 more; removed ContainerInteractive script, Microwave script, AttachedContainer script, AttachedContainerGenerator script and 1 more; edited object setup.
 
 **2 prefabs with the same changes:** MopBucket, Enforcer (in `Assets/Content`)
 - "New Container Editor, multiple container on a single game object (#798)": added Animator, ContainerDescriptor script, AttachedContainer script, ContainerInteractive script and 1 more; edited object setup.
 
 **DisposalBin** (prefab, in `Assets/Content/Furniture/Machines/Supply/DisposalBin`)
-- "New Container Editor, multiple container on a single game object (#798)": added ContainerDescriptor script, DisposalBin script; removed DisposalBin script; edited object setup.
+- "New Container Editor, multiple container on a single game object (#798)": added ContainerDescriptor script, AttachedContainer script, ContainerInteractive script, DisposalBin script; removed DisposalBin script, AttachedContainer script, AttachedContainerGenerator script; edited object setup.
 
 **LockerSecure** (prefab, in `Assets/Content/Furniture/Storage/Lockers`)
-- "New Container Editor, multiple container on a single game object (#798)": removed ContainerInteractive script; edited position/rotation/scale, object setup.
+- "New Container Editor, multiple container on a single game object (#798)": added ContainerDescriptor script, AttachedContainer script, ContainerSync script, ContainerInteractive script and 1 more; removed SimpleExaminable script, ContainerInteractive script, AttachedContainer script, AttachedContainerGenerator script and 2 more; edited position/rotation/scale, object setup.
 
 **CardboardBox** (prefab, in `Assets/Content/Items/Functional/Containers/Object`)
-- "New Container Editor, multiple container on a single game object (#798)": added ContainerSync script; removed ContainerInteractive script; edited object setup.
+- "New Container Editor, multiple container on a single game object (#798)": added ContainerDescriptor script, AttachedContainer script, ContainerInteractive script, ContainerSync script; removed ContainerInteractive script, ContainerSync script, AttachedContainer script, AttachedContainerGenerator script; edited object setup.
 
-**2 prefabs with the same changes:** CigarettePack, Toilet (in `Assets/Content`)
-- "New Container Editor, multiple container on a single game object (#798)": added ContainerDescriptor script; removed ContainerInteractive script; edited object setup.
-
-**2 prefabs with the same changes:** Locker, TankStorageUnit (in `Assets/Content/Furniture`)
-- "New Container Editor, multiple container on a single game object (#798)": removed an unidentified script; edited object setup.
-
-**5 prefabs with the same changes:** medkit, RedToolbox, Crate, CrateSecure, fridge (in `Assets/Content`)
-- "New Container Editor, multiple container on a single game object (#798)": edited object setup.
+**6 prefabs with the same changes:** CigarettePack, Toilet, medkit, Crate, CrateSecure, fridge (in `Assets/Content`)
+- "New Container Editor, multiple container on a single game object (#798)": added ContainerDescriptor script, AttachedContainer script, ContainerInteractive script; removed ContainerInteractive script, AttachedContainer script, AttachedContainerGenerator script; edited object setup.
   - objects named in the change: Medkit
+
+**Locker** (prefab, in `Assets/Content/Furniture/Storage/Lockers`)
+- "New Container Editor, multiple container on a single game object (#798)": added ContainerDescriptor script, AttachedContainer script, ContainerInteractive script; removed ContainerInteractive script, AttachedContainer script, AttachedContainerGenerator script, VisibleContainer script; edited object setup.
+
+**RedToolbox** (prefab, in `Assets/Content/Items/Functional/Containers/Object/Toolboxes`)
+- "New Container Editor, multiple container on a single game object (#798)": added ContainerSync script, ContainerDescriptor script, AttachedContainer script, ContainerInteractive script; removed ContainerInteractive script, AttachedContainer script, AttachedContainerGenerator script, ContainerSync script; edited object setup.
 
 **TableLamp** (prefab, in `Assets/Content/Items/Functional/Generic`)
 - "New Container Editor, multiple container on a single game object (#798)": added Light; edited object setup, script settings.
@@ -80,6 +80,9 @@ Largest area this week: **Code** (25 of 82 file changes).
 **MainMenu** (scene, in `Assets/Content/Scenes`)
 - "New Container Editor, multiple container on a single game object (#798)": edited Render Settings, placed-prefab overrides, an unidentified script settings.
   - objects named in the change: Network Manager
+
+**TankStorageUnit** (prefab, in `Assets/Content/Furniture/Machines/Atmospherics`)
+- "New Container Editor, multiple container on a single game object (#798)": removed an unidentified script; edited object setup.
 
 ---
 *Generated by ChangeLens from the project's version history. Version B. In "and N more", scripts the project does not contain (such as Unity's own UI scripts) count together as one.*

@@ -57,6 +57,14 @@ git log --all --no-merges --reverse --date=short --format="%h %ad %(trailers:key
 
 Local Claude Code session logs (one `.jsonl` per session, with sub-agent logs in a folder of the same name) are on Raphael's PC in `C:\Users\rapha\.claude\projects\C--Users-rapha-Documents-School-Unit-3-Sem-2\`. Raphael chooses which to export as evidence.
 
+A marker cannot open the session links above. To turn one local log into a readable transcript for an appendix:
+
+```
+node tools/export-transcript.js <session>.jsonl --out transcript.md [--no-tool-output] [--from 2026-10-17T00:00 --to 2026-10-17T23:59]
+```
+
+It writes the user prompts, Claude's replies and the names of the tools called, each with a timestamp, and masks e-mail addresses and the Windows user folder. Read the output before using it. Its tests: `node tools/export-transcript.test.js`. Which local log holds which session (checked 17 Oct 2026 by searching the logs for the session links): the 13–14 Oct session is in `a2281cff-….jsonl` (it ran on the PC over Remote Control); the 17 Oct session is `fa1f5015-….jsonl`. The 12 Oct phone session ran in the cloud and has no local log; it can only be shown from claude.ai.
+
 ### By deliverable
 
 | Deliverable (branch) | Dates | Commits | What the AI produced |

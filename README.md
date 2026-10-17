@@ -70,6 +70,12 @@ node deliverable-5/recode-sample.js merge --in deliverable-5/think-aloud-coding-
 
 The blind re-code helper (branch `deliverable-5-sessions`): its tests, then drawing a quarter of the pass-1 coded segments and merging the pass-2 codes back. On 17 Oct 2026 the tests passed (5) and a draw found 0 coded segments, since no session has been run.
 
+```
+node tools/export-transcript.test.js
+```
+
+The session-transcript exporter for the GenAI evidence (branch `deliverable-2-changelens`; 5 tests pass on 17 Oct 2026). Usage is in `GENAI-EVIDENCE.md`.
+
 ## Sources, licences and AI use
 
 - Study data: taken from SS3D (github.com/RE-SS3D/SS3D). Source commits and licences: `study/SOURCE-AND-LICENCE.md`.

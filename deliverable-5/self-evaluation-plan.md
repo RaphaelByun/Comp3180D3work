@@ -180,7 +180,7 @@ General rules for every activity:
 | CW5 | Recover after typing the date in the wrong form. | From repository, date typed as 19/07/2021 |
 
 **Steps.**
-1. Write the persona and each task's correct action sequence in `se3-walkthrough.csv` (one row per step) before judging anything.
+1. Write the persona in `deliverable-6/data/se3-persona.md` (the CSV has no persona column) and each task's correct action sequence in `se3-walkthrough.csv` (one row per step) before judging anything.
 2. For each step, answer the four questions (Wharton et al., 1994) with `Y` or `N`:
    - Q1: Will the user try to achieve the right effect?
    - Q2: Will the user notice that the correct action is available?
@@ -336,7 +336,7 @@ Both branches are read-only today. Nothing below has been done.
 4. `answer-key-and-scoring.md`: the second-scorer check becomes the optional AI scorer for SE2, disclosed.
 5. `session-protocol.md`, `participant-info-and-consent.md`, `proxy-scenario.md`, `pilot-plan.md`: status line "Not used (17 Oct 2026 decision); kept as the A2 plan record". The proxy scenario stays the source of the SE3 persona.
 6. `ethics/report-ethics-points.md`: mark points 1 and 2 as not applicable (no participants); add the contributor-email question to point 4.
-7. The reserve-week `study/reserve/*/report-*.md` on this branch are the older pages; the readers' pages are on `deliverable-2-changelens` at `d9fa4bf`. Either update or add a line saying so.
+7. The reserve-week `study/reserve/*/report-*.md` on this branch are the older pages; the pages SE2 reads are on `deliverable-2-changelens` at `d9fa4bf`. Either update or add a line saying so.
 
 **D4 (`deliverable-4-fidelity-check`)**
 1. Regenerate `study/reserve/2020-12-14/fidelity-A.md`, `fidelity-B.md`, `study/reserve/2021-09-27/fidelity-A.md`, `fidelity-B.md` from the pages frozen at `d9fa4bf`. All four templates on this branch differ from the D2 versions (both reserve B pages were re-frozen on 17 Oct).
@@ -353,13 +353,13 @@ Both branches are read-only today. Nothing below has been done.
 3. After SE3 and SE4: fix what you choose to fix, list each fix with its CW or CL id in `prototype/CHANGELOG.md`, and say in the report which commit was evaluated and which was fixed after.
 4. `README.md` and the package README: say the evaluation is a solo evaluation (17 Oct), with a link to this plan.
 
-**D5 (`deliverable-5-sessions`, this branch)**
-1. Add this plan (this commit).
-2. `README.md`: new status and purpose (solo evaluation kit); the catch-up plan, checkpoints and open questions replaced by section 4 of this plan.
-3. `recruitment-message.md`, `booking-tracker.csv`, `session-checklist.md`: status line "Not used (17 Oct 2026 decision)", kept as the A2 plan record. Do not delete.
-4. `think-aloud-coding-sheet.md`: add a note that the codebook now codes the SE2 needs log; `participant` = `SELF`.
-5. `recode-sample.js`: check it runs on `se2-needs-log.csv` with one participant; add a test case if not.
-6. Optional: `deliverable-5/solo/` for the SE2 answer-sheet template and the SE3 task card, if D3 stays untouched.
+**D5 (`deliverable-5-sessions`, this branch)**: done 17 Oct 2026, local commits only.
+1. Add this plan. Done (`125a9bb`, revised `8bb1800`).
+2. `README.md`: new status and purpose (solo evaluation kit); the catch-up plan, checkpoints and open questions replaced by section 4 of this plan. Done.
+3. `recruitment-message.md`, `booking-tracker.csv`, `session-checklist.md`: status line "Not used (17 Oct 2026 decision)", kept as the A2 plan record. Done: moved to `deliverable-5/retired/` with the status line and a one-line reason each in `retired/README.md`. Not deleted.
+4. `think-aloud-coding-sheet.md`: add a note that the codebook now codes the SE2 needs log; `participant` = `SELF`. Done; its procedure now points at `deliverable-6/data/se2-needs-log.csv`.
+5. `recode-sample.js`: check it runs on `se2-needs-log.csv` with one participant; add a test case if not. Done: it already kept `SELF` rows; a test now proves it, and an `agree` command prints pass 1 against pass 2 as x of n.
+6. `deliverable-5/solo/` for the SE2 answer-sheet template and the SE3 task card. Done, with run sheets for SE1 to SE4, `how-to-score.md`, the dated schedule and the nine header-only logs (`solo/logs/`, checked against section 3 by `solo/logs.test.js`). The D6 templates in item 1 below should copy these headers.
 
 **D6 (`deliverable-6-evaluation-report`)**
 1. `analysis/templates/`: add header-only `se1-fidelity-handcheck.csv`, `se2-reads.csv`, `se2-item-scores.csv`, `se2-need-answers.csv`, `se2-needs-log.csv`, `se2-second-scorer.csv`, `se3-walkthrough.csv`, `se4-heuristic-problems.csv`, `se4-task-outcomes.csv` with the columns in section 3.

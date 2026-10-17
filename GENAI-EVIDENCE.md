@@ -37,7 +37,7 @@ Companion to Appendix A of the proposal. Items dated 28 Jul to 2 Sep are on disk
 
 ## A3 (final project, from 11 Oct 2026)
 
-Facts for the A3 Statement on Generative AI use. The statement itself is Raphael's to write. Built on 17 Oct 2026 from `git log --all`; later commits are not listed. Tool throughout: Claude (Anthropic) via Claude Code, model Claude Opus 5.5, with sub-agents.
+Facts for the A3 Statement on Generative AI use. The statement itself is Raphael's to write. Built on 17 Oct 2026 from `git log --all`; later commits are not listed. Tool throughout: Claude (Anthropic) via Claude Code, model Claude Opus 5.5, with Claude Sonnet 5.5 sub-agents (the model names in the local session logs a2281cff, fa1f5015 and 8aab22de).
 
 Every commit in the repository up to 17 Oct 2026 carries a `Co-Authored-By: Claude` trailer. To refresh this list:
 

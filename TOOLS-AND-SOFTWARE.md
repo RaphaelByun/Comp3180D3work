@@ -17,15 +17,16 @@ Versions come from the project files where one exists. Where a version is marked
 | Microsoft.NET.Test.Sdk | 17.11.1 (released 5 Sep 2024) | Microsoft | MIT | D2: test host for `dotnet test` | `tests.csproj` |
 | Git | 2.48.1 (released 13 Jan 2025), Git for Windows build 2.48.1.windows.1 | The Git Project; Git for Windows | GPL-2.0 | D2: ChangeLens runs git to read a week's history. Corpus scripts. Version control for the whole repository | `git --version`, installed on 17 Oct 2026 |
 | GitHub | Web service, no version | GitHub, Inc. | Proprietary (GitHub Terms of Service) | Hosts the private repository `RaphaelByun/Comp3180D3work`. D1: GitHub Projects was one of the four tools inspected (below) | Not applicable |
-| Node.js | 22.14.0 (released 11 Feb 2025) | OpenJS Foundation | MIT | `build-docx-v2.js` (Word builder). D5 `recode-sample.js`, D6 `analyse.js`, `figures.js` and `test.js`, D9 `variance-table.js`. These use only Node's own modules | `node -v`, installed on 17 Oct 2026 |
-| docx (npm package) | 9.6.1 (released 10 Mar 2026) | Dolan Miu | MIT | `build-docx-v2.js`: builds the A2 Word file, and the A3 report if reused | `package.json`; `School/node_modules/docx/package.json` |
+| Node.js | 22.14.0 (released 11 Feb 2025) | OpenJS Foundation | MIT | `build-docx-v2.js` (Word builder). D2 branch: `tools/export-transcript.js` and its test, `audit/count-a3.js` and its test. D5 `recode-sample.js` and its test, D6 `analyse.js`, `figures.js` and `test.js`, D8 `sum-hours.js` and `test.js`, D9 `variance-table.js` and its test. All but the Word builder use only Node's own modules | `node -v`, installed on 17 Oct 2026 |
+| docx (npm package) | 9.6.1 (released 10 Mar 2026) | Dolan Miu | MIT | `build-docx-v2.js`: builds the A2 Word file. It makes the A2 layout only (no GitHub Username line, no table of contents), so it does not fit the A3 template as it stands | `package.json`; `School/node_modules/docx/package.json` |
 | Python | 3.14.6 (build of 10 Jun 2026) | Python Software Foundation | PSF License Version 2 | `corpus/` scripts (`corpus.py`, `scan-weeks.py`, `export-week.py`, `scan-repo.py`, `plot-fig1.py`), `assemble.py`, `audit/*.py` | `py --version`, installed on 17 Oct 2026; `corpus/README.md` says Python 3.14 |
 | Matplotlib | 3.11.2 (released 11 Sep 2026) | The Matplotlib Development Team | Matplotlib License (PSF-based) | `corpus/plot-fig1.py` and `corpus/corpus.py`: the A2 code-file share charts | Installed on 17 Oct 2026 |
-| Microsoft Word | Microsoft 365, 16.0.20430.20146 | Microsoft | Proprietary | `audit/count-and-pdf.ps1`: word counts and the A2 PDF, through Word's COM interface | Installed on 17 Oct 2026 |
-| PowerShell | Not recorded | Microsoft | Windows PowerShell: part of Windows. PowerShell 7: MIT | `audit/count-and-pdf.ps1` | Not recorded |
+| Microsoft Word | Microsoft 365, 16.0.20430.20146 | Microsoft | Proprietary | `audit/count-and-pdf.ps1`: word counts and the A2 PDF. `audit/count-a3.ps1`: A3 report word counts by section and an optional PDF. Both through Word's COM interface | Installed on 17 Oct 2026 |
+| PowerShell | Not recorded | Microsoft | Windows PowerShell: part of Windows. PowerShell 7: MIT | `audit/count-and-pdf.ps1`, `audit/count-a3.ps1` | Not recorded |
 | Claude Code | 2.1.302 on 17 Oct 2026; earlier sessions ran earlier versions | Anthropic | Proprietary (Anthropic terms) | AI coding agent for every deliverable. Details in `GENAI-EVIDENCE.md` | `claude --version` on 17 Oct 2026 |
-| Claude (model) | Claude Opus 5.5 | Anthropic | Proprietary (Anthropic terms) | The model behind Claude Code in the A3 sessions | `GENAI-EVIDENCE.md` |
-| Google Chrome with the Claude in Chrome extension | Chrome 155.0.8059.82 installed on 17 Oct 2026. The version on 14 Oct was not recorded | Google; Anthropic | Proprietary | D1: Claude ran heuristic tasks T1 to T7 in Chrome on 14 Oct 2026 | Installed version only |
+| Claude (model), A2 sprint | Fable 5.1 main loop; Opus, Sonnet and Haiku sub-agents (17 to 20 Sep 2026) | Anthropic | Proprietary (Anthropic terms) | The models behind Claude Code in the A2 sprint, where the D2 code was started | README "A2 archive"; `GENAI-EVIDENCE.md` (A2 section) |
+| Claude (model), A3 | Claude Opus 5.5 main loop; Claude Sonnet 5.5 sub-agents (Oct 2026) | Anthropic | Proprietary (Anthropic terms) | The models behind Claude Code in the A3 sessions | Model names recorded in the local session logs a2281cff (10 to 14 Oct), fa1f5015 and 8aab22de (17 Oct) |
+| Google Chrome with the Claude in Chrome extension | Chrome 155.0.8059.82 installed on 17 Oct 2026. The version on 14 Oct was not recorded | Google; Anthropic | Proprietary | D1: Claude ran heuristic tasks T1 to T7 in Chrome on 14 Oct 2026. D6: `deliverable-6/analysis/figures.js` starts an installed Chrome or Edge headless to save Figure 1 as a PNG (optional; it looks for `chrome.exe` first) | Installed version only |
 
 ## Tools inspected in the D1 heuristic pass
 
@@ -50,7 +51,11 @@ Used as objects of study, not to build anything. Plans and dates are from `deliv
 
 For the A3 reference list. Each year is the release year of the version used. Web services with no version use "n.d." and a retrieval date.
 
+Anthropic. (2026). *Claude* (Fable 5.1 version) [Large language model]. https://www.anthropic.com/claude
+
 Anthropic. (2026). *Claude* (Opus 5.5 version) [Large language model]. https://www.anthropic.com/claude
+
+Anthropic. (2026). *Claude* (Sonnet 5.5 version) [Large language model]. https://www.anthropic.com/claude
 
 Anthropic. (2026). *Claude Code* (Version 2.1.302) [Computer software]. https://claude.com/claude-code
 

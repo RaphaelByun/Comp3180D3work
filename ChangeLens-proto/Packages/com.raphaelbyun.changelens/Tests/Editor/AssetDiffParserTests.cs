@@ -375,6 +375,24 @@ namespace ChangeLens.Editor.Tests
             StringAssert.Contains("S / C / U", report.FidelityChecklistMarkdown());
         }
 
+        // The strict measure counts the asset's own root name, which the page
+        // never shows, so a third line counts only names a reader sees.
+        [Test]
+        public void NamingSummary_CountsOnlyNamesThePageShows()
+        {
+            ChangeReport counts = ChangeReport.Build(GitLogParser.Parse(SamplePatch.Log), "sample");
+            var assets = new List<AssetChange>
+            {
+                new AssetChange { CommitHash = "a", Path = "Assets/Items/Soul.prefab", ObjectNames = { "Soul" } },
+                new AssetChange { CommitHash = "a", Path = "Assets/Items/Lamp.prefab", ObjectNames = { "Lamp", "Bulb" } },
+                new AssetChange { CommitHash = "a", Path = "Assets/Items/Box.prefab", TypesTouched = { "Transform" } }
+            };
+            ProducerReport b = ProducerReport.Build(counts, assets, null, ReportCondition.Treatment, "t");
+            string summary = StudyExport.NamingSummary(b);
+            StringAssert.Contains("(strict, A2 measure): 2 of 3", summary);
+            StringAssert.Contains("names an object other than the asset itself: 1 of 3", summary);
+        }
+
         // On a tie the page used to name whichever area came first in the list.
         [Test]
         public void LargestArea_NamesEveryAreaOnATie()

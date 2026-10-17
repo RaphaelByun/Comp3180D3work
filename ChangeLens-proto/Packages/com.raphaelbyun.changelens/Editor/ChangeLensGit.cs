@@ -323,8 +323,12 @@ namespace ChangeLens.Editor
             //             context: the measure export-week.py used for the A2 scoping.
             //   broad   - the page says anything about the inside: an object name,
             //             a component type, or the file being added/deleted.
+            //   shown   - the page lists an object name other than the asset's own
+            //             name. The page drops the asset's own root name, so this
+            //             is what a reader sees, and it is lower than strict.
             var strict = new Dictionary<string, bool>();
             var broad = new Dictionary<string, bool>();
+            var shown = new Dictionary<string, bool>();
             // Keyed on each asset's final path, so a renamed asset counts once.
             List<string> finalPaths = ProducerReport.FinalPaths(b.AssetChanges);
             for (int k = 0; k < b.AssetChanges.Count; k++)
@@ -334,13 +338,16 @@ namespace ChangeLens.Editor
                 bool s = a.ObjectNames.Count > 0;
                 bool w = s || a.TypesTouched.Count > 0 || a.AddedTypes.Count > 0 ||
                          a.RemovedTypes.Count > 0 || a.FileAdded || a.FileDeleted;
+                bool n = a.ObjectNames.Exists(name => name != a.AssetName);
                 bool prior;
                 strict[key] = (strict.TryGetValue(key, out prior) && prior) || s;
                 broad[key] = (broad.TryGetValue(key, out prior) && prior) || w;
+                shown[key] = (shown.TryGetValue(key, out prior) && prior) || n;
             }
-            int strictCount = 0, broadCount = 0;
+            int strictCount = 0, broadCount = 0, shownCount = 0;
             foreach (bool v in strict.Values) if (v) strictCount++;
             foreach (bool v in broad.Values) if (v) broadCount++;
+            foreach (bool v in shown.Values) if (v) shownCount++;
 
             var sb = new StringBuilder();
             sb.AppendLine("# Deliverable 2 measures: " + b.Title);
@@ -351,6 +358,8 @@ namespace ChangeLens.Editor
                           strictCount + " of " + strict.Count + " — target 60%");
             sb.AppendLine("- Changed scenes/prefabs the page describes inside (object, component or add/delete): " +
                           broadCount + " of " + broad.Count);
+            sb.AppendLine("- Changed scenes/prefabs whose page entry names an object other than the asset itself: " +
+                          shownCount + " of " + shown.Count);
             return sb.ToString();
         }
     }

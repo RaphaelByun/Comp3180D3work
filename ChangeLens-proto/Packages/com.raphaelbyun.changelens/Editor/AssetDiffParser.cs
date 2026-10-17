@@ -495,7 +495,7 @@ namespace ChangeLens.Editor
                         int.TryParse(inner.Substring(i + 1, hexLength),
                                      System.Globalization.NumberStyles.AllowHexSpecifier,
                                      System.Globalization.CultureInfo.InvariantCulture, out code) &&
-                        (hexLength == 4 || (code <= 0x10FFFF && (code < 0xD800 || code > 0xDFFF))))
+                        (hexLength == 4 || (code >= 0 && code <= 0x10FFFF && (code < 0xD800 || code > 0xDFFF))))
                     {
                         // A four-digit escape is one UTF-16 unit, so a surrogate pair written as two escapes joins up.
                         sb.Append(hexLength == 4 ? ((char)code).ToString() : char.ConvertFromUtf32(code));

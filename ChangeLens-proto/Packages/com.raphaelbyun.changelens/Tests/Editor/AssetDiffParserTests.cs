@@ -166,6 +166,9 @@ namespace ChangeLens.Editor.Tests
             Assert.AreEqual("it's", AssetDiffParser.UnquoteYamlScalar("it's"));
             Assert.AreEqual("", AssetDiffParser.UnquoteYamlScalar("''"));
             Assert.AreEqual("\\q", AssetDiffParser.UnquoteYamlScalar("\"\\q\""));
+            // An eight-digit escape that parses as a negative int must not throw.
+            Assert.AreEqual("\\UFFFFFFFF", AssetDiffParser.UnquoteYamlScalar("\"\\UFFFFFFFF\""));
+            Assert.AreEqual("\\U80000000", AssetDiffParser.UnquoteYamlScalar("\"\\U80000000\""));
         }
 
         // The asset's own root name is not an object "other than the asset itself",

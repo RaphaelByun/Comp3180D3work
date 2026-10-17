@@ -43,5 +43,5 @@ deliverable-6/
     d1-task-outcomes.csv       (optional, for Table F)
     analysis-output.md
     figures/        (figures.js output: figure-time-confidence.svg and .png, tables.md)
-  analysis/   (this tool, unchanged)
+  analysis/   (analyse.js, figures.js, test.js, sample-*.csv and templates/: already in the repo, not created later)
 ```

@@ -1,8 +1,8 @@
 # Published sources — coded in place of the two interviews (DRAFT)
 
-Deliverable 1, "Interviews" part (2 hours in A2). Prepared 14 October 2026 by Claude Code for Raphael to check. Nothing here is committed.
+Deliverable 1, "Interviews" part (2 hours in A2). Prepared 14 October 2026 by Claude Code (AI) for Raphael to check. Committed on branch `deliverable-1-ux-study`; still a draft until Raphael accepts it.
 
-**Status.** Six published accounts were opened and read on 14 October 2026. The coding is a first pass for Raphael to accept, change or reject. One check is still his job: the pages were read through a fetch tool that returns extracts, not the raw page, so every quote below must be matched against the live page before it goes into the spec (see section 7). Section 6 was completed later on 14 October 2026 from the heuristic pass, including the three-point reconciliation in §6.1.
+**Status.** Six published accounts were opened and read on 14 October 2026. The coding is a first pass for Raphael to accept, change or reject. One check is still his job: the pages were read through a fetch tool that returns extracts, not the raw page, so every quote below must be matched against the live page before it goes into the spec (see section 7). Section 6 was completed later on 14 October 2026 from the heuristic pass, including the three-point reconciliation in §6.1. (Update, 15 October 2026: the live-page match was done and its corrections applied; see section 7. Raphael accepts it in CHECK-PACK Step 6.)
 
 ## 1. Method
 
@@ -222,7 +222,7 @@ Agreement worth stating in the spec, not counted as a disagreement: D5. The sour
 ## 7. What could not be verified, and what is missing
 
 - **Live-page check done, 15 October 2026.** All six URLs were opened. The fetch tool returns extracts, not raw HTML (I also pulled the raw HTML for P1, P4 and P6 with curl), so the check is a match against page text. Result: every quoted item matches the live page verbatim except two P5 wordings (items 1 and 2 below) and one P3 quote that is cut short (item 3). Paragraph numbers are unreliable: the fetch tool's own counts differed between two passes on P2 (for example the "accurate time logs" quote came back as ¶2 and then ¶3), so cite sections where the article has headings and drop ¶ numbers elsewhere.
-- **Corrections to apply in the coding tables (for the agent editing them; I have not edited them):**
+- **Corrections for the coding tables (all applied in section 3 on 15 October 2026):**
   1. **P5, Q4 row** (Sunday review meeting): the table quotes "to keep everyone informed" but the page says "keeping everyone clued into what was going on with the project". Quote the page wording, or leave it unquoted as a paraphrase.
   2. **P5, Q3 row** (hours): the row says "about 20 hours a week"; the page says "closer to 20 hours a week". The row is not in quotation marks, so only the wording needs aligning.
   3. **P3, Q4 / Q9 row** (gray box): the quote is cut off at "just three months"; the page sentence continues "after we started pre-production". Complete it, or keep the ellipsis and mark the cut.

@@ -170,4 +170,4 @@ Reviews are self-selected and many HacknPlan reviews date from 2017–2019; reco
 
 ## Sources
 
-Ads: fetched 15 October 2026 at the URLs in section 2 (A09 via the two mirrors named there) and 2.4. Reviews: URLs as listed in section 3, not retrievable (HTTP 403) on 15 October 2026; first located by web search on 12 October 2026.
+Ads: fetched 15 October 2026 at the URLs in section 2 (A09 via the two mirrors named there) and 2.4. Reviews: URLs as listed in section 3; first located by web search on 12 October 2026. The fetch tool was blocked (HTTP 403) on 15 October 2026. V1-V4 were verified in Chrome later on 15 October 2026; V5 was not found.

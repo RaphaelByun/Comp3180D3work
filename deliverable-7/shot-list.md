@@ -11,7 +11,7 @@ Status: plan only. Tick when captured. Record screens at 1920x1080, 30 fps; reco
 | S3 | 2 | "Fix restart bug (#588)" commit: 35 files in five categories (use the Appendix C table row or a `git show --stat` crop) | 10 s | Crop to the file list | [ ] |
 | S4 | 3 | Unity 6.4 Editor: Window > ChangeLens Producer Page; choose Frozen study week (`study/week1-2021-02-08`) or From repository (week starts `2021-02-08`, Days `7`); press Generate; the page fills in | 20 s | Deliverable 2 branch checked out; Unity at 125% scale; clean scene; do a dry run first (`TRY-CHANGELENS.md`) | [ ] |
 | S5 | 4 | Version A (baseline) selected in the Producer Page, scrolled: header, "Where the work went", commit list | 25 s | Same window and size as S6 | [ ] |
-| S6 | 5 | Flip to Version B (treatment) in the same window: same sections, then the scene and prefab names | 25 s | Same scroll speed as S5 so the eye compares | [ ] |
+| S6 | 5 | Flip to Version B (treatment) in the same window: same sections, then the scene and prefab names | 25 s | Same scroll speed as S5 so the eye compares. February B in the window carries the 17 Oct repairs and differs from the committed `report-B-treatment.md` readers saw in two rows (pepperspray; Wet Floor Sign listed once, so 25 scenes and prefabs, not 26). Keep the zoom on the airlock rows, which match; see "February Version B" in the storyboard rules | [ ] |
 | S7 | 5 | Flip A then B again, with the airlock prefab names highlighted | 12 s | Edit overlay | [ ] |
 | S8 | 6 | Result slide with the real figure | 20 s | After analysis only | [ ] |
 | S9 | 8 | Limits slide | 12 s | Four bullets maximum (the "changes to the project, not people" bullet is optional) | [ ] |

@@ -1,5 +1,7 @@
 # Day-of session checklist (45 minutes)
 
+**Status: not used (17 Oct 2026 decision).** Raphael decided on 17 Oct 2026 that there is no study with other people. He evaluates ChangeLens himself (`../self-evaluation-plan.md`). This file is kept only as the A2 plan record. Do not send, book or run anything from it.
+
 One copy per session. Print it. The timings are the A2 plan: 5 + 12 + 12 + 6 + 10 = 45.
 
 **Master document:** how a session runs (every word you say, the prods, the term replies, the three-follow-up selection rule, the counterbalancing sequences) is `deliverable-3/session-protocol.md`. This checklist only tells you where you are in that script and what to record. If the two ever differ, D3 wins; fix this file.

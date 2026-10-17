@@ -1,5 +1,7 @@
 # Recruitment message (general call-out, send Sat 17 or Sun 18 Oct 2026)
 
+**Status: not used (17 Oct 2026 decision).** Raphael decided on 17 Oct 2026 that there is no study with other people. He evaluates ChangeLens himself (`../self-evaluation-plan.md`). This file is kept only as the A2 plan record. Do not send, book or run anything from it.
+
 **Draft only, not Raphael's words.** Raphael rewrites it in his own voice before it goes anywhere. The facts in it (session length, what is recorded, dates) are checked against `deliverable-3/session-protocol.md` and `deliverable-3/participant-info-and-consent.md`; keep them if you change the wording.
 
 A2 planned to recruit at the Weeks 9 and 10 pracs. That has been replaced by one written call-out in the COMP3151 and COMP3180 channels this weekend (see the catch-up plan in `README.md`), plus the spoken version at a Week 11 class if a reminder is needed. Keep it short. Never pressure anyone; never promise marks, food or favours.

@@ -715,7 +715,14 @@ const inCodebook = c => Object.prototype.hasOwnProperty.call(KO_TYPES, c) || Obj
 function prepareCodes(codeRows) {
   const warnings = csvWarnings(codeRows).slice();
   const pilot = codeRows.filter(isPilot);
-  const rows = codeRows.filter(r => !isPilot(r));
+  // A blank participant cell (code typed only on a block's first row) could hide pilot rows, so those
+  // rows are named and left out until filled in. A sheet with no participant column at all is still read.
+  const blankP = codeRows.filter(r => !isPilot(r) && r.participant !== undefined && r.participant === '');
+  if (blankP.length) {
+    warnings.push(`WARNING: ${blankP.length} row(s) with a blank participant, left out until filled in: segment ${blankP.map(r => r.segment_id || '(blank)').join(', ')}. ` +
+      'Fill participant on every row: a blank row under a pilot row may be pilot data.');
+  }
+  const rows = codeRows.filter(r => !isPilot(r) && !blankP.includes(r));
   const by = {}, label = {}, count = {};
   const owners = {}, badPass = [];
   rows.forEach(r => {

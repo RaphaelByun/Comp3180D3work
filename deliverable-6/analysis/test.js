@@ -328,6 +328,19 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   hasNot('codebook: extra codes accepted', p1, '"none"');
   has('codebook: case and spaces read', p1, 'Agreement: 2/3 (67%)');
 }
+// 11g. Blank participant cells under a pilot row (reader code typed on a block's first row only).
+//      S01 P0 a2; S02, S03 blank a2; S04 R01 d1/d1; S05 blank d3. The pilot row is dropped, the three blank
+//      rows are named and left out, so only S04 is analysed: 1 segment, a2 never counted. Table 3 agrees.
+{
+  const rows = ['S01,P0,,,,a2,,,,,', 'S02,,,,,a2,,,,,', 'S03,,,,,a2,,,,,', 'S04,R01,,,,d1,,d1,,,', 'S05,,,,,d3,,,,,'];
+  const o = wide(rows);
+  has('blank participant: warning', o, 'WARNING: 3 row(s) with a blank participant, left out until filled in: segment S02, S03, S05.');
+  has('blank participant: pilot', o, 'Pilot rows excluded: 1.');
+  has('blank participant: segments', o, 'Segments with pass 1: 1. Re-coded in pass 2: 1');
+  hasNot('blank participant: a2 not counted', o, '| a2 ');
+  const F = require('./figures.js');
+  has('blank participant: table 3', F.table3(A.parseCSV([WIDE].concat(rows).join('\r\n'))), 'pilot excluded, 1 segments');
+}
 // 11e. Long layout (templates/think-aloud-codes.csv header), pass typed "pass 2" and "p1": read as 2 and 1.
 //      S01 1/2 a2/a2, S02 1/2 d1/d1: 2 segments, both re-coded, agreement 2/2, no warning.
 //      A pass of 3 is named with reader, segment and the raw value, and that row is left out.

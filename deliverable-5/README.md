@@ -13,7 +13,7 @@ A2 success measure (Deliverables table, row 5, 18 h, 4 in prac): **"Nine 45-minu
 | `session-checklist.md` | Day-of checklist, run of show pointing at the D3 scripts (which are the master for every spoken line, prod, term reply and the three-follow-up rule), after-session steps, what to do when things go wrong |
 | `think-aloud-coding-sheet.md` | Codebook with Ko et al.'s 21 information types (confirmed), extra codes, coding rules, and the pass 1 to pass 2 agreement procedure |
 | `think-aloud-coding-sheet.csv` | Header-only coding sheet (one row per utterance) |
-| `recode-sample.js` | Draws a seeded blind quarter for the re-code after a week, and merges pass 2 back in. Tested on a temporary fake sheet; no data kept |
+| `recode-sample.js` | Draws a seeded blind quarter for the re-code after a week, and merges pass 2 back in. It stops on a broken quote or a row with too many cells. Tested by `recode-sample.test.js` on made-up sheets in a temp folder; no data kept |
 
 ## Counterbalancing
 

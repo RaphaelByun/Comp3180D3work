@@ -6,9 +6,9 @@ Use this with two people who are not in your project, did not take part in the s
 
 ## How to run it (5 minutes each)
 
-1. Give them the rough cut with no introduction. Say only: "Please watch this video. It is 3 to 4 minutes. I will ask three questions afterwards."
+1. Give them the rough cut with no introduction. Say only: "Please watch this video. It is 3 to 4 minutes. I will ask five short questions afterwards."
 2. Do not pause, explain or hint while they watch.
-3. Hand them the form below (or read it out and write their words down exactly). Ask the three questions before telling them anything.
+3. Hand them the form below (or read it out and write their words down exactly). Ask all five questions before telling them anything. Only questions 1 to 3 are marked; questions 4 and 5 are unscored notes for fixing the cut.
 4. Mark pass or fail with the key. Then you may discuss.
 5. If either viewer fails, fix the video and test with a new viewer (the same person has seen it already).
 
@@ -44,6 +44,8 @@ Relationship to games: none / play games / study or work in games
 | 1 Purpose | It turns a week of changes in a game project into a short report, so someone can see what happened without reading code or relying on people to write it up | Only "a Unity tool", "a game", "a testing app", or a feature list with no sense of why |
 | 2 Reader | A game producer or project manager, or someone who does not code but needs to know what the team did | "Developers", "players", "everyone", or no answer |
 | 3 Both conditions | Notices there are two versions and that one names things (optional, supports the "both conditions" measure) | Not scored, but if neither viewer notices, beat 4 and 5 are too fast |
+
+Questions 4 and 5 are not scored. Use their answers to choose what to fix.
 
 Measure met when both viewers pass Q1 and Q2. Record the outcome as a count: "2 of 2 viewers stated both" (or "1 of 2, then fixed and retested with V3").
 

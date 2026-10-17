@@ -1,8 +1,10 @@
 # A3 Evaluation section: skeleton (about 1000 words)
 
-Status: skeleton only. No findings are written here, and none should be until the sessions are run and `analyse.js` has been run on the real CSVs. Every `[PLACEHOLDER]` says what evidence goes there. Delete this note and all placeholder text before submitting.
+Status: skeleton only, rewritten 17 Oct 2026 for the solo evaluation. No findings are written here, and none should be until SE1 to SE4 are run and `analyse.js` has been run on the real CSVs. Every `[PLACEHOLDER]` says what evidence goes there. Delete this note and all placeholder text before submitting.
 
-Word budget (template guide): RQ and opening about 60, Target Audience about 60, Method up to 200, Results and Discussion about 700. Only the 2500-word total for the whole report is penalised.
+The decision (17 Oct 2026, Raphael's): there is no study with other people. No recruitment, no live sessions, no online form. Raphael evaluates ChangeLens himself. His reasons, in his words: he doesn't want live testing, he has no time to arrange people, and testing it himself is "the best way for me to explain it myself to others if they are using it, and I am able to learn it as well." He accepted that this likely caps the Evaluation criterion near a Pass. The plan is `deliverable-5/self-evaluation-plan.md` on `deliverable-5-sessions` (SE1 to SE4).
+
+Word budget (plan section 6): opening and Target Audience about 120, Method up to 200, Results and Discussion about 700. Only the 2500-word total for the whole report is penalised.
 
 ---
 
@@ -12,51 +14,65 @@ Word budget (template guide): RQ and opening about 60, Target Audience about 60,
 
 > Which of a producer's information needs can be answered automatically from the artefacts a team already produces — and which can't?
 
-[PLACEHOLDER: one sentence saying the study tests it two ways, as in A2: Sub-question 1 (which artefact could supply each of ten needs; N readers sort them, N from the tracker) and Sub-question 2 (does naming the changed scenes and prefabs help a reader understand the week?). Add one sentence naming which of utility, usability or UX the study assesses; the template wants one named. Likely: utility of the report for the producer, with usability notes from the think-alouds.]
+[PLACEHOLDER: one sentence saying early and plainly that this is a one-reader evaluation by the developer, and that it can say what a ChangeLens page holds, checked against the git log, not what producers can do with it. Then the two sub-questions as now answerable (plan section 2): SQ1, which of the ten needs a page answers fully, partly or not at all on two unseen weeks; SQ2, which answers the scene and prefab names (Version B) added or changed, and at what cost in reading time. One clause naming what is assessed: utility (is the page true, which needs it answers), usability (the window, by walkthrough and heuristics) and a limited view of UX (one reader's time, confidence and ratings).]
 
 ### 3.1 Target Audience (about 60 words)
 
-[PLACEHOLDER: who the reader is (a game producer who plans and tracks work without opening the codebase) and why, in industry terms. Evidence: the job-advertisement result. A2 Appendix A had six of nine employers asking for progress reporting; replace it with the Deliverable 1 coded scan (ten ads, four verified reviews; review V5 was not verified and is not scored) if D1 finished. One clause on proxies: COMP3151 teammates briefed into the role, and what that gives up.]
+[PLACEHOLDER: who the reader is (a game producer who plans and tracks work without opening the codebase) and why, in industry terms. Evidence: the Deliverable 1 coded scan (ten ads, four verified reviews; review V5 was not verified and is not scored). One clause saying the evaluator is not this reader: he built the tool. The tasks are framed by a producer persona (SE3) and the D1 needs, not by producers themselves.]
 
 ### 3.2 Method (200 words or fewer)
 
-Word cap: the nine rows below share 200 words, about 22 each. Cut each row to one sentence and push the detail to the appendices (instruments to Appendix A, fidelity to Appendix F).
+Word cap: the nine rows below share 200 words, about 22 each. Cut each row to one sentence and push the detail to the appendices.
 
 | Part | What to say | Evidence source |
 |---|---|---|
-| Design | Within-subjects. Each reader reads two ChangeLens reports for different SS3D weeks, one with names (treatment, Version B) and one without (baseline, Version A). Week and order counterbalanced across four cells. | `deliverable-5/booking-tracker.csv` (cells), `study/*/report-A-baseline.md`, `report-B-treatment.md` |
-| Participants | [PLACEHOLDER: N readers analysed, how many producers and how many proxies, which classes recruited from, pilot excluded. Real numbers only, from the tracker.] | tracker, consent log |
-| Instruments | Six items per week scored against fixed answers (Endsley's three levels; item 6 is unanswerable); ten-need sheet; think-aloud prompt. Link to the appendices. One line on AI: the items, the item answer key and the ten-need key were drafted with Claude Code, and Raphael accepted or changed the keys before the sessions (give the date only once that is true). Point to the GenAI statement. | Appendix A; `deliverable-3/ten-need-sheet.md` (status line); GenAI statement |
-| Procedure | 45 minutes: 5 briefing and consent, 12 per report, 6 on the ten-need sheet, 10 think-aloud for six readers. [PLACEHOLDER: when and where the sessions ran, in prac or not, remote or on campus.] | session checklist |
-| Ethics | One or two sentences: voluntary, stop or withdraw at any time, a general call-out so classmates did not feel singled out, codes not names, written notes only. No ethics application (decided 17 Oct 2026). Give the basis as the Lecture 1 statement (27 Jul 2026): students have general clearance to run user studies under the student code of conduct, and should design around potential harms. Check the wording against the Week 1 lecture material before quoting it. | `deliverable-3/ethics/report-ethics-points.md` points 1 and 2; `COMP3180/Week 1/Lecture.md` (Lecture 1, 27 Jul 2026, transcript at 51:42) |
-| Fidelity check | One sentence: both weeks' reports were checked claim by claim against the diffs before any session; state the Deliverable 4 result (July: A and B pass. February: A 15 of 15; B 39 of 39 after the repair and re-score of six rows). Say who scored: an AI-assisted first pass, hand-checked by Raphael (only once that check is done). This check also covers ethics point 4: SS3D is real people's work, so a wrong summary would misreport them. State SS3D's licence once Raphael has checked the D2 licence note. | `FIDELITY-RESULT.md` and the scored files on `deliverable-4-fidelity-check` (Appendix F); `deliverable-3/ethics/report-ethics-points.md` point 4; `study/SOURCE-AND-LICENCE.md` on `deliverable-2-changelens` |
-| Scoring check | [PLACEHOLDER: who the second scorer was (not a participant), how many readers' sheets they re-scored (at least two, both reports), and the agreement as items in agreement out of items scored, items 1-5 and item 6 apart. Real numbers only.] | `analyse.js --scores2` output, section 1b; `deliverable-3/answer-key-and-scoring.md` (second-scorer check) |
-| Analysis | Item means with raw counts, treatment-minus-baseline difference per reader, per-week baseline scores, percentage agreement and per-reader Cohen's kappa against the ten-need key (call it your key only once you have accepted it), and think-aloud codes against Ko et al.'s (2007) 21 types with a quarter re-coded after a week. One line on AI: the analysis script was drafted with Claude Code; point to the GenAI statement. | `analysis/analyse.js` output; GenAI statement |
-| Deviations | [PLACEHOLDER: anything that changed from A2: fewer than eight readers, a reserve week used, a session shortened. Say it here; honesty is marked.] | diary, tracker notes |
+| Design | A solo evaluation in four parts (SE1 to SE4). SE2 is the core: two unseen reserve weeks (14 Dec 2020, RX; 27 Sep 2021, RY), both versions each, order switched between weeks and fixed before reading (RX: A then B; RY: B then A). First reads are compared only with each other. | Plan section 3; `study/reserve/*/report-A-baseline.md`, `report-B-treatment.md` on `deliverable-2-changelens` (frozen at `d9fa4bf`) |
+| Participant | One reader, the developer (Raphael). He built ChangeLens and is not its target reader. Say this here and again at the start of Results. [PLACEHOLDER: whether any reserve page was opened before SE2, from `seen_before`.] | `se2-reads.csv` (`seen_before`) |
+| Instruments | The ten-need sheet, answered from the page (a different task from A2's, where readers ticked whether the records could answer each need); [PLACEHOLDER: the six Endsley items per reserve week, only if they were written and sealed; else "the ten needs alone"]; a stand-up draft; a needs log coded to Ko et al.'s (2007) 21 types; the Wharton et al. (1994) walkthrough; Nielsen's (1994) heuristics on the D1 scale. One line on AI: the ten-need key [and the reserve items and their keys] were AI-drafted; Raphael accepted or changed the key on [PLACEHOLDER: date, only once true]. | Appendix A; `deliverable-3/ten-need-sheet.md` section B; plan section 5 |
+| Procedure | Per reserve week, one sitting of about 45 minutes: answers, confidence and lap times written and committed before the git log was opened, then scored against the git log. Commit times record order, not proof: one person controls the clock and the history. [PLACEHOLDER: dates of the sittings and of scoring.] | `se2-reads.csv`; git log of `deliverable-6/data/` |
+| Ethics | No participants, so points 1 and 2 of the ethics notes no longer apply; say that in one sentence. Point 3: ChangeLens reports changes to the project, not each person's output (SE4 task T2 records this as a design choice). Point 4: SS3D is real contributors' work, so every page used was checked against the diffs (Fidelity row); state SS3D's licence once checked. Point 5: AI use is declared in the GenAI statement. | `deliverable-3/ethics/report-ethics-points.md` points 3 to 5; `study/SOURCE-AND-LICENCE.md` on `deliverable-2-changelens` |
+| Fidelity check | One sentence: every page used was checked claim by claim against the diffs. AI scorers did the first pass (Deliverable 4); Raphael hand-checked [PLACEHOLDER: which rows, from Table A: at least every Version B row and every row an AI scorer marked C], and the reserve weeks only after SE2 was scored. State the result from Table A as counts. | Table A; `se1-fidelity-handcheck.csv`; scored files on `deliverable-4-fidelity-check` (Appendix F) |
+| Scoring check | [PLACEHOLDER: either "an AI second scorer, blind to Raphael's scores, re-scored the SE2 answers: x of n need answers and x of n item answers agreed" (from the scoring check), or "there was no second scorer". Real numbers only. Item keys sealed by SHA-256 hash before SE2, only if that was done.] | `analyse.js` scoring check; `se2-second-scorer.csv`; plan section 5 (hash) |
+| Analysis | Raw counts only, no p-values. Needs answered correctly per read; the key's R/U class against what the page gave, checked against the git log (Table C), with Cohen's (1960) kappa as indicative only; needs-log types with pass 1 against pass 2 as x of n. One line on AI: the analysis tools were drafted with Claude Code; point to the GenAI statement. | `analysis/analyse.js` output (Appendix E); GenAI statement |
+| Deviations | Every change from A2 is a variance: no readers, pilot, think-alouds or counterbalanced sequences (17 Oct decision); the ten needs answered rather than classified; the stand-up and needs log written alone, not spoken; the fidelity hand-check limited to [PLACEHOLDER: the rows done]. [PLACEHOLDER: anything else that slipped, such as no reserve items or no second scorer.] | Plan sections 1 and 3; diary |
 
 ### 3.3 Results and Discussion (about 700 words)
 
-Plan the 700 words as five short blocks, each with one piece of integrated evidence. Lead with the answer to the research question, then the evidence.
+Plan the 700 words as five short blocks and a close (plan section 6: about 350 on SE2, 80 on SE1, 150 on SE3 and SE4 together, 120 on limits). Open with the one-reader statement, lead with the answer to the research question, then the evidence. Raw counts first; no percentage without its count beside it.
 
-1. **Answer first** (about 80 words). [PLACEHOLDER: one or two sentences answering the RQ in plain words: which needs the artefacts could supply, which they could not, and whether the names helped. Write it last, from the numbers.]
+1. **Answer first, and is the page true?** (about 120 words). [PLACEHOLDER: start with "one reader, the developer". Then one or two sentences answering the RQ for this reader: which of the ten needs the page answered and which it could not, and whether the names (Version B) changed any answer. Write it last, from Tables B and C. Then the SE1 result as a precondition, from Table A: rows hand-checked, supported and contradicted per week and version, and agreement with the AI scorers as x of n. An answer from a wrong page is no answer.]
 
-2. **Sub-question 1: ten-need sheet** (about 180 words). Evidence: Table 1, the ten-need key (D / P / N) beside the count of readers who matched it for each need. [PLACEHOLDER: agreement as a raw count per reader (for example "7 of 10"), the per-reader kappa range, and the needs where readers departed from the key. Each departure is a finding about what the artefacts cannot say; name two or three.] Limit to state: over ten items these are indicative, not inferential, and kappa swings widely.
+2. **SQ1: which needs the page answers** (about 160 words). Evidence: Table B (ten needs by read, C / PC / W / NA, beside the key's R/U class and what the git log could answer) and Table C (key against observed, first reads only). [PLACEHOLDER: needs answered correctly on each first read as x of 10; the needs where the observed class departed from the key, and whether the gap is in the page (log against observed) or in the key (key against log); wrong answers by cause (misread, overclaim, page-wrong).] Limits to state: ten needs on two thin weeks (3 changes by 2 people; 2 changes by 1 person); kappa over ten needs is unstable; the key was known in advance, which favours agreement.
 
-3. **Sub-question 2: comprehension items** (about 220 words). Evidence: Figure 5, each reader's treatment-minus-baseline difference over the five scored items (a dot plot, one dot per reader, producers and proxies marked differently), Table 2, full-mark counts per item by condition and by week, and Table 2b, item 6 codes per version. [PLACEHOLDER: how many readers scored higher, the same and lower with names; which items moved (watch the Level 3 item about what to test next); item 6, how many over-claimed from the page.] Limits to state: N readers (N from the tracker) show direction and failure points, not significance; proxies strip a real producer's context, so the difference is an upper bound.
+3. **SQ2: what the names added, and what they cost** (about 110 words). Evidence: the time-and-confidence figure (Figure 5) and the `only_in_b` count in Table B [and Table D, if items exist]. [PLACEHOLDER: answers that needed a line only Version B has; minutes per read (first reads compared only with each other); how many wrong answers came at confidence 4 or 5.] Limits to state: RX-A against RY-B mixes version with week; second reads are never clean; one reader.
 
-4. **Rival explanation: week difficulty** (about 60 words). Evidence: per-week baseline scores from `analyse.js`. [PLACEHOLDER: baseline means for each week and the gap; say whether the gap is smaller or larger than the treatment difference.]
+4. **Usability of the window and the page** (about 130 words). Evidence: Table F (ChangeLens problems by severity beside the four D1 tools, and T1 to T7 outcomes), with one line from Table E (walkthrough failures by question). [PLACEHOLDER: the severity 3 and 4 problems, if any, by heuristic; where a first-time producer would get lost (CW task and question); how ChangeLens sits beside the D1 tools on the tasks a producer tool is asked to do. Use D1 ratings only for findings Raphael has checked, and say which.] Limits to state: one evaluator who built the tool (Nielsen & Molich, 1990; Hertzum & Jacobsen, 2001); D1's pass was an AI evaluator, so the comparison also changes evaluator.
 
-5. **Think-aloud: what the page leaves a reader needing** (about 160 words). Evidence: Table 3, counts of coded segments by Ko et al. information type, and two or three short quotes. [PLACEHOLDER: the types coded most often; whether the unmet needs point to "why" and rationale (Whitson's opacity prediction) or to who and when; coding agreement between passes as a raw count and kappa, with the size of the re-coded sample.] Limit to state: a quarter re-coded is a small sample.
+5. **What the page left unmet** (about 80 words). Evidence: Table G (needs-log entries by Ko et al. type), and the stand-up claims and ratings from Table H in one line. [PLACEHOLDER: the types logged most often; whether the unmet needs point to "why" and rationale (Whitson's opacity prediction) or to who and when; pass 1 against pass 2 as x of n.] Limit to state: typed notes from one reader, not spoken comments from several.
 
-Close (about 40 words). [PLACEHOLDER: one sentence on what this means for the tool (utility) and one on the biggest limit of the study.]
+Close and limits (about 100 words; the other limits sit in the blocks above). [PLACEHOLDER: one sentence on what this means for the tool (utility), and one on the biggest limit: n = 1, and the reader is the developer. Name familiarity as a bias that favours the tool. If citing Neustaedter and Sengers (2012), cite it only for learning through use, say that Raphael is not ChangeLens's user, and call the study a variance from A2, not autobiographical design.]
 
-### Figures and tables to prepare (integrate them in the text, not only in appendices; `analysis/figures.js` builds the plot and Tables 1 to 3)
+### Limitations to state (plan section 7; one clause each, most in the blocks above)
 
-- Figure 5: paired differences per reader. The number follows the report-wide list in `deliverable-7/README.md`, where Figure 1 is the code-share chart and Figures 2 to 4 are the video stills. Run `figures.js` with `--figure 5` so the plot's title matches; its files are still named `figure-1-paired-differences.*`.
-- Table 1: ten needs, key, readers matching.
-- Table 2: item full-mark counts by condition and by week within condition.
-- Table 2b: item 6 Pass / Hedged / Over-claim counts per version.
-- Table 3: think-aloud segment counts by information type (final code after resolution, else pass 1).
+- n = 1: "one reader; the results show what the page can hold and where it fails, not how producers would do."
+- The reader is the developer, not the target audience. This is why the Pass band is expected.
+- Familiarity with the tool: "I knew the tool, not the weeks." A bias that favours the tool.
+- Order effect: first and second reads reported apart; the A-against-B comparison mixes version with week.
+- Self-scoring: scored against the git log; the second-scorer agreement as x of n, or "there was none".
+- Single evaluator for SE3 and SE4, who built the tool; D1's pass was an AI evaluator.
+- Key known in advance (anchoring): a bias that favours agreement.
+- Thin reserve weeks; reserve weeks not matched to the D3 study weeks.
+- SE2 read the Markdown page, not the Producer Page window; SE3 tested the window.
+- The ten-need key was AI-drafted: call it Raphael's only after the date he accepted it.
+
+### Figures and tables to prepare (integrate them in the text, not only in appendices; `analysis/figures.js` builds the figure and Tables B, C, F and G)
+
+- Figure 5: time and confidence (minutes per read; need answers by confidence and git-log result). It replaces the A2 paired-differences plot. The number follows the report-wide list in `deliverable-7/README.md`, where Figure 1 is the code-share chart and Figures 2 to 4 are the video stills. Run `figures.js` with `--figure 5` so the title matches.
+- Table B: ten needs by read, with the per-read counts under it.
+- Table C: key against observed, first reads only, with agreement per week.
+- Table F: heuristic problems by severity, ChangeLens beside the D1 tools; T1 to T7 outcomes.
+- Table G: needs-log entries by Ko et al. information type.
+- Tables A, D, E and H go to the appendices unless a block needs one line from them.
 - Optional: the two report versions side by side (reuse the video still).
 
 ### Traps to check before submitting
@@ -64,5 +80,5 @@ Close (about 40 words). [PLACEHOLDER: one sentence on what this means for the to
 - Raw counts before percentages; no percentage from small n without the count beside it (the A2 marker's note).
 - RQ stated first, in the exact A2 words.
 - Each claim traceable to an appendix (A to G in `appendix-plan.md`).
-- Participants de-identified (reader codes R01 onward and P0 for the pilot only).
-- The Evaluation must be a conducted study, not self-assessment: say plainly it had human readers.
+- No result written in Raphael's voice by anyone else; every number from the CSVs.
+- The Evaluation must be a conducted study, not self-assessment: say plainly it had one reader, the developer. Never call it a user study.

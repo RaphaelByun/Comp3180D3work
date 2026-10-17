@@ -12,7 +12,7 @@ A2 success measure (Deliverables table, row 6, 6 h, 1 in prac): **"All six items
 | `appendix-plan.md` | Appendices A to G for raw data, with source files and rules |
 | `analysis/analyse.js` | Node tool (no dependencies). Reads CSVs, prints a Markdown report |
 | `analysis/figures.js` | Node tool (no dependencies). Same CSVs; writes the paired-differences plot (SVG dot plot, plus a PNG copy for Word, of each reader's difference, producers as filled circles, proxies as hollow squares) and Tables 1, 2, 2b and 3 as Markdown. The plot is Figure 5 in the report (numbering list in `deliverable-7/README.md`); give `--figure 5` so its title says so |
-| `analysis/test.js` | 203 checks against hand-computed values, for both tools. Run `node deliverable-6/analysis/test.js` from the repo root. Result on 17 Oct: 203 passed, 0 failed. The PNG render check is skipped when no Chrome or Edge is found |
+| `analysis/test.js` | 273 checks against hand-computed values, for both tools. Run `node deliverable-6/analysis/test.js` from the repo root. Result on 17 Oct: 273 passed, 0 failed. The PNG render check is skipped when no Chrome or Edge is found |
 | `analysis/sample-*.csv` | **FAKE** data (4 invented readers and a pilot row) so you can see the output. Labelled FAKE inside each file and in the tool's banner |
 | `analysis/templates/*.csv` | Header-only files to copy into `deliverable-6/data/` and fill |
 

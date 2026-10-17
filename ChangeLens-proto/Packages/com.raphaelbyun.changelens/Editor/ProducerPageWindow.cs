@@ -135,7 +135,7 @@ namespace ChangeLens.Editor
                 if (!string.IsNullOrEmpty(chosen)) { _frozenFolder = chosen; GUI.FocusControl(null); }
             }
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.LabelField("e.g. study/week2-2021-07-19 in the project repository", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField("e.g. study/week2-2021-07-19 (the study folder is one level above the Unity project)", EditorStyles.miniLabel);
         }
 
         // -------------------------------------------------------------------
@@ -200,14 +200,14 @@ namespace ChangeLens.Editor
 
         private void GenerateFromFrozen()
         {
-            string exportFolder = Path.Combine(_frozenFolder, "export");
-            if (!File.Exists(Path.Combine(exportFolder, WeekExport.LogFile)))
+            string studyFolder = WeekExport.FindStudyFolder(_frozenFolder, Directory.GetCurrentDirectory());
+            if (studyFolder == null)
             {
                 Fail("No export/" + WeekExport.LogFile + " inside:\n" + _frozenFolder);
                 return;
             }
-            _export = WeekExport.FromFolder(exportFolder);
-            _title = TitleFromSavedReport(_frozenFolder) ?? Path.GetFileName(_frozenFolder.TrimEnd('/', '\\'));
+            _export = WeekExport.FromFolder(Path.Combine(studyFolder, "export"));
+            _title = TitleFromSavedReport(studyFolder) ?? Path.GetFileName(studyFolder.TrimEnd('/', '\\'));
             EditorPrefs.SetString(FrozenKey, _frozenFolder);
             BuildReports();
         }

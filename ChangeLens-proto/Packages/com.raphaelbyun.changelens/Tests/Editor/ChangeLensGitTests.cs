@@ -78,5 +78,32 @@ namespace ChangeLens.Editor.Tests
             Assert.AreEqual("2.weeks.ago", WeekExport.DateBound("2.weeks.ago"));
             Assert.AreEqual("", WeekExport.DateBound(null));
         }
+
+        // Unity runs in ChangeLens-proto, and study/ sits one level up, so the
+        // hinted "study/week2-2021-07-19" has to be found from the parent too.
+        [Test]
+        public void StudyFolder_TypedRelativePath_IsFoundFromTheRepositoryRoot()
+        {
+            string root = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "cl-study-" + System.Guid.NewGuid().ToString("N"));
+            string project = System.IO.Path.Combine(root, "ChangeLens-proto");
+            string week = System.IO.Path.Combine(root, "study", "week2-2021-07-19");
+            try
+            {
+                System.IO.Directory.CreateDirectory(project);
+                System.IO.Directory.CreateDirectory(System.IO.Path.Combine(week, "export"));
+                System.IO.File.WriteAllText(System.IO.Path.Combine(week, "export", WeekExport.LogFile), "");
+
+                string full = System.IO.Path.GetFullPath(week);
+                Assert.AreEqual(full, WeekExport.FindStudyFolder("study/week2-2021-07-19", project));
+                Assert.AreEqual(full, WeekExport.FindStudyFolder("study/week2-2021-07-19", root));
+                Assert.AreEqual(week, WeekExport.FindStudyFolder(week, project));
+                Assert.IsNull(WeekExport.FindStudyFolder("study/week9", project));
+                Assert.IsNull(WeekExport.FindStudyFolder(" ", project));
+            }
+            finally
+            {
+                if (System.IO.Directory.Exists(root)) System.IO.Directory.Delete(root, true);
+            }
+        }
     }
 }

@@ -300,6 +300,26 @@ namespace ChangeLens.Editor
             return dateOnly ? trimmed + "T00:00:00+0000" : trimmed;
         }
 
+        /// <summary>
+        /// The study week folder the user typed, as a folder that holds export/log.txt,
+        /// or null. Unity runs in the ChangeLens-proto folder, but study/ sits one level
+        /// up at the repository root, so a relative path is also tried from there.
+        /// </summary>
+        public static string FindStudyFolder(string folder, string workingDirectory)
+        {
+            if (string.IsNullOrWhiteSpace(folder)) return null;
+            folder = folder.Trim();
+            var candidates = new List<string> { folder };
+            if (!Path.IsPathRooted(folder))
+            {
+                candidates[0] = Path.GetFullPath(Path.Combine(workingDirectory, folder));
+                candidates.Add(Path.GetFullPath(Path.Combine(workingDirectory, "..", folder)));
+            }
+            foreach (string candidate in candidates)
+                if (File.Exists(Path.Combine(candidate, "export", LogFile))) return candidate;
+            return null;
+        }
+
         public static WeekExport FromFolder(string folder)
         {
             return new WeekExport

@@ -40,6 +40,7 @@
 - [What did the fidelity failure teach you about trusting the tool's output?]
 - I passed the heuristic pass to Claude because it is a testing task. I know it is meant to be a human test: which tool is easy or hard to use, and whether it is harder for programmers or producers. Those are the questions to ask, and I found I got a better list of questions from Claude and could answer them. [Optional: what did it cost? For example, one AI evaluator instead of me, and the 16 severity 3–4 findings still need my hand-check.]
 - [Why five readers? Why the ethics decision?]
+- [17 Oct: why did you decide to evaluate ChangeLens yourself, with no study with other people? Explain it in your own words (your reasons are quoted in `fact-log-weeks-9-10.md` section 4), and what you expect to lose and to learn.]
 
 **Prac:** [attended Y/N; who you spoke to]
 

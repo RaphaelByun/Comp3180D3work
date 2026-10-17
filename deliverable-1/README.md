@@ -62,7 +62,7 @@ A2 planned 600 minutes for D1. After the AI work on 14 and 15 October, about 177
 | 7 | Accept or change the seven recodes and the cap of 2 | published-sources.md §3, §5 | 10 | Sources |
 | 8 | Accept or rewrite the three-point reconciliation | published-sources.md §6.1 | 10 | Sources |
 | 9 | ~~Confirm with the convenor that coding public sources needs no ethics approval~~ Dropped 17 Oct 2026: no ethics application or convenor email (`deliverable-3/README.md`) | — | 0 | Sources |
-| 10 | Accept the six Ko et al. changes (four misstatements, one figure citation, three softer readings kept with a note) | needs-catalogue.md §1 | 5 | Needs (3 h) |
+| 10 | Accept the six Ko et al. changes (items 1 to 4 correct misstatements, item 5 the figure citation, item 6 a note on three softer readings) | needs-catalogue.md §1 | 5 | Needs (3 h) |
 | 11 | Accept or change the merges, additions and rewordings | needs-catalogue.md §3, §7 | 10 | Needs |
 | 12 | Accept or change the 75 marks and the three rejected-artefact cases (N07, N10, N27) | needs-catalogue.md §3, §3.1 | 20 | Needs |
 | 13 | Accept the UXF week and six verdicts | needs-catalogue.md §4 | 5 | Needs |

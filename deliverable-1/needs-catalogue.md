@@ -264,7 +264,7 @@ Considered and kept: N03 and N15 at T = D (see §4); N01 at R = D, accepting tha
 
 All AI-drafted on 15 October 2026. Mark each "accepted" or write the change.
 
-1. §1: the six changes to the Ko et al. adaptation, items 1 to 6 of the step 10 check log (four misstatements: c2, c3, a3, d2; the Figure 4 citation; three softer readings kept with a note).
+1. §1: the six changes to the Ko et al. adaptation, items 1 to 6 of the step 10 check log (items 1 to 4 correct misstatements: c2, c3, a3, d2; item 5 the Figure 4 citation; item 6 a note on three softer readings).
 2. §3: the two merges (N05 + N06, N12 + N13), the two additions (N26, N27), folding NEW-3 into N14, and the rewordings.
 3. §3: every T / R / U × D / P / N mark (75 cells), and the definition of D and P in §2. In particular N20 R = P (changed), N03 and N15 T = D (kept), N01 R = D (kept).
 4. §3.1: the three rejected-artefact cases N07, N10, N27.

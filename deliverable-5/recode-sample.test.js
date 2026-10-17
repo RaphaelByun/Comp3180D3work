@@ -96,5 +96,36 @@ test('a segment_id on two rows stops draw and merge and leaves the sheet alone',
   assert.strictEqual(fs.readFileSync(dup, 'utf8'), text);
 });
 
+// Solo use (17 Oct 2026 decision): the SE2 needs log has one participant, SELF, and read ids as report_condition.
+const solo = path.join(tmp, 'se2-needs-log.csv');
+const soloRows = [];
+for (let i = 1; i <= 9; i++) soloRows.push(`N${String(i).padStart(2, '0')},SELF,10:0${i},${i <= 5 ? 'RX-A1' : 'RY-B1'},made-up need ${i},a2,2026-10-22,,,,`);
+fs.writeFileSync(solo, HEAD + '\r\n' + soloRows.join('\r\n') + '\r\n');
+const soloBlind = path.join(tmp, 'solo-blind.csv');
+
+test('draw keeps SELF rows and takes a quarter (rounded up) of one participant\'s 9 rows', () => {
+  const r = run(['draw', '--in', solo, '--out', soloBlind, '--seed', '2026']);
+  assert.strictEqual(r.code, 0, r.out);
+  assert.match(r.out, /pilot excluded\): 9\. Drew 3/);
+  const b = parse(fs.readFileSync(soloBlind, 'utf8'));
+  assert.strictEqual(b.rows.length, 3);
+  assert.ok(b.rows.every(x => x.participant === 'SELF'));
+});
+
+test('agree refuses before a merge, then prints x of n after one', () => {
+  const before = run(['agree', '--in', solo]);
+  assert.notStrictEqual(before.code, 0);
+  assert.match(before.out, /Run merge first/);
+  const b = parse(fs.readFileSync(soloBlind, 'utf8'));
+  b.rows.forEach((x, i) => { x.pass2_code = i === 0 ? 'd3' : 'A2'; });
+  fs.writeFileSync(soloBlind, require('./recode-sample.js').serialise(b.head, b.rows));
+  const m = run(['merge', '--in', solo, '--blind', soloBlind, '--out', solo]);
+  assert.strictEqual(m.code, 0, m.out);
+  const a = run(['agree', '--in', solo]);
+  assert.strictEqual(a.code, 0, a.out);
+  assert.match(a.out, /2 of 3 re-coded segments matched\./);
+  assert.match(a.out, new RegExp('Differ: ' + b.rows[0].segment_id + '\\.'));
+});
+
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log(`${passed} tests passed.`);

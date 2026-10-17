@@ -1,17 +1,21 @@
 #!/usr/bin/env node
 'use strict';
 /*
- * Blind re-code helper for the think-aloud coding sheet (A2: "a quarter is re-coded after a week").
+ * Blind re-code helper for a coding sheet in the D5 layout (A2: "a quarter is re-coded after a week").
+ * Since the 17 Oct 2026 decision it is used on the SE2 needs log (participant SELF), not on think-alouds.
  *
- *   Draw a sample:  node recode-sample.js draw  --in think-aloud-coding-sheet.csv --out recode-blind.csv [--seed 2026] [--share 0.25]
- *   Merge it back:  node recode-sample.js merge --in think-aloud-coding-sheet.csv --blind recode-blind.csv --out think-aloud-coding-sheet.csv
+ *   Draw a sample:  node recode-sample.js draw  --in se2-needs-log.csv --out recode-blind.csv [--seed 2026] [--share 0.25]
+ *   Merge it back:  node recode-sample.js merge --in se2-needs-log.csv --blind recode-blind.csv --out se2-needs-log.csv
+ *   Agreement:      node recode-sample.js agree --in se2-needs-log.csv
  *
- * draw  picks a seeded random quarter (rounded up) of the pass-1 coded segments, pilot excluded,
- *       and writes them WITHOUT the pass-1 codes, so pass 2 is blind to pass 1.
+ * draw  picks a seeded random quarter (rounded up) of the pass-1 coded segments, pilot rows (P01 etc.) excluded,
+ *       and writes them WITHOUT the pass-1 codes, so pass 2 is blind to pass 1. SELF rows are kept.
  * merge copies the pass-2 codes you filled in back into the main sheet (column pass2_code).
  *       If --out is the same file as --in, the old sheet is kept as <in>.bak first.
  *       It writes nothing if the merged sheet would not keep the same rows and pass-1 codes.
- * Both stop with an error on an unclosed quote, a row with more cells than the header,
+ * agree prints pass 1 against pass 2 as "x of n re-coded segments matched" (raw count only, no kappa;
+ *       plan section 6, Table G). It changes nothing.
+ * All three stop with an error on an unclosed quote, a row with more cells than the header,
  *       or a segment_id used on more than one row (split rows need their own id, e.g. S05b).
  * The seed and sample size are printed: write them in the diary and in Appendix D.
  */
@@ -92,6 +96,13 @@ function merge(main, blind) {
   return { text, n };
 }
 
+// Pass 1 against pass 2 on the rows that have both codes. Codes compare in lower case, trimmed.
+function agree(rows) {
+  const both = rows.filter(r => r.pass1_code && r.pass2_code);
+  const same = both.filter(r => r.pass1_code.toLowerCase() === r.pass2_code.toLowerCase());
+  return { n: both.length, x: same.length, differ: both.filter(r => !same.includes(r)).map(r => r.segment_id) };
+}
+
 if (require.main === module) {
   try {
     const o = opts(process.argv.slice(2));
@@ -114,6 +125,13 @@ if (require.main === module) {
       }
       fs.writeFileSync(o.out, text);
       console.log(`Merged ${n} pass-2 codes into ${o.out}. Pass-1 codes were not touched.`);
+    } else if (o._ === 'agree' && o.in) {
+      const { rows } = parse(fs.readFileSync(o.in, 'utf8'));
+      checkIds(rows, o.in);
+      const { n, x, differ } = agree(rows);
+      if (!n) { console.log('No row has both a pass-1 and a pass-2 code yet. Run merge first.'); process.exit(1); }
+      console.log(`${x} of ${n} re-coded segments matched.`);
+      if (differ.length) console.log(`Differ: ${differ.join(', ')}. Resolve each in final_code and resolution_rule.`);
     } else {
       console.log('Usage: see the comment at the top of this file.');
       process.exit(1);
@@ -123,4 +141,4 @@ if (require.main === module) {
     process.exit(1);
   }
 }
-module.exports = { draw, merge, parse, serialise, mulberry32, checkIds };
+module.exports = { draw, merge, agree, parse, serialise, mulberry32, checkIds };

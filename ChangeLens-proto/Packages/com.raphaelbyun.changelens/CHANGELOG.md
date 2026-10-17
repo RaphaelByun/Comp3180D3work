@@ -5,11 +5,11 @@ Built from the repository's commit history. Hashes are on the `deliverable-2-cha
 ## Unreleased (A3 committed tier)
 
 ### 17 October 2026
-- A merge row now lists who wrote the work it brought in and up to five of their changes, and the header counts those people. Before, a week where main was merged into a branch and then fast-forwarded showed everyone else's work as one merge row credited to the person who merged.
-- A script deleted during the week is named. The guid table is also read just before the week's oldest commit.
-- Every git call pins the settings the parsers read (diff prefixes, grep line numbers, log layout, colour), so a user's own git config cannot change the page.
-- An asset edited and then renamed or moved in the same week is listed and counted once, under its final path.
-- The fidelity checklist tells the scorer to open a commit with `git show --diff-merges=first-parent`, which shows a merge's files. The frozen study checklists keep the old line; their weeks have no merges.
+- A merge row now lists who wrote the work it brought in and up to five of their changes, and the header counts those people. Before, a week where main was merged into a branch and then fast-forwarded showed everyone else's work as one merge row credited to the person who merged (`038551b`).
+- A script deleted during the week is named. The guid table is also read just before the week's oldest commit (`038551b`).
+- Every git call pins the settings the parsers read (diff prefixes, grep line numbers, log layout, colour), so a user's own git config cannot change the page (`038551b`).
+- An asset edited and then renamed or moved in the same week is listed and counted once, under its final path (`038551b`).
+- The fidelity checklist tells the scorer to open a commit with `git show --diff-merges=first-parent`, which shows a merge's files. The frozen study checklists keep the old line; their weeks have no merges (`038551b`).
 - A scene or prefab moved or renamed with no content change now says where it came from, not "changed (0 lines)" (`4d33ce7`).
 - Paths are read from git's `rename to`, `+++ b/` and `--- a/` lines, so a folder whose name ends in " b" is no longer cut short (`4d33ce7`).
 - Git's quoted paths (for example non-ASCII file names) are unquoted in both parsers (`4d33ce7`).

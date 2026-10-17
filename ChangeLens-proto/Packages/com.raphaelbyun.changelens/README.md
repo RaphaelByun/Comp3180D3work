@@ -26,8 +26,18 @@ How the A2 prototype window works is in `prototype/HOW-IT-WORKS.md`.
 
 | Folder | What it holds |
 | --- | --- |
-| `Editor/` | The package code. The parsers and report builders are plain C# with no UnityEditor use, so the .NET harness can test them. |
+| `Editor/` | The package code. The parsers and report builders are plain C# with no UnityEditor use, so the .NET harness can test them. It also holds the three helper scripts listed below. |
 | `Tests/Editor/` | EditMode tests (NUnit). |
 | `Samples~/` | Sample SS3D week exports and reports from the A2 prototype. |
+
+### Helper scripts in `Editor/`
+
+These are not part of the tool. None of them runs unless Unity is started with `-executeMethod` naming it. Each one closes Unity when it finishes (`EditorApplication.Exit`).
+
+| File | What it is |
+| --- | --- |
+| `BatchTools.cs` | Headless entry points, set up with environment variables. `ExportReport` writes the A2 prototype report from a log export (`CHANGELENS_SAMPLE`, `CHANGELENS_REPORT_OUT`). `ExportStudyWeek` writes a study week from a repository (`CHANGELENS_REPO`, `CHANGELENS_SINCE`, `CHANGELENS_UNTIL`, `CHANGELENS_OUT`, `CHANGELENS_TITLE`). `BuildAndReport` builds an empty scene and writes Unity's BuildReport summary (`CHANGELENS_BUILDREPORT_OUT`); it was the A2 BuildReport probe. |
+| `ScreenshotBootstrap.cs` | One-off figure tool. It took the two A2 proposal screenshots of the prototype window. Kept as a record of how those figures were made. |
+| `DockedScreenshotBootstrap.cs` | One-off figure tool. It took the A2 Figure 2 capture with the window docked in the Editor. Kept as a record of how that figure was made. |
 
 Changes are listed in `CHANGELOG.md`.

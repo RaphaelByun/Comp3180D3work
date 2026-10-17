@@ -110,6 +110,7 @@ namespace ChangeLens.Editor
             // a '-' line belongs to the last '-' header and a '+' line to the last
             // '+' header; a context header starts a new block on both sides.
             Block removedBlock = null, addedBlock = null;
+            int oldLine = 0, newLine = 0; // the next line number on each side of the hunk
 
             foreach (string line in lines)
             {
@@ -161,11 +162,16 @@ namespace ChangeLens.Editor
                 if (line.StartsWith("@@", StringComparison.Ordinal))
                 {
                     inHunk = true;
-                    removedBlock = addedBlock = null;
                     // "@@ -163,7 +163,7 @@ AudioSource:" -> "AudioSource"
                     int close = line.IndexOf("@@", 2, StringComparison.Ordinal);
                     string context = close >= 0 ? line.Substring(close + 2).Trim() : "";
                     currentType = TypeFromKeyLine(context) ?? "";
+                    int nextOld, nextNew;
+                    HunkStarts(line, out nextOld, out nextNew);
+                    removedBlock = StillOpen(removedBlock, currentType, nextOld);
+                    addedBlock = StillOpen(addedBlock, currentType, nextNew);
+                    oldLine = nextOld;
+                    newLine = nextNew;
                     continue;
                 }
 
@@ -177,6 +183,11 @@ namespace ChangeLens.Editor
                 if (sign != '+' && sign != '-' && sign != ' ') continue; // "\ No newline..." etc.
                 string body = line.Substring(1);
 
+                // This line's number on its own side of the diff.
+                int lineNo = sign == '+' ? newLine : oldLine;
+                if (sign != '+') oldLine++;
+                if (sign != '-') newLine++;
+
                 // A block header: "--- !u!114 &-809169823751194735".
                 if (body.StartsWith("--- !u!", StringComparison.Ordinal))
                 {
@@ -186,6 +197,7 @@ namespace ChangeLens.Editor
                     {
                         Id = BlockIdOf(body),
                         Sign = sign,
+                        HeaderLine = lineNo,
                         Stripped = body.TrimEnd().EndsWith(" stripped", StringComparison.Ordinal)
                     };
                     if (opened != null) blocks.Add(opened);
@@ -271,11 +283,52 @@ namespace ChangeLens.Editor
         {
             public string Id = "";
             public char Sign;
+            public int HeaderLine; // line number of the "--- !u!" header on its own side
             public string Type;
             public string ScriptGuid;
             public bool Stripped;
             public readonly System.Text.StringBuilder Body = new System.Text.StringBuilder();
             public readonly List<string> Names = new List<string>();
+        }
+
+        /// <summary>
+        /// Unity writes a script component's m_Script line nine lines below its
+        /// "--- !u!114" header (MonoBehaviour:, then seven fixed fields).
+        /// </summary>
+        private const int ScriptLineOffset = 9;
+
+        /// <summary>
+        /// Whether a wholly added or removed block carries on into the next hunk.
+        /// Git can split one block across two hunks: pepperspray (#604) changed a
+        /// script component's id in one hunk and its m_Script line in the next, so
+        /// the swapped script was lost. A block stays open only when it is a
+        /// script component still waiting for its m_Script line, the next hunk
+        /// is inside a MonoBehaviour, and that hunk starts before the block's
+        /// m_Script line would be, so no other block can start in the gap.
+        /// </summary>
+        private static Block StillOpen(Block block, string hunkType, int nextStart)
+        {
+            if (block == null || block.Type != "MonoBehaviour" || block.ScriptGuid != null) return null;
+            if (hunkType != "MonoBehaviour") return null;
+            int gap = nextStart - block.HeaderLine;
+            return gap > 0 && gap <= ScriptLineOffset ? block : null;
+        }
+
+        /// <summary>"@@ -163,7 +165,7 @@" -> 163 and 165. Zero when the header does not parse.</summary>
+        public static void HunkStarts(string header, out int oldStart, out int newStart)
+        {
+            oldStart = newStart = 0;
+            int minus = header.IndexOf(" -", StringComparison.Ordinal);
+            int plus = header.IndexOf(" +", StringComparison.Ordinal);
+            if (minus >= 0) oldStart = LeadingNumber(header, minus + 2);
+            if (plus >= 0) newStart = LeadingNumber(header, plus + 2);
+        }
+
+        private static int LeadingNumber(string text, int start)
+        {
+            int n = 0, i = start;
+            while (i < text.Length && char.IsDigit(text[i]) && n < 100000000) n = n * 10 + (text[i++] - '0');
+            return n;
         }
 
         /// <summary>Names seen outside whole blocks, per file, so a dropped block only drops its own names.</summary>

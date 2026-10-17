@@ -303,6 +303,75 @@ namespace ChangeLens.Editor.Tests
             CollectionAssert.AreEqual(new[] { "PrefabInstance" }, changes[0].RemovedTypes);
         }
 
+        // Found by the February fidelity check (pepperspray, #604, an open repair
+        // item): git put the script component's new id in one hunk and its new
+        // m_Script line in the next, so the Item -> PepperSpray swap was lost.
+        private const string PeppersprayHunks =
+            "commit 0059f5dacbdb569f1d4563ee1ec5eea09e36cf73\n" +
+            "diff --git a/Assets/Items/pepperspray.prefab b/Assets/Items/pepperspray.prefab\n" +
+            "index 9e12fbc..2481743 100644\n" +
+            "--- a/Assets/Items/pepperspray.prefab\n" +
+            "+++ b/Assets/Items/pepperspray.prefab\n" +
+            "@@ -163,7 +163,7 @@ MeshCollider:\n" +
+            "   m_Convex: 1\n" +
+            "   m_CookingOptions: 30\n" +
+            "   m_Mesh: {fileID: 9067431505445562313, guid: 1d027408b61acc647a8e6c6785bb5b5d, type: 3}\n" +
+            "---- !u!114 &8763634506270647443\n" +
+            "+--- !u!114 &1436701974858568618\n" +
+            " MonoBehaviour:\n" +
+            "   m_ObjectHideFlags: 0\n" +
+            "   m_CorrespondingSourceObject: {fileID: 0}\n" +
+            "@@ -172,7 +172,7 @@ MonoBehaviour:\n" +
+            "   m_GameObject: {fileID: 8429492116086818138}\n" +
+            "   m_Enabled: 1\n" +
+            "   m_EditorHideFlags: 0\n" +
+            "-  m_Script: {fileID: 11500000, guid: b8e907cf58c0ce0439d34cd7cf644216, type: 3}\n" +
+            "+  m_Script: {fileID: 11500000, guid: 2b2da253dedfcc247b09ba258f4e9479, type: 3}\n" +
+            "   m_Name: \n" +
+            "   m_EditorClassIdentifier: \n" +
+            "   syncMode: 0\n" +
+            "@@ -180,10 +180,4 @@ MonoBehaviour:\n" +
+            "   bulkSize: 2\n" +
+            "---- !u!114 &-1695933415644116206\n" +
+            "-MonoBehaviour:\n" +
+            "-  m_ObjectHideFlags: 0\n" +
+            "-  m_CorrespondingSourceObject: {fileID: 0}\n" +
+            "-  m_PrefabInstance: {fileID: 0}\n" +
+            "-  m_PrefabAsset: {fileID: 0}\n" +
+            "-  m_GameObject: {fileID: 8429492116086818138}\n" +
+            "-  m_Enabled: 1\n" +
+            "-  m_EditorHideFlags: 0\n" +
+            "-  m_Script: {fileID: 11500000, guid: 59d174b721ba45d285a8f164a519c314, type: 3}\n";
+
+        [Test]
+        public void Parse_ScriptSwapSplitAcrossTwoHunksIsNamed()
+        {
+            AssetChange spray = AssetDiffParser.Parse(PeppersprayHunks)[0];
+            CollectionAssert.AreEqual(new[] { "2b2da253dedfcc247b09ba258f4e9479" }, spray.AddedScriptGuids);
+            CollectionAssert.AreEquivalent(new[] { "b8e907cf58c0ce0439d34cd7cf644216", "59d174b721ba45d285a8f164a519c314" },
+                                           spray.RemovedScriptGuids);
+            CollectionAssert.IsEmpty(spray.TouchedScriptGuids);
+
+            var guids = GuidIndex.Parse(
+                "x:Assets/Items/Item.cs.meta:guid: b8e907cf58c0ce0439d34cd7cf644216\n" +
+                "x:Assets/Items/PepperSpray.cs.meta:guid: 2b2da253dedfcc247b09ba258f4e9479\n" +
+                "x:Assets/Items/ItemExaminable.cs.meta:guid: 59d174b721ba45d285a8f164a519c314\n");
+            ProducerReport b = ProducerReport.Build(null, new List<AssetChange> { spray }, guids, ReportCondition.Treatment, "t");
+            List<string> names;
+            StringAssert.Contains("added PepperSpray script; removed Item script, ItemExaminable script", b.DescribeInside(spray, out names));
+        }
+
+        // A block is not carried into a hunk that starts past its m_Script line:
+        // another block could have started in the lines git left out.
+        [Test]
+        public void Parse_BlockIsNotCarriedPastAGapThatCouldHoldAnotherBlock()
+        {
+            string patch = PeppersprayHunks.Replace("@@ -172,7 +172,7 @@", "@@ -272,7 +272,7 @@");
+            AssetChange spray = AssetDiffParser.Parse(patch)[0];
+            CollectionAssert.IsEmpty(spray.AddedScriptGuids);
+            CollectionAssert.Contains(spray.TouchedScriptGuids, "2b2da253dedfcc247b09ba258f4e9479");
+        }
+
         // Found by the February fidelity check: SS3D has two .meta files with
         // one guid, so the page must not pick one of them silently.
         [Test]

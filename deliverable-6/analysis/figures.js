@@ -31,36 +31,8 @@ const cp = require('child_process');
 const { pathToFileURL } = require('url');
 const A = require('./analyse.js');
 
-// The 21 types, from deliverable-5/think-aloud-coding-sheet.md (checked against Ko et al., 2007,
-// Section 5 and Figure 3, on 13 Oct 2026). The last three codes are Raphael's own, not Ko et al.'s.
-const KO_TYPES = {
-  c1: ['Writing Code', 'What data structures or functions can be used to implement this behavior?'],
-  c2: ['Writing Code', 'How do I use this data structure or function?'],
-  c3: ['Writing Code', 'How can I coordinate this code with this other data structure or function?'],
-  s1: ['Submitting a Change', 'Did I make any mistakes in my new code?'],
-  s2: ['Submitting a Change', "Did I follow my team's conventions?"],
-  s3: ['Submitting a Change', 'Which changes are part of this submission?'],
-  b1: ['Triaging Bugs', 'Is this a legitimate problem?'],
-  b2: ['Triaging Bugs', 'How difficult will this problem be to fix?'],
-  b3: ['Triaging Bugs', 'Is the problem worth fixing?'],
-  r1: ['Reproducing a Failure', 'What does the failure look like?'],
-  r2: ['Reproducing a Failure', 'In what situations does this failure occur?'],
-  u1: ['Understanding Execution Behavior', 'What code could have caused this behavior?'],
-  u2: ['Understanding Execution Behavior', "What's statically related to this code?"],
-  u3: ['Understanding Execution Behavior', 'What code caused this program state?'],
-  d1: ['Reasoning about Design', 'What is the purpose of this code?'],
-  d2: ['Reasoning about Design', 'What is the program supposed to do?'],
-  d3: ['Reasoning about Design', 'Why was this code implemented this way?'],
-  d4: ['Reasoning about Design', 'What are the implications of this change?'],
-  a1: ['Maintaining Awareness', 'How have resources I depend on changed?'],
-  a2: ['Maintaining Awareness', 'What have my coworkers been doing?'],
-  a3: ['Maintaining Awareness', 'What information was relevant to my task?'],
-};
-const EXTRA_CODES = {
-  none: ['Not an information need (extra code, not Ko et al.)', ''],
-  other: ['Need outside the 21 types (extra code, not Ko et al.)', ''],
-  unclear: ['Cannot tell from the note (extra code, not Ko et al.)', ''],
-};
+// The codebook (21 Ko et al. types plus none, other, unclear) lives in analyse.js, which checks codes against it.
+const { KO_TYPES, EXTRA_CODES } = A;
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 function mdTable(head, rows) {

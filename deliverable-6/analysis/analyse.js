@@ -33,7 +33,8 @@
  * with 0, 1 or 2). Any other reader is named with the reason and left out of every table. Fewer than
  * five complete readers prints the A2 fallback notice. Pilot codes (P followed by digits, e.g. P0) and
  * rows with pilot = yes are dropped from every section. Think-aloud segments are keyed by
- * participant + segment_id.
+ * participant + segment_id. Every pass 1, pass 2 and final code is checked against the codebook (21 Ko et al.
+ * types plus none, other, unclear); any other code is named and its pass 1 / pass 2 pair is left out of agreement.
  * Design checks: every row of one report gives one week and one order, and a reader's two reports
  * differ in both week and order; a reader failing this is left out and named. Weeks are read in upper
  * case and roles in lower case; weeks other than W1/W2 and roles other than producer/proxy are warned about.
@@ -677,6 +678,37 @@ function analyseNeeds(needRows, keyRows) {
 }
 
 // ---------- 5. think-aloud coding ----------
+// The 21 types, from deliverable-5/think-aloud-coding-sheet.md (checked against Ko et al., 2007,
+// Section 5 and Figure 3, on 13 Oct 2026). The last three codes are Raphael's own, not Ko et al.'s.
+const KO_TYPES = {
+  c1: ['Writing Code', 'What data structures or functions can be used to implement this behavior?'],
+  c2: ['Writing Code', 'How do I use this data structure or function?'],
+  c3: ['Writing Code', 'How can I coordinate this code with this other data structure or function?'],
+  s1: ['Submitting a Change', 'Did I make any mistakes in my new code?'],
+  s2: ['Submitting a Change', "Did I follow my team's conventions?"],
+  s3: ['Submitting a Change', 'Which changes are part of this submission?'],
+  b1: ['Triaging Bugs', 'Is this a legitimate problem?'],
+  b2: ['Triaging Bugs', 'How difficult will this problem be to fix?'],
+  b3: ['Triaging Bugs', 'Is the problem worth fixing?'],
+  r1: ['Reproducing a Failure', 'What does the failure look like?'],
+  r2: ['Reproducing a Failure', 'In what situations does this failure occur?'],
+  u1: ['Understanding Execution Behavior', 'What code could have caused this behavior?'],
+  u2: ['Understanding Execution Behavior', "What's statically related to this code?"],
+  u3: ['Understanding Execution Behavior', 'What code caused this program state?'],
+  d1: ['Reasoning about Design', 'What is the purpose of this code?'],
+  d2: ['Reasoning about Design', 'What is the program supposed to do?'],
+  d3: ['Reasoning about Design', 'Why was this code implemented this way?'],
+  d4: ['Reasoning about Design', 'What are the implications of this change?'],
+  a1: ['Maintaining Awareness', 'How have resources I depend on changed?'],
+  a2: ['Maintaining Awareness', 'What have my coworkers been doing?'],
+  a3: ['Maintaining Awareness', 'What information was relevant to my task?'],
+};
+const EXTRA_CODES = {
+  none: ['Not an information need (extra code, not Ko et al.)', ''],
+  other: ['Need outside the 21 types (extra code, not Ko et al.)', ''],
+  unclear: ['Cannot tell from the note (extra code, not Ko et al.)', ''],
+};
+const inCodebook = c => Object.prototype.hasOwnProperty.call(KO_TYPES, c) || Object.prototype.hasOwnProperty.call(EXTRA_CODES, c);
 // Two accepted layouts: long (segment_id, participant, pass, code) or wide (segment_id, participant,
 // pass1_code, pass2_code, as in deliverable-5/think-aloud-coding-sheet.csv). Segments are keyed by
 // participant + segment_id, so ids that restart for each reader do not merge. Pilot rows are dropped.
@@ -714,6 +746,19 @@ function prepareCodes(codeRows) {
       ', left out until fixed: ' + Array.from(dupKeys).sort().map(k => fmtSeg(label[k])).join(', ') + '.');
     dupKeys.forEach(k => delete by[k]);
   }
+  // every code must be in the codebook; a typo ('a 2', 'dl') or two codes in one cell ('a2/d3') is named here
+  // and the segment's pass 1 / pass 2 pair is left out of agreement (analyseCodes) until it is fixed
+  const badCode = [];
+  Object.keys(by).sort().forEach(k => {
+    for (const [ps, name] of [['1', 'pass 1'], ['2', 'pass 2'], ['f', 'final']]) {
+      const c = by[k][ps];
+      if (c && !inCodebook(c)) badCode.push(`${fmtSeg(label[k])} ${name} "${c}"`);
+    }
+  });
+  if (badCode.length) {
+    warnings.push(`WARNING: code not in the codebook (the 21 Ko et al. types, none, other, unclear): ${badCode.join('; ')}. ` +
+      'Pass 1 / pass 2 pairs with such a code are left out of agreement until fixed.');
+  }
   const shared = Object.keys(owners).filter(s => owners[s].size > 1).sort();
   if (shared.length) {
     warnings.push(`WARNING: segment_id used for more than one reader: ${shared.map(s => `${s} (${Array.from(owners[s]).sort().join(', ')})`).join('; ')}. ` +
@@ -731,8 +776,10 @@ function analyseCodes(codeRows) {
   C.warnings.forEach(w => out.push(w));
   const ids = Object.keys(by).sort();
   const first = ids.filter(id => by[id]['1']);
-  const both = ids.filter(id => by[id]['1'] && by[id]['2']);
-  out.push(`Segments with pass 1: ${first.length}. Re-coded in pass 2: ${both.length} (${first.length ? Math.round(100 * both.length / first.length) : 0}% of pass 1; A2 plans about a quarter).`);
+  const recoded = ids.filter(id => by[id]['1'] && by[id]['2']);
+  const both = recoded.filter(id => inCodebook(by[id]['1']) && inCodebook(by[id]['2']));
+  out.push(`Segments with pass 1: ${first.length}. Re-coded in pass 2: ${recoded.length} (${first.length ? Math.round(100 * recoded.length / first.length) : 0}% of pass 1; A2 plans about a quarter).`);
+  if (recoded.length > both.length) out.push(`Re-coded pairs left out of agreement for a code not in the codebook: ${recoded.length - both.length}. Fix them and run again.`);
   if (!both.length) return out.join('\n');
   const a = both.map(id => by[id]['1']), b = both.map(id => by[id]['2']);
   const ag = agreement(a, b), k = cohenKappa(a, b);
@@ -798,5 +845,6 @@ module.exports = {
   parseCSV, readCSV, agreement, cohenKappa, analyseScores, analyseNeeds, analyseCodes, mean, median,
   prepareScores, prepareNeeds, prepareCodes, pairedDiffs, fullMarkCounts, item6Counts, sequenceCounts,
   secondScorer, analyseSecondScorer, footer, isPilot, FLOOR, normNeedId, orderByCondition, weekBalanced,
+  KO_TYPES, EXTRA_CODES, inCodebook,
 };
 if (require.main === module) main();

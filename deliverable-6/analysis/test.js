@@ -309,6 +309,25 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   has('identical: agreement', o, 'Agreement: 4/4 (100%)');
   has('identical: kappa', o, "Cohen's kappa: undefined (no variation in labels).");
 }
+// 11f. Codes not in the codebook (D5 wide header, CRLF). Pass 2 typos 'a 2' (S01), 'dl' (S02) and two codes
+//      in one cell 'a2/d3' (S04). Each is named with reader, segment and pass; the three pairs are left out,
+//      so agreement is over S03 only (d3/d3): 1/1, not 1/4. S05 has no pass 2. figures.js Table 3 shows it too.
+{
+  const rows = ['S01,R01,,,,a2,,a 2,,,', 'S02,R01,,,,d1,,dl,,,', 'S03,R02,,,,d3,,d3,,,', 'S04,R02,,,,u1,,a2/d3,,,', 'S05,R03,,,,a2,,,,,'];
+  const o = wide(rows);
+  has('codebook: warning', o, 'WARNING: code not in the codebook (the 21 Ko et al. types, none, other, unclear): R01 S01 pass 2 "a 2"; R01 S02 pass 2 "dl"; R02 S04 pass 2 "a2/d3".');
+  has('codebook: counts', o, 'Segments with pass 1: 5. Re-coded in pass 2: 4');
+  has('codebook: left out', o, 'Re-coded pairs left out of agreement for a code not in the codebook: 3.');
+  has('codebook: agreement', o, 'Agreement: 1/1 (100%)');
+  hasNot('codebook: typo not a disagreement', o, '| a 2');
+  const F = require('./figures.js');
+  has('codebook: table 3 warns', F.table3(A.parseCSV([WIDE].concat(rows).join('\r\n'))), 'R01 S02 pass 2 "dl"');
+  // a pass 1 typo is named too, and none / other / unclear are accepted
+  const p1 = wide(['S01,R01,,,,A2 ,,a2,,,', 'S02,R01,,,,none,,other,,,', 'S03,R01,,,,unclear,,unclear,,,', 'S04,R01,,,,dl,,,,,']);
+  has('codebook: pass 1 typo', p1, 'R01 S04 pass 1 "dl"');
+  hasNot('codebook: extra codes accepted', p1, '"none"');
+  has('codebook: case and spaces read', p1, 'Agreement: 2/3 (67%)');
+}
 // 11e. Long layout (templates/think-aloud-codes.csv header), pass typed "pass 2" and "p1": read as 2 and 1.
 //      S01 1/2 a2/a2, S02 1/2 d1/d1: 2 segments, both re-coded, agreement 2/2, no warning.
 //      A pass of 3 is named with reader, segment and the raw value, and that row is left out.

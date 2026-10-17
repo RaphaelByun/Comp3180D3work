@@ -390,7 +390,7 @@ namespace ChangeLens.Editor.Tests
                      {
                          "-c core.quotepath=false", "-c diff.noprefix=false", "-c diff.mnemonicPrefix=false",
                          "-c grep.lineNumber=false", "-c grep.column=false", "-c color.ui=false",
-                         "-c log.showSignature=false", "-c log.abbrevCommit=false",
+                         "-c log.showSignature=false", "-c log.abbrevCommit=false", "-c log.mailmap=true",
                          "-c diff.algorithm=myers", "-c diff.context=3", "-c diff.interHunkContext=0",
                          "-c diff.indentHeuristic=true", "-c diff.relative=false"
                      })

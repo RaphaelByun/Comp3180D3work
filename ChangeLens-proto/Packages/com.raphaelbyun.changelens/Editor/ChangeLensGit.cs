@@ -241,7 +241,7 @@ namespace ChangeLens.Editor
         public const string PinnedConfig =
             "-c core.quotepath=false -c diff.noprefix=false -c diff.mnemonicPrefix=false " +
             "-c grep.lineNumber=false -c grep.column=false -c color.ui=false -c log.showSignature=false " +
-            "-c log.abbrevCommit=false -c diff.renames=true -c i18n.logOutputEncoding=UTF-8 " +
+            "-c log.abbrevCommit=false -c log.mailmap=true -c diff.renames=true -c i18n.logOutputEncoding=UTF-8 " +
             "-c diff.algorithm=myers -c diff.context=3 -c diff.interHunkContext=0 " +
             "-c diff.indentHeuristic=true -c diff.relative=false";
 

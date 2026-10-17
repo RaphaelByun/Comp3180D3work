@@ -182,10 +182,11 @@ namespace ChangeLens.Editor
                 : c.FirstDate == c.LastDate ? LongDate(c.FirstDate)
                 : LongDate(c.FirstDate) + " to " + LongDate(c.LastDate);
             // People who wrote the work, including the work a merge brought in,
-            // not only the person who made the merge.
+            // not only the person who made the merge. Counted by name, so one
+            // person committing from two email addresses counts once.
             int people = c.Commits.Select(x => x.Author)
                           .Concat(c.Commits.SelectMany(x => x.MergedCommits).Select(m => m.Author))
-                          .Where(a => a.Length > 0).Distinct().Count();
+                          .Select(PersonName).Where(a => a.Length > 0).Distinct().Count();
             string headline = range + " · " + c.CommitCount + (c.CommitCount == 1 ? " change" : " changes") +
                               " by " + people + (people == 1 ? " person" : " people") +
                               " · " + c.TotalFileEntries + " file changes";

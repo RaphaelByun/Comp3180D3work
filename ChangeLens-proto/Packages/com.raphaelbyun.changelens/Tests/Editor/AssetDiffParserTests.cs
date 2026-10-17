@@ -666,6 +666,27 @@ namespace ChangeLens.Editor.Tests
             Assert.AreEqual("Assets/Furniture/locker.prefab", assets[0].RenamedFrom);
         }
 
+        // Found in SS3D, week of 9 Jan 2020: one person committed from two
+        // email addresses and the header said "4 changes by 2 people".
+        [Test]
+        public void Header_CountsOnePersonWithTwoEmailsOnce()
+        {
+            string log =
+                "commit aaaa000000000000000000000000000000000001\n" +
+                "Author: Em3rgencyLT <one@example.com>\n" +
+                "Date:   2020-01-10 10:00:00 +0000\n\n" +
+                "    First\n\n" +
+                "M\tAssets/Scripts/Door.cs\n\n" +
+                "commit aaaa000000000000000000000000000000000002\n" +
+                "Author: Em3rgencyLT <two@example.com>\n" +
+                "Date:   2020-01-11 10:00:00 +0000\n\n" +
+                "    Second\n\n" +
+                "M\tAssets/Scripts/Door.cs\n";
+            ProducerReport page = ProducerReport.Build(ChangeReport.Build(GitLogParser.Parse(log), "t"), null, null,
+                                                       ReportCondition.Baseline, "t");
+            StringAssert.Contains("2 changes by 1 person", page.ToMarkdown());
+        }
+
         // The strict measure counts the asset's own root name, which the page
         // never shows, so a third line counts only names a reader sees.
         [Test]

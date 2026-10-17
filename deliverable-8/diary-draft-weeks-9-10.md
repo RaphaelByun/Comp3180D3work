@@ -39,7 +39,7 @@
 **What I made of it / what I decided:**
 - [What did the fidelity failure teach you about trusting the tool's output?]
 - I passed the heuristic pass to Claude because it is a testing task. I know it is meant to be a human test: which tool is easy or hard to use, and whether it is harder for programmers or producers. Those are the questions to ask, and I found I got a better list of questions from Claude and could answer them. [Optional: what did it cost? For example, one AI evaluator instead of me, and the 16 severity 3–4 findings still need my hand-check.]
-- [Why five readers? Why the ethics decision?]
+- [14 Oct: why five readers? (The floor was dropped on 17 Oct, see the next line.) Why the ethics decision?]
 - [17 Oct: why did you decide to evaluate ChangeLens yourself, with no study with other people? Explain it in your own words (your reasons are quoted in `fact-log-weeks-9-10.md` section 4), and what you expect to lose and to learn.]
 
 **Prac:** [attended Y/N; who you spoke to]
@@ -50,7 +50,7 @@
 
 **Evidence links:** `bf09b4e`, `b1a2df6` (`FIDELITY-RESULT.md`), `e078ebd`, `92ff8b4`, `ff65ae7`.
 
-**Next week:** Send recruitment, run the pilot on 20–21 Oct, finish the D1/D3/D4 hand-checks. [Adjust.]
+**Next week:** [Solo evaluation SE1 to SE4 from Sun 18 Oct if you approve the plan; the D1/D3/D4 hand-checks. Write your own plan.]
 
 ## Mid-session break (21 Sep to 4 Oct 2026)
 

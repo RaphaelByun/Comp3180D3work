@@ -59,7 +59,7 @@ Prompts for the "Why" column:
 - What would you change in the next estimate?
 - Staff said "everything always takes longer than you expect, even if you take that into account." Does your data agree?
 
-Deliverable 1 is a variance in method as well as hours. A2 planned 600 minutes of your own work; after the AI work on 14 and 15 October about 177 minutes remain, almost all checking (D1 README, revised 17 Oct 2026). Prompts for its "Why" cell and one sentence in the report:
+Deliverable 1 is a variance in method as well as hours. A2 planned 600 minutes of your own work; after the AI work on 14 and 15 October about 177 minutes were budgeted for your own work (about 208 on the check pack's estimate), almost all checking (D1 README, revised 17 Oct 2026). Prompts for its "Why" cell and one sentence in the report:
 - What was dropped or handed over: the two interviews (replaced by six coded published sources), the heuristic pass (run by AI), and the needs analysis (AI-drafted, you accepted or changed it). Say which, in your words.
 - Why: the reason D1 records is time. The ethics reason given on 14 Oct no longer applies after the 17 Oct no-ethics decision, so do not give it.
 - Effect on the Apply and Analyse measure: the reconciliation is now inspection against published sources, not interviews, and the inspection had one AI evaluator. What does that cost the finding?

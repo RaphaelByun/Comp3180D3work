@@ -309,6 +309,20 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   has('identical: agreement', o, 'Agreement: 4/4 (100%)');
   has('identical: kappa', o, "Cohen's kappa: undefined (no variation in labels).");
 }
+// 11e. Long layout (templates/think-aloud-codes.csv header), pass typed "pass 2" and "p1": read as 2 and 1.
+//      S01 1/2 a2/a2, S02 1/2 d1/d1: 2 segments, both re-coded, agreement 2/2, no warning.
+//      A pass of 3 is named with reader, segment and the raw value, and that row is left out.
+{
+  const LONG = 'segment_id,participant,timestamp,pass,code';
+  const lng = rows => A.analyseCodes(A.parseCSV([LONG].concat(rows).join('\r\n') + '\r\n'));
+  const o = lng(['S01,R01,,1,a2', 'S01,R01,,pass 2,a2', 'S02,R01,,p1,d1', 'S02,R01,,2,d1']);
+  has('pass words: counts', o, 'Segments with pass 1: 2. Re-coded in pass 2: 2');
+  has('pass words: agreement', o, 'Agreement: 2/2 (100%)');
+  hasNot('pass words: no warning', o, 'WARNING');
+  const bad = lng(['S01,R01,,1,a2', 'S01,R01,,3,a2', 'S02,R01,,1,d1', 'S02,R01,,2,d1']);
+  has('pass 3: warning', bad, 'WARNING: pass not 1, 2 or final, row left out until fixed: R01 S01 ("3").');
+  has('pass 3: counts', bad, 'Segments with pass 1: 2. Re-coded in pass 2: 1');
+}
 
 // 12. Ten-need sheet with a blank need. Key N01-N10 = D D D D P P P N N N.
 //     R01 and R03 match all ten. R02 labels N10 as D (9/10). R04 labels N09 as P and leaves N10 blank (8/9).
@@ -446,6 +460,17 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   has('order 3: reason', o, 'R05 (treatment order not 1 or 2 ("3"))');
   has('order 3: mean over 4', o, 'Mean difference 1.75 points out of 10');
   hasNot('order 3: no extra cell', o, 'order 3:');
+}
+// 15g. Item typed Q1: R03 treatment item 1 typed "Q1". The Q1 row is named with its raw value, and R03 is
+//      left out with both reasons (item 1 missing, item "Q1" not 1 to 6). R01, R02, R04, R05: 3, 4, -2, 1 -> 1.50.
+//      Item 01 still reads as item 1 (R01 baseline item 1 typed 01; no warning about it).
+{
+  const o = run(scoreLines().map(l => (l === 'R03,proxy,treatment,W2,2,1,2,' ? 'R03,proxy,treatment,W2,2,Q1,2,' :
+    l === 'R01,producer,baseline,W1,1,1,2,' ? 'R01,producer,baseline,W1,1,01,2,' : l)));
+  has('item Q1: warning', o, 'WARNING: 1 row(s) with an item that is not 1 to 6: R03 treatment item "Q1".');
+  has('item Q1: reason', o, 'R03 (treatment item 1 missing; treatment item "Q1" not 1 to 6)');
+  has('item Q1: mean over 4', o, 'Mean difference 1.50 points out of 10');
+  hasNot('item 01: not warned', o, '"01"');
 }
 // 15f. Weeks typed 'Week 1'/'Week 2': the week warning fires, and the week-balanced line says the weeks
 //      are not W1/W2 instead of claiming every treatment report was in one week.

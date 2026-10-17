@@ -200,7 +200,9 @@ const validOrder = o => o === '1' || o === '2';
 function prepareScores(rowsAll) {
   const pilotRows = rowsAll.filter(isPilot);
   const rows = rowsAll.filter(r => !isPilot(r)).map(r => {
-    const item = String(parseInt(r.item, 10));
+    // item is 1-6 (01 reads as 1); anything else (Q1, 7, blank) is kept as typed and warned about below
+    const itemRaw = (r.item || '').trim();
+    const item = /^0*[1-6]$/.test(itemRaw) ? String(parseInt(itemRaw, 10)) : itemRaw;
     const raw = (r.score || '').trim();
     return {
       participant: r.participant, role: (r.role || '').toLowerCase(), cond: normCond(r.condition),
@@ -216,6 +218,11 @@ function prepareScores(rowsAll) {
   if (bad.length) {
     warnings.push(`WARNING: ${bad.length} row(s) for items 1-5 with a score that is not 0, 1 or 2: ` +
       bad.map(r => `${r.participant} ${r.cond} item ${r.item} ("${Number.isNaN(r.score) ? '' : r.score}")`).join('; ') + '.');
+  }
+  const badItem = rows.filter(r => !/^[1-6]$/.test(r.item));
+  if (badItem.length) {
+    warnings.push(`WARNING: ${badItem.length} row(s) with an item that is not 1 to 6: ` +
+      badItem.map(r => `${r.participant} ${r.cond} item "${r.item}"`).join('; ') + '. Fix the item column.');
   }
   const bad6 = rows.filter(r => r.item === '6' && !r.code6);
   if (bad6.length) {
@@ -261,6 +268,8 @@ function prepareScores(rowsAll) {
       if (missing.length) reasons.push(`${c} item ${missing.join(', ')} missing`);
       if (dupIt.length) reasons.push(`${c} item ${dupIt.join(', ')} duplicated`);
       if (badIt.length) reasons.push(`${c} item ${badIt.join(', ')} score not 0, 1 or 2`);
+      const oddIt = cr.filter(r => !/^[1-6]$/.test(r.item)).map(r => `"${r.item}"`);
+      if (oddIt.length) reasons.push(`${c} item ${oddIt.join(', ')} not 1 to 6`);
       // every row of one report must give the same week and the same order
       const wks = Array.from(new Set(cr.map(r => r.week))), ords = Array.from(new Set(cr.map(r => r.order)));
       if (wks.length > 1) reasons.push(`${c} rows give more than one week (${wks.join(', ')})`);
@@ -676,7 +685,7 @@ function prepareCodes(codeRows) {
   const pilot = codeRows.filter(isPilot);
   const rows = codeRows.filter(r => !isPilot(r));
   const by = {}, label = {}, count = {};
-  const owners = {};
+  const owners = {}, badPass = [];
   rows.forEach(r => {
     const p = r.participant || '';
     const k = `${p}|${r.segment_id}`;
@@ -684,7 +693,10 @@ function prepareCodes(codeRows) {
     (owners[r.segment_id] = owners[r.segment_id] || new Set()).add(p);
     const seg = (by[k] = by[k] || {});
     if (r.pass !== undefined && r.code !== undefined) {
-      const pass = /^f/i.test((r.pass || '').trim()) ? 'f' : String(parseInt(r.pass, 10));
+      // pass is 1, 2 or final; 'pass 2', 'p2' and 'Pass2' read by their last number, 'f' and 'final' as final
+      const pt = (r.pass || '').trim().toLowerCase(), num = /(\d+)\s*$/.exec(pt);
+      const pass = /^f/.test(pt) ? 'f' : (num ? String(parseInt(num[1], 10)) : '');
+      if (pass !== '1' && pass !== '2' && pass !== 'f') { badPass.push(`${fmtSeg(label[k])} ("${r.pass}")`); return; }
       const ck = `${k}|${pass}`; count[ck] = (count[ck] || 0) + 1;
       if (r.code) seg[pass] = r.code.toLowerCase();
     } else {
@@ -694,6 +706,7 @@ function prepareCodes(codeRows) {
       if (r.final_code) seg.f = r.final_code.toLowerCase();
     }
   });
+  if (badPass.length) warnings.push(`WARNING: pass not 1, 2 or final, row left out until fixed: ${badPass.join('; ')}.`);
   // a segment listed twice (twice in one pass for the long layout) cannot be trusted: leave it out
   const dupKeys = new Set(Object.keys(count).filter(c => count[c] > 1).map(c => c.split('|').slice(0, 2).join('|')));
   if (dupKeys.size) {

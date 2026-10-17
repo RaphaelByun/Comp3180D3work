@@ -61,11 +61,11 @@ The video stills are reused in the report, and the D6 figure tool also calls its
 | Figure 2 | The ChangeLens Producer Page in the Unity Editor | New capture, still 2 |
 | Figure 3 | Version A (baseline), "Where the work went" table | New capture, still 3 |
 | Figure 4 | Version B (treatment), a naming section | New capture, still 4 |
-| Figure 5 | Time and confidence (SE2): minutes per read, and confidence against the git-log result, one reader, the developer | `deliverable-6/analysis/figures.js` (Deliverable 6 branch), once it replaces the A2 paired-differences plot (plan section 12, D6 item 3). Until then `figures.js` still draws the old plot as "Figure 1"; do not use it |
-| Table 1 | Ten needs by read (solo Table B) | Solo analysis script on the Deliverable 6 branch (plan section 12, D6 item 2; not written yet), from `se2-need-answers.csv` |
-| Table 2 | Key against observed, SQ1 (solo Table C) | Same script, first reads of Table B |
-| Table 3 | Heuristic problems for ChangeLens beside the four D1 tools (solo Table F) | Same script, from `se4-heuristic-problems.csv`, `se4-task-outcomes.csv` and the D1 tables |
-| Table 4 | What the page left unmet, by Ko et al. type (solo Table G) | Same script, from `se2-needs-log.csv` |
+| Figure 5 | Time and confidence (SE2): minutes per read, and confidence against the git-log result, one reader, the developer | `deliverable-6/analysis/figures.js` (Deliverable 6 branch), which now draws this figure in place of the A2 paired-differences plot. Run it with `--figure 5` so the title says Figure 5 (without the flag it says Figure 1). Real data goes in `deliverable-6/data/`; output built from the FAKE samples is stamped FAKE and must not be used |
+| Table 1 | Ten needs by read (solo Table B) | `deliverable-6/analysis/analyse.js` or `figures.js` on the Deliverable 6 branch (they print the same table as Markdown), from `se2-need-answers.csv` |
+| Table 2 | Key against observed, SQ1 (solo Table C) | Same tools, first reads of Table B |
+| Table 3 | Heuristic problems for ChangeLens beside the four D1 tools (solo Table F) | Same tools, from `se4-heuristic-problems.csv`, `se4-task-outcomes.csv` and the D1 tables |
+| Table 4 | What the page left unmet, by Ko et al. type (solo Table G) | Same tools, from `se2-needs-log.csv` |
 
 The report's Results are built around solo Tables B, C, F and G (plan section 12, D6 item 4), so those are Tables 1 to 4 here. The other solo tables (A fidelity, D items, E walkthrough, H stand-up and ratings) go to the appendices as the plan suggests, or take Table 5 upward in order of first mention if you put them in the body. The old Tables 1, 2, 2b and 3 (full marks by condition, item 6 codes, think-aloud segments) came from the reader study and are not used.
 

@@ -97,6 +97,15 @@ namespace ChangeLens.Editor
         public string Subject = "";
         public List<FileChange> Changes = new List<FileChange>();
 
+        /// <summary>True when git printed a "Merge:" line: the commit has two or more parents.</summary>
+        public bool IsMerge;
+
+        /// <summary>
+        /// For a merge: the commits it brought in (hash, author, date and subject
+        /// only, no file list), newest first. Empty for an ordinary commit.
+        /// </summary>
+        public List<CommitRecord> MergedCommits = new List<CommitRecord>();
+
         /// <summary>
         /// The date part only ("2025-03-04") taken off the front of <see cref="Date"/>.
         /// Returns an empty string when there is no date.
@@ -176,8 +185,12 @@ namespace ChangeLens.Editor
                     current.Date = rawLine.Substring("Date:".Length).Trim();
                     continue;
                 }
-                if (rawLine.StartsWith("Merge:", StringComparison.Ordinal) ||
-                    rawLine.StartsWith("AuthorDate:", StringComparison.Ordinal) ||
+                if (rawLine.StartsWith("Merge:", StringComparison.Ordinal))
+                {
+                    current.IsMerge = true;
+                    continue;
+                }
+                if (rawLine.StartsWith("AuthorDate:", StringComparison.Ordinal) ||
                     rawLine.StartsWith("CommitDate:", StringComparison.Ordinal) ||
                     rawLine.StartsWith("Commit:", StringComparison.Ordinal))
                 {
@@ -207,6 +220,44 @@ namespace ChangeLens.Editor
             }
 
             return commits;
+        }
+
+        /// <summary>
+        /// Reads the export's merged.txt: one line per commit a merge brought in,
+        /// "mergeHash TAB hash TAB author TAB date TAB subject". Returns the
+        /// commits for each merge hash, in file order (newest first).
+        /// </summary>
+        public static Dictionary<string, List<CommitRecord>> ParseMerged(string text)
+        {
+            var byMerge = new Dictionary<string, List<CommitRecord>>();
+            if (string.IsNullOrEmpty(text)) return byMerge;
+            foreach (string line in text.Replace("\r\n", "\n").Split('\n'))
+            {
+                string[] parts = line.Split('\t');
+                if (parts.Length < 5 || parts[0].Length == 0) continue;
+                List<CommitRecord> list;
+                if (!byMerge.TryGetValue(parts[0], out list)) byMerge[parts[0]] = list = new List<CommitRecord>();
+                list.Add(new CommitRecord
+                {
+                    Hash = parts[1],
+                    Author = parts[2].Trim(),
+                    Date = parts[3].Trim(),
+                    // A subject could hold a tab; keep everything after the date.
+                    Subject = string.Join("\t", parts, 4, parts.Length - 4).Trim()
+                });
+            }
+            return byMerge;
+        }
+
+        /// <summary>Gives each merge in <paramref name="commits"/> the commits it brought in.</summary>
+        public static void AttachMerged(List<CommitRecord> commits, Dictionary<string, List<CommitRecord>> byMerge)
+        {
+            if (commits == null || byMerge == null || byMerge.Count == 0) return;
+            foreach (CommitRecord c in commits)
+            {
+                List<CommitRecord> brought;
+                if (byMerge.TryGetValue(c.Hash, out brought)) c.MergedCommits = brought;
+            }
         }
 
         /// <summary>

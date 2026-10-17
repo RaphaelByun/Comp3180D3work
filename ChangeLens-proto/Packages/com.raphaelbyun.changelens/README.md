@@ -9,7 +9,7 @@ A Unity Editor package that writes a one-page weekly change report for a game pr
 - **Save study files.** Writes the frozen export, both reports, a fidelity checklist for each and the naming measures to a folder.
 - **Window → ChangeLens.** The A2 prototype. It loads a `git log --name-status` text file and sorts the files by type only.
 
-Weeks are cut at midnight UTC. The export follows the main line, so a merged branch is reported in the week it was merged.
+Weeks are cut at midnight UTC. The export follows the main line, so a merged branch is reported in the week it was merged. A merge row lists who wrote the work it brought in, and the header counts them.
 
 ## Requirements
 

@@ -181,7 +181,11 @@ namespace ChangeLens.Editor
             string range = c.FirstDate.Length == 0 ? "(no dates)"
                 : c.FirstDate == c.LastDate ? LongDate(c.FirstDate)
                 : LongDate(c.FirstDate) + " to " + LongDate(c.LastDate);
-            int people = c.Commits.Select(x => x.Author).Where(a => a.Length > 0).Distinct().Count();
+            // People who wrote the work, including the work a merge brought in,
+            // not only the person who made the merge.
+            int people = c.Commits.Select(x => x.Author)
+                          .Concat(c.Commits.SelectMany(x => x.MergedCommits).Select(m => m.Author))
+                          .Where(a => a.Length > 0).Distinct().Count();
             string headline = range + " · " + c.CommitCount + (c.CommitCount == 1 ? " change" : " changes") +
                               " by " + people + (people == 1 ? " person" : " people") +
                               " · " + c.TotalFileEntries + " file changes";
@@ -235,6 +239,7 @@ namespace ChangeLens.Editor
                               commit.Changes.Count + " | " + kinds + " |");
                 AddClaim("Changes", commit.DateOnly + " \"" + commit.Subject + "\": " + commit.Changes.Count +
                                     " files (" + kinds + ")", new List<string> { commit.Hash });
+                AppendMergedRows(sb, commit);
             }
             sb.AppendLine();
 
@@ -255,6 +260,46 @@ namespace ChangeLens.Editor
             return sb.ToString();
         }
 
+        /// <summary>The most brought-in commits listed under one merge row.</summary>
+        public const int MergedRowsShown = 5;
+
+        /// <summary>
+        /// Under a merge row: who wrote the work it brought in, then that work's
+        /// own changes (newest first, up to <see cref="MergedRowsShown"/>). The
+        /// merge row's file count is everything the merge brought in.
+        /// </summary>
+        private void AppendMergedRows(StringBuilder sb, CommitRecord merge)
+        {
+            List<CommitRecord> brought = merge.MergedCommits;
+            if (brought.Count == 0) return;
+
+            List<string> authors = brought.Select(m => m.Author).Where(a => a.Length > 0).Distinct()
+                                          .Select(PersonName).ToList();
+            string summary = "↳ brings in " + brought.Count + (brought.Count == 1 ? " change" : " changes") +
+                             (authors.Count > 0 ? " by " + Cap(authors, 4) : "");
+            sb.AppendLine("|  | " + EscapeCell(summary) + " |  |  |");
+            AddClaim("Changes", "\"" + merge.Subject + "\" " + summary.Substring(2), new List<string> { merge.Hash });
+
+            foreach (CommitRecord m in brought.Take(MergedRowsShown))
+            {
+                string who = PersonName(m.Author);
+                sb.AppendLine("| " + ShortDate(m.DateOnly) + " | ↳ " + EscapeCell(m.Subject) +
+                              (who.Length > 0 ? " (" + EscapeCell(who) + ")" : "") + " |  |  |");
+                AddClaim("Changes", m.DateOnly + " \"" + m.Subject + "\" by " + who + ", brought in by \"" +
+                                    merge.Subject + "\"", new List<string> { m.Hash });
+            }
+            if (brought.Count > MergedRowsShown)
+                sb.AppendLine("|  | ↳ and " + (brought.Count - MergedRowsShown) + " more |  |  |");
+        }
+
+        /// <summary>"Jane Dev &lt;jane@example.com&gt;" -> "Jane Dev".</summary>
+        public static string PersonName(string author)
+        {
+            if (string.IsNullOrEmpty(author)) return "";
+            int lt = author.IndexOf(" <", StringComparison.Ordinal);
+            return lt > 0 ? author.Substring(0, lt).Trim() : author.Trim();
+        }
+
         private void AppendAssetSection(StringBuilder sb)
         {
             sb.AppendLine("## Scenes and prefabs changed");
@@ -269,13 +314,18 @@ namespace ChangeLens.Editor
             var subjects = new Dictionary<string, string>();
             foreach (CommitRecord commit in Counts.Commits) subjects[commit.Hash] = commit.Subject;
 
-            // Group by asset path, keeping first-seen (newest-first) order.
+            // Group by asset, keeping first-seen (newest-first) order. An asset
+            // renamed or moved during the week is keyed on its final path, so
+            // its earlier changes under the old path are listed with it.
             var order = new List<string>();
             var byPath = new Dictionary<string, List<AssetChange>>();
-            foreach (AssetChange a in AssetChanges)
+            List<string> finalPaths = FinalPaths(AssetChanges);
+            for (int k = 0; k < AssetChanges.Count; k++)
             {
-                if (!byPath.ContainsKey(a.Path)) { byPath[a.Path] = new List<AssetChange>(); order.Add(a.Path); }
-                byPath[a.Path].Add(a);
+                AssetChange a = AssetChanges[k];
+                string key = finalPaths[k];
+                if (!byPath.ContainsKey(key)) { byPath[key] = new List<AssetChange>(); order.Add(key); }
+                byPath[key].Add(a);
             }
 
             // Busiest assets first so the eye lands on what moved most.
@@ -299,7 +349,8 @@ namespace ChangeLens.Editor
                 string key = string.Join("\n", byPath[path].Select(a =>
                 {
                     List<string> ignored;
-                    return a.CommitHash + "|" + (byPath[path][0].IsScene ? "s" : "p") + "|" + DescribeInside(a, out ignored);
+                    return a.CommitHash + "|" + (byPath[path][0].IsScene ? "s" : "p") + "|" +
+                           (a.Path == path ? "" : a.Path) + "|" + DescribeInside(a, out ignored);
                 }));
                 List<string> group;
                 if (!groupOf.TryGetValue(key, out group))
@@ -319,8 +370,8 @@ namespace ChangeLens.Editor
                 string label;
                 if (group.Count == 1)
                 {
-                    label = first.AssetName;
-                    sb.AppendLine("**" + first.AssetName + "** (" + kind + ", in `" + FolderOf(group[0]) + "`)");
+                    label = AssetDiffParser.AssetNameOf(group[0]);
+                    sb.AppendLine("**" + label + "** (" + kind + ", in `" + FolderOf(group[0]) + "`)");
                 }
                 else
                 {
@@ -336,6 +387,8 @@ namespace ChangeLens.Editor
                     string subject;
                     subjects.TryGetValue(a.CommitHash, out subject);
                     string what = DescribeInside(a, out List<string> names);
+                    // A change made before a later rename or move says where the asset was then.
+                    if (a.Path != group[0]) what = what.TrimEnd('.') + " (then at `" + a.Path + "`).";
                     string line = "- " + (subject != null ? "\"" + subject + "\": " : "") + what;
                     sb.AppendLine(line);
                     AddClaim("Scenes and prefabs changed", label + " — " + line.Substring(2),
@@ -360,6 +413,27 @@ namespace ChangeLens.Editor
                 }
                 sb.AppendLine();
             }
+        }
+
+        /// <summary>
+        /// For each change (in the given newest-first order), the path its asset
+        /// has at the end of the week. A rename or move maps every OLDER change
+        /// at the old path onto the new one; a newer file that reuses the old
+        /// path is not affected, because the mapping only applies past the rename.
+        /// </summary>
+        public static List<string> FinalPaths(List<AssetChange> newestFirst)
+        {
+            var result = new List<string>();
+            var finalOf = new Dictionary<string, string>();
+            foreach (AssetChange a in newestFirst ?? new List<AssetChange>())
+            {
+                string final;
+                if (!finalOf.TryGetValue(a.Path, out final)) final = a.Path;
+                result.Add(final);
+                if (!string.IsNullOrEmpty(a.RenamedFrom) && a.RenamedFrom != a.Path)
+                    finalOf[a.RenamedFrom] = final;
+            }
+            return result;
         }
 
         /// <summary>"a, b, c and 4 more" once a list passes <paramref name="max"/> items.</summary>
@@ -447,6 +521,16 @@ namespace ChangeLens.Editor
         /// A printable checklist: every claim on the page with the commits to
         /// open, and a Supported / Contradicted / Unclear column to fill by hand.
         /// </summary>
+        /// <summary>
+        /// How the scorer opens a commit. Plain `git show` prints a merge as a
+        /// combined diff, which is usually empty, so the checklist asks for the
+        /// first-parent diff: the same view the export counts.
+        /// </summary>
+        public const string ChecklistInstruction =
+            "Open each commit's diff (`git show --diff-merges=first-parent <hash>`) and mark every claim. " +
+            "For a merge, `git log --no-merges <hash>^1..<hash>` lists the changes it brought in. " +
+            "Pass rule (A2): none contradicted and at least 90% supported.";
+
         public string FidelityChecklistMarkdown()
         {
             if (Claims.Count == 0) ToMarkdown();
@@ -454,8 +538,7 @@ namespace ChangeLens.Editor
             sb.AppendLine("# Fidelity checklist: " + Title + " (" +
                           (Condition == ReportCondition.Treatment ? "Version B, treatment" : "Version A, baseline") + ")");
             sb.AppendLine();
-            sb.AppendLine("Open each commit's diff (`git show <hash>`) and mark every claim. " +
-                          "Pass rule (A2): none contradicted and at least 90% supported.");
+            sb.AppendLine(ChecklistInstruction);
             sb.AppendLine();
             sb.AppendLine("| # | Section | Claim | Commits | S / C / U |");
             sb.AppendLine("| ---: | --- | --- | --- | --- |");

@@ -26,10 +26,17 @@ namespace ChangeLens.Editor
         public const string LogFile = "log.txt";
         public const string PatchFile = "assets.patch";
         public const string GuidFile = "guids.txt";
+        public const string MergedFile = "merged.txt";
 
         public string LogText = "";
         public string PatchText = "";
         public string GuidText = "";
+
+        /// <summary>
+        /// The commits each merge brought in, one per line (see
+        /// <see cref="GitLogParser.ParseMerged"/>). Empty for a week with no merges.
+        /// </summary>
+        public string MergedText = "";
 
         /// <summary>Runs git for [since, until) in <paramref name="repoPath"/>.</summary>
         public static WeekExport FromGit(string repoPath, string since, string until)
@@ -42,9 +49,46 @@ namespace ChangeLens.Editor
             if (commits.Count > 0)
             {
                 // Script guids as they stood at the week's newest commit.
-                export.GuidText = RunGit(repoPath, "grep -I -e \"^guid:\" " + commits[0].Hash + " -- \"*.cs.meta\"");
+                string newest = RunGit(repoPath, GuidArgs(commits[0].Hash));
+
+                // Then as they stood just before the week's oldest commit, so a
+                // script deleted during the week still has a name. Only guids the
+                // newest table lacks are added: a script renamed during the week
+                // keeps its new name and is not made ambiguous.
+                string before = "";
+                string parent = RunGit(repoPath, "rev-parse -q --verify " + commits[commits.Count - 1].Hash + "^").Trim();
+                if (parent.Length > 0) before = RunGit(repoPath, GuidArgs(parent));
+                export.GuidText = GuidIndex.AppendMissing(newest, before);
+
+                // What each merge on the main line brought in.
+                var merged = new StringBuilder();
+                foreach (CommitRecord c in commits)
+                {
+                    if (!c.IsMerge) continue;
+                    string brought = RunGit(repoPath, MergedArgs(c.Hash));
+                    foreach (string line in brought.Replace("\r\n", "\n").Split('\n'))
+                        if (line.Length > 0) merged.Append(c.Hash).Append('\t').Append(line).Append('\n');
+                }
+                export.MergedText = merged.ToString();
             }
             return export;
+        }
+
+        /// <summary>The git arguments for every script guid line at one commit.</summary>
+        public static string GuidArgs(string commit)
+        {
+            return "grep -I -e \"^guid:\" " + commit + " -- \"*.cs.meta\"";
+        }
+
+        /// <summary>
+        /// The git arguments for the commits a merge brought in: everything
+        /// reachable from the merge but not from its first parent, merges left out.
+        /// One line each: hash, author, date, subject, tab-separated.
+        /// </summary>
+        public static string MergedArgs(string merge)
+        {
+            return "log --no-merges --no-color --date=iso \"--format=%H%x09%aN <%aE>%x09%ad%x09%s\" " +
+                   merge + "^1.." + merge;
         }
 
         /// <summary>
@@ -53,17 +97,43 @@ namespace ChangeLens.Editor
         /// brought in (--diff-merges=first-parent). So work done on a branch is
         /// reported in the week it was merged, not the week it was committed,
         /// which a weekly report run on the day would never see.
+        /// --pretty=medium and --no-color fix the layout the parser reads, whatever
+        /// the user's own git settings say (format.pretty=fuller, color.ui=always).
         /// </summary>
         public static string LogArgs(string since, string until)
         {
-            return "log --first-parent --diff-merges=first-parent --name-status --date=iso " + Range(since, until);
+            return "log --first-parent --diff-merges=first-parent --pretty=medium --no-color --name-status --date=iso " +
+                   Range(since, until);
         }
 
-        /// <summary>The git arguments for the week's scene and prefab patch (see <see cref="LogArgs"/>).</summary>
+        /// <summary>
+        /// The git arguments for the week's scene and prefab patch (see <see cref="LogArgs"/>).
+        /// The a/ and b/ prefixes are pinned because the patch parser reads them,
+        /// and textconv and external diff tools are turned off so the patch is git's own.
+        /// </summary>
         public static string PatchArgs(string since, string until)
         {
-            return "log -p --first-parent --diff-merges=first-parent --date=iso " + Range(since, until) +
+            return "log -p --first-parent --diff-merges=first-parent --pretty=medium --no-color " +
+                   "--src-prefix=a/ --dst-prefix=b/ --no-ext-diff --no-textconv --date=iso " + Range(since, until) +
                    " -- \"*.prefab\" \"*.unity\"";
+        }
+
+        /// <summary>
+        /// Settings passed with every git call so the output does not depend on
+        /// the user's git config. Each one, if set the other way, changes text
+        /// the parsers read: diff prefixes, grep line numbers and columns,
+        /// colour codes, signature lines, short hashes, rename detection and
+        /// the output encoding.
+        /// </summary>
+        public const string PinnedConfig =
+            "-c core.quotepath=false -c diff.noprefix=false -c diff.mnemonicPrefix=false " +
+            "-c grep.lineNumber=false -c grep.column=false -c color.ui=false -c log.showSignature=false " +
+            "-c log.abbrevCommit=false -c diff.renames=true -c i18n.logOutputEncoding=UTF-8";
+
+        /// <summary>The full argument string handed to git: <see cref="PinnedConfig"/> then the command.</summary>
+        public static string GitArguments(string args)
+        {
+            return PinnedConfig + " " + args;
         }
 
         private static string Range(string since, string until)
@@ -121,7 +191,8 @@ namespace ChangeLens.Editor
             {
                 LogText = ReadIfExists(Path.Combine(folder, LogFile)),
                 PatchText = ReadIfExists(Path.Combine(folder, PatchFile)),
-                GuidText = ReadIfExists(Path.Combine(folder, GuidFile))
+                GuidText = ReadIfExists(Path.Combine(folder, GuidFile)),
+                MergedText = ReadIfExists(Path.Combine(folder, MergedFile))
             };
         }
 
@@ -131,11 +202,17 @@ namespace ChangeLens.Editor
             File.WriteAllText(Path.Combine(folder, LogFile), LogText);
             File.WriteAllText(Path.Combine(folder, PatchFile), PatchText);
             File.WriteAllText(Path.Combine(folder, GuidFile), GuidText);
+            // Written only for a week with merges, so a week without them saves
+            // the same three files it always did.
+            if (!string.IsNullOrEmpty(MergedText))
+                File.WriteAllText(Path.Combine(folder, MergedFile), MergedText);
         }
 
         public ProducerReport BuildReport(ReportCondition condition, string title, IGuidResolver extraResolver = null)
         {
-            ChangeReport counts = ChangeReport.Build(GitLogParser.Parse(LogText), title);
+            List<CommitRecord> commits = GitLogParser.Parse(LogText);
+            GitLogParser.AttachMerged(commits, GitLogParser.ParseMerged(MergedText));
+            ChangeReport counts = ChangeReport.Build(commits, title);
             List<AssetChange> assets = AssetDiffParser.Parse(PatchText);
             GuidIndex index = GuidIndex.Parse(GuidText);
             IGuidResolver resolver = extraResolver == null
@@ -146,7 +223,7 @@ namespace ChangeLens.Editor
 
         public static string RunGit(string repoPath, string args)
         {
-            var psi = new ProcessStartInfo("git", "-c core.quotepath=false " + args)
+            var psi = new ProcessStartInfo("git", GitArguments(args))
             {
                 WorkingDirectory = repoPath,
                 RedirectStandardOutput = true,
@@ -239,14 +316,18 @@ namespace ChangeLens.Editor
             //             a component type, or the file being added/deleted.
             var strict = new Dictionary<string, bool>();
             var broad = new Dictionary<string, bool>();
-            foreach (AssetChange a in b.AssetChanges)
+            // Keyed on each asset's final path, so a renamed asset counts once.
+            List<string> finalPaths = ProducerReport.FinalPaths(b.AssetChanges);
+            for (int k = 0; k < b.AssetChanges.Count; k++)
             {
+                AssetChange a = b.AssetChanges[k];
+                string key = finalPaths[k];
                 bool s = a.ObjectNames.Count > 0;
                 bool w = s || a.TypesTouched.Count > 0 || a.AddedTypes.Count > 0 ||
                          a.RemovedTypes.Count > 0 || a.FileAdded || a.FileDeleted;
                 bool prior;
-                strict[a.Path] = (strict.TryGetValue(a.Path, out prior) && prior) || s;
-                broad[a.Path] = (broad.TryGetValue(a.Path, out prior) && prior) || w;
+                strict[key] = (strict.TryGetValue(key, out prior) && prior) || s;
+                broad[key] = (broad.TryGetValue(key, out prior) && prior) || w;
             }
             int strictCount = 0, broadCount = 0;
             foreach (bool v in strict.Values) if (v) strictCount++;

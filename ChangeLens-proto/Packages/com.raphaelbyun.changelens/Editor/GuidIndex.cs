@@ -18,6 +18,10 @@
 //         git grep -I "^guid:" <commit> -- "*.meta"
 //         -> <commit>:Assets/Scripts/EmergencyLight.cs.meta:guid: 307b90d1...
 //
+//     The same is read just before the week's oldest commit, and any guid the
+//     newest table lacks is added from it (AppendMissing), so a script deleted
+//     during the week can still be named.
+//
 // Pure C#, unit-tested.
 // ---------------------------------------------------------------------------
 
@@ -69,6 +73,28 @@ namespace ChangeLens.Editor
                 if (!all.Contains(metaPath)) all.Add(metaPath);
             }
             return index;
+        }
+
+        /// <summary>
+        /// The newest guid table followed by the lines of an older table whose
+        /// guid the newest one lacks. Used to add the scripts that were deleted
+        /// during the week: their guids are only in the table from before it.
+        /// </summary>
+        public static string AppendMissing(string newestGrep, string olderGrep)
+        {
+            newestGrep = newestGrep ?? "";
+            if (string.IsNullOrEmpty(olderGrep)) return newestGrep;
+            GuidIndex newest = Parse(newestGrep);
+            var sb = new System.Text.StringBuilder(newestGrep);
+            if (sb.Length > 0 && sb[sb.Length - 1] != '\n') sb.Append('\n');
+            foreach (string raw in olderGrep.Replace("\r\n", "\n").Split('\n'))
+            {
+                if (raw.Length == 0) continue;
+                GuidIndex one = Parse(raw);
+                foreach (string guid in one._paths.Keys)
+                    if (newest.PathFor(guid) == null) sb.Append(raw).Append('\n');
+            }
+            return sb.ToString();
         }
 
         public void Add(string guid, string path)

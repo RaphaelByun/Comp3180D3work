@@ -32,12 +32,12 @@ Dates in the page are each author's own local date, so a change made late on Sun
 
 Weeks are cut at midnight UTC, so the result is the same whatever time or time zone you run it in. A commit at exactly midnight belongs to the week it starts.
 
-The export follows the main line only. Work done on a branch shows up in the week the branch was merged, as one merge commit listing every file it brought in.
+The export follows the main line only. Work done on a branch shows up in the week the branch was merged, as one merge commit listing every file it brought in. Under the merge row the page lists who wrote that work and up to five of their changes, and the header counts those people too. This matters when someone merges main into their branch and main then moves onto that branch: the main line then runs through their branch, and everyone else's work arrives inside the merge.
 
 ## 4. Run the tests
 
-- In Unity: **Window → General → Test Runner → EditMode → Run All**. Expect 56 passing.
-- Without Unity: `dotnet test tools/changelens-dotnet/tests/tests.csproj` (also 56).
+- In Unity: **Window → General → Test Runner → EditMode → Run All**. Expect 67 passing.
+- Without Unity: `dotnet test tools/changelens-dotnet/tests/tests.csproj` (also 67).
 
 ## 5. Things worth trying to break
 

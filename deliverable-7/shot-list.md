@@ -7,7 +7,7 @@ Status: plan only. Tick when captured. Record screens at 1920x1080, 30 fps; reco
 | Shot | Beat | What | Length of clip | Prep | Done |
 |---|---|---|---|---|---|
 | S1 | 1 | Producer's world: a generic producer board or stand-up notes you build yourself (default). The Inkform board only if every teammate visible on it agrees in writing | 8 s | Hide names, emails | [ ] |
-| S2 | 2 | Figure 1 chart, animate in bar by bar or hold still | 12 s | Use `figures/fig4-code-file-percentage.png`; check it shows six repositories; the Inkform bar is an aggregate share only, so show no names, commits or issues beside it | [ ] |
+| S2 | 2 | Code share chart (A3 Figure 1), animate in bar by bar or hold still | 12 s | Use `figures/fig4-code-file-percentage.png`; check it shows six repositories; the Inkform bar is an aggregate share only, so show no names, commits or issues beside it | [ ] |
 | S3 | 2 | "Fix restart bug (#588)" commit: 35 files in five categories (use the Appendix C table row or a `git show --stat` crop) | 10 s | Crop to the file list | [ ] |
 | S4 | 3 | Unity 6.4 Editor: Window > ChangeLens Producer Page; choose Frozen study week (`study/week1-2021-02-08`) or From repository (week starts `2021-02-08`, Days `7`); press Generate; the page fills in | 20 s | Deliverable 2 branch checked out; Unity at 125% scale; clean scene; do a dry run first (`TRY-CHANGELENS.md`) | [ ] |
 | S5 | 4 | Version A (baseline) selected in the Producer Page, scrolled: header, "Where the work went", commit list | 25 s | Same window and size as S6 | [ ] |

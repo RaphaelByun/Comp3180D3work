@@ -34,3 +34,18 @@ Staff pointed to the Echo 360 folder of past portfolio videos, and two transcrip
 ## Where the sources sit
 
 The study reports (`study/week1-2021-02-08/report-A-baseline.md` and `report-B-treatment.md`) and the Producer Page (`Window > ChangeLens Producer Page`, with its Version A / Version B flip; see `TRY-CHANGELENS.md`) are on the Deliverable 2 branch (`deliverable-2-changelens`), not on `main`. Record beats 3 to 5 from that branch. The A2 Figure 2 docked window is the older file-sorting prototype; do not use it for beat 3. Figures are in `figures/` on `main`: Figure 1 in A2 (code share) is `fig4-code-file-percentage.png`; the A2 Figure 2 (docked window) and Figure 3 (prefab hunk) are `fig2-changelens-docked-2021.png` and `fig3-prefab-yaml-hunk.png`. File numbers differ from the A2 figure numbers.
+
+## Figure and table numbers in the A3 report
+
+The video stills are reused in the report, and the D6 figure tool also calls its plot "Figure 1". To avoid two figures with one number, use one list for the whole report. This is a proposal in order of first mention. Change it if the report's order changes, and keep the storyboard stills list in step.
+
+| Number | What | Source |
+|---|---|---|
+| Figure 1 | Code share of changed-file entries, six Unity repositories | `figures/fig4-code-file-percentage.png` on `main` (A2 Figure 1) |
+| Figure 2 | The ChangeLens Producer Page in the Unity Editor | New capture, still 2 |
+| Figure 3 | Version A (baseline), "Where the work went" table | New capture, still 3 |
+| Figure 4 | Version B (treatment), a naming section | New capture, still 4 |
+| Figure 5 | Paired differences per reader | `deliverable-6/analysis/figures.js` (Deliverable 6 branch). It titles the plot "Figure 1" and writes `figure-1-paired-differences.*`; renumber there or in the caption |
+| Tables 1, 2, 2b, 3 | Ten needs; full marks by condition and week; item 6 codes; think-aloud segments | `figures.js` as now. No other tables are planned, so these numbers stand |
+
+If a figure is dropped, renumber the rest in order and update this list.

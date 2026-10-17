@@ -658,6 +658,42 @@ const wide = rows => A.analyseCodes(A.parseCSV([WIDE].concat(rows).join('\r\n') 
   has('need id: sheet template note', fs.readFileSync(path.join(__dirname, 'templates', 'need-classifications.csv'), 'utf8'), 'not the printed row number');
 }
 
+// 24. Blank participant under a pilot row (r5). Ten-need sheet: P0 typed on its first row only, the
+//     other nine rows blank, then R01 and R02 in full (CRLF). Only R01 and R02 are analysed, and every need
+//     is classified by 2 readers, so Table 1 denominators are /2. Item scores: the pilot's rows after the
+//     first are blank too; they are named and left out, and the five readers are unchanged (mean 1.60).
+{
+  const ids = ['N01', 'N03', 'N07', 'N08', 'N09', 'N12', 'N17', 'N19', 'N25', 'N26'];
+  const keyL = L('D D D D P P P N N N');
+  const keyRows = A.parseCSV(['need_id,class'].concat(ids.map((id, i) => `${id},${keyL[i]}`)).join('\r\n'));
+  const lines = ['participant,need_id,class'];
+  ids.forEach((id, i) => lines.push(`${i ? '' : 'P0'},${id},${keyL[i]}`));
+  for (const p of ['R01', 'R02']) ids.forEach((id, i) => lines.push(`${p},${id},${keyL[i]}`));
+  const needRows = A.parseCSV(lines.join('\r\n') + '\r\n');
+  const o = A.analyseNeeds(needRows, keyRows);
+  has('blank needs: readers', o, 'readers analysed: 2 (pilot excluded)');
+  has('blank needs: warning', o, 'WARNING: 9 row(s) with a blank participant, left out until filled in: need N03, N07, N08, N09, N12, N17, N19, N25, N26. Fill participant on every row');
+  hasNot('blank needs: no nameless reader', o, 'classified 9 of 10');
+  const N = A.prepareNeeds(needRows, keyRows);
+  eq('blank needs: people', N.people.join(','), 'R01,R02');
+  eq('blank needs: N03 classified by 2', N.perNeed.find(x => x.id === 'N03').classified, 2);
+  const F = require('./figures.js');
+  has('blank needs: table 1 N03', F.table1(needRows, keyRows), '| N03 | D | 2/2 |');
+  // item scores: keep P0 on each block's first row only
+  let first = true;
+  const sl = scoreLines().map(l => {
+    if (!l.startsWith('P0,')) return l;
+    if (first) { first = false; return l; }
+    return l.slice(2);
+  });
+  const so = run(sl);
+  has('blank scores: rows read', so, 'Rows read: 72; pilot rows excluded: 1; blank participant rows left out: 11; analysed: 60.');
+  has('blank scores: warning', so, 'WARNING: 11 row(s) with a blank participant, left out until filled in: baseline item 2;');
+  has('blank scores: five readers', so, 'Readers: 5. Higher with names: 4.');
+  has('blank scores: mean', so, 'Mean difference 1.60 points out of 10');
+  hasNot('blank scores: no nameless reader', so, '(blank code)');
+}
+
 // 22. The tracker's five-reader sequences (deliverable-5/booking-tracker.csv): R01 S1, R02 S2, R03 S3, R04 S4,
 //     R05 S2. S1 = W1-B then W2-A; S2 = W2-A then W1-B; S3 = W1-A then W2-B; S4 = W2-B then W1-A.
 //     So treatment is W1 for R01, R02, R05 (3) and W2 for R03, R04 (2); order 2 for R02, R03, R05 (3).

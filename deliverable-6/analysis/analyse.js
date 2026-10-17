@@ -39,6 +39,7 @@
  * differ in both week and order; a reader failing this is left out and named. Weeks are read in upper
  * case and roles in lower case; weeks other than W1/W2 and roles other than producer/proxy are warned about.
  * Order is read as 1 or 2 (01, 1st, first; 02, 2nd, second); any other order is warned about and the reader left out.
+ * A row with a blank participant (in any file that has the column) is named and left out: it may be pilot data.
  * Ten-need sheet: duplicate (reader, need) rows and classes other than D, P or N are named and left out.
  * need_id is the key N-number (n1, N1 and n01 read as N01); a bare number maps through the key's optional
  * `row` column. A reader with any need_id not in the key is named and left out of every need table.
@@ -108,6 +109,10 @@ function parseCSV(text) {
   return out;
 }
 const csvWarnings = rows => (rows && rows.warnings) || [];
+// A blank participant cell (code typed only on a block's first row) could hide pilot rows, so those
+// rows are left out until filled in. A file with no participant column at all is still read.
+const isBlankP = r => !isPilot(r) && r.participant !== undefined && r.participant === '';
+const BLANK_P_NOTE = 'Fill participant on every row: a blank row under a pilot row may be pilot data.';
 
 function readCSV(file) {
   return parseCSV(fs.readFileSync(file, 'utf8'));
@@ -200,7 +205,8 @@ const validOrder = o => o === '1' || o === '2';
 // and treatment always cover the same people and every total is out of 10.
 function prepareScores(rowsAll) {
   const pilotRows = rowsAll.filter(isPilot);
-  const rows = rowsAll.filter(r => !isPilot(r)).map(r => {
+  const blankP = rowsAll.filter(isBlankP);
+  const rows = rowsAll.filter(r => !isPilot(r) && !isBlankP(r)).map(r => {
     // item is 1-6 (01 reads as 1); anything else (Q1, 7, blank) is kept as typed and warned about below
     const itemRaw = (r.item || '').trim();
     const item = /^0*[1-6]$/.test(itemRaw) ? String(parseInt(itemRaw, 10)) : itemRaw;
@@ -215,6 +221,10 @@ function prepareScores(rowsAll) {
     };
   });
   const warnings = csvWarnings(rowsAll).slice();
+  if (blankP.length) {
+    warnings.push(`WARNING: ${blankP.length} row(s) with a blank participant, left out until filled in: ` +
+      blankP.map(r => `${normCond(r.condition) || '(blank condition)'} item ${(r.item || '').trim() || '(blank)'}`).join('; ') + '. ' + BLANK_P_NOTE);
+  }
   const bad = rows.filter(r => SCORED.includes(r.item) && !validScore(r.score));
   if (bad.length) {
     warnings.push(`WARNING: ${bad.length} row(s) for items 1-5 with a score that is not 0, 1 or 2: ` +
@@ -291,7 +301,7 @@ function prepareScores(rowsAll) {
     else { complete.push(p); tot[p] = per; }
   }
   const inc = new Set(complete);
-  return { rowsAll, pilotRows, rows, used: rows.filter(r => inc.has(r.participant)), warnings, people, complete, excluded, tot };
+  return { rowsAll, pilotRows, blankRows: blankP, rows, used: rows.filter(r => inc.has(r.participant)), warnings, people, complete, excluded, tot };
 }
 
 function floorNotice(n) {
@@ -305,7 +315,8 @@ function analyseScores(rowsAll) {
   const out = [];
   const notice = floorNotice(S.complete.length);
   if (notice) out.push(notice + '\n');
-  out.push(`Rows read: ${S.rowsAll.length}; pilot rows excluded: ${S.pilotRows.length}; analysed: ${S.rows.length}.`);
+  out.push(`Rows read: ${S.rowsAll.length}; pilot rows excluded: ${S.pilotRows.length}; ` +
+    (S.blankRows.length ? `blank participant rows left out: ${S.blankRows.length}; ` : '') + `analysed: ${S.rows.length}.`);
   out.push(`Complete readers (both reports, items 1-5 each scored once): ${S.complete.length}${S.complete.length ? ' (' + S.complete.join(', ') + ')' : ''}. Every table below uses these readers only.`);
   S.warnings.forEach(w => out.push(w));
   if (S.excluded.length) {
@@ -583,7 +594,11 @@ function prepareNeeds(needRows, keyRows) {
     const t = (s || '').trim();
     return /^\d+$/.test(t) && rowMap[String(parseInt(t, 10))] ? rowMap[String(parseInt(t, 10))] : normNeedId(t);
   };
-  const rowsIn = needRows.filter(r => !isPilot(r)).map(r => Object.assign({}, r, { need_id: nid(r.need_id) }));
+  const blankP = needRows.filter(isBlankP);
+  if (blankP.length) {
+    warnings.push(`WARNING: ${blankP.length} row(s) with a blank participant, left out until filled in: need ${blankP.map(r => r.need_id || '(blank)').join(', ')}. ` + BLANK_P_NOTE);
+  }
+  const rowsIn = needRows.filter(r => !isPilot(r) && !isBlankP(r)).map(r => Object.assign({}, r, { need_id: nid(r.need_id) }));
   // A reader row whose need_id is not in the key means the sheet was typed with other ids (often the
   // printed row numbers). Matching the rest would compare answers against the wrong needs, so the
   // reader is named and left out of every need table until the sheet is fixed.
@@ -715,12 +730,9 @@ const inCodebook = c => Object.prototype.hasOwnProperty.call(KO_TYPES, c) || Obj
 function prepareCodes(codeRows) {
   const warnings = csvWarnings(codeRows).slice();
   const pilot = codeRows.filter(isPilot);
-  // A blank participant cell (code typed only on a block's first row) could hide pilot rows, so those
-  // rows are named and left out until filled in. A sheet with no participant column at all is still read.
-  const blankP = codeRows.filter(r => !isPilot(r) && r.participant !== undefined && r.participant === '');
+  const blankP = codeRows.filter(isBlankP);
   if (blankP.length) {
-    warnings.push(`WARNING: ${blankP.length} row(s) with a blank participant, left out until filled in: segment ${blankP.map(r => r.segment_id || '(blank)').join(', ')}. ` +
-      'Fill participant on every row: a blank row under a pilot row may be pilot data.');
+    warnings.push(`WARNING: ${blankP.length} row(s) with a blank participant, left out until filled in: segment ${blankP.map(r => r.segment_id || '(blank)').join(', ')}. ` + BLANK_P_NOTE);
   }
   const rows = codeRows.filter(r => !isPilot(r) && !blankP.includes(r));
   const by = {}, label = {}, count = {};

@@ -2,7 +2,7 @@
 
 Plan section 3, SE4. ChangeLens gets the same heuristics, severity scale, tasks and seed week as the four tools in D1, so the report can set it beside Trello, HacknPlan, Jira and GitHub Projects. This is your own hand pass; D1's pass was an AI evaluator. Say that when you compare.
 
-Logs: `deliverable-6/data/se4-heuristic-problems.csv` and `se4-task-outcomes.csv` (headers in `logs/`). About 50 minutes, Tue 27 Oct, after SE3.
+Logs: `deliverable-6/data/se4-heuristic-problems.csv` and `se4-task-outcomes.csv` (headers in `logs/`). About 50 minutes, Wed 28 Oct, after SE3.
 
 ## Materials (branch `deliverable-1-ux-study`)
 

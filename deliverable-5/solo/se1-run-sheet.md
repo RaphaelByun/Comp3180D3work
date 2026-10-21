@@ -30,6 +30,6 @@ A week and version passes when no claim is contradicted and at least 90% are sup
 
 | Day | Rows | Minutes |
 | --- | --- | ---: |
-| Fri 23 Oct | February B (39) and every C verdict | 45 |
-| Sat 24 Oct | July B (28); reserve-week C verdicts | 45 |
+| Mon 26 Oct (after SE2 scoring) | February B (39) and every C verdict | 45 |
+| Tue 27 Oct | July B (28); reserve-week C verdicts | 45 |
 | If time | February A (15), July A (14) | 20 |

@@ -64,8 +64,8 @@ Ko et al. studied developers. A producer's needs may fit none of the 21 types, a
 
 | Step | When | Do | File |
 |---|---|---|---|
-| 1. Capture | During each SE2 read (Tue 20 and Wed 21 Oct) | One row per need, clock time, `read_id` in `report_condition`, the note as typed. Commit with the answers, before the git log is opened | `deliverable-6/data/se2-needs-log.csv` |
-| 2. Pass 1 | Thu 22 Oct, a separate sitting after both weeks are read | Fill `pass1_code` and `pass1_date` for every row | same |
+| 1. Capture | During each SE2 read (Sun 25 Oct) | One row per need, clock time, `read_id` in `report_condition`, the note as typed. Commit with the answers, before the git log is opened | `deliverable-6/data/se2-needs-log.csv` |
+| 2. Pass 1 | Mon 26 Oct, a separate sitting after both weeks are read | Fill `pass1_code` and `pass1_date` for every row | same |
 | 3. Wait | At least 7 days | Do something else. Note the date in the diary | |
 | 4. Draw | Thu 29 Oct | `node deliverable-5/recode-sample.js draw --in deliverable-6/data/se2-needs-log.csv --out deliverable-6/data/recode-blind.csv`. It picks a seeded random quarter (rounded up) of the pass-1 rows and writes them without the pass-1 codes. `SELF` rows are kept. Write the printed seed and count in your diary | `recode-blind.csv` |
 | 5. Pass 2 | Same day as the draw | Code the blind file from the `quote_note` alone, without opening the main sheet | `recode-blind.csv` |

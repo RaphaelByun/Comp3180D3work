@@ -118,7 +118,7 @@ General rules for every activity:
 7. Commit the answers file, the ratings and the log. **Do not open the git log yet.**
 8. Five-minute break. Open the second version. For each item and need, mark only what changes: a new answer, a changed answer, or (RY) an answer the A page no longer supports. Lap times and confidence as before. Give the ratings again. Commit.
 
-**Scoring (Thu 22 Oct, after both weeks, about 60 minutes: 64 answers to check against the git log).**
+**Scoring (Mon 26 Oct, after both weeks, about 60 minutes: 64 answers to check against the git log).**
 1. Open the sealed keys (if items exist) and check the hash. Score items 1 to 5 as 0, 1 or 2 and code item 6 Pass, Hedged or Over-claim, with `deliverable-3/answer-key-and-scoring.md`.
 2. Score every need answer against the git log: `C` correct, `PC` partly correct, `W` wrong, `NA` left blank. Several needs (tasks finished, blocked work, risk, milestone, work left, what to tell a publisher) have no answer in a git log. For a need where the log holds nothing, "the page does not say" is a valid answer: score it `C` after you check the log has nothing, and score a specific answer `W` with cause `overclaim`. Also fill `record_could_answer` (`D`, `P` or `N`) from the git log by hand, not from the key. For each `W`, name the cause: `misread` (the page was right, you read it wrong), `overclaim` (the page did not say it), `page-wrong` (the page itself is wrong; carry it into SE1).
 3. Mark `only_in_b` = `y` where the correct answer depends on a line only Version B has.
@@ -226,6 +226,8 @@ General rules for every activity:
 
 Today's own checks of D3 and D4 come first. Dates are targets for Raphael.
 
+**Revised 21 Oct 2026:** SE2 did not run on 20 and 21 Oct (COMP3850 D4 comes first). The live dates are in `solo/README.md` "Revised schedule": SE2 Sun 25 Oct; scoring and SE1 February Mon 26; SE1 July and SE3 Tue 27; SE4 Wed 28; pass 2 Thu 29; analysis Fri 30. The table below is the 17 Oct plan, kept as the record.
+
 | Date | What | Minutes |
 | --- | --- | ---: |
 | Sat 17 Oct | Raphael's D3 and D4 checks (already planned); skip `study/reserve/` in both. Read and approve this plan and the change lists in sections 11 and 12 | – |
@@ -248,7 +250,7 @@ A3 is due Sun 8 Nov (the spec also gives 9 Nov for part of it; plan for 8 Nov). 
 
 Why this order: SE2 comes before the reserve-week fidelity check and before any walkthrough, so nothing spoils the reserve weeks. SE3 comes before SE4 so the task-based pass is not shaped by a heuristic list.
 
-## 5. Fixed before SE2 (fill and commit before Tue 20 Oct)
+## 5. Fixed before SE2 (filled and committed 21 Oct, `8fb989c`)
 
 - Ten-need key accepted or changed by Raphael on: 21 Oct 2026, accepted as drafted in `deliverable-3/ten-need-sheet.md` section B, no rows changed (Raphael asked Claude to fill in this section)
 - Rule chosen (Rule 1 or Rule 2), and why: Rule 2. A2 Sub-question 1 asks which *artefact* could supply each need (the tracker, the repository or the Unity asset layer); a person is not an artefact, so a need whose best source is a person is not derivable. Chosen on that reading, not on the mix. (the rule only changes the "Overall" columns, which include the tracker and a person; it does not change `key_ru_class`, so SE2 does not depend on it)

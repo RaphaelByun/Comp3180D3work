@@ -4,14 +4,14 @@ Every scoring rule from plan sections 3, 5 and 6, in the order you use them. If 
 
 Raw counts first, every time. No percentage without its count beside it. No p-values.
 
-## Step 0. Before SE2 (Sun 18 Oct)
+## Step 0. Before SE2 (done 21 Oct; see plan section 5)
 
 1. Accept or change the ten-need key in `deliverable-3/ten-need-sheet.md` section B. Write the date in plan section 5.
 2. Choose Rule 1 or Rule 2 and say why. The rule only changes the "Overall" columns. It does not change `key_ru_class`.
 3. Fill `key_ru_class` for each need: the best of the R and U columns (D beats P beats N). ChangeLens reads no tracker, so the T column is not used.
 4. Commit. From here on, `key_ru_class` does not change.
 
-## Step 1. SE2 items (Thu 22 Oct, only if items exist)
+## Step 1. SE2 items (Mon 26 Oct, only if items exist)
 
 1. Open the sealed keys. Check each key's SHA-256 against plan section 5. Write in `note` whether it matched.
 2. Score items 1 to 5 as 0, 1 or 2 with `deliverable-3/answer-key-and-scoring.md`.
@@ -19,7 +19,7 @@ Raw counts first, every time. No percentage without its count beside it. No p-va
 4. Tick `specific` (`y` or `n`) on items 4 and 5, as D3 does.
 5. Log in `se2-item-scores.csv`, one row per item per read.
 
-## Step 2. SE2 ten needs (Thu 22 Oct)
+## Step 2. SE2 ten needs (Mon 26 Oct)
 
 Open the git log now: `study/reserve/<week>/export/log.txt`, `export/assets.patch`, `export/guids.txt`, and `git show <hash>` in `prototype-data/SS3D`.
 
@@ -35,15 +35,15 @@ For each need on each read, fill `se2-need-answers.csv`:
 
 **When the log holds nothing.** Several needs (tasks finished, blocked work, risk, milestone, work left, what to tell a publisher) have no answer in a git log. If you check the log and it holds nothing, then "the page does not say" scores `C`. A specific answer scores `W` with cause `overclaim`.
 
-## Step 3. Stand-up drafts (Thu 22 Oct, first reads only)
+## Step 3. Stand-up drafts (Mon 26 Oct, first reads only)
 
 Split each draft into separate claims. Check each against the git log: `S` supported, `C` contradicted, `U` unclear. Write the three counts in `se2-reads.csv` (`standup_S`, `standup_C`, `standup_U`).
 
-## Step 4. Needs log pass 1 (Thu 22 Oct)
+## Step 4. Needs log pass 1 (Mon 26 Oct)
 
 Code every line of `se2-needs-log.csv` with `../think-aloud-coding-sheet.md`. Pass 2 on the blind quarter is Thu 29 Oct (same file, steps 4 to 8). Agreement is "x of n" only.
 
-## Step 5. AI second scorer (optional, Thu 22 Oct)
+## Step 5. AI second scorer (optional, Mon 26 Oct)
 
 An AI agent scores the same item and need answers, blind to your scores, from the keys and the git log. It writes `se2-second-scorer.csv`. Report agreement as answers in agreement out of answers scored. Disclose it in the GenAI statement.
 

@@ -28,7 +28,22 @@ The plan keeps the data in `deliverable-6/data/` on `deliverable-6-evaluation-re
 3. **Log your time** in `deliverable-8/hours-entries.csv` (on `deliverable-8-dev-diary`) against Deliverable 5.
 4. **Never fill a cell you did not observe.** A blank stays blank.
 
-## Schedule (plan section 4)
+## Revised schedule (21 Oct 2026)
+
+SE2 did not run on 20 and 21 Oct. COMP3850 D4 (due Sat 24 Oct) comes first, so SE2 moved to **Sun 25 Oct, both weeks in one day** (two sittings with a break between). The order of reads and every rule are unchanged. These dates are targets, proposed by Claude on 21 Oct; the dated tables further down are the 17 Oct plan, kept as the record.
+
+| Date | What | Minutes |
+| --- | --- | ---: |
+| Sun 25 Oct | SE2 sitting 1, week RX (A then B); break; sitting 2, week RY (B then A) | 100 |
+| Mon 26 Oct | SE2 scoring against the git log, needs-log pass 1, optional AI second scorer; then SE1 February B rows and C verdicts | 75 + 45 |
+| Tue 27 Oct | SE1 July B rows and reserve-week C verdicts; SE3 cognitive walkthrough | 45 + 40 |
+| Wed 28 Oct | SE4 heuristic evaluation. **All activities finished** | 50 |
+| Thu 29 Oct | Needs-log pass 2 on the blind quarter | 15 |
+| Fri 30 Oct | **Scoring and analysis finished** | 20 |
+
+`deliverable-6/data/` on `deliverable-6-evaluation-report` already holds the blank logs and the four answer sheets, so SE2 needs no setup beyond opening the pages.
+
+## Schedule (plan section 4, 17 Oct)
 
 Dates are targets. Move them if you need to, and keep the order.
 

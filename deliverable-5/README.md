@@ -35,7 +35,7 @@ Dates are targets for Raphael. The full table with run sheets is in `solo/README
 | Sat 17 Oct | Your D3 and D4 checks; skip `study/reserve/` in both. Approve the plan | – |
 | Sun 18 Oct | Accept the ten-need key, choose the rule, fill `key_ru_class` (plan section 5). Commit | 15 |
 | Mon 19 Oct | If approved: AI agent drafts the reserve items and sealed keys; D4 reserve checklists regenerated | – |
-| Tue 20 Oct | SE2, week RX (A then B) | 45 |
+| Tue 20 Oct (moved to Sun 25 Oct, see `solo/README.md` "Revised schedule") | SE2, week RX (A then B) | 45 |
 | Wed 21 Oct | SE2, week RY (B then A) | 45 |
 | Thu 22 Oct | SE2 scoring; needs-log pass 1; optional AI second scorer | 75 |
 | Fri 23 Oct | SE1, February B rows and C verdicts | 45 |

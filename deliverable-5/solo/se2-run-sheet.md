@@ -1,6 +1,6 @@
 # SE2 run sheet: timed self-read of the two reserve weeks
 
-Plan section 3, SE2. This is the core of the evaluation. You read each reserve week in both versions and answer from the page alone. Scoring against the git log comes later, on Thu 22 Oct (`how-to-score.md`).
+Plan section 3, SE2. This is the core of the evaluation. You read each reserve week in both versions and answer from the page alone. Scoring against the git log comes later, on Mon 26 Oct (`how-to-score.md`). Revised 21 Oct: both weeks run on Sun 25 Oct, RX first, then a break of at least 15 minutes, then RY.
 
 ## Fixed before you start
 
@@ -8,15 +8,15 @@ The order is fixed now. Do not change it after you have seen a page.
 
 | Day | Week | Code | First read | Second read |
 | --- | --- | --- | --- | --- |
-| Tue 20 Oct | 14 Dec 2020 | RX | A (baseline), `RX-A1` | B (treatment), `RX-B2` |
-| Wed 21 Oct | 27 Sep 2021 | RY | B (treatment), `RY-B1` | A (baseline), `RY-A2` |
+| Sun 25 Oct, sitting 1 | 14 Dec 2020 | RX | A (baseline), `RX-A1` | B (treatment), `RX-B2` |
+| Sun 25 Oct, sitting 2 | 27 Sep 2021 | RY | B (treatment), `RY-B1` | A (baseline), `RY-A2` |
 
-Before Tue 20 Oct, check these are done and committed:
+Before Sun 25 Oct, check these are done and committed:
 
-- [ ] Plan section 5 filled: key accepted, rule chosen, `key_ru_class` for all ten needs, reserve weeks opened before (yes or no).
-- [ ] Item key hashes in plan section 5, or "no items" written there.
+- [x] Plan section 5 filled: key accepted, rule chosen, `key_ru_class` for all ten needs, reserve weeks opened before (yes or no) (`8fb989c`, 21 Oct).
+- [x] Item key hashes in plan section 5, or "no items" written there (`8fb989c`; items `0d3f811`).
 - [ ] The item question sheets for both weeks are in hand (only if items were approved). The keys are **not** in the repo.
-- [ ] The CSVs from `logs/` are copied into `deliverable-6/data/`.
+- [x] The CSVs from `logs/` are copied into `deliverable-6/data/`, with one answer sheet per read (done 21 Oct on `deliverable-6-evaluation-report`).
 
 ## Materials
 
@@ -54,7 +54,7 @@ Before Tue 20 Oct, check these are done and committed:
 
 - The diary entry for the Create goal (an unfamiliar week) is written the same day as a first read, straight after it. Not before SE2.
 - Log the minutes for each sitting in `deliverable-8/hours-entries.csv`.
-- Score on Thu 22 Oct with `how-to-score.md`.
+- Score on Mon 26 Oct with `how-to-score.md`.
 
 ## If something goes wrong
 

@@ -250,11 +250,11 @@ Why this order: SE2 comes before the reserve-week fidelity check and before any 
 
 ## 5. Fixed before SE2 (fill and commit before Tue 20 Oct)
 
-- Ten-need key accepted or changed by Raphael on: __________
-- Rule chosen (Rule 1 or Rule 2), and why: __________ (the rule only changes the "Overall" columns, which include the tracker and a person; it does not change `key_ru_class`, so SE2 does not depend on it)
-- `key_ru_class` per need (best of the R and U columns of the accepted key): N01 ___ N03 ___ N07 ___ N08 ___ N09 ___ N12 ___ N17 ___ N19 ___ N25 ___ N26 ___
+- Ten-need key accepted or changed by Raphael on: 21 Oct 2026, accepted as drafted in `deliverable-3/ten-need-sheet.md` section B, no rows changed (Raphael asked Claude to fill in this section)
+- Rule chosen (Rule 1 or Rule 2), and why: Rule 2. A2 Sub-question 1 asks which *artefact* could supply each need (the tracker, the repository or the Unity asset layer); a person is not an artefact, so a need whose best source is a person is not derivable. Chosen on that reading, not on the mix. (the rule only changes the "Overall" columns, which include the tracker and a person; it does not change `key_ru_class`, so SE2 does not depend on it)
+- `key_ru_class` per need (best of the R and U columns of the accepted key): N01 D N03 P N07 N N08 N N09 N N12 D N17 N N19 P N25 P N26 P
 - Reserve item keys, SHA-256 (written 21 Oct 2026 by an AI agent, checked by a second agent; keys kept in `../_sealed-keys/` outside the repository, Raphael has not opened them): RX `66c0299560eeae7fe6a97878585e2c65290d8a3919805d407df5fa631829b1d5` RY `bf85b79c184ca984ce03c0fa54e3a4681503ca30db28591c17341deaa68a1517`. Question sheets: `deliverable-5/solo/items-reserve-2020-12-14.md`, `items-reserve-2021-09-27.md`.
-- Reserve weeks opened before today? __________
+- Reserve weeks opened before today? No (Raphael, 21 Oct 2026). He has not seen the reserve pages, diffs or keys, nor the agents' reports about the items.
 
 ## 6. Scoring and analysis
 

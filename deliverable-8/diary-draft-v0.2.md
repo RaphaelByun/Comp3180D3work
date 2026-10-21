@@ -74,7 +74,7 @@ I did not do any project work over the break. *(Raphael, 17 Oct draft)*
 
 ## Week 12 (26 Oct to 1 Nov 2026)   |   completed by me on [date]
 
-[Planned (solo run kit, revised 21 Oct): SE2 scoring and SE1 on Mon 26, SE1 and SE3 on Tue 27, SE4 on Wed 28, needs-log pass 2 on Thu 29, analysis on Fri 30. Write what actually happened, and any fix you made after SE3 or SE4, with its commit.]
+[Planned (run kit, revised 21 Oct): SE2 scoring and SE1 on Mon 26, SE1 and SE3 on Tue 27, SE4 on Wed 28, needs-log pass 2 on Thu 29, analysis on Fri 30. Write what actually happened, and any fix you made after SE3 or SE4, with its commit.]
 [The **Understand-goal entry** `[goal evidence]`: the three mechanisms stated unaided, before Fri 30 Oct.]
 
 ## Week 13 (2 to 8 Nov 2026)   |   completed by me on [date]

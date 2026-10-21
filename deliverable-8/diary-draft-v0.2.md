@@ -9,7 +9,7 @@
 | v0.1 | 17 Oct 2026 | `diary-draft-weeks-9-10.md`: break, Week 9 and Week 10 drafts |
 | v0.2 | 21 Oct 2026 | This file. Commit counts re-checked on 21 Oct; Week 11 facts to 21 Oct added; empty Week 12 and 13 slots added; v0.1 kept unchanged |
 
-**How the counts were made (21 Oct 2026):** `git log --remotes` after `git fetch --all`, unique commits, author date in Sydney time. There are 187 unique commits: 184 authored by RaphaelByun and 3 by Claude, and all 187 carry a `Co-Authored-By: Claude` trailer. By day: 11 Oct 1, 12 Oct 3, 13 Oct 15 (3 of them merges), 14 Oct 9, 17 Oct 155, 21 Oct 4. There are no commits on 15, 16, 18, 19 or 20 Oct.
+**How the counts were made (21 Oct 2026):** `git log --remotes` after `git fetch --all`, unique commits, author date in Sydney time. Before this file was committed there were 187 unique commits (184 authored by RaphaelByun, 3 by Claude), and all 187 carry a `Co-Authored-By: Claude` trailer. By day: 11 Oct 1, 12 Oct 3, 13 Oct 15 (3 of them merges), 14 Oct 9, 17 Oct 155, 21 Oct 4. There are no commits on 15, 16, 18, 19 or 20 Oct.
 
 ---
 
@@ -44,17 +44,16 @@ I did not do any project work over the break. *(Raphael, 17 Oct draft)*
 - 12–13 Oct: two date bugs fixed (`e73f544`, `323eac1`). On a Sydney PC the February week showed 3 commits instead of 8.
 - 13 Oct: Producer Page window added (`323eac1`). The February fidelity check (AI scorers) found contradicted Version B rows 19, 21 and 33. Parser repaired (`bf09b4e`); B re-scored 39 of 39 (`b1a2df6`). Tests 42 → 46. D3–D9 scaffolds committed the same evening.
 - 14 Oct: D1 heuristic pass run by Claude in your browser at your request (61 problems, 16 at severity 3–4; `e078ebd`). The two interviews dropped for six coded published sources. D1 finished by AI (`92ff8b4`).
-- 17 Oct: no ethics application (your decision; `f569f96` and five sibling commits). Solo evaluation decided by you (`deliverable-5/self-evaluation-plan.md`). Reserve weeks re-frozen at `d9fa4bf`. 155 commits that day from multi-agent Claude Code runs; .NET tests 46 → 85.
+- 17 Oct: no ethics application (your decision; `f569f96` and five sibling commits). Reserve weeks re-frozen at `d9fa4bf`. 155 commits that day from multi-agent Claude Code runs; .NET tests 46 → 85.
 
 **What I made of it** *(Raphael, 17 Oct draft)*: I passed the heuristic pass to Claude because it is a testing task. I know it is meant to be a human test: which tool is easy or hard to use, and whether it is harder for programmers or producers. I found I got a better list of questions from Claude and could answer them.
 
 [What the fidelity failure taught you about trusting the tool's output.]
-[17 Oct: why you chose to evaluate ChangeLens yourself, in your own words, and what you expect to lose and to learn.]
 [155 commits in one day reads as a binge. Say honestly how the work was spread and who did it.]
 
 **Prac:** [attended Y/N; who you spoke to]
 
-**Plan changes (facts):** D1 interviews dropped (14 Oct); D1 pass by AI (14 Oct); D5 sessions replaced by SE1–SE4 (17 Oct); D7 two-viewer test dropped (17 Oct). [Why, in your words.]
+**Plan changes (facts):** D1 interviews dropped (14 Oct); D1 pass by AI (14 Oct); D7 two-viewer test dropped (17 Oct). [Any other change, in your words.] [Why, in your words.]
 
 ## Week 11 (19 to 25 Oct 2026), so far to Wed 21 Oct   |   completed by me on [date]
 

@@ -11,7 +11,7 @@ Marker's notes to act on (A2 feedback, 100/100):
 2. For the A3 Evaluation, report raw counts and limits (that is Deliverable 6, but carry the habit into any number you quote here).
 3. Staff will mark down hour variances that have no explanation (Lecture 4). The table in section 2 is where you explain them.
 
-**17 Oct 2026 decision.** There is no study with other people: no recruitment, no sessions, no online form. You evaluate ChangeLens yourself (SE1 to SE4 in `deliverable-5/self-evaluation-plan.md` on `deliverable-5-sessions`). Every prompt below that once pointed at readers now points at that solo evidence. In the reflection, the study has one reader, the developer. Do not describe it as having any other readers or participants.
+**17 Oct 2026 decision.** There is no study with other people: no recruitment, no sessions, no online form. You evaluate ChangeLens yourself (SE1 to SE4 in `deliverable-5/self-evaluation-plan.md` on `deliverable-5-sessions`). Every prompt below that once pointed at readers now points at that solo evidence. **Updated 26 Oct 2026 (Claude Code, Raphael away) for your 21 Oct rule:** the reflection does not describe the evaluation design at all. It is stated once, in one sentence in the report's Evaluation Method. The variance table's evaluation rows only point to that sentence. Never describe the study as having other readers or participants.
 
 ## 1. The four learning goals, quoted exactly from A2
 
@@ -31,7 +31,7 @@ A2 lead-in: "These capabilities span understand to create (Anderson & Krathwohl,
 |---|---|---|---|
 | Understand | A diary entry stating each of the three mechanisms unaided, with its source and a breakdown it predicts | **A diary entry you still have to write** (see the note below). Mechanisms: structural (Dourish & Bellotti, 1992), opacity (Whitson, 2018), audience (Stray et al., 2016) | Not started |
 | Apply and Analyse | Four tools coded; one reconciliation naming three places inspection and interviews disagree. **Changed in D1 (14 Oct 2026):** the interviews were dropped for time and six published producer accounts were coded instead, so the measure now reads "three places where inspection and the published sources disagree". State this substitution wherever you report the measure | Deliverable 1: `heuristic-coding-sheet.md` (61 problems across the four tools), `published-sources.md` (six sources; reconciliation in §6.1), `design-spec.md`. Added by the solo plan: SE4, your own hand heuristic pass of ChangeLens on the D1 scale (`deliverable-6/data/se4-*.csv`, Table F) | Heuristic pass run by AI (Claude Code, 14 Oct 2026): one evaluator, and an AI one. Reconciliation AI-drafted. Yours: hand spot-check the 16 severity 3–4 findings and accept or rewrite the reconciliation (D1 README steps 2 and 8). SE4 is the first pass you run by hand; it adds to the measure but does not replace it (four tools coded, one reconciliation). SE4: not started |
-| Evaluate | Every need classified against a named artefact; three needs where you name the rejected artefact and why | Deliverable 1 `needs-catalogue.md` (25 needs, 75 marks; rejected-artefact cases N07, N10, N27 in §3.1). Solo evidence: SE2 Table B (ten needs by read) and Table C (the ten-need key against what the page gave, checked against the git log), one reader, the developer | All 25 needs marked and the three cases picked by AI (15 Oct 2026). Yours: accept or change each mark and case (D1 README steps 10 to 14, needs-catalogue.md §8). Ten-need key accepted on: ___ (plan §5). SE2: not started |
+| Evaluate | Every need classified against a named artefact; three needs where you name the rejected artefact and why | Deliverable 1 `needs-catalogue.md` (25 needs, 75 marks; rejected-artefact cases N07, N10, N27 in §3.1). Evaluation evidence: SE2 Table B (ten needs by read) and Table C (the ten-need key against what the page gave, checked against the git log) | All 25 needs marked and the three cases picked by AI (15 Oct 2026). Yours: accept or change each mark and case (D1 README steps 10 to 14, needs-catalogue.md §8). Ten-need key accepted on: ___ (plan §5). SE2: not started |
 | Create | A diary entry written against an unfamiliar Unity week, tying each layout decision to a named reader need | Deliverable 2 (the report layout) plus **a diary entry you still have to write** against a week you have not worked on. Use a reserve week (14 Dec 2020 or 27 Sep 2021) **only after SE2**: write the entry the same day, straight after your SE2 first read of that week. Opening a reserve week earlier spoils SE2 | Not started |
 
 Note: two of the four measures are diary entries (Understand and Create). They must be written in the diary (Deliverable 8) in your own words, with the date you really wrote them. The skeleton cannot do this for you.
@@ -53,22 +53,17 @@ How to fill: log hours in `deliverable-8/hours-entries.csv`, total them into `de
 | 9 | Reflection report (all four goals) | 2 | 0 | | | | |
 | | **Total** | **65** | **15** | | | | |
 
-Things the planned figures already include, which can help explain differences: the committed tier is 11 h, the stretch tier 3 h, the challenge tier 2 h (A2); an overrun drops the challenge tier first, then the stretch tier. Say which tiers were built, cut or changed. A2 named recruitment as the biggest risk; on 17 Oct 2026 you decided not to recruit at all, so say how that moved the hours.
+Things the planned figures already include, which can help explain differences: the committed tier is 11 h, the stretch tier 3 h, the challenge tier 2 h (A2); an overrun drops the challenge tier first, then the stretch tier. Say which tiers were built, cut or changed. The evaluation rows (3, 5 and 6) only point to the Evaluation Method sentence (21 Oct rule); give their actual hours, not a reason.
 
 † **A2-plan change: the evaluation (17 Oct 2026).** `variance-table.js` marks rows 3, 5 and 6 and prints these sources under the table. They are facts to draw on, not the "why"; write that yourself.
 
 | # | A2 plan | What changed (`deliverable-5/self-evaluation-plan.md`) | Planned after the change | Actual | Why (write this yourself) |
 |---|---|---|---|---|---|
-| 3 | Protocol and instruments for eight readers, tested in a pilot | No pilot and no sessions. The ten-need sheet, the Endsley item slot plan, the codebook and the fidelity check are kept for one reader (§1, §11) | – | | |
-| 5 | 18 h: 7 sessions, 4 recruiting, 7 coding | Solo evaluation SE1 to SE4: fidelity hand-check, timed self-read of two unseen weeks, cognitive walkthrough, heuristic pass (§3) | about 6.5 h (§4, §10) | | |
-| 6 | Report and analysis from the readers' data | Tables A to H built from the solo CSVs (§6) | – | | |
+| 3 | Protocol and instruments for eight readers, tested in a pilot | No pilot and no sessions. The ten-need sheet, the Endsley item slot plan, the codebook and the fidelity check are kept (§1, §11) | – | | See Evaluation Method |
+| 5 | 18 h: 7 sessions, 4 recruiting, 7 coding | Solo evaluation SE1 to SE4: fidelity hand-check, timed self-read of two unseen weeks, cognitive walkthrough, heuristic pass (§3) | about 6.5 h (§4, §10) | | See Evaluation Method |
+| 6 | Report and analysis from the readers' data | Tables A to H built from the evaluation CSVs (§6) | – | | See Evaluation Method |
 
-Source for the "why" cells: your reasons on 17 Oct 2026, in your words (plan §1): you don't want live testing, you have no time to arrange people, and testing it yourself is "the best way for me to explain it myself to others if they are using it, and I am able to learn it as well." You accepted that this likely caps Evaluation near a Pass (plan §9). Plan §10 asks for the D5 difference to be reported as a change of method, not as time saved.
-
-Prompts for these three rows:
-- Which of your 17 Oct reasons drove the change most? Say it in one sentence; do not paste the quote above as your answer.
-- What did the change cost the study (one reader who built the tool, no reader-to-reader agreement, no claim about producers), and what did it give you (learning the tool well enough to explain it)?
-- Did the solo plan's hours hold? Count the SE1 to SE4 minutes in `deliverable-8/hours-entries.csv` before you write the cause.
+For these three rows (21 Oct rule): the "Why" cell only points to the Evaluation Method sentence. No reason and no limitation goes here; your 17 Oct reasons stay in plan §1. Fill "Actual" from the SE1 to SE4 minutes in `deliverable-8/hours-entries.csv`.
 
 Prompts for the "Why" column:
 - Was it scope (more or less built), skill (slower or faster than expected), waiting (people, tools, fixes), or rework (a bug, a marker's note, a redo)?
@@ -121,7 +116,6 @@ For each goal, answer in your own words, in this order. Keep the evidence link n
 - Table C sets the ten-need key against what the page gave you on the unseen weeks, checked against the git log. Which needs surprised you? Name three where you rejected an artefact and why.
 - Where did the key and `record_could_answer` differ, and where did the page lose what the records held? What did that tell you that an agreement count could not?
 - Where did your marking key prove wrong or unclear? Which of your wrong answers were `misread`, `overclaim` or `page-wrong`?
-- You knew the key before SE2 (anchoring) and you built the tool. How far can one reader, the developer, judge whether artefacts serve a producer? Be plain about the limit.
 - Skill gained: ___. Extent and why.
 
 **Create**
@@ -159,5 +153,5 @@ Goals list (names only, restated) 40; four goals at about 80 each 320; self-dire
 - [ ] Every flagged variance has a cause in your own words.
 - [ ] Transferable-skill wording used; A2 goal names in brackets.
 - [ ] Numbers quoted as counts with limits.
-- [ ] The evaluation is described as one reader, the developer, with the 17 Oct 2026 change stated as an A2 variance. No claim about producers or other readers.
+- [ ] The evaluation design is not described in the reflection; it is stated once, in Evaluation Method (21 Oct rule). The variance rows only point there. No claim about producers or other readers.
 - [ ] No sentence here was written by an AI. If you used AI to proofread, say so in the Statement on Generative AI use.

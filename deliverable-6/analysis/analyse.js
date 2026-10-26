@@ -4,7 +4,6 @@
  * ChangeLens solo evaluation analysis (COMP3180 A3, Deliverable 6).
  * Plain Node.js, no dependencies.
  *
- * The evaluation is a solo one (Raphael's decision, 17 Oct 2026): one reader, the developer.
  * The plan is deliverable-5/self-evaluation-plan.md on deliverable-5-sessions (SE1 to SE4, sections 3 and 6).
  * This tool replaces the reader-study analysis (paired differences across readers, reader floor,
  * counterbalanced sequences, per-reader kappa). That version is in the git history before 17 Oct 2026.
@@ -12,12 +11,16 @@
  * Usage:
  *   node analyse.js                      (runs on the FAKE sample-*.csv files beside this script)
  *   node analyse.js --se1 se1-fidelity-handcheck.csv --reads se2-reads.csv --needs se2-need-answers.csv
- *                   --items se2-item-scores.csv --log se2-needs-log.csv --scorer2 se2-second-scorer.csv
+ *                   --items se2-item-scores.csv --log se2-needs-log.csv
  *                   --walk se3-walkthrough.csv --heur se4-heuristic-problems.csv --tasks se4-task-outcomes.csv
  *                   [--d1 d1-problems.csv] [--d1tasks d1-task-outcomes.csv] [--out analysis-output.md]
  *
- * Any input may be left out; its table is skipped. Columns are in the plan, section 3, and in the
- * header-only templates in templates/.
+ * --scorer2 is unused: there is no AI second scorer (decided 26 Oct 2026). The option is kept only so
+ * the FAKE demo still shows the check; a header-only scorer file is skipped.
+ * --d1 and --d1tasks are optional: give them only once the D1 files exist in data/.
+ *
+ * Any input may be left out; its table is skipped. A file that is named but not found is skipped with a
+ * WARNING line, not a crash. Columns are in the plan, section 3, and in the header-only templates in templates/.
  *
  * What it prints (raw counts first, no percentage without its count, no p-values):
  *   Table A. Fidelity hand-check (SE1): per week and version, S / C / U by hand, the A2 pass rule,
@@ -33,7 +36,7 @@
  *            T1 to T7 outcomes.
  *   Table G. Needs log (SE2): entries by Ko et al. (2007) type; pass 1 against pass 2 as x of n only.
  *   Table H. Ratings and stand-up per read (SE2).
- *   Scoring check. AI second scorer against Raphael's scores, x of n.
+ *   Scoring check. Unused (no second scorer, 26 Oct 2026); runs only when a scorer file has data rows.
  *
  * Read order is fixed by the plan: RX-A1 (14 Dec 2020, A first), RX-B2, RY-B1 (27 Sep 2021, B first), RY-A2.
  * First reads are compared only with each other; first and second reads are never added together.
@@ -512,7 +515,7 @@ function tableH(rowsIn) {
   const P = prepareReads(rowsIn);
   const s = x => (x === null || x === undefined ? '' : String(x));
   return {
-    id: 'H', title: 'Table H. Ratings and stand-up per read (SE2): ratings 1 (low) to 5 (high), written before scoring; one reader\'s opinion',
+    id: 'H', title: 'Table H. Ratings and stand-up per read (SE2): ratings 1 (low) to 5 (high), written before scoring',
     head: ['Read', 'Date', 'Seen before', 'Minutes', 'Ease', 'Useful', 'Would send', 'Why', 'Stand-up S', 'Stand-up C', 'Stand-up U'],
     rows: READ_IDS.map(read => {
       const v = P.rows.find(x => x.read === read);
@@ -585,7 +588,7 @@ function tableE(rowsIn) {
     id: 'E', title: 'Table E. Cognitive walkthrough of the Producer Page window (SE3; Wharton et al., 1994): N answers per question and failure stories by severity',
     head: ['Task', 'Steps', 'Q1 N', 'Q2 N', 'Q3 N', 'Q4 N', 'Steps failing', 'Sev 0', 'Sev 1', 'Sev 2', 'Sev 3', 'Sev 4'],
     rows: out,
-    notes: ['One evaluator, who built the tool. The walkthrough is usually a group method.'],
+    notes: [],
     warnings,
   };
 }
@@ -655,8 +658,7 @@ function tableF(heurRows, taskRows, d1Rows, d1TaskRows) {
       { title: 'Table F (continued). Problems by primary heuristic', head: ['Heuristic'].concat(tools), rows: hRows },
       { title: 'Table F (continued). Tasks T1 to T7: completed Y, partly or N', head: ['Task'].concat(tTools), rows: taskTable },
     ],
-    notes: ['D1\'s pass was run by an AI evaluator. Use a D1 rating only where Raphael has checked it ("checked"), and say which.',
-      'One evaluator found the ChangeLens problems, and he built the tool (Nielsen & Molich, 1990; Hertzum & Jacobsen, 2001).'],
+    notes: ['D1\'s pass was run by an AI evaluator. Use a D1 rating only where Raphael has checked it ("checked"), and say which.'],
     warnings,
   };
 }
@@ -829,8 +831,21 @@ function inputFiles(a, dir) {
   return f;
 }
 const isFake = f => Object.values(f).some(x => x && path.basename(x).startsWith('sample-'));
+// A named input file that does not exist is dropped with a WARNING, so its table is skipped instead of
+// the run crashing (for example --d1 before the D1 files are copied into data/).
+function dropMissing(f) {
+  const files = {}, warnings = [];
+  for (const k of Object.keys(f)) {
+    const v = f[k];
+    if (v && !fs.existsSync(v)) { warnings.push(`WARNING: --${k} ${v}: file not found, table skipped.`); files[k] = null; }
+    else files[k] = v || null;
+  }
+  return { files, warnings };
+}
 
 function buildAll(f) {
+  const M = dropMissing(f);
+  f = M.files;
   const rd = k => (f[k] ? readCSV(f[k]) : null);
   const d = {};
   for (const k of Object.keys(INPUTS)) d[k] = rd(k);
@@ -843,22 +858,27 @@ function buildAll(f) {
   if (d.heur || d.tasks) t.push(tableF(d.heur, d.tasks, d.d1, d.d1tasks));
   if (d.log) t.push(tableG(d.log));
   if (d.reads) t.push(tableH(d.reads));
-  if (d.scorer2) {
+  // No second scorer is used (26 Oct 2026): a header-only scorer file prints nothing.
+  if (d.scorer2 && d.scorer2.length) {
     if (d.needs || d.items) t.push(scoringCheck(d.needs, d.items, d.scorer2));
     else t.push({ id: 'S', title: 'Scoring check', head: [], rows: [], notes: ['Needs --needs or --items beside --scorer2; skipped.'] });
   }
+  t.missing = M.warnings;
   return t;
 }
 
-const FOOTER = 'One reader, the developer. Raw counts only, no p-values. These tables show what the page holds and where it fails for this reader, not how producers would do.';
+const FOOTER = 'Raw counts only, no p-values. These tables show what the page holds and where it fails.';
 
 function main() {
   const a = args(process.argv.slice(2));
   const f = inputFiles(a, __dirname);
   const out = ['# ChangeLens solo evaluation analysis'];
   if (isFake(f)) out.push('\n**FAKE DATA: one or more inputs are sample-*.csv files. Nothing below is a result.**');
-  out.push('\nInputs: ' + Object.entries(f).filter(([, v]) => v).map(([k, v]) => `${k}=${path.basename(v)}`).join(', '));
-  buildAll(f).forEach(t => out.push(render(t)));
+  const M = dropMissing(f);
+  out.push('\nInputs: ' + Object.entries(M.files).filter(([, v]) => v).map(([k, v]) => `${k}=${path.basename(v)}`).join(', '));
+  const tables = buildAll(f);
+  if (tables.missing.length) out.push('', tables.missing.join('\n'));
+  tables.forEach(t => out.push(render(t)));
   out.push('\n---\n' + FOOTER);
   const text = out.join('\n') + '\n';
   if (a.out) fs.writeFileSync(a.out, text);
@@ -871,6 +891,6 @@ module.exports = {
   normReadId, normNeedId, observedClass,
   prepareSE1, prepareNeeds, prepareItems, prepareReads, prepareLog,
   tableA, tableB, tableC, tableD, tableE, tableF, tableG, tableH, tableTime, timeConfidence, scoringCheck,
-  INPUTS, inputFiles, isFake, buildAll, FOOTER,
+  INPUTS, inputFiles, isFake, dropMissing, buildAll, FOOTER,
 };
 if (require.main === module) main();

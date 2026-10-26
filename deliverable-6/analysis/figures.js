@@ -11,6 +11,9 @@
  *                   --heur se4-heuristic-problems.csv --tasks se4-task-outcomes.csv [--d1 d1-problems.csv] \
  *                   [--d1tasks d1-task-outcomes.csv] --outdir deliverable-6/data/figures --figure 5
  *
+ * --d1 and --d1tasks are optional: give them only once the D1 files exist in data/. A named file that is
+ * not found is skipped with a WARNING line, not a crash.
+ *
  * --figure N sets the figure's number in its title and in tables.md (default 1). The report-wide
  * numbering list in deliverable-7/README.md makes this Figure 5, so give --figure 5 for the report.
  *
@@ -96,8 +99,8 @@ function figureSvg(T, opts) {
   y += 44;
   const H = Math.round(y);
   o.push(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="Calibri, Arial, sans-serif" role="img" aria-labelledby="t d">`);
-  o.push(`<title id="t">Figure ${num}: time and confidence, one reader</title>`);
-  o.push(`<desc id="d">One reader, the developer. Minutes per read: ${esc(T.reads.map(r => `${r.read} ${r.minutes === null ? 'n/a' : r.minutes}`).join('; '))}. ` +
+  o.push(`<title id="t">Figure ${num}: time and confidence</title>`);
+  o.push(`<desc id="d">Minutes per read: ${esc(T.reads.map(r => `${r.read} ${r.minutes === null ? 'n/a' : r.minutes}`).join('; '))}. ` +
     `Need answers by confidence and result: ${esc(['C', 'PC', 'W', 'NA'].map(k => `${k} ${T.grid[k].join('/')}`).join('; '))}.</desc>`);
   o.push(`<rect width="${W}" height="${H}" fill="#FFFFFF"/>`);
   if (fake) o.push(`<text x="${W / 2}" y="24" text-anchor="middle" font-size="16" font-weight="bold" fill="#B00020">FAKE DATA: sample files, not a result</text>`);
@@ -173,14 +176,17 @@ function args(argv) {
 function build(f, opts) {
   const num = (opts && opts.number) || 1;
   const fake = A.isFake(f);
+  const M = A.dropMissing(f);
+  f = M.files;
   const md = [`# ChangeLens solo evaluation: Figure ${num} and Tables B, C, F and G`];
   if (fake) md.push('', '**FAKE DATA: one or more inputs are sample-*.csv files. Nothing below is a result.**');
   md.push('', 'Inputs: ' + Object.entries(f).filter(([, v]) => v).map(([k, v]) => `${k}=${path.basename(v)}`).join(', '));
+  if (M.warnings.length) md.push('', M.warnings.join('\n'));
   let svg = null;
   if (f.reads || f.needs) {
     const T = A.timeConfidence(f.reads ? A.readCSV(f.reads) : null, f.needs ? A.readCSV(f.needs) : null);
     svg = figureSvg(T, { fake, number: num });
-    md.push('', `Figure ${num}: time and confidence, one reader (the developer). ${T.n} need answer(s) with a confidence and a result; ${T.highWrong} wrong at confidence 4 or 5.`);
+    md.push('', `Figure ${num}: time and confidence. ${T.n} need answer(s) with a confidence and a result; ${T.highWrong} wrong at confidence 4 or 5.`);
     T.warnings.forEach(w => md.push('', w));
   }
   md.push('', tablesMd(f));

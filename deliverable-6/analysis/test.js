@@ -297,6 +297,9 @@ eq('undefined kappa is NaN', Number.isNaN(A.cohenKappa(L('A A A A'), L('A A A A'
   has('F: T1', md, '| T1   | Y (40 s)       | partly    | N         |');
   has('F: T3', md, '| T3   | partly (300 s) | –         | –         |');
   has('F: AI evaluator note', md, 'D1\'s pass was run by an AI evaluator.');
+  // 26 Oct: the design is stated once, in the report's Method, so Table F carries no evaluator/limits line.
+  for (const word of ['One evaluator', 'built the tool', 'Hertzum', 'Nielsen & Molich']) hasNot(`F: no "${word}" line`, md, word);
+  hasNot('E: no evaluator line', A.render(A.tableE(sample('walk'))), 'built the tool');
   // without D1 files: ChangeLens alone
   const solo = A.render(A.tableF(sample('heur'), null, null, null));
   has('F: ChangeLens only', solo, '| Total      | 4          |');
@@ -358,7 +361,23 @@ eq('undefined kappa is NaN', Number.isNaN(A.cohenKappa(L('A A A A'), L('A A A A'
   eq('main: tables in order', ts.map(t => t.id).join(''), 'ABCDTEFGHS');
   const all = ts.map(t => A.render(t)).join('\n');
   for (const word of ['paired difference', 'floor', 'counterbalanc', 'R01', 'pilot', 'participants']) hasNot(`main: no "${word}"`, all.toLowerCase(), word.toLowerCase());
-  has('main: footer', A.FOOTER, 'One reader, the developer.');
+  has('main: footer', A.FOOTER, 'Raw counts only, no p-values.');
+  hasNot('main: footer has no design line', A.FOOTER, 'One reader');
+  // 26 Oct: a missing optional file (--d1 before the D1 files exist) is skipped with a WARNING, not a crash.
+  {
+    const gone = path.join(dir, 'no-such-d1-problems.csv');
+    const tsM = A.buildAll(A.inputFiles({ heur: path.join(dir, A.INPUTS.heur), d1: gone }, dir));
+    eq('main: missing --d1 still builds Table F', tsM.map(t => t.id).join(''), 'F');
+    has('main: missing --d1 warning', tsM.missing.join('\n'), 'file not found, table skipped.');
+  }
+  // 26 Oct: no second scorer. A header-only scorer file prints no Scoring check.
+  {
+    const tmpS = path.join(os.tmpdir(), `cl-s2-${process.pid}.csv`);
+    fs.writeFileSync(tmpS, HEAD['se2-second-scorer'] + '\r\n');
+    const tsS = A.buildAll(A.inputFiles({ needs: path.join(dir, A.INPUTS.needs), scorer2: tmpS }, dir));
+    fs.unlinkSync(tmpS);
+    eq('main: header-only scorer2 skipped', tsS.map(t => t.id).join(''), 'BCT');
+  }
   hasNot('main: no p-values', all, 'p =');
   // only some inputs given: only their tables
   const some = A.buildAll(A.inputFiles({ walk: path.join(dir, A.INPUTS.walk) }, dir));
@@ -381,7 +400,8 @@ eq('undefined kappa is NaN', Number.isNaN(A.cohenKappa(L('A A A A'), L('A A A A'
   has('fig: RY-B1 bar', r.svg, '<title>RY-B1 28 minutes</title>');
   has('fig: C at 3', r.svg, '<title>C at confidence 3: 6</title>');
   has('fig: n', r.svg, '(n = 25)');
-  has('fig: default number', r.svg, '<title id="t">Figure 1: time and confidence, one reader</title>');
+  has('fig: default number', r.svg, '<title id="t">Figure 1: time and confidence</title>');
+  hasNot('fig: no design line in figure', r.svg + r.md, 'one reader');
   has('fig: tables B C F G', r.md, 'Table B. Ten needs by read');
   has('fig: table C', r.md, 'Table C. Key against observed');
   has('fig: table F', r.md, 'Table F. Heuristic problems by severity');
@@ -389,7 +409,7 @@ eq('undefined kappa is NaN', Number.isNaN(A.cohenKappa(L('A A A A'), L('A A A A'
   has('fig: md table form', r.md, '| N01 | D | C | C | D | C | – | D |');
   hasNot('fig: no table A in report subset', r.md, 'Table A.');
   const r5 = F.build(f, { number: 5 });
-  has('fig: number 5 title', r5.svg, '<title id="t">Figure 5: time and confidence, one reader</title>');
+  has('fig: number 5 title', r5.svg, '<title id="t">Figure 5: time and confidence</title>');
   has('fig: number 5 heading', r5.md, '# ChangeLens solo evaluation: Figure 5 and Tables B, C, F and G');
   hasNot('fig: number 5 no Figure 1', r5.svg + r5.md, 'Figure 1');
   // a read with no time is labelled, not drawn

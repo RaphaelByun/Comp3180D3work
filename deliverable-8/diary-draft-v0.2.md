@@ -1,5 +1,7 @@
 # Development diary: draft v0.2 (break to Week 11 so far, slots for Weeks 12 and 13)
 
+> **Superseded by `diary-draft-v0.3.md` (26 Oct 2026).** Kept unchanged below as the 21 Oct record; write in v0.3.
+
 > **Drafted with Claude (Claude Code, Opus 5.5) on Wed 21 Oct 2026, from the commit history and the fact logs, while Raphael was away.** Only facts are filled in, each with its commit or file. Everything in [brackets] is for Raphael alone: what he thought, decided, felt, attended and said. Lines marked *(Raphael, 17 Oct draft)* are his own answers, carried over word for word from `diary-draft-weeks-9-10.md`. Rewrite anything that is not true, delete brackets you cannot answer, and change each "completed by me on [date]" line when you finish that entry. The A3 GenAI statement must say that the diary was drafted from the commit record with Claude and completed by you.
 >
 > Completed by me on [date]: [Raphael]

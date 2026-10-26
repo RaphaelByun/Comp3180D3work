@@ -5,9 +5,12 @@
  *   node deliverable-8/sum-hours.js [entries.csv] [--write [hours-log.csv]]
  * Default entries path: deliverable-8/hours-entries.csv (resolved from this file).
  * Without --write it prints the totals and changes nothing.
- * With --write it fills only actual_hours and actual_in_prac in hours-log.csv
- * (default deliverable-8/hours-log.csv). It never touches the A2 columns or the "why".
- * Deliverables with no entries are left blank, so they still show as "not logged yet".
+ * With --write it fills actual_hours, actual_in_prac and variance_hours in hours-log.csv
+ * (default deliverable-8/hours-log.csv). variance_hours = actual_hours - a2_hours, where
+ * a2_hours is read from the A2 column already in hours-log.csv. It never touches the A2
+ * columns, the "why" column or the total row.
+ * Deliverables with no entries have all three cells blanked (never 0), so a stale value
+ * left from an earlier run cannot survive and the row still shows as "not logged yet".
  * in_prac is the hours of that entry spent in prac. "yes"/"y" means all of them; blank or "no" means none.
  */
 const fs = require('fs');
@@ -66,12 +69,22 @@ function fill(logText, totals) {
     const c = parseLine(l);
     if (!head) { head = c.map(h => h.toLowerCase()); return l; }
     const ih = head.indexOf('actual_hours'), ip = head.indexOf('actual_in_prac'), id = head.indexOf('deliverable');
+    const ia = head.indexOf('a2_hours'), iv = head.indexOf('variance_hours');
     const d = c[id];
-    if (d === 'total' || !totals[d]) return l;
-    seen.add(d);
-    // Rewrite only the two actual cells; keep every other cell exactly as written.
+    if (d === 'total') return l;
+    // Rewrite only the actual and variance cells; keep every other cell exactly as written.
     const raw = splitRaw(l);
+    if (!totals[d]) {
+      // No entries for this deliverable: blank the cells rather than keep a stale value.
+      raw[ih] = ''; raw[ip] = ''; if (iv !== -1) raw[iv] = '';
+      return raw.join(',');
+    }
+    seen.add(d);
     raw[ih] = String(totals[d].hours); raw[ip] = String(totals[d].in_prac);
+    if (iv !== -1) {
+      const a2 = ia === -1 || c[ia] === '' ? NaN : Number(c[ia]);
+      raw[iv] = Number.isNaN(a2) ? '' : String(round(totals[d].hours - a2));
+    }
     return raw.join(',');
   });
   const unknown = Object.keys(totals).filter(d => !seen.has(d));
@@ -100,6 +113,6 @@ if (require.main === module) {
   if (w !== -1) {
     const log = args[w + 1] || path.join(__dirname, 'hours-log.csv');
     fs.writeFileSync(log, fill(fs.readFileSync(log, 'utf8'), totals));
-    process.stdout.write(`Wrote actual_hours and actual_in_prac into ${log}\n`);
+    process.stdout.write(`Wrote actual_hours, actual_in_prac and variance_hours into ${log}\n`);
   }
 }

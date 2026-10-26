@@ -9,8 +9,9 @@
 | v0.1 | 17 Oct 2026 | `diary-draft-weeks-9-10.md`: break, Week 9 and Week 10 drafts |
 | v0.2 | 21 Oct 2026 | `diary-draft-v0.2.md`: commit counts re-checked; Week 11 facts to 21 Oct; empty Week 12 and 13 slots |
 | v0.3 | 26 Oct 2026 | This file. Counts re-checked (191); Week 11 closed with facts to 25 Oct; Week 12 plan; sharper prompts per week; a neutral conversations line replaces the prac line; v0.1 and v0.2 kept unchanged |
+| v0.3, revised | 26 Oct 2026 | Claude Code (Opus 5.5), Raphael away. Counts re-checked after the 26 Oct commits (203); Week 12 facts line added; 13 Oct date for the two date fixes; one clause of your 17 Oct answer restored from v0.1 in brackets; superseded notes added to v0.1 and v0.2 |
 
-**How the counts were made (26 Oct 2026):** `git rev-list --remotes`, unique commits, author date in Sydney time. Before this file was committed there were 191 unique commits (188 authored by RaphaelByun, 3 by Claude), and all 191 carry a `Co-Authored-By: Claude` trailer. By day: 11 Oct 1, 12 Oct 3, 13 Oct 15 (3 of them merges), 14 Oct 9, 17 Oct 155, 21 Oct 8. There are no commits on 15, 16, 18, 19 or 20 Oct, and none after 21 Oct 19:41 (`f598b99`).
+**How the counts were made (re-checked 26 Oct 2026):** `git rev-list --remotes` after `git fetch --all`, unique commits, author date in Sydney time. Up to and including `0bcdcfc` and `7213a22` (26 Oct 19:29) there were 203 unique commits (200 authored by RaphaelByun, 3 by Claude), and all 203 carry a `Co-Authored-By: Claude` trailer. By day: 11 Oct 1, 12 Oct 3, 13 Oct 15 (3 of them merges), 14 Oct 9, 17 Oct 155, 21 Oct 8, 26 Oct 12. There are no commits on 15, 16, 18, 19 or 20 Oct, and none between 21 Oct 19:41 (`f598b99`) and 26 Oct 18:49 (`d882927`). Commits made after 26 Oct 19:29 are not in these counts.
 
 ---
 
@@ -47,12 +48,14 @@ I did not do any project work over the break. *(Raphael, 17 Oct draft)*
 **Roadblock or breakthrough:** [name it; the v0.1 draft suggests "the fidelity check caught ChangeLens contradicting the commit history, and it was repaired"]
 
 **What happened (facts):**
-- 12–13 Oct: two date bugs fixed (`e73f544`, `323eac1`). On a Sydney PC the February week showed 3 commits instead of 8.
+- 13 Oct: two date bugs fixed (`e73f544`, `323eac1`). On a Sydney PC the February week showed 3 commits instead of 8.
 - 13 Oct: Producer Page window added (`323eac1`). The February fidelity check (AI scorers) found contradicted Version B rows 19, 21 and 33. Parser repaired (`bf09b4e`); B re-scored 39 of 39 (`b1a2df6`). Tests 42 → 46. D3–D9 scaffolds committed the same evening.
 - 14 Oct: D1 heuristic pass run by Claude in your browser at your request (61 problems, 16 at severity 3–4; `e078ebd`). The two interviews dropped for six coded published sources. D1 finished by AI (`92ff8b4`).
 - 17 Oct: no ethics application (your decision; `f569f96` and five sibling commits). Reserve weeks re-frozen at `d9fa4bf`. 155 commits that day from multi-agent Claude Code runs; .NET tests 46 → 85.
 
-**What I made of it** *(Raphael, 17 Oct draft)*: I passed the heuristic pass to Claude because it is a testing task. I know it is meant to be a human test: which tool is easy or hard to use, and whether it is harder for programmers or producers. I found I got a better list of questions from Claude and could answer them.
+**What I made of it** *(Raphael, 17 Oct draft)*: I passed the heuristic pass to Claude because it is a testing task. I know it is meant to be a human test: which tool is easy or hard to use, and whether it is harder for programmers or producers. [Those are the questions to ask, and] I found I got a better list of questions from Claude and could answer them.
+
+[The bracketed clause is restored from your 17 Oct answer in v0.1 (`adbbf58`); v0.2 and v0.3 had left it out. Keep it and remove the brackets if it is yours; delete it if not.]
 
 [Pick the week's roadblock or breakthrough: the February week showing 3 commits instead of 8 on your PC (`323eac1`), or the fidelity check finding rows that contradicted the git log (`b1a2df6`). Say what it taught you about trusting the tool's output.]
 [Directed vs checked: on 14 Oct you asked Claude to run the heuristic pass (`e078ebd`) and finish D1 (`92ff8b4`). Which of the 61 findings or the final ten needs have you checked yourself, and when?]
@@ -84,6 +87,9 @@ I did not do any project work over the break. *(Raphael, 17 Oct draft)*
 **Conversations:** [Conversations about the project this week (staff, peers), if any]
 
 ## Week 12 (26 Oct to 1 Nov 2026)   |   completed by me on [date]
+
+**What happened (facts):**
+- 26 Oct 18:49–19:29: 12 commits drafted by Claude while you were away, to documents, the hours prefill and the D9 variance-table script (no ChangeLens package code), on D5 (`d882927`, `9a12294`), D6 (`c355b43`, `1403820`, `403576c`), D7 (`1855d39`, `db1d401`, `7213a22`), D8 (`c1df9d2`, `cc37123`) and D9 (`8dabc2e`, `0bcdcfc`).
 
 [Planned (revised 26 Oct): Tue 27 SE2; Wed 28 scoring; Thu 29 SE1 and SE3; Fri 30 SE4 and one evaluation-driven fix; Sat 31 analysis and the Understand-goal entry; video shots that do not need results on Fri 30, then S8/S11 and a rough cut on Sun 1 Nov. Write what actually happened.]
 [The **Create-goal entry** `[goal evidence]` goes in on Tue 27, straight after your first SE2 read.]

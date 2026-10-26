@@ -1,5 +1,7 @@
 # Diary drafts: Week 9 and Week 10
 
+> **Superseded by `diary-draft-v0.3.md` (26 Oct 2026).** This is draft v0.1, kept unchanged below as the 17 Oct record and the source of your 17 Oct answers; write in v0.3.
+
 > **Drafted by Claude Code on 17 Oct 2026 from `fact-log-weeks-9-10.md` and the commit history, at Raphael's request.** The facts are filled in. Everything in [brackets] is something only Raphael knows: what he thought, decided, felt and did away from the computer. Fill or rewrite those parts in your own words, delete anything that is not true, then change the "Entry written" line to the date you finish it. Say in the GenAI statement that the diary was drafted from the commit record with Claude and completed by you.
 
 ## Week 9 (5 to 11 Oct 2026)   |   Entry written: 17 Oct 2026 (late; drafted with Claude, completed by me on [date])
@@ -40,7 +42,7 @@
 - [What did the fidelity failure teach you about trusting the tool's output?]
 - I passed the heuristic pass to Claude because it is a testing task. I know it is meant to be a human test: which tool is easy or hard to use, and whether it is harder for programmers or producers. Those are the questions to ask, and I found I got a better list of questions from Claude and could answer them. [Optional: what did it cost? For example, one AI evaluator instead of me, and the 16 severity 3–4 findings still need my hand-check.]
 - [14 Oct: why five readers? (The floor was dropped on 17 Oct, see the next line.) Why the ethics decision?]
-- [17 Oct: why did you decide to evaluate ChangeLens yourself, with no study with other people? Explain it in your own words (your reasons are quoted in `fact-log-weeks-9-10.md` section 4), and what you expect to lose and to learn.]
+- [Not for the diary: the evaluation design goes once in the report's Evaluation Method.]
 
 **Prac:** [attended Y/N; who you spoke to]
 
@@ -50,7 +52,7 @@
 
 **Evidence links:** `bf09b4e`, `b1a2df6` (`FIDELITY-RESULT.md`), `e078ebd`, `92ff8b4`, `ff65ae7`.
 
-**Next week:** [Solo evaluation SE1 to SE4 from Sun 18 Oct if you approve the plan; the D1/D3/D4 hand-checks. Write your own plan.]
+**Next week:** [Evaluation runs SE1 to SE4; the D1/D3/D4 hand-checks. Write your own plan.]
 
 ## Mid-session break (21 Sep to 4 Oct 2026)
 

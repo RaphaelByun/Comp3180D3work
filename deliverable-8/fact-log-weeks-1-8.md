@@ -158,8 +158,8 @@ The A1 marker's comment is quoted in the `CLAUDE.md` ledger. It said the slides 
 
 ## 5. Gaps the files cannot fill (you must supply these)
 
-1. **Week 5 prac.** `ANSWERS.md` says no Weeks 5 to 7 pracs were attended, but also that your A1 Q&A was on Mon 24 Aug. Say which it was: a Q&A-only visit, a full prac, or online.
-2. **Week 8 prac (Mon 14 Sep).** No record. Say whether you went and who you spoke to.
+1. **Week 5 prac.** Optional; only if you want it in the diary.
+2. **Week 8 prac (Mon 14 Sep).** Optional; only if you want it in the diary.
 3. **Who you spoke to in Weeks 1 to 3.** The notes do not always name the staff member (Week 3 does not).
 4. **Questionnaire 2 date.** The Trello-team conversation is undated.
 5. **The Week 5 lecture** (Mitchell, CARS, 24 Aug) and any later lectures. No notes are on disk.

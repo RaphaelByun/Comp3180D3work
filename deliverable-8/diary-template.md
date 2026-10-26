@@ -1,6 +1,6 @@
 # Development diary: format and template
 
-**Purpose.** A2 success measure for Deliverable 8: "A dated entry each week naming a roadblock or breakthrough." The A3 report then summarises it in about 500 words (one paragraph up to Week 8, then a few lines for the mid-session break and each of Weeks 9 to 13, noting deliverables added, dropped or changed). The diary also carries the R&D Engagement criterion (15% of A3): staff read it with the commit history and prac attendance. Lecture 4: the diary may be in any format.
+**Purpose.** A2 success measure for Deliverable 8: "A dated entry each week naming a roadblock or breakthrough." The A3 report then summarises it in about 500 words (one paragraph up to Week 8, then a few lines for the mid-session break and each of Weeks 9 to 13, noting deliverables added, dropped or changed). The diary also carries the R&D Engagement criterion (15% of A3): staff read it with the commit history. Lecture 4: the diary may be in any format.
 
 **Rules that keep it honest and marked well**
 
@@ -10,7 +10,7 @@
 4. Hours by deliverable come from `hours-log.csv`, not memory.
 5. Evidence links point to things in the repo or to a dated screenshot: commit hashes, files, tracker rows, photos of paper sheets (codes only).
 6. Say what the AI tools did and what you did. Staff want clear individual contribution; the GenAI statement has to match.
-7. Note prac attendance and who you talked to. That is engagement evidence staff can check.
+7. Note who you talked to about the project.
 8. Do not paste raw entries into the report. The report summary is edited down to concrete achievements and roadblocks.
 
 ## Entry template (copy for each week)
@@ -31,7 +31,7 @@
 |---|---|---|---|---|---|---|---|---|---|
 |   |   |   |   |   |   |   |   |   |       |
 
-**Prac:** attended Y/N. Who I spoke to and what they said:
+**Conversations:** who I spoke to and what they said:
 
 **Plan changes** (added, dropped or changed a deliverable, tier or scope, and why):
 -
@@ -58,11 +58,7 @@ One short summary for the report. Source material: `fact-log-weeks-1-8.md` (star
 
 ### Week 10 (12 to 18 Oct 2026)
 
-Include a dated entry for 17 Oct on the evaluation decision (no study with other people; you evaluate ChangeLens yourself). Source material: `fact-log-weeks-9-10.md` section 4, where your reasons from that day are quoted.
-
 ### Week 11 (19 to 25 Oct 2026)
-
-The solo evaluation runs this week (`deliverable-5/self-evaluation-plan.md`). Write the Create entry `[goal evidence]` on the same day as an SE2 first read of a reserve week, straight after it, never before.
 
 ### Week 12 (26 Oct to 1 Nov 2026)
 

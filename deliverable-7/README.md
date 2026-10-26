@@ -1,11 +1,13 @@
 # Deliverable 7: Portfolio video
 
-Status (17 Oct 2026, Week 10): plan only, committed on this branch. Nothing is recorded or uploaded.
+Status (26 Oct 2026, Week 12): plan only, committed on this branch. Nothing is recorded or uploaded.
+
+**Source of truth for timing and order (26 Oct 2026):** the local script `_prep-19oct/Video script + shot list v0.2.md` on Raphael's PC, outside this repository (there is no v0.3). Where this folder and v0.2 differ on beat order or timing, v0.2 wins. v0.2 runs 4:00; a shorter cut is suggested below as [suggested 3:40, Raphael to confirm].
 
 A2 success measure (Deliverables table, row 7, 4 h, 1 in prac): **"Three to four minutes showing both conditions; two outside viewers can state its purpose and reader."** A2 timeline: analysis and video in Week 13.
 
-**17 Oct 2026 decision.** There is no study with other people: no recruitment, no live sessions, no online form. Raphael evaluates ChangeLens himself. The plan is `deliverable-5/self-evaluation-plan.md` on `deliverable-5-sessions`. For this folder that means:
-- The video never claims a reader study and never describes the evaluation design (Raphael's 21 Oct rule: the design is stated once, in the report's Evaluation Method). The result beat shows real counts only.
+**17 Oct 2026 decision.** For this folder that means:
+- The video never describes the evaluation design (Raphael's 21 Oct rule: the design is stated once, in the report's Evaluation Method). The result beat shows real counts only.
 - The two-viewer test is retired (`retired/feedback-form.md`). That half of the A2 measure is a variance.
 
 **The video is uploaded to Echo 360, not to this repo** (LFS limits; the unit asks for Echo 360). The repo keeps the plan. Link the Echo 360 video in the submission text box and in the report's Project Deliverables section; check the link in a private window.
@@ -14,7 +16,7 @@ A2 success measure (Deliverables table, row 7, 4 h, 1 in prac): **"Three to four
 
 | File | What it is |
 |---|---|
-| `storyboard.md` | Nine beats with timings, what the viewer must understand, what is on screen, repo sources, cut order, rules. Covers the reader, the problem, the tool, both report conditions, a result slot and your own contribution |
+| `storyboard.md` | Nine beats with timings (order and timing follow the local v0.2 script), what the viewer must understand, what is on screen, repo sources, cut order, rules. Covers the reader, the problem, the tool, both report conditions, a result slot and your own contribution |
 | `shot-list.md` | Eleven shots to capture, audio and edit checklist, export and upload steps, hour budget |
 | `retired/feedback-form.md` | Not used (17 Oct 2026 decision). The A2 two-viewer test, kept as the plan record. Do not run it, and do not give it a report appendix |
 
@@ -22,7 +24,7 @@ A2 success measure (Deliverables table, row 7, 4 h, 1 in prac): **"Three to four
 
 The first half of the A2 measure still holds and you can check it alone: three to four minutes, both conditions on screen.
 
-The second half ("two outside viewers can state its purpose and reader") needs other people, so it is dropped. Report it as a variance in the A3 report and in the Deliverable 9 variance table, with the 17 Oct decision as the reason. That is the plan's default (section 12, D7 item 3); keeping it is your call.
+The second half ("two outside viewers can state its purpose and reader") is retired with the two-viewer test, so it is dropped. Report it as a variance in the A3 report and in the Deliverable 9 variance table, with the 17 Oct decision as the reason. That is the plan's default (section 12, D7 item 3); keeping it is your call.
 
 Optional self-check in its place. It is not the same measure, so do not report it as one:
 1. Wait at least a day after the rough cut, then watch it once without pausing.
@@ -32,13 +34,13 @@ Optional self-check in its place. It is not the same measure, so do not report i
 
 ## The result slot
 
-Beat 6 is a placeholder until the solo analysis is done (plan section 4: scoring and analysis finished Fri 30 Oct). It must hold a real SE2 table or the time-and-confidence figure from the Deliverable 6 analysis, with raw counts ("x of 10 needs"), and no line about the evaluation design (21 Oct rule). Never "x of n readers", "participants" or "users". No result is written anywhere in this folder.
+Beat 6 is a placeholder until the analysis is done (26 Oct schedule: analysis on Sat 31 Oct). It must hold a real SE2 table or the time-and-confidence figure from the Deliverable 6 analysis, with raw counts ("x of 10 needs"), and no line about the evaluation design (21 Oct rule). Never "x of n readers", "participants" or "users". No result is written anywhere in this folder.
 
 ## What Raphael must do
 
 1. Capture the screens (shot list) in Week 12 so the rough cut exists before the results.
 2. Write and record the narration yourself in your own words.
-3. Re-record beat 6 once the solo analysis is done (after Fri 30 Oct).
+3. Re-record beat 6 once the analysis is done (after Sat 31 Oct; rough cut Sun 1 Nov).
 4. Run the self-check above on the rough cut, if you want it, and fix what it finds.
 5. Upload to Echo 360 at least a day before 8 Nov 2026 and put the link in both places.
 6. Log hours in `deliverable-8/hours-entries.csv`; the weekly total goes into `deliverable-8/hours-log.csv` (A2 budget 4 h, 1 in prac).
@@ -49,7 +51,7 @@ Staff pointed to the Echo 360 folder of past portfolio videos, and two transcrip
 
 ## Where the sources sit
 
-The frozen study-week pages (`study/week1-2021-02-08/report-A-baseline.md` and `report-B-treatment.md`) and the Producer Page (`Window > ChangeLens Producer Page`, with its Version A / Version B flip; see `TRY-CHANGELENS.md`) are on the Deliverable 2 branch (`deliverable-2-changelens`), not on `main`. Record beats 3 to 5 from that branch. The A2 Figure 2 docked window is the older file-sorting prototype; do not use it for beat 3. Figures are in `figures/` on `main`: Figure 1 in A2 (code share) is `fig4-code-file-percentage.png`; the A2 Figure 2 (docked window) and Figure 3 (prefab hunk) are `fig2-changelens-docked-2021.png` and `fig3-prefab-yaml-hunk.png`. File numbers differ from the A2 figure numbers.
+The frozen study-week pages (`study/week1-2021-02-08/report-A-baseline.md` and `report-B-treatment.md`) and the Producer Page (`Window > ChangeLens Producer Page`, with its Version A / Version B flip; see `TRY-CHANGELENS.md`) are on the Deliverable 2 branch (`deliverable-2-changelens`), not on `main`. Record beats 2, 4 and 5 from that branch. The A2 Figure 2 docked window is the older file-sorting prototype; do not use it for beat 2. Figures are in `figures/` on `main`: Figure 1 in A2 (code share) is `fig4-code-file-percentage.png`; the A2 Figure 2 (docked window) and Figure 3 (prefab hunk) are `fig2-changelens-docked-2021.png` and `fig3-prefab-yaml-hunk.png`. File numbers differ from the A2 figure numbers.
 
 ## Figure and table numbers in the A3 report
 
@@ -58,15 +60,17 @@ The video stills are reused in the report, and the D6 figure tool also calls its
 | Number | What | Source |
 |---|---|---|
 | Figure 1 | Code share of changed-file entries, six Unity repositories | `figures/fig4-code-file-percentage.png` on `main` (A2 Figure 1) |
-| Figure 2 | The ChangeLens Producer Page in the Unity Editor | New capture, still 2 |
-| Figure 3 | Version A (baseline), "Where the work went" table | New capture, still 3 |
-| Figure 4 | Version B (treatment), a naming section | New capture, still 4 |
+| Figure 2 | The ChangeLens Producer Page in the Unity Editor | New capture, still 2 (fallback: `figures/a3-producer-page-A.png`, `f3f195f`, Deliverable 2 branch) |
+| Figure 3 | Version A (baseline), "Where the work went" table | New capture, still 3 (fallback: `figures/a3-producer-page-A.png`, July week) |
+| Figure 4 | Version B (treatment), a naming section | New capture, still 4 (fallback: `figures/a3-producer-page-B-scenes.png` or `a3-producer-page-B.png`, July week) |
 | Figure 5 | Time and confidence (SE2): minutes per read, and confidence against the git-log result | `deliverable-6/analysis/figures.js` (Deliverable 6 branch), which now draws this figure in place of the A2 paired-differences plot. Run it with `--figure 5` so the title says Figure 5 (without the flag it says Figure 1). Real data goes in `deliverable-6/data/`; output built from the FAKE samples is stamped FAKE and must not be used |
-| Table 1 | Ten needs by read (solo Table B) | `deliverable-6/analysis/analyse.js` or `figures.js` on the Deliverable 6 branch (they print the same table as Markdown), from `se2-need-answers.csv` |
-| Table 2 | Key against observed, SQ1 (solo Table C) | Same tools, first reads of Table B |
-| Table 3 | Heuristic problems for ChangeLens beside the four D1 tools (solo Table F) | Same tools, from `se4-heuristic-problems.csv`, `se4-task-outcomes.csv` and the D1 tables |
-| Table 4 | What the page left unmet, by Ko et al. type (solo Table G) | Same tools, from `se2-needs-log.csv` |
+| Table 1 | Ten needs by read (plan Table B) | `deliverable-6/analysis/analyse.js` or `figures.js` on the Deliverable 6 branch (they print the same table as Markdown), from `se2-need-answers.csv` |
+| Table 2 | Key against observed, SQ1 (plan Table C) | Same tools, first reads of Table B |
+| Table 3 | Heuristic problems for ChangeLens beside the four D1 tools (plan Table F) | Same tools, from `se4-heuristic-problems.csv`, `se4-task-outcomes.csv` and the D1 tables |
+| Table 4 | What the page left unmet, by Ko et al. type (plan Table G) | Same tools, from `se2-needs-log.csv` |
 
-The report's Results are built around solo Tables B, C, F and G (plan section 12, D6 item 4), so those are Tables 1 to 4 here. The other solo tables (A fidelity, D items, E walkthrough, H stand-up and ratings) go to the appendices as the plan suggests, or take Table 5 upward in order of first mention if you put them in the body. The old Tables 1, 2, 2b and 3 (full marks by condition, item 6 codes, think-aloud segments) came from the reader study and are not used.
+The report's Results are built around plan Tables B, C, F and G (plan section 12, D6 item 4), so those are Tables 1 to 4 here. The other plan tables (A fidelity, D items, E walkthrough, H stand-up and ratings) go to the appendices as the plan suggests, or take Table 5 upward in order of first mention if you put them in the body. The old Tables 1, 2, 2b and 3 (full marks by condition, item 6 codes, think-aloud segments) came from the reader study and are not used.
 
 If a figure is dropped, renumber the rest in order and update this list.
+
+Fallback stills if a new capture is not made: the July study week captures `figures/a3-producer-page-A.png` (Version A), `figures/a3-producer-page-B.png` and `figures/a3-producer-page-B-scenes.png` (Version B, the scenes and prefabs section), committed in `f3f195f` (17 Oct 2026) on the Deliverable 2 branch (`deliverable-2-changelens`), not on this branch or `main`. They show July, not February, so the airlock rows are not in them.

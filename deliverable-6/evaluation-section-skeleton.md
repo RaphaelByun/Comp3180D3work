@@ -48,7 +48,7 @@ Plan the 700 words as five short blocks and a close (plan section 6: about 350 o
 
 4. **Usability of the window and the page** (about 130 words). Evidence: Table F (ChangeLens problems by severity beside the four D1 tools, and T1 to T7 outcomes), with one line from Table E (walkthrough failures by question). [PLACEHOLDER: the severity 3 and 4 problems, if any, by heuristic; where a first-time producer would get lost (CW task and question); how ChangeLens sits beside the D1 tools on the tasks a producer tool is asked to do. Use D1 ratings only for findings Raphael has checked, and say which.]
 
-5. **What the page left unmet** (about 80 words). Evidence: Table G (needs-log entries by Ko et al. type), and the stand-up claims and ratings from Table H in one line. [PLACEHOLDER: the types logged most often; whether the unmet needs point to "why" and rationale (Whitson's opacity prediction) or to who and when; pass 1 against pass 2 as x of n.] Limit to state: typed notes from one reader, not spoken comments from several.
+5. **What the page left unmet** (about 80 words). Evidence: Table G (needs-log entries by Ko et al. type), and the stand-up claims and ratings from Table H in one line. [PLACEHOLDER: the types logged most often; whether the unmet needs point to "why" and rationale (Whitson's opacity prediction) or to who and when; pass 1 against pass 2 as x of n.]
 
 Close (about 100 words). [PLACEHOLDER: one sentence on what this means for the tool (utility), and one on the fix or next step it points to. No limitations paragraph (21 Oct rule).]
 

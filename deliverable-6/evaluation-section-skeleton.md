@@ -14,7 +14,7 @@ Word budget (plan section 6): opening and Target Audience about 120, Method up t
 
 > Which of a producer's information needs can be answered automatically from the artefacts a team already produces — and which can't?
 
-[PLACEHOLDER: one sentence saying early and plainly that this is a one-reader evaluation by the developer, and that it can say what a ChangeLens page holds, checked against the git log, not what producers can do with it. Then the two sub-questions as now answerable (plan section 2): SQ1, which of the ten needs a page answers fully, partly or not at all on two unseen weeks; SQ2, which answers the scene and prefab names (Version B) added or changed, and at what cost in reading time. One clause naming what is assessed: utility (is the page true, which needs it answers), usability (the window, by walkthrough and heuristics) and a limited view of UX (one reader's time, confidence and ratings).]
+[PLACEHOLDER: the two sub-questions as now answerable (plan section 2): SQ1, which of the ten needs a page answers fully, partly or not at all on two unseen weeks; SQ2, which answers the scene and prefab names (Version B) added or changed, and at what cost in reading time. One clause naming what is assessed: utility (is the page true, which needs it answers), usability (the window, by walkthrough and heuristics) and UX (time, confidence and ratings). The design itself is stated once only, in the Method Participant row (21 Oct rule).]
 
 ### 3.1 Target Audience (about 60 words)
 
@@ -27,22 +27,22 @@ Word cap: the nine rows below share 200 words, about 22 each. Cut each row to on
 | Part | What to say | Evidence source |
 |---|---|---|
 | Design | A solo evaluation in four parts (SE1 to SE4). SE2 is the core: two unseen reserve weeks (14 Dec 2020, RX; 27 Sep 2021, RY), both versions each, order switched between weeks and fixed before reading (RX: A then B; RY: B then A). First reads are compared only with each other. | Plan section 3; `study/reserve/*/report-A-baseline.md`, `report-B-treatment.md` on `deliverable-2-changelens` (frozen at `d9fa4bf`) |
-| Participant | One reader, the developer (Raphael). He built ChangeLens and is not its target reader. Say this here and again at the start of Results. [PLACEHOLDER: whether any reserve page was opened before SE2, from `seen_before`.] | `se2-reads.csv` (`seen_before`) |
+| Participant | One reader, the developer (Raphael). He built ChangeLens and is not its target reader. This is the report's one sentence on the design (Raphael's 21 Oct rule): put it first in Method, with n = 1. Do not repeat it in Results. [PLACEHOLDER: whether any reserve page was opened before SE2, from `seen_before`.] | `se2-reads.csv` (`seen_before`) |
 | Instruments | The ten-need sheet, answered from the page (a different task from A2's, where readers ticked whether the records could answer each need); [PLACEHOLDER: the six Endsley items per reserve week, only if they were written and sealed; else "the ten needs alone"]; a stand-up draft; a needs log coded to Ko et al.'s (2007) 21 types; the Wharton et al. (1994) walkthrough; Nielsen's (1994) heuristics on the D1 scale. One line on AI: the ten-need key [and the reserve items and their keys] were AI-drafted; Raphael accepted or changed the key on [PLACEHOLDER: date, only once true]. | Appendix A; `deliverable-3/ten-need-sheet.md` section B; plan section 5 |
 | Procedure | Per reserve week, one sitting of about 45 minutes: answers, confidence and lap times written and committed before the git log was opened, then scored against the git log. Commit times record order, not proof: one person controls the clock and the history. [PLACEHOLDER: dates of the sittings and of scoring.] | `se2-reads.csv`; git log of `deliverable-6/data/` |
 | Ethics | No participants, so points 1 and 2 of the ethics notes no longer apply; say that in one sentence. Point 3: ChangeLens reports changes to the project, not each person's output (SE4 task T2 records this as a design choice). Point 4: SS3D is real contributors' work, so every page used was checked against the diffs (Fidelity row); state SS3D's licence once checked. Point 5: AI use is declared in the GenAI statement. | `deliverable-3/ethics/report-ethics-points.md` points 3 to 5; `study/SOURCE-AND-LICENCE.md` on `deliverable-2-changelens` |
 | Fidelity check | One sentence: every page used was checked claim by claim against the diffs. AI scorers did the first pass (Deliverable 4); Raphael hand-checked [PLACEHOLDER: which rows, from Table A: at least every Version B row and every row an AI scorer marked C], and the reserve weeks only after SE2 was scored. State the result from Table A as counts. | Table A; `se1-fidelity-handcheck.csv`; scored files on `deliverable-4-fidelity-check` (Appendix F) |
 | Scoring check | [PLACEHOLDER: either "an AI second scorer, blind to Raphael's scores, re-scored the SE2 answers: x of n need answers and x of n item answers agreed" (from the scoring check), or "there was no second scorer". Real numbers only. Item keys sealed by SHA-256 hash before SE2, only if that was done.] | `analyse.js` scoring check; `se2-second-scorer.csv`; plan section 5 (hash) |
 | Analysis | Raw counts only, no p-values. Needs answered correctly per read; the key's R/U class against what the page gave, checked against the git log (Table C), with Cohen's (1960) kappa as indicative only; needs-log types with pass 1 against pass 2 as x of n. One line on AI: the analysis tools were drafted with Claude Code; point to the GenAI statement. | `analysis/analyse.js` output (Appendix E); GenAI statement |
-| Deviations | Every change from A2 is a variance: no readers, pilot, think-alouds or counterbalanced sequences (17 Oct decision); the ten needs answered rather than classified; the stand-up and needs log written alone, not spoken; the fidelity hand-check limited to [PLACEHOLDER: the rows done]. [PLACEHOLDER: anything else that slipped, such as no reserve items or no second scorer.] | Plan sections 1 and 3; diary |
+| Deviations | Every change from A2 goes in the variance table (Appendix A), whose row only points to the Participant sentence. Instrument changes: the ten needs answered rather than classified; the stand-up and needs log written alone, not spoken; the fidelity hand-check limited to [PLACEHOLDER: the rows done]. [PLACEHOLDER: anything else that slipped, such as no reserve items or no second scorer.] | Plan sections 1 and 3; diary |
 
 ### 3.3 Results and Discussion (about 700 words)
 
-Plan the 700 words as five short blocks and a close (plan section 6: about 350 on SE2, 80 on SE1, 150 on SE3 and SE4 together, 120 on limits). Open with the one-reader statement, lead with the answer to the research question, then the evidence. Raw counts first; no percentage without its count beside it.
+Plan the 700 words as five short blocks and a close (plan section 6: about 350 on SE2, 80 on SE1, 150 on SE3 and SE4 together, about 120 on what was left unmet and the close). Lead with the answer to the research question, then the evidence. Raw counts first; no percentage without its count beside it.
 
-1. **Answer first, and is the page true?** (about 120 words). [PLACEHOLDER: start with "one reader, the developer". Then one or two sentences answering the RQ for this reader: which of the ten needs the page answered and which it could not, and whether the names (Version B) changed any answer. Write it last, from Tables B and C. Then the SE1 result as a precondition, from Table A: rows hand-checked, supported and contradicted per week and version, and agreement with the AI scorers as x of n. An answer from a wrong page is no answer.]
+1. **Answer first, and is the page true?** (about 120 words). [PLACEHOLDER: one or two sentences answering the RQ: which of the ten needs the page answered and which it could not, and whether the names (Version B) changed any answer. Write it last, from Tables B and C. Then the SE1 result as a precondition, from Table A: rows hand-checked, supported and contradicted per week and version, and agreement with the AI scorers as x of n. An answer from a wrong page is no answer.]
 
-2. **SQ1: which needs the page answers** (about 160 words). Evidence: Table B (ten needs by read, C / PC / W / NA, beside the key's R/U class and what the git log could answer) and Table C (key against observed, first reads only). [PLACEHOLDER: needs answered correctly on each first read as x of 10; the needs where the observed class departed from the key, and whether the gap is in the page (log against observed) or in the key (key against log); wrong answers by cause (misread, overclaim, page-wrong).] Limits to state: ten needs on two thin weeks (3 changes by 2 people; 2 changes by 1 person); kappa over ten needs is unstable; the key was known in advance, which favours agreement.
+2. **SQ1: which needs the page answers** (about 160 words). Evidence: Table B (ten needs by read, C / PC / W / NA, beside the key's R/U class and what the git log could answer) and Table C (key against observed, first reads only). [PLACEHOLDER: what each reserve week contained, from the scored tables, after SE2.]
 
 3. **SQ2: what the names added, and what they cost** (about 110 words). Evidence: the time-and-confidence figure (Figure 5) and the `only_in_b` count in Table B [and Table D, if items exist]. [PLACEHOLDER: answers that needed a line only Version B has; minutes per read (first reads compared only with each other); how many wrong answers came at confidence 4 or 5.] Limits to state: RX-A against RY-B mixes version with week; second reads are never clean; one reader.
 
@@ -50,20 +50,11 @@ Plan the 700 words as five short blocks and a close (plan section 6: about 350 o
 
 5. **What the page left unmet** (about 80 words). Evidence: Table G (needs-log entries by Ko et al. type), and the stand-up claims and ratings from Table H in one line. [PLACEHOLDER: the types logged most often; whether the unmet needs point to "why" and rationale (Whitson's opacity prediction) or to who and when; pass 1 against pass 2 as x of n.] Limit to state: typed notes from one reader, not spoken comments from several.
 
-Close and limits (about 100 words; the other limits sit in the blocks above). [PLACEHOLDER: one sentence on what this means for the tool (utility), and one on the biggest limit: n = 1, and the reader is the developer. Name familiarity as a bias that favours the tool. If citing Neustaedter and Sengers (2012), cite it only for learning through use, say that Raphael is not ChangeLens's user, and call the study a variance from A2, not autobiographical design.]
+Close (about 100 words). [PLACEHOLDER: one sentence on what this means for the tool (utility), and one on the fix or next step it points to. No limitations paragraph (21 Oct rule).]
 
-### Limitations to state (plan section 7; one clause each, most in the blocks above)
+### Limitations
 
-- n = 1: "one reader; the results show what the page can hold and where it fails, not how producers would do."
-- The reader is the developer, not the target audience. This is why the Pass band is expected.
-- Familiarity with the tool: "I knew the tool, not the weeks." A bias that favours the tool.
-- Order effect: first and second reads reported apart; the A-against-B comparison mixes version with week.
-- Self-scoring: scored against the git log; the second-scorer agreement as x of n, or "there was none".
-- Single evaluator for SE3 and SE4, who built the tool; D1's pass was an AI evaluator.
-- Key known in advance (anchoring): a bias that favours agreement.
-- Thin reserve weeks; reserve weeks not matched to the D3 study weeks.
-- SE2 read the Markdown page, not the Producer Page window; SE3 tested the window.
-- The ten-need key was AI-drafted: call it Raphael's only after the date he accepted it.
+Removed 26 Oct 2026 (Claude Code, Raphael away) to match Raphael's 21 Oct rule: the design is stated once, in Method, and no limitations go in the report. The record of the limits stays in plan section 7 on `deliverable-5-sessions`.
 
 ### Figures and tables to prepare (integrate them in the text, not only in appendices; `analysis/figures.js` builds the figure and Tables B, C, F and G)
 
@@ -81,4 +72,4 @@ Close and limits (about 100 words; the other limits sit in the blocks above). [P
 - RQ stated first, in the exact A2 words.
 - Each claim traceable to an appendix (A to G in `appendix-plan.md`).
 - No result written in Raphael's voice by anyone else; every number from the CSVs.
-- The Evaluation must be a conducted study, not self-assessment: say plainly it had one reader, the developer. Never call it a user study.
+- The design is stated once, in Method (one sentence, first, with n = 1). No limitations paragraph; no plural "readers" or "participants" in Results. Never call it a user study.

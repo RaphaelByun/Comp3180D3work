@@ -55,12 +55,12 @@ How to fill: log hours in `deliverable-8/hours-entries.csv`, total them into `de
 
 Things the planned figures already include, which can help explain differences: the committed tier is 11 h, the stretch tier 3 h, the challenge tier 2 h (A2); an overrun drops the challenge tier first, then the stretch tier. Say which tiers were built, cut or changed. The evaluation rows (3, 5 and 6) only point to the Evaluation Method sentence (21 Oct rule); give their actual hours, not a reason.
 
-† **A2-plan change: the evaluation (17 Oct 2026).** `variance-table.js` marks rows 3, 5 and 6 and prints these sources under the table. They are facts to draw on, not the "why"; write that yourself.
+† **A2-plan change: the evaluation (17 Oct 2026).** `variance-table.js` marks rows 1, 3, 5 and 6. Under the table, rows 3, 5 and 6 only say "See Evaluation Method" (D5 also gives the A2 breakdown of its 18 h), and row 1 states the D1 method change as a fact. None of it is the "why"; write that yourself.
 
 | # | A2 plan | What changed (`deliverable-5/self-evaluation-plan.md`) | Planned after the change | Actual | Why (write this yourself) |
 |---|---|---|---|---|---|
 | 3 | Protocol and instruments for eight readers, tested in a pilot | No pilot and no sessions. The ten-need sheet, the Endsley item slot plan, the codebook and the fidelity check are kept (§1, §11) | – | | See Evaluation Method |
-| 5 | 18 h: 7 sessions, 4 recruiting, 7 coding | Solo evaluation SE1 to SE4: fidelity hand-check, timed self-read of two unseen weeks, cognitive walkthrough, heuristic pass (§3) | about 6.5 h (§4, §10) | | See Evaluation Method |
+| 5 | 18 h: nine 45-minute sessions incl. pilot (7 h), recruiting and briefing 4 h, coding 7 h | Solo evaluation SE1 to SE4: fidelity hand-check, timed self-read of two unseen weeks, cognitive walkthrough, heuristic pass (§3) | about 6.5 h (§4, §10) | | See Evaluation Method |
 | 6 | Report and analysis from the readers' data | Tables A to H built from the evaluation CSVs (§6) | – | | See Evaluation Method |
 
 For these three rows (21 Oct rule): the "Why" cell only points to the Evaluation Method sentence. No reason and no limitation goes here; your 17 Oct reasons stay in plan §1. Fill "Actual" from the SE1 to SE4 minutes in `deliverable-8/hours-entries.csv`.
@@ -71,7 +71,7 @@ Prompts for the "Why" column:
 - What would you change in the next estimate?
 - Staff said "everything always takes longer than you expect, even if you take that into account." Does your data agree?
 
-Deliverable 1 is a variance in method as well as hours. A2 planned 600 minutes of your own work; after the AI work on 14 and 15 October about 177 minutes were budgeted for your own work (about 208 on the check pack's estimate), almost all checking (D1 README, revised 17 Oct 2026). Prompts for its "Why" cell and one sentence in the report:
+Deliverable 1 is a variance in method as well as hours. A2 planned 600 minutes of your own work; after the AI work on 14 October about 177 minutes were budgeted for your own work (about 208 on the check pack's estimate), almost all checking (D1 README, revised 17 Oct 2026). Prompts for its "Why" cell and one sentence in the report:
 - What was dropped or handed over: the two interviews (replaced by six coded published sources), the heuristic pass (run by AI), and the needs analysis (AI-drafted, you accepted or changed it). Say which, in your words.
 - Why: the reason D1 records is time. The ethics reason given on 14 Oct no longer applies after the 17 Oct decision to run no study with other people, so do not give it.
 - Effect on the Apply and Analyse measure: the reconciliation is now inspection against published sources, not interviews, and the inspection had one AI evaluator. What does that cost the finding?
@@ -120,7 +120,6 @@ For each goal, answer in your own words, in this order. Keep the evidence link n
 
 **Create**
 - Which layout decisions held up in your SE2 reads of the unseen weeks, and which did your needs log, your stand-up drafts or the SE3 walkthrough show to fail?
-- You read the pages as their builder, not as a producer. Which layout decisions can you not judge that way?
 - What did building over the asset layer teach you about what a file can and cannot tell you (names yes, reasons no)?
 - What did the fidelity check and the date bugs teach you about trusting your own tool?
 - Skill gained: ___. Extent and why.
@@ -128,7 +127,6 @@ For each goal, answer in your own words, in this order. Keep the evidence link n
 ## 5. Self-directed learning (about 100 words in the report)
 
 - What worked in how you learned this unit (reading plan, one branch per deliverable, prac conversations, mock marking)? What did not (timing, break)?
-- On 17 Oct 2026 you chose to evaluate ChangeLens yourself, partly to learn it well enough to explain it to others (your words, plan §1). Did it work as a way to learn? What did it not teach you that watching other people would have?
 - Where did you stall and what got you moving? Link diary weeks.
 - AI tools: what did they speed up, and what did you have to check yourself? What would you do differently so the learning is yours?
 - Two or three concrete changes for next time (for example: log hours daily, decide the evaluation method earlier, write diary entries on the day).

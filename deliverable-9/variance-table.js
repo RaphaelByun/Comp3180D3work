@@ -7,20 +7,20 @@
  * Reads planned hours (A2) and the actual hours you entered. It does not write the "why": that is yours.
  * Rows whose actuals are still blank are shown as "not logged yet".
  * A row is flagged "explain" when the actual differs from plan by 2 hours or more, or by 25% or more.
- * Rows whose A2 method changed are marked with a dagger and listed under the table with the source to draw on.
- * Those notes are sources, not reasons: the "why" is still yours.
+ * Rows whose A2 method changed are marked with a dagger and listed under the table.
+ * Those notes are facts only, never reasons: the "why" is still yours.
+ * Rows 3, 5 and 6 only point to the report's Evaluation Method; they say nothing else about the method.
  */
 const fs = require('fs');
 const path = require('path');
 
 // A2-plan method changes, keyed by deliverable number. Facts and sources only; never a "why".
 const PLAN_CHANGES = {
-  3: 'No pilot and no sessions to run the instruments in: the 17 Oct 2026 decision, no study with other people (deliverable-5/self-evaluation-plan.md §1, D3 changes in §11).',
-  5: 'Sessions replaced by a solo evaluation, SE1 to SE4 (17 Oct 2026 decision). A2 planned 18 h (7 sessions, 4 recruiting, 7 coding); the solo plan budgets about 6.5 h (self-evaluation-plan.md §4 and §10). Report the difference as a change of method, not as time saved.',
-  6: 'The analysis tables are built from the solo CSVs (SE1 to SE4) instead of the reader-study data (self-evaluation-plan.md §6, D6 changes in §12).',
+  1: 'Method changed on 14 Oct 2026: the two planned interviews were replaced by six coded published producer sources, and the heuristic pass of the four tools was run by AI (Claude Code) as a single evaluator (commits e078ebd and 92ff8b4).',
+  3: 'See Evaluation Method.',
+  5: 'A2 planned 18 h: nine 45-minute sessions incl. pilot (7 h), recruiting and briefing 4 h, coding 7 h. See Evaluation Method.',
+  6: 'See Evaluation Method.',
 };
-// Raphael's stated reasons, his words, 17 Oct 2026 (self-evaluation-plan.md §1). A source to draw on, not text to paste.
-const DECISION_SOURCE = 'Your reasons on 17 Oct 2026 (self-evaluation-plan.md §1): no live testing wanted, no time to arrange people, and testing it yourself is "the best way for me to explain it myself to others if they are using it, and I am able to learn it as well."';
 
 function parseLine(line) {
   const out = []; let cell = '', q = false;
@@ -36,6 +36,7 @@ function parseLine(line) {
 }
 
 function build(text) {
+  const round1 = x => Math.round(x * 10) / 10;
   const lines = text.replace(/^﻿/, '').split(/\r?\n/).filter(l => l.trim() && !l.startsWith('#'));
   const head = parseLine(lines[0]).map(h => h.toLowerCase());
   const rows = lines.slice(1).map(l => { const c = parseLine(l); const o = {}; head.forEach((h, i) => { o[h] = c[i] === undefined ? '' : c[i]; }); return o; });
@@ -60,11 +61,12 @@ function build(text) {
     if (note) changed.push(`- D${r.deliverable} (${r.name}): ${note}`);
     out.push(`| ${r.deliverable} | ${r.name}${note ? ' †' : ''} | ${p} | ${pp} | ${a === null ? '' : a} | ${pa === null ? '' : pa} | ${v}${flag} | ${r.variance_why || ''} |`);
   }
-  const d = ta - tp;
+  tp = round1(tp); tpp = round1(tpp); ta = round1(ta); tpa = round1(tpa);
+  const d = round1(ta - tp);
   const bold = x => (x === '' ? '' : `**${x}**`);
   out.push(`| | **Total** | ${bold(tp)} | ${bold(tpp)} | ${bold(allLogged ? ta : '')} | ${bold(allLogged ? tpa : '')} | ${bold(allLogged ? (d > 0 ? '+' : '') + d : 'incomplete')} | |`);
   if (changed.length) {
-    out.push('', '† A2-plan method changed. Sources to draw on for the "why" (write it yourself):', ...changed, `- ${DECISION_SOURCE}`);
+    out.push('', '† A2-plan method changed. Facts only; any "why" is yours to write:', ...changed);
   }
   return out.join('\n') + '\n';
 }

@@ -18,7 +18,7 @@ Word budget (plan section 6): opening and Target Audience about 120, Method up t
 
 ### 3.1 Target Audience (about 60 words)
 
-[PLACEHOLDER: who the reader is (a game producer who plans and tracks work without opening the codebase) and why, in industry terms. Evidence: the Deliverable 1 coded scan (ten ads, four verified reviews; review V5 was not verified and is not scored). One clause saying the evaluator is not this reader: he built the tool. The tasks are framed by a producer persona (SE3) and the D1 needs, not by producers themselves.]
+[PLACEHOLDER: who the reader is (a game producer who plans and tracks work without opening the codebase) and why, in industry terms. Evidence: the Deliverable 1 coded scan (ten ads, four verified reviews; review V5 was not verified and is not scored). The tasks are framed by a producer persona (SE3) and the D1 needs, not by producers themselves.]
 
 ### 3.2 Method (200 words or fewer)
 
@@ -44,9 +44,9 @@ Plan the 700 words as five short blocks and a close (plan section 6: about 350 o
 
 2. **SQ1: which needs the page answers** (about 160 words). Evidence: Table B (ten needs by read, C / PC / W / NA, beside the key's R/U class and what the git log could answer) and Table C (key against observed, first reads only). [PLACEHOLDER: what each reserve week contained, from the scored tables, after SE2.]
 
-3. **SQ2: what the names added, and what they cost** (about 110 words). Evidence: the time-and-confidence figure (Figure 5) and the `only_in_b` count in Table B [and Table D, if items exist]. [PLACEHOLDER: answers that needed a line only Version B has; minutes per read (first reads compared only with each other); how many wrong answers came at confidence 4 or 5.] Limits to state: RX-A against RY-B mixes version with week; second reads are never clean; one reader.
+3. **SQ2: what the names added, and what they cost** (about 110 words). Evidence: the time-and-confidence figure (Figure 5) and the `only_in_b` count in Table B [and Table D, if items exist]. [PLACEHOLDER: answers that needed a line only Version B has; minutes per read (first reads compared only with each other); how many wrong answers came at confidence 4 or 5.]
 
-4. **Usability of the window and the page** (about 130 words). Evidence: Table F (ChangeLens problems by severity beside the four D1 tools, and T1 to T7 outcomes), with one line from Table E (walkthrough failures by question). [PLACEHOLDER: the severity 3 and 4 problems, if any, by heuristic; where a first-time producer would get lost (CW task and question); how ChangeLens sits beside the D1 tools on the tasks a producer tool is asked to do. Use D1 ratings only for findings Raphael has checked, and say which.] Limits to state: one evaluator who built the tool (Nielsen & Molich, 1990; Hertzum & Jacobsen, 2001); D1's pass was an AI evaluator, so the comparison also changes evaluator.
+4. **Usability of the window and the page** (about 130 words). Evidence: Table F (ChangeLens problems by severity beside the four D1 tools, and T1 to T7 outcomes), with one line from Table E (walkthrough failures by question). [PLACEHOLDER: the severity 3 and 4 problems, if any, by heuristic; where a first-time producer would get lost (CW task and question); how ChangeLens sits beside the D1 tools on the tasks a producer tool is asked to do. Use D1 ratings only for findings Raphael has checked, and say which.]
 
 5. **What the page left unmet** (about 80 words). Evidence: Table G (needs-log entries by Ko et al. type), and the stand-up claims and ratings from Table H in one line. [PLACEHOLDER: the types logged most often; whether the unmet needs point to "why" and rationale (Whitson's opacity prediction) or to who and when; pass 1 against pass 2 as x of n.] Limit to state: typed notes from one reader, not spoken comments from several.
 

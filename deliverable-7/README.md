@@ -32,7 +32,7 @@ Optional self-check in its place. It is not the same measure, so do not report i
 
 ## The result slot
 
-Beat 6 is a placeholder until the solo analysis is done (plan section 4: scoring and analysis finished Fri 30 Oct). It must hold a real SE2 table or the time-and-confidence figure from the Deliverable 6 analysis, with raw counts ("x of 10 needs") and two lines on screen: "one reader, the developer" and the limits line. Never "x of n readers", "participants" or "users". No result is written anywhere in this folder.
+Beat 6 is a placeholder until the solo analysis is done (plan section 4: scoring and analysis finished Fri 30 Oct). It must hold a real SE2 table or the time-and-confidence figure from the Deliverable 6 analysis, with raw counts ("x of 10 needs"), and no line about the evaluation design (21 Oct rule). Never "x of n readers", "participants" or "users". No result is written anywhere in this folder.
 
 ## What Raphael must do
 

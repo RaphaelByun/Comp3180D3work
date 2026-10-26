@@ -40,6 +40,6 @@ Cut order if over 4:00: beat 8 first, then trim beat 2, then beat 1. Never cut b
 
 ## Deck of still frames to capture first (reuse in the report)
 
-1. Code share chart (A3 Figure 1). 2. The ChangeLens Producer Page in the Editor (A3 Figure 2). 3. Report A, "Where the work went" table (A3 Figure 3). 4. Report B, a naming section (A3 Figure 4). 5. The result slide: the time-and-confidence figure (A3 Figure 5) or an SE2 table, with "one reader, the developer" (after Fri 30 Oct). 6. The contribution slide (beat 7; not a report figure).
+1. Code share chart (A3 Figure 1). 2. The ChangeLens Producer Page in the Editor (A3 Figure 2). 3. Report A, "Where the work went" table (A3 Figure 3). 4. Report B, a naming section (A3 Figure 4). 5. The result slide: the time-and-confidence figure (A3 Figure 5) or an SE2 table (after the analysis, target Sat 31 Oct; no line about the evaluation design). 6. The contribution slide (beat 7; not a report figure).
 
 These numbers follow the proposed A3 list in `README.md` ("Figure and table numbers in the A3 report"). Use them in the report captions so no number is used twice.

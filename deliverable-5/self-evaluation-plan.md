@@ -258,6 +258,11 @@ Why this order: SE2 comes before the reserve-week fidelity check and before any 
 - Reserve item keys, SHA-256 (written 21 Oct 2026 by an AI agent, checked by a second agent; keys kept in `../_sealed-keys/` outside the repository, Raphael has not opened them): RX `66c0299560eeae7fe6a97878585e2c65290d8a3919805d407df5fa631829b1d5` RY `bf85b79c184ca984ce03c0fa54e3a4681503ca30db28591c17341deaa68a1517`. Question sheets: `deliverable-5/solo/items-reserve-2020-12-14.md`, `items-reserve-2021-09-27.md`.
 - Reserve weeks opened before today? No (Raphael, 21 Oct 2026). He has not seen the reserve pages, diffs or keys, nor the agents' reports about the items.
 
+**Added Mon 26 Oct 2026, before SE2 (Raphael's answers in chat, recorded by Claude Code at his request):**
+- Success thresholds for SE2: **none set in advance** (Raphael).
+- AI second scorer: **no** (Raphael). Scoring is his alone; the report gives no second-scorer agreement.
+- Rule 2: kept as filled on 21 Oct (Claude's call, reversible); Raphael asked what it means on 26 Oct and is to confirm or change it before scoring on Wed 28 Oct. It changes only the "Overall" columns, not SE2 itself.
+
 ## 6. Scoring and analysis
 
 Raw counts first, every time. No percentage without its count beside it. No p-values. (A2 marker's note: percentages from 5 to 10 items are more precise than the sample supports.)

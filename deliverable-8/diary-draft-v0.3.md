@@ -75,7 +75,7 @@ I did not do any project work over the break. *(Raphael, 17 Oct draft)*
 - 21 Oct 17:14: SE2 moved to Sun 25 Oct, with both weeks in one day (`3d0f66d`). Blank logs and four answer sheets set up in `deliverable-6/data/` (`e9ec1de`).
 - 21 Oct 17:20–17:38: diary draft v0.2 committed (`bc5cde2`, `45a9005`, `d906704`). 19:41: SE1–SE4 run-sheet dates moved to the revised schedule (`f598b99`).
 - 22–25 Oct: no commits. SE2, planned for Sun 25 Oct, did not run (no answer sheets committed).
-- COMP3850 D4 (due Sat 24 Oct) took priority this week (`Unit 3 Sem 2/CLAUDE.md`, calendar; `3d0f66d` message).
+- COMP3850 D4 was due Sat 24 Oct. [Whether it took priority, and how, in your words.]
 
 [Roadblock: another unit's deadline took the week. What did that cost ChangeLens, and would you plan it differently?]
 [Directed vs checked: on 21 Oct you said go ahead for the reserve-week items (`0d3f811`) and asked for plan section 5 to be filled (`8fb989c`). Do you accept Rule 2 as yours? Say so, or change it, with a date.]
@@ -90,7 +90,7 @@ I did not do any project work over the break. *(Raphael, 17 Oct draft)*
 [The **Understand-goal entry** `[goal evidence]` on Sat 31: the three mechanisms stated unaided.]
 [Roadblock or breakthrough from SE2 to SE4: one thing ChangeLens got wrong or made hard, and one thing it got right.]
 [The evaluation-driven fix on Fri 30: what you found, what you asked Claude to change, how you checked it, and its commit.]
-[What you learnt from reading the producer page as a reader rather than as its builder.]
+[What you learnt from reading the producer page on weeks you had not seen.]
 
 **Conversations:** [Conversations about the project this week (staff, peers), if any]
 

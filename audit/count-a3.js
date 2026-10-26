@@ -3,13 +3,21 @@
 // Same sections and guides as count-a3.ps1, which uses Word and gives the
 // count that matters. This one is for drafts before they go into the template.
 //
-// A section starts at a heading whose text (after any "1." or "1 " numbering)
-// is one of the template's top-level section names, at any heading level.
+// A section starts at a heading whose text (after any "1." or "1 " numbering,
+// and without a trailing "(300)", "(~50)" or "(uncounted)" note) is one of the
+// template's top-level section names, at any heading level. The name may be
+// followed by ": anything" (e.g. "Development Diary Summary (480): fact outline").
+// "Appendix A: ..." headings count as the Appendices section.
 // Its count runs to the next such heading and includes its own headings.
 // Words are runs of non-space characters with a letter or digit in them,
 // after link targets, image paths, HTML comments and Markdown marks are removed.
 //
+// If any of the five counted sections is not found, the report says
+// NOT COUNTED and the script exits non-zero, so a draft whose headings were
+// not recognised can never show a false "within the limit".
+//
 // Usage: node audit/count-a3.js path/to/draft.md
+// Exit code: 0 when all five sections are found and the total is within 2500; 1 otherwise.
 'use strict';
 const fs = require('fs');
 
@@ -36,8 +44,18 @@ function words(text) {
 function sectionName(line) {
   const m = /^#{1,6}\s+(.*?)\s*#*\s*$/.exec(line);
   if (!m) return null;
-  const text = m[1].replace(/^\d+(\.\d+)*\.?\s+/, '').trim();
-  return NAMES.find(n => n.toLowerCase() === text.toLowerCase()) || null;
+  let text = m[1].replace(/^\d+(\.\d+)*\.?\s+/, '').trim();
+  // Drop parenthetical notes such as "(300)", "(~50)" or "(uncounted)",
+  // wherever they sit, then tidy the spacing.
+  text = text.replace(/\s*\([^()]*\)/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+  if (/^appendi(x|ces)\b/.test(text)) {
+    const rest = text.replace(/^appendi(x|ces)\b/, '');
+    if (/^\s*[a-z0-9]{0,3}\s*(:|$)/.test(rest)) return 'Appendices';
+  }
+  return NAMES.find(n => {
+    const l = n.toLowerCase();
+    return text === l || text.startsWith(l + ':');
+  }) || null;
 }
 
 function count(markdown) {
@@ -57,15 +75,21 @@ function count(markdown) {
 function report(totals) {
   const out = ['Counted sections (words / template guide), approximate:'];
   let total = 0;
+  const missing = [];
   for (const [name, guide] of COUNTED) {
     if (name in totals) {
       total += totals[name];
       out.push(`  ${name.padEnd(36)} ${String(totals[name]).padStart(5)} / ${guide}`);
     } else {
+      missing.push(name);
       out.push(`  ${name.padEnd(36)} MISSING`);
     }
   }
-  const status = total <= LIMIT ? 'within the limit' : `OVER the limit by ${total - LIMIT}`;
+  const parts = [];
+  if (missing.length) parts.push(`NOT COUNTED: ${missing.length} of ${COUNTED.length} counted sections not found, so this total is incomplete`);
+  if (total > LIMIT) parts.push(`OVER the limit by ${total - LIMIT}`);
+  if (!parts.length) parts.push('within the limit');
+  const status = parts.join('; ');
   out.push(`  ${'TOTAL'.padEnd(36)} ${String(total).padStart(5)} / ${LIMIT}  (${status})`);
   out.push('', 'Not counted:');
   out.push(`  ${'Before the first section'.padEnd(36)} ${String(totals['(before the first section)']).padStart(5)}`);
@@ -73,7 +97,8 @@ function report(totals) {
     out.push(`  ${name.padEnd(36)} ${name in totals ? String(totals[name]).padStart(5) : 'MISSING'}`);
   }
   out.push('', 'Check the final count with count-a3.ps1 in Word.');
-  return { text: out.join('\n'), total };
+  const ok = missing.length === 0 && total <= LIMIT;
+  return { text: out.join('\n'), total, missing, ok };
 }
 
 module.exports = { words, count, report, sectionName };
@@ -83,5 +108,5 @@ if (require.main === module) {
   if (!file) { console.error('usage: node audit/count-a3.js draft.md'); process.exit(2); }
   const r = report(count(fs.readFileSync(file, 'utf8')));
   console.log(r.text);
-  process.exit(r.total <= LIMIT ? 0 : 1);
+  process.exit(r.ok ? 0 : 1);
 }

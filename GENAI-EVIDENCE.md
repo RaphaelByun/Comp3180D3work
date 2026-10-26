@@ -37,9 +37,9 @@ Companion to Appendix A of the proposal. Items dated 28 Jul to 2 Sep are on disk
 
 ## A3 (final project, from 11 Oct 2026)
 
-Facts for the A3 Statement on Generative AI use. The statement itself is Raphael's to write. Built on 17 Oct 2026 from `git log --all`; later commits are not listed. Tool throughout: Claude (Anthropic) via Claude Code, model Claude Opus 5.5, with Claude Sonnet 5.5 sub-agents (the model names in the local session logs a2281cff, fa1f5015 and 8aab22de).
+Facts for the A3 Statement on Generative AI use. The statement itself is Raphael's to write. Built on 17 Oct 2026 from `git log --all` and brought up to 26 Oct 2026 (updated by Claude Code, Opus 5.5, on 26 Oct 2026 while Raphael was away). On 26 Oct the remotes hold 203 commits (200 by RaphaelByun, of which 3 are merge commits, and 3 by Claude), and every one carries a `Co-Authored-By: Claude` trailer. Tool throughout: Claude (Anthropic) via Claude Code, model Claude Opus 5.5, with Claude Sonnet 5.5 sub-agents (the model names in the local session logs a2281cff, fa1f5015 and 8aab22de).
 
-Every commit in the repository up to 17 Oct 2026 carries a `Co-Authored-By: Claude` trailer. To refresh this list:
+Every commit in the repository up to 26 Oct 2026 carries a `Co-Authored-By: Claude` trailer. To refresh this list:
 
 ```
 git log --all --no-merges --reverse --date=short --format="%h %ad %(trailers:key=Claude-Session,valueonly) %s"
@@ -53,7 +53,10 @@ git log --all --no-merges --reverse --date=short --format="%h %ad %(trailers:key
 | 12 Oct | https://claude.ai/code/session_011G7cN5AvLXs3TiJfp38JQ9 (a claude.ai/code session run from Raphael's phone) | `b96c1fa`, `5fd3044`, `4c4c87f` |
 | 13 Oct | none in the trailer | `802fbb8` |
 | 13–14 Oct | https://claude.ai/code/session_01AUvZoZdotWrVLXNE3DghCf | `e73f544` to `cf90ef9` |
-| 17 Oct | https://claude.ai/code/session_01KoudXgtp2BMgLNPU5gMipQ | `f569f96` onward |
+| 17 Oct | https://claude.ai/code/session_01KoudXgtp2BMgLNPU5gMipQ | `f569f96` to `af23dab` and the other 17 Oct commits (155 commits carry this link) |
+| 21 Oct | https://claude.ai/code/session_01PZPfKm5Zv1R8j9P3wFYogQ | `0d3f811`, `8fb989c` |
+| 21 Oct (evening) | none in the trailer (local Claude Code sessions on the PC) | `3d0f66d`, `e9ec1de`, `bc5cde2`, `45a9005`, `d906704`, `f598b99` |
+| 26 Oct | none in the trailer (local Claude Code sessions on the PC) | `d882927`, `8dabc2e`, `c355b43`, `c1df9d2`, `1855d39`, `db1d401`, `1403820`, `cc37123`, `403576c`, `9a12294`, `0bcdcfc`, `7213a22` |
 
 Local Claude Code session logs (one `.jsonl` per session, with sub-agent logs in a folder of the same name) are on Raphael's PC in `C:\Users\rapha\.claude\projects\C--Users-rapha-Documents-School-Unit-3-Sem-2\`. Raphael chooses which to export as evidence.
 
@@ -65,16 +68,38 @@ node tools/export-transcript.js <session>.jsonl --out transcript.md [--no-tool-o
 
 It writes the user prompts, Claude's replies and the names of the tools called, each with a timestamp, and masks e-mail addresses and the Windows user folder. Read the output before using it. Its tests: `node tools/export-transcript.test.js`. Which local log holds which session (checked 17 Oct 2026 by searching the logs for the session links): the 13–14 Oct session is in `a2281cff-….jsonl` (it ran on the PC over Remote Control); the 17 Oct session is `fa1f5015-….jsonl`. The 12 Oct phone session ran in the cloud and has no local log; it can only be shown from claude.ai.
 
+**Local log map (26 Oct 2026).** Built from file names and created/modified times only; no log from 21 Oct onward was opened. Logs sit in two project folders: `C:\Users\rapha\.claude\projects\C--Users-rapha-Documents-School-Unit-3-Sem-2\` ("Sem-2") and `C:\Users\rapha\.claude\projects\C--Users-rapha-Documents-School-Unit-3-Sem-2-COMP3180\` ("COMP3180").
+
+| Log (first 8 characters) | Folder | Open (created to last modified) | Session |
+| --- | --- | --- | --- |
+| `a2281cff` | Sem-2 | 10 Oct 23:24 to 15 Oct 02:16 | 13–14 Oct session 01AUvZ (checked 17 Oct, see above) |
+| `fa1f5015` | Sem-2 | 17 Oct 09:34 to 23:24 | 17 Oct session 01KoudX (checked 17 Oct, see above) |
+| `15f52659` | Sem-2 | 17 Oct 22:46 to 19 Oct 07:46 | [unconfirmed] |
+| `ea84872c` | Sem-2 | 18 Oct 00:05 to 08:06 | [unconfirmed] |
+| `8271d5bf` | COMP3180 | 19 Oct 08:42 to 21 Oct 17:02 | 21 Oct session 01PZPf, the one that made `0d3f811` and `8fb989c` [mapping from the 26 Oct sweep; not confirmed from metadata] |
+| `b33ef4e9` | Sem-2 | 19 Oct 08:42 to 21 Oct 17:02 | [unconfirmed; open at the same times as `8271d5bf`] |
+| `09885011` | COMP3180 | 21 Oct 17:03 to 23 Oct 20:10 | 21 Oct evening/night sessions [unconfirmed which of the two made which commits] |
+| `d41f7f0c` | Sem-2 | 21 Oct 17:05 to 23 Oct 20:10 | 21 Oct evening/night sessions [as above] |
+| `c1d3315c` | Sem-2 | 23 Oct 20:10 to 26 Oct 18:08 | [unconfirmed] |
+| `8d725b2a` | Sem-2 | 26 Oct 18:08, still open at 19:37 on 26 Oct | 26 Oct [unconfirmed] |
+| `efdddc8a` | COMP3180 | 26 Oct 18:44, still open at 19:37 on 26 Oct | 26 Oct sweep session |
+
+Earlier logs with an unchecked session mapping: `8aab22de` and `f88102c3` (Sem-2, 17 Oct), `1a9c376f` (COMP3180, 17–19 Oct), `82bebcd6` (Sem-2, 14–15 Oct), and the 10 Oct and earlier logs.
+
+**Warning: do not export or read the logs from 21 Oct onward until Raphael's SE2 answers are committed.** They may hold held-out-week content. These are `8271d5bf`, `b33ef4e9`, `09885011`, `d41f7f0c`, `c1d3315c`, `8d725b2a` and `efdddc8a`. (`b33ef4e9` is on this list because it was open on 21 Oct alongside `8271d5bf`.)
+
 ### By deliverable
 
 | Deliverable (branch) | Dates | Commits | What the AI produced |
 | --- | --- | --- | --- |
 | D1 UX study (`deliverable-1-ux-study`) | 12, 14, 17 Oct | `4c4c87f`, `e078ebd`, `92ff8b4`, `f569f96`, `ce147cd`, `b0b931d` | Tool selection, heuristic coding sheet, job-ad and review scan, interview guide, needs catalogue and spec outline (12 Oct). The heuristic pass itself: Claude ran tasks T1 to T7 in Chrome on Raphael's accounts and coded and rated the problems (14 Oct). Six published producer sources coded in place of the interviews. Verified scan, need marks, UXF check, top ten and design spec, all for Raphael to accept. The check pack of 16 spot-check cards (17 Oct). |
-| D2 ChangeLens (`deliverable-2-changelens`) | 12–14, 17 Oct | `b96c1fa`, `802fbb8`, `e73f544`, `323eac1`, `bf09b4e`, `ac9d39c`, `2b6b5ab`, `4d33ce7`, `1976e8a`, `8fb518f`, `b1c39af`, `4cb2f8c`, `09cac30`, `c7a8f24` | All the C# code and tests, the .NET harness, the Producer Page window, the study-week exports and reports, the parser repairs, and the guides (`TRY-CHANGELENS.md`, the package README and CHANGELOG). The SS3D credit page with its licences (`4cb2f8c`). This A3 section of the GenAI index (`09cac30`). The draft A3 index in the README (`c7a8f24`). |
+| D2 ChangeLens (`deliverable-2-changelens`) | 12–14, 17, 26 Oct | `b96c1fa`, `802fbb8`, `e73f544`, `323eac1`, `bf09b4e`, `ac9d39c`, `2b6b5ab`, `4d33ce7`, `1976e8a`, `8fb518f`, `b1c39af`, `4cb2f8c`, `09cac30`, `c7a8f24` | All the C# code and tests, the .NET harness, the Producer Page window, the study-week exports and reports, the parser repairs, and the guides (`TRY-CHANGELENS.md`, the package README and CHANGELOG). The SS3D credit page with its licences (`4cb2f8c`). This A3 section of the GenAI index (`09cac30`). The draft A3 index in the README (`c7a8f24`). 26 Oct: the README brought up to date with a "Start here" block, this index updated, and the A3 word counter `audit/count-a3.js` fixed so that a draft whose headings are not recognised is reported as NOT COUNTED [this commit, 26 Oct]. |
 | D3 Instruments (`deliverable-3-instruments`) | 13, 14, 17 Oct | `4ae7653`, `ff65ae7`, `4804778`, `3407fea`, `cf90ef9`, `e603c8f`, `ea35352` | Draft items, answer key, ten-need sheet, session protocol, consent form, proxy scenario, pilot plan, the ethics research and the report ethics points. |
 | D4 Fidelity check (`deliverable-4-fidelity-check`) | 12–13 Oct | `5fd3044`, `b1a2df6` | AI scorers: first-scorer checklists for the July week; the February week scored by two independent AI scorers, then re-scored after the tool repair (`study/week1-2021-02-08/FIDELITY-RESULT.md`). The A2 plan says the check is read by hand, so Raphael's own check is separate. |
-| D5 Sessions (`deliverable-5-sessions`) | 13, 14, 17 Oct | `3864dc5`, `46857b4`, `4fe6e0f`, `50d63be`, `cc9d44e` | Recruitment text drafts, booking tracker, session checklist, think-aloud codebook and `recode-sample.js`. No session data. |
-| D6 Evaluation report (`deliverable-6-evaluation-report`) | 13, 14, 17 Oct | `6c1faba`, `e69ec9c`, `716f053`, `7ab114f`, `67d2f0c`, `a253f5c`, `89ed906` | Section skeleton, appendix plan, the analysis tool `analyse.js` with `test.js`, `figures.js`, and the D6 README updates. Sample CSVs are fake and labelled so. No findings. |
-| D7 Portfolio video (`deliverable-7-portfolio-video`) | 13, 17 Oct | `91536d3`, `2bc8e14`, `6d9f7ba`, `5b82e14`, `ecc230c`, `7c5167b` | Storyboard, shot list and the two-viewer feedback form. No narration and no recording. |
-| D8 Development diary (`deliverable-8-dev-diary`) | 13, 17 Oct | `3b75f12`, `1e60899`, `84a83e5`, `2a1d446`, `72a9d1d`, `7706776` | Diary template, fact log of commits and files, hours log files. No diary entries. |
-| D9 Reflection (`deliverable-9-reflection`) | 13, 17 Oct | `6cb114e`, `e2f491c`, `124bd4b`, `e19aa0e`, `5f2345b`, `48e163c` | Reflection skeleton, prompts and `variance-table.js`. No reflection text. |
+| D5 Sessions (`deliverable-5-sessions`) | 13, 14, 17, 21, 26 Oct | `3864dc5`, `46857b4`, `4fe6e0f`, `50d63be`, `cc9d44e`; `0d3f811`, `8fb989c`, `3d0f66d`, `f598b99`, `d882927`, `9a12294` | Recruitment text drafts, booking tracker, session checklist, think-aloud codebook and `recode-sample.js`. 21 Oct: held-out-week question sheets written by AI agents, with the keys sealed outside the repository (`0d3f811`); plan section 5 filled at Raphael's request (`8fb989c`); run-kit dates (`3d0f66d`, `f598b99`). 26 Oct: plan wording (`d882927`); Raphael's pre-SE2 answers recorded (`9a12294`): no thresholds set in advance, and no AI second scorer. No session data. |
+| D6 Evaluation report (`deliverable-6-evaluation-report`) | 13, 14, 17, 21, 26 Oct | `6c1faba`, `e69ec9c`, `716f053`, `7ab114f`, `67d2f0c`, `a253f5c`, `89ed906`; `e9ec1de`, `c355b43`, `1403820`, `403576c` | Section skeleton, appendix plan, the analysis tool `analyse.js` with `test.js`, `figures.js`, and the D6 README updates. Sample CSVs are fake and labelled so. 21 Oct: blank data logs and answer sheets (`e9ec1de`). 26 Oct: skeleton wording (`c355b43`, `1403820`, `403576c`). No findings. |
+| D7 Portfolio video (`deliverable-7-portfolio-video`) | 13, 17, 26 Oct | `91536d3`, `2bc8e14`, `6d9f7ba`, `5b82e14`, `ecc230c`, `7c5167b`; `1855d39`, `db1d401`, `7213a22` | Storyboard, shot list and the two-viewer feedback form. 26 Oct: video-doc wording, order and timing (`1855d39`, `db1d401`, `7213a22`). No narration and no recording. |
+| D8 Development diary (`deliverable-8-dev-diary`) | 13, 17, 21, 26 Oct | `3b75f12`, `1e60899`, `84a83e5`, `2a1d446`, `72a9d1d`, `7706776`; `bc5cde2`, `45a9005`, `d906704`, `c1df9d2`, `cc37123` | Diary template, fact log of commits and files, hours log files. 21 Oct: diary draft v0.2 from commit facts (`bc5cde2`, `45a9005`, `d906704`). 26 Oct: diary draft v0.3, an hours prefill with the minutes left blank and a draft contribution ledger `CONTRIBUTIONS.md` (`c1df9d2`); wording fixes (`cc37123`). No diary entries in Raphael's words. |
+| D9 Reflection (`deliverable-9-reflection`) | 13, 17, 26 Oct | `6cb114e`, `e2f491c`, `124bd4b`, `e19aa0e`, `5f2345b`, `48e163c`; `8dabc2e`, `0bcdcfc` | Reflection skeleton, prompts and `variance-table.js`. 26 Oct: skeleton and variance-note wording (`8dabc2e`, `0bcdcfc`). No reflection text. |
+
+No AI second scorer is used for the evaluation scoring (Raphael's decision, 26 Oct 2026, recorded in `9a12294`).

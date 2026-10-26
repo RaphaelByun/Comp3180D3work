@@ -15,7 +15,7 @@ A 15-minute hands-on check of the committed tier (Deliverable 2). Everything bel
 1. Click **Frozen study week** at the top, then **Browse** to `study/week1-2021-02-08` (in this repository) and press **Generate**.
 2. Flip between **Version A (baseline)** and **Version B (treatment)**. B adds the "Scenes and prefabs changed" section; everything above it is identical in both.
 3. Do the same for `study/week2-2021-07-19`.
-4. The window rebuilds the page from the week's `export/` folder with the current code. The evaluation uses the committed `report-A-baseline.md` and `report-B-treatment.md`. For July they are the same. For February, Version B in the window differs in two rows repaired on 17 Oct 2026 (pepperspray names the PepperSpray and Item scripts; Wet Floor Sign is listed once, as moved and rebuilt, so 25 scenes and prefabs, not 26). The package `CHANGELOG.md` lists both.
+4. The window rebuilds the page from the week's `export/` folder with the current code. The evaluation uses the committed `report-A-baseline.md` and `report-B-treatment.md`. For July they are the same. For February, Version B in the window differs in two rows repaired on 17 Oct 2026 (pepperspray names the PepperSpray and Item scripts; Wet Floor Sign is listed once, as moved and rebuilt, so 25 scenes and prefabs, not 26).
 
 What you should see:
 

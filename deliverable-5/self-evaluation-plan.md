@@ -98,7 +98,7 @@ General rules for every activity:
 - **Order effect.** The second read of a week is never clean: you already know the week. So the A-against-B comparison is the two first reads (RX-A against RY-B), and that mixes version with week. Report both, and never add first and second reads together.
 - **Familiarity bias.** You built ChangeLens, accepted the AI-drafted ten-need key, and know what the page can say.
 - **Anchoring.** You will know the key's R and U classes before SE2, so they can pull your answers toward the key. Commit the key first, answer from the page, and take `record_could_answer` from the git log, not from the key.
-- **Thin weeks.** The page headers say 14 Dec 2020 has 3 changes by 2 people and 27 Sep 2021 has 2 changes by 1 person. Needs about who did what, or about work that went quiet, have little to find in them. Say so. You will read it faster and more carefully than a producer would. The unseen weeks remove memory of the content, not knowledge of the tool.
+- **Thin weeks.** The reserve weeks may hold few changes, so some needs may have nothing to report. Record what each week held only after SE2 is scored. *(26 Oct 2026: this bullet used to give the reserve pages' header counts; that is reserve content, so it was removed before SE2.)*
 
 **Materials.**
 - Pages (branch `deliverable-2-changelens`, frozen by commit `d9fa4bf`, unchanged at `20eff9a`): `study/reserve/2020-12-14/report-A-baseline.md`, `study/reserve/2020-12-14/report-B-treatment.md`, `study/reserve/2021-09-27/report-A-baseline.md`, `study/reserve/2021-09-27/report-B-treatment.md`. Read the page only, in a Markdown preview or on paper, same font and size for A and B.
@@ -163,7 +163,7 @@ General rules for every activity:
 
 ### SE3. Cognitive walkthrough of the Producer Page window (usability: learnability)
 
-**Purpose.** Check whether a first-time user can do the producer tasks in `Window > ChangeLens Producer Page` without help. Method: the cognitive walkthrough (Wharton et al., 1994). It can be run with no participants, because it asks set questions about each correct step instead of watching users. It is usually run by a small group, and here the one evaluator designed the tool, so state both as limits. Read the Wharton et al. chapter for what it says about who should run it before you cite that point.
+**Purpose.** Check whether a first-time user can do the producer tasks in `Window > ChangeLens Producer Page` without help. Method: the cognitive walkthrough (Wharton et al., 1994). It can be run with no participants, because it asks set questions about each correct step instead of watching users. It is usually run by a small group, and here the one evaluator designed the tool (both recorded in section 7, not stated in the report). Read the Wharton et al. chapter for what it says about who should run it before you cite that point.
 
 **Persona** (written before the walkthrough). Based on `deliverable-3/proxy-scenario.md`: a producer who has just joined a small Unity team, plans and tracks the work, does not write code, and has the team's Unity project installed only to run tools. State this persona in the report. Note the tension: the proxy scenario says a producer does not open Unity, but the window lives in the Unity Editor.
 
@@ -286,23 +286,27 @@ How the outputs map to the rubric and the RQ:
 
 Usability here follows ISO 9241-11 (2018): effectiveness, efficiency and satisfaction for specified users. The study has one user who is not the specified user, so say "for this reader".
 
-**Fit to the report.** The Evaluation section is about 1000 words: opening and target audience about 120, Method up to 200, Results and Discussion about 700. The template guide treats the Evaluation as a study with real participants, so say early and plainly that this is a one-reader evaluation. Suggested split, for Raphael to change: Method, one sentence for each of SE1 to SE4. Results, about 350 words on SE2 (Tables B and C, the time and confidence figure), 80 on SE1, 150 on SE3 and SE4 together, and 120 on limits. Everything else goes to the appendices as the CSVs. No result is written in this plan.
+**Fit to the report.** The Evaluation section is about 1000 words: opening and target audience about 120, Method up to 200, Results and Discussion about 700. The template guide treats the Evaluation as a study with real participants, so the design goes first in Method, in one plain sentence with n = 1 (Raphael's 21 Oct rule; nowhere else). Suggested split, for Raphael to change: Method, one sentence for each of SE1 to SE4. Results, about 350 words on SE2 (Tables B and C, the time and confidence figure), 80 on SE1, 150 on SE3 and SE4 together, and about 120 on what was left unmet and the close. Everything else goes to the appendices as the CSVs. No result is written in this plan.
 
-## 7. Limitations and how the report states them
+## 7. Limitations (internal record; the report states the design once)
 
-| Limitation | Mitigation in this plan | How the report says it |
+**Updated 26 Oct 2026 (Claude Code, Raphael away), to match his 21 Oct rule.** The report states the solo design in **one plain sentence in Evaluation Method** (developer as single reader, two unseen weeks, keys sealed in advance, a brief reason). There is no limitations paragraph, and the design is not mentioned in Results, the reflection, the diary or the video. The variance-table row only points to the Method sentence. The table below is the design record behind that sentence. It is not text for the report. The right-hand column says what the report *does* (reporting practice), not what it says about limits.
+
+| Limitation | Mitigation in this plan | What the report does |
 | --- | --- | --- |
-| n = 1 | Two weeks, both versions, fixed order switch; raw counts only | "One reader; the results show what the page can hold and where it fails, not how producers would do." |
-| The reader is the developer, not the target audience | Tasks framed by the producer persona and the D1 needs; SE4 sets ChangeLens beside tools on the same scale | State it in Method and in the opening of Results; this is why the Pass band is expected |
-| Familiarity with the tool | Unseen reserve weeks; answers written and committed before checking; `seen_before` recorded | "I knew the tool, not the weeks." Name it as a bias that favours the tool |
-| Order effect | Order switched between weeks; second reads record change only; first reads compared only with each other | Report first and second reads apart; say the A-against-B comparison mixes version with week |
-| Self-scoring | Scoring against the git log, not memory; sealed item keys with a hash; optional AI second scorer, disclosed | Give the second-scorer agreement as x of n, or say there was none |
-| Single evaluator for SE3 and SE4 | Fixed methods, D1 rules unchanged | One evaluator finds a minority of problems (Nielsen & Molich, 1990), and evaluators differ (Hertzum & Jacobsen, 2001). The evaluator also built the tool, and the walkthrough is usually a group method. D1's pass was an AI evaluator, so the ChangeLens-against-D1 comparison also changes evaluator, and D1's severity 3 and 4 findings are only as checked as Raphael's CHECK-PACK pass |
-| Key known in advance (anchoring) | Key committed before SE2; `record_could_answer` taken from the git log | "I knew which needs the key called derivable." Name it as a bias that favours agreement |
-| Thin reserve weeks | None possible now | The pages show 3 changes by 2 people and 2 changes by 1 person. Say what the weeks could and could not test |
-| Pages in Markdown, not the window | Read the page only, same font for A and B | SE2 tests the page's content and layout in a preview, not the Producer Page window; SE3 tests the window |
-| Reserve weeks are reserves, not matched to the study weeks | None possible now | Say so; per-week results are not compared with the D3 study weeks |
-| The ten-need key was AI-drafted | Raphael accepts or changes it before SE2 and dates it | Call it his key only after that date; disclose in the GenAI statement |
+| n = 1 | Two weeks, both versions, fixed order switch; raw counts only | Raw counts, never percentages; no plural "readers" or "participants" |
+| The reader is the developer, not the target audience | Tasks framed by the producer persona and the D1 needs; SE4 sets ChangeLens beside tools on the same scale | Covered by the one Method sentence only |
+| Familiarity with the tool | Unseen reserve weeks; answers written and committed before checking; `seen_before` recorded | `seen_before` reported in the reads table |
+| Order effect | Order switched between weeks; second reads record change only; first reads compared only with each other | First and second reads reported apart |
+| Self-scoring | Scoring against the git log, not memory; sealed item keys with a hash; optional AI second scorer, disclosed | Second-scorer agreement as x of n if run; the scorer goes in the GenAI statement |
+| Single evaluator for SE3 and SE4 | Fixed methods, D1 rules unchanged | Methods named with their sources in Method; no limits paragraph |
+| Key known in advance (anchoring) | Key committed before SE2; `record_could_answer` taken from the git log | `record_could_answer` column from the git log shown beside the key |
+| Thin reserve weeks | None possible now | Report what each week contained, from the scored tables, after SE2 |
+| Pages in Markdown, not the window | Read the page only, same font for A and B | Method names the medium (page preview); SE3 covers the window |
+| Reserve weeks are reserves, not matched to the study weeks | None possible now | Per-week results not compared with the D3 study weeks |
+| The ten-need key was AI-drafted | Raphael accepts or changes it before SE2 and dates it | Disclosed in the GenAI statement |
+
+*(26 Oct: the "Thin reserve weeks" row used to give the reserve weeks' change and author counts. That is reserve content, so it was removed here before SE2.)*
 
 Neustaedter and Sengers (2012) describe autobiographical design: the designer is also the user and learns through use. It fits Raphael's stated reason (learning by using the tool himself). It does not fit fully, because he built ChangeLens and is not a producer, so he is not its user. If you cite it, cite it only for learning through use, say that limit, and say plainly that this is a variance from the A2 plan. Do not call the study autobiographical design without that limit.
 
@@ -316,12 +320,12 @@ There are no participants, so `deliverable-3/ethics/report-ethics-points.md` poi
 
 ## 9. Expected rubric band and why
 
-**Expected: Pass (about 60), as Raphael accepted on 17 Oct 2026.**
+**Expected: Pass (about 60), as Raphael accepted on 17 Oct 2026.** Updated 26 Oct 2026 for his 21 Oct one-sentence rule.
 
 - The spec asks for "a study conducted to answer your primary research question and evaluate the utility, usability or UX ... for its target audience". The Pass band is "may lack in selection of appropriate methods and/or sample". A one-reader, developer-as-reader study is that case.
-- What can lift it within or just above Pass: named methods (Endsley items, Wharton et al. walkthrough, Nielsen heuristics on the D1 scale), checks against the git log, sealed keys, every limit stated, and evidence on all three of utility, usability and UX. The CR band asks for "largely appropriate methods and sample"; the methods may read that way, the sample will not. Do not count on CR.
-- What would drop it below Pass: results written without the CSVs behind them, the limits left out, or calling this a user study.
-- **The risk is real.** The F descriptor is "largely incomplete or uses inappropriate methods and/or sample", and the template guide reads the Evaluation as a study with real participants, not self-assessment. A marker could read a one-reader study as an inappropriate sample. Pass is the expectation, not a guarantee. The Pass descriptor covers "utility, usability and/or UX", so evidence on all three, with the limits stated, is the best protection.
+- What can lift it within or just above Pass: named methods (Endsley items, Wharton et al. walkthrough, Nielsen heuristics on the D1 scale), checks against the git log, sealed keys with hashes, raw counts from the CSVs, and evidence on all three of utility, usability and UX. The CR band asks for "largely appropriate methods and sample"; the methods may read that way, the sample will not. Do not count on CR.
+- What would drop it below Pass: results written without the CSVs behind them, or calling this a user study.
+- **The risk is real, and Raphael chose this trade on 21 Oct.** The F descriptor is "largely incomplete or uses inappropriate methods and/or sample". Stating the design once, in Method, means a skimming marker may miss it; putting that sentence first in Method, with n = 1, is the mitigation. The limits are kept in section 7 of this plan, not in the report.
 
 ## 10. Hours
 

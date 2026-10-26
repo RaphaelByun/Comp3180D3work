@@ -5,7 +5,7 @@ Status (17 Oct 2026, Week 10): plan only, committed on this branch. Nothing is r
 A2 success measure (Deliverables table, row 7, 4 h, 1 in prac): **"Three to four minutes showing both conditions; two outside viewers can state its purpose and reader."** A2 timeline: analysis and video in Week 13.
 
 **17 Oct 2026 decision.** There is no study with other people: no recruitment, no live sessions, no online form. Raphael evaluates ChangeLens himself. The plan is `deliverable-5/self-evaluation-plan.md` on `deliverable-5-sessions`. For this folder that means:
-- The video never claims a reader study. Its result beat shows the solo evaluation, with "one reader, the developer" on screen.
+- The video never claims a reader study and never describes the evaluation design (Raphael's 21 Oct rule: the design is stated once, in the report's Evaluation Method). The result beat shows real counts only.
 - The two-viewer test is retired (`retired/feedback-form.md`). That half of the A2 measure is a variance.
 
 **The video is uploaded to Echo 360, not to this repo** (LFS limits; the unit asks for Echo 360). The repo keeps the plan. Link the Echo 360 video in the submission text box and in the report's Project Deliverables section; check the link in a private window.
@@ -61,7 +61,7 @@ The video stills are reused in the report, and the D6 figure tool also calls its
 | Figure 2 | The ChangeLens Producer Page in the Unity Editor | New capture, still 2 |
 | Figure 3 | Version A (baseline), "Where the work went" table | New capture, still 3 |
 | Figure 4 | Version B (treatment), a naming section | New capture, still 4 |
-| Figure 5 | Time and confidence (SE2): minutes per read, and confidence against the git-log result, one reader, the developer | `deliverable-6/analysis/figures.js` (Deliverable 6 branch), which now draws this figure in place of the A2 paired-differences plot. Run it with `--figure 5` so the title says Figure 5 (without the flag it says Figure 1). Real data goes in `deliverable-6/data/`; output built from the FAKE samples is stamped FAKE and must not be used |
+| Figure 5 | Time and confidence (SE2): minutes per read, and confidence against the git-log result | `deliverable-6/analysis/figures.js` (Deliverable 6 branch), which now draws this figure in place of the A2 paired-differences plot. Run it with `--figure 5` so the title says Figure 5 (without the flag it says Figure 1). Real data goes in `deliverable-6/data/`; output built from the FAKE samples is stamped FAKE and must not be used |
 | Table 1 | Ten needs by read (solo Table B) | `deliverable-6/analysis/analyse.js` or `figures.js` on the Deliverable 6 branch (they print the same table as Markdown), from `se2-need-answers.csv` |
 | Table 2 | Key against observed, SQ1 (solo Table C) | Same tools, first reads of Table B |
 | Table 3 | Heuristic problems for ChangeLens beside the four D1 tools (solo Table F) | Same tools, from `se4-heuristic-problems.csv`, `se4-task-outcomes.csv` and the D1 tables |

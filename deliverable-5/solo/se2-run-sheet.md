@@ -1,6 +1,6 @@
 # SE2 run sheet: timed self-read of the two reserve weeks
 
-Plan section 3, SE2. This is the core of the evaluation. You read each reserve week in both versions and answer from the page alone. Scoring against the git log comes later, on Mon 26 Oct (`how-to-score.md`). Revised 21 Oct: both weeks run on Sun 25 Oct, RX first, then a break of at least 15 minutes, then RY.
+Plan section 3, SE2. This is the core of the evaluation. You read each reserve week in both versions and answer from the page alone. Scoring against the git log comes later, on Wed 28 Oct (`how-to-score.md`). Revised 26 Oct: both weeks run on Tue 27 Oct, RX first, then a break of at least 15 minutes, then RY (the 21 Oct revision had Sun 25 Oct).
 
 ## Fixed before you start
 
@@ -8,15 +8,17 @@ The order is fixed now. Do not change it after you have seen a page.
 
 | Day | Week | Code | First read | Second read |
 | --- | --- | --- | --- | --- |
-| Sun 25 Oct, sitting 1 | 14 Dec 2020 | RX | A (baseline), `RX-A1` | B (treatment), `RX-B2` |
-| Sun 25 Oct, sitting 2 | 27 Sep 2021 | RY | B (treatment), `RY-B1` | A (baseline), `RY-A2` |
+| Tue 27 Oct, sitting 1 | 14 Dec 2020 | RX | A (baseline), `RX-A1` | B (treatment), `RX-B2` |
+| Tue 27 Oct, sitting 2 | 27 Sep 2021 | RY | B (treatment), `RY-B1` | A (baseline), `RY-A2` |
 
-Before Sun 25 Oct, check these are done and committed:
+Before Tue 27 Oct, check these are done and committed:
 
 - [x] Plan section 5 filled: key accepted, rule chosen, `key_ru_class` for all ten needs, reserve weeks opened before (yes or no) (`8fb989c`, 21 Oct).
 - [x] Item key hashes in plan section 5, or "no items" written there (`8fb989c`; items `0d3f811`).
 - [ ] The item question sheets for both weeks are in hand (only if items were approved). The keys are **not** in the repo.
 - [x] The CSVs from `logs/` are copied into `deliverable-6/data/`, with one answer sheet per read (done 21 Oct on `deliverable-6-evaluation-report`).
+
+Where you fill things in: the logs and answer sheets are in `deliverable-6/data/` on `deliverable-6-evaluation-report`, not in `solo/logs/`. Reach them through a second, sparse folder so you never switch branches and nothing from `study/` lands on disk: `git worktree add --no-checkout ..\d6 deliverable-6-evaluation-report`, then in `..\d6` run `git sparse-checkout set --no-cone deliverable-6/data/`, `git checkout` and `git pull --ff-only`. The full steps are under "Before you start" in `_overseer-21oct/SE run sheets v0.4.md`, outside the repo.
 
 ## Materials
 
@@ -54,7 +56,7 @@ Before Sun 25 Oct, check these are done and committed:
 
 - The diary entry for the Create goal (an unfamiliar week) is written the same day as a first read, straight after it. Not before SE2.
 - Log the minutes for each sitting in `deliverable-8/hours-entries.csv`.
-- Score on Mon 26 Oct with `how-to-score.md`.
+- Score on Wed 28 Oct with `how-to-score.md`.
 
 ## If something goes wrong
 

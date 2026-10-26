@@ -51,7 +51,7 @@ What it **cannot** support:
 All paths are repository paths in `Comp3180D3work`. The branch is named where it matters. Data files go in `deliverable-6/data/` on `deliverable-6-evaluation-report`, as D6 already plans. The CSV columns below are exact; templates are a D6 change (section 12).
 
 General rules for every activity:
-- **Write before you check.** Answers, verdicts and walkthrough notes are written and committed before any key, AI verdict or git log is opened. The commit time is a record of order, not proof: one person controls the clock and the history. Say so in the report.
+- **Write before you check.** Answers, verdicts and walkthrough notes are written and committed before any key, AI verdict or git log is opened. The commit time is a record of order, not proof: one person controls the clock and the history. That is kept in this plan (section 7, "Familiarity with the tool"); the report adds no sentence for it, because the one Method sentence states the design. *(26 Oct: was "Say so in the report".)*
 - **Do not open the reserve weeks before SE2.** That means `study/reserve/*/report-*.md`, `study/reserve/*/export/`, `study/reserve/*/fidelity-*.md`, `study/reserve/*/naming.md`, and the reserve weeks in the Producer Page window, **on every branch**. D2, D3 and D4 each hold a copy. D3 and D4 hold older Version B pages and the reserve fidelity checklists, whose claim rows describe the pages. While you check D3 and D4 today, skip `study/reserve/` in both. If you have opened any of them before, say so in `seen_before` (SE2), do not hide it.
 - **"Unseen" means the page and the diffs.** A2 already gives commit counts and naming shares for both reserve weeks (3 changes on 14 Dec 2020, 2 on 27 Sep 2021). Say that in the report.
 - **Log time** for each activity in `deliverable-8/hours-entries.csv` (on `deliverable-8-dev-diary`) against Deliverable 5.
@@ -118,12 +118,12 @@ General rules for every activity:
 7. Commit the answers file, the ratings and the log. **Do not open the git log yet.**
 8. Five-minute break. Open the second version. For each item and need, mark only what changes: a new answer, a changed answer, or (RY) an answer the A page no longer supports. Lap times and confidence as before. Give the ratings again. Commit.
 
-**Scoring (Mon 26 Oct, after both weeks, about 60 minutes: 64 answers to check against the git log).**
+**Scoring (Wed 28 Oct, revised 26 Oct; after both weeks, about 60 minutes: 64 answers to check against the git log).**
 1. Open the sealed keys (if items exist) and check the hash. Score items 1 to 5 as 0, 1 or 2 and code item 6 Pass, Hedged or Over-claim, with `deliverable-3/answer-key-and-scoring.md`.
 2. Score every need answer against the git log: `C` correct, `PC` partly correct, `W` wrong, `NA` left blank. Several needs (tasks finished, blocked work, risk, milestone, work left, what to tell a publisher) have no answer in a git log. For a need where the log holds nothing, "the page does not say" is a valid answer: score it `C` after you check the log has nothing, and score a specific answer `W` with cause `overclaim`. Also fill `record_could_answer` (`D`, `P` or `N`) from the git log by hand, not from the key. For each `W`, name the cause: `misread` (the page was right, you read it wrong), `overclaim` (the page did not say it), `page-wrong` (the page itself is wrong; carry it into SE1).
 3. Mark `only_in_b` = `y` where the correct answer depends on a line only Version B has.
 3a. Split the stand-up draft into separate claims and check each against the git log: `S` supported, `C` contradicted, `U` unclear. Write the counts in `se2-reads.csv`.
-4. **Second scorer (optional, disclosed).** An AI agent scores the same answers blind to your scores, from the keys and the git log, into `se2-second-scorer.csv`. Report agreement as answers in agreement out of answers scored. Disclose it in the GenAI statement.
+4. **Second scorer: not run (26 Oct, `9a12294`).** Raphael decided on 26 Oct that there is no AI second scorer. Leave `se2-second-scorer.csv` empty. *(Was: an optional AI agent scoring the same answers blind, reported as answers in agreement out of answers scored.)*
 
 **Logged in** (`deliverable-6/data/`):
 
@@ -151,9 +151,9 @@ General rules for every activity:
 
 `segment_id,participant,timestamp,report_condition,quote_note,pass1_code,pass1_date,pass2_code,pass2_date,final_code,resolution_rule`
 
-- `participant`: `SELF`. `report_condition`: the `read_id`. Codes from `deliverable-5/think-aloud-coding-sheet.md` (Ko et al.'s 21 types, `none`, `other`, `unclear`). Pass 1 on Thu 22 Oct; pass 2 on the blind quarter on Thu 29 Oct. `recode-sample.js` skips only participant codes like `P01`, so `SELF` is kept. Expect only a few dozen lines; a quarter is a handful.
+- `participant`: `SELF`. `report_condition`: the `read_id`. Codes from `deliverable-5/think-aloud-coding-sheet.md` (Ko et al.'s 21 types, `none`, `other`, `unclear`). Pass 1 on Wed 28 Oct; pass 2 on the blind quarter on [date per Raphael's decision] (revised 26 Oct; was Thu 22 and Thu 29 Oct). `recode-sample.js` skips only participant codes like `P01`, so `SELF` is kept. Expect only a few dozen lines; a quarter is a handful.
 
-`se2-second-scorer.csv` (optional):
+`se2-second-scorer.csv` (not run, 26 Oct, `9a12294`; the header is kept and the file stays empty):
 
 `read_id,kind,id,score,scorer,scored_date`
 
@@ -228,6 +228,8 @@ Today's own checks of D3 and D4 come first. Dates are targets for Raphael.
 
 **Revised 21 Oct 2026:** SE2 did not run on 20 and 21 Oct (COMP3850 D4 comes first). The live dates are in `solo/README.md` "Revised schedule": SE2 Sun 25 Oct; scoring and SE1 February Mon 26; SE1 July and SE3 Tue 27; SE4 Wed 28; pass 2 Thu 29; analysis Fri 30. The table below is the 17 Oct plan, kept as the record.
 
+**Revised 26 Oct 2026 (supersedes the 21 Oct line above):** SE2 Tue 27 Oct; SE2 scoring and needs-log pass 1 Wed 28; SE1 and SE3 Thu 29; SE4 and one fix Fri 30; scoring and analysis finished Sat 31, except the Table G pass-1/pass-2 agreement, which follows needs-log pass 2; needs-log pass 2 [date per Raphael's decision]. The live table is `solo/README.md` "Revised schedule (26 Oct 2026)"; the short form for each day is `_overseer-21oct/SE run sheets v0.4.md`, outside the repo.
+
 | Date | What | Minutes |
 | --- | --- | ---: |
 | Sat 17 Oct | Raphael's D3 and D4 checks (already planned); skip `study/reserve/` in both. Read and approve this plan and the change lists in sections 11 and 12 | – |
@@ -246,7 +248,7 @@ Today's own checks of D3 and D4 come first. Dates are targets for Raphael.
 
 Total about 6 hours 35 minutes, inside the A2 Deliverable 5 budget of 18 hours. The Version A fidelity rows would add about 20.
 
-A3 is due Sun 8 Nov (the spec also gives 9 Nov for part of it; plan for 8 Nov). Everything after Fri 30 Oct is left for the work this table does not cover: fixes you choose after SE3 and SE4, the Evaluation section, the video, the diary and the reflection. That is 9 days. If SE2 slips by a day, drop the Version A fidelity rows and the optional AI second scorer first.
+A3 is due Sun 8 Nov (the spec also gives 9 Nov for part of it; plan for 8 Nov). Scoring and analysis are finished by Sat 31 Oct, except the Table G pass-1/pass-2 agreement, which follows needs-log pass 2. Everything after Sat 31 Oct (revised 26 Oct; was Fri 30) is left for the work this table does not cover: further fixes after SE3 and SE4, the Evaluation section, the video, the diary and the reflection. That is 8 days. If SE2 slips by a day, drop the Version A fidelity rows first (the AI second scorer is not run: 26 Oct, `9a12294`).
 
 Why this order: SE2 comes before the reserve-week fidelity check and before any walkthrough, so nothing spoils the reserve weeks. SE3 comes before SE4 so the task-based pass is not shaped by a heuristic list.
 
@@ -276,9 +278,9 @@ Raw counts first, every time. No percentage without its count beside it. No p-va
 | Figure. Time and confidence | `se2-reads.csv`, `se2-need-answers.csv` | Minutes per read (four bars), and confidence against `gitlog_result`, so high-confidence wrong answers show. Replaces the A2 paired-differences plot |
 | Table E. Walkthrough | `se3-walkthrough.csv` | Steps per task; `N` answers by question (Q1 to Q4); failure stories by severity |
 | Table F. Heuristic problems | `se4-heuristic-problems.csv`, `se4-task-outcomes.csv`, D1 tables | Problems by severity for ChangeLens beside the four D1 tools; T1 to T7 outcomes across five tools |
-| Table G. What the page left unmet | `se2-needs-log.csv` | Entries by Ko et al. information type; pass 1 against pass 2 agreement as x of n only. With a handful of re-coded lines and 24 code options, kappa would mean nothing |
-| Table H. Stand-up and ratings | `se2-reads.csv` | Per read: ease, useful and would_send ratings (one reader's opinion). First reads: stand-up claims S / C / U as counts |
-| Scoring check | `se2-second-scorer.csv` | AI second scorer: answers in agreement out of answers scored |
+| Table G. What the page left unmet | `se2-needs-log.csv` | Entries by Ko et al. information type; pass 1 against pass 2 agreement as x of n only, as a raw count. No kappa; the reason (a handful of re-coded lines, 24 code options) stays in this plan and is not written as a limit in the report |
+| Table H. Stand-up and ratings | `se2-reads.csv` | Per read: ease, useful and would_send ratings as raw values (the design is stated only in the one Method sentence). First reads: stand-up claims S / C / U as counts |
+| Scoring check | `se2-second-scorer.csv` | **Not used**: no AI second scorer (26 Oct, `9a12294`) |
 
 How the outputs map to the rubric and the RQ:
 
@@ -303,7 +305,7 @@ Usability here follows ISO 9241-11 (2018): effectiveness, efficiency and satisfa
 | The reader is the developer, not the target audience | Tasks framed by the producer persona and the D1 needs; SE4 sets ChangeLens beside tools on the same scale | Covered by the one Method sentence only |
 | Familiarity with the tool | Unseen reserve weeks; answers written and committed before checking; `seen_before` recorded | `seen_before` reported in the reads table |
 | Order effect | Order switched between weeks; second reads record change only; first reads compared only with each other | First and second reads reported apart |
-| Self-scoring | Scoring against the git log, not memory; sealed item keys with a hash; optional AI second scorer, disclosed | Second-scorer agreement as x of n if run; the scorer goes in the GenAI statement |
+| Self-scoring | Scoring against the git log, not memory; sealed item keys with a hash; AI second scorer not run (26 Oct, `9a12294`) | No second-scorer figure |
 | Single evaluator for SE3 and SE4 | Fixed methods, D1 rules unchanged | Methods named with their sources in Method; no limits paragraph |
 | Key known in advance (anchoring) | Key committed before SE2; `record_could_answer` taken from the git log | `record_could_answer` column from the git log shown beside the key |
 | Thin reserve weeks | None possible now | Report what each week contained, from the scored tables, after SE2 |
@@ -317,11 +319,11 @@ Neustaedter and Sengers (2012) describe autobiographical design: the designer is
 
 ## 8. Ethics
 
-There are no participants, so `deliverable-3/ethics/report-ethics-points.md` points 1 (testing with classmates) and 2 (participant data) no longer apply. Say that in one sentence. Points 3 to 5 still apply:
+There are no participants, so `deliverable-3/ethics/report-ethics-points.md` points 1 (testing with classmates) and 2 (participant data) no longer apply. Leave points 1 and 2 out of the report; the one Evaluation Method sentence already states the design, so add no ethics sentence about it. Points 3 to 5 still apply:
 
 - **Point 3, what the tool could be used for.** ChangeLens could be used to monitor or blame developers. The page reports changes to the project, not each person's output. SE4 task T2 (per-person work) records this as a design choice, not a gap.
 - **Point 4, accurate reporting of real people's work.** SS3D is real contributors' work. SE1 checks every page used, including both reserve weeks. Check SS3D's licence (`study/SOURCE-AND-LICENCE.md` on `deliverable-2-changelens`) and state it. The export logs (`study/*/export/log.txt`) hold contributor email addresses; decide whether the repository should keep them before it is shared with markers.
-- **Point 5, AI use.** Declare in the GenAI statement: the AI fidelity scorers, the AI-drafted ten-need key, the AI-written reserve items and keys, the optional AI second scorer, and this plan.
+- **Point 5, AI use.** Declare in the GenAI statement: the AI fidelity scorers, the AI-drafted ten-need key, the AI-written reserve items and keys, and this plan (the AI second scorer was not run: 26 Oct, `9a12294`).
 
 ## 9. Expected rubric band and why
 
@@ -334,27 +336,39 @@ There are no participants, so `deliverable-3/ethics/report-ethics-points.md` poi
 
 ## 10. Hours
 
-A2 budgeted Deliverable 5 at 18 hours (7 sessions, 4 recruiting, 7 coding). This plan uses about 6.5. Report the variance in the D9 table with the reason (the 17 Oct decision), not as time saved.
+A2 budgeted Deliverable 5 at 18 hours: nine 45-minute sessions including the pilot (7 h), recruiting and briefing (4 h), and six think-alouds coded from timestamped notes (7 h) (the A2 wording is quoted in `README.md`). This plan uses about 6.5. Report the variance in the D9 table with a pointer to the one Method sentence, not as time saved. The "why" cell is Raphael's.
 
 ## 11. Changes needed in D3 and D4 (list only; Raphael approves after his check)
 
-Both branches are read-only today. Nothing below has been done.
+Both branches are read-only today. Nothing below has been done on D3 or D4.
+
+**Revised 26 Oct 2026 (Claude Code (Opus 5.5), Raphael away).** Items brought up to the 26 Oct state, D3 items 8 to 10 and D4 items 6 and 7 added, and three questions for Raphael at the end. **Approval requested by Wed 28 Oct**, so the D4 items can land before the reserve-week part of SE1 on Thu 29 Oct. Every line reference below was checked on 26 Oct against `origin/deliverable-3-instruments` (tip `ea35352`) or `origin/deliverable-4-fidelity-check` (tip `b1a2df6`); no file under `study/reserve/` was opened.
 
 **D3 (`deliverable-3-instruments`)**
-1. `README.md`: new status line (17 Oct decision: no sessions, no pilot); the last line of "How this meets the A2 measure" (it says the measure is met only when the pilot has run); in "What Raphael must do", the Ethics paragraph (it still says classmates and consent safeguards), the last sentence of item 2 (it says not to start sessions) and items 5 to 7 (consent brackets, pilot, second human scorer) marked not needed; open decisions 3 to 5 (think-aloud report, withdrawal date, participant floor) marked void; point to this plan.
-2. New files `items-reserve-2020-12-14.md` and `items-reserve-2021-09-27.md`: question sheets only, same slot plan. Keys in separate files, kept out of the repository until SE2 answers are committed, then added with their hash checked. If you prefer D3 untouched, these can live in `deliverable-5/solo/` instead.
-3. `ten-need-sheet.md`: add a short section D, "Solo use": the R/U reading of the key, the rule choice, and the date accepted. Also change the status line ("The pilot may still use either set") and the two instructions in section B that say to date the key or choose the rule "before reading any participant's sheet" and "before seeing any sheets" to "before SE2".
-4. `answer-key-and-scoring.md`: the second-scorer check becomes the optional AI scorer for SE2, disclosed.
+1. `README.md`: new status line (17 Oct decision: no sessions, no pilot); the last line of "How this meets the A2 measure" (it says the measure is met only when the pilot has run); in "What Raphael must do", the Ethics paragraph (it still says classmates and consent safeguards), the last sentence of item 2 (it says not to start sessions) and items 5 to 7 (consent brackets, pilot, second human scorer) marked not needed; open decisions 3 to 5 (think-aloud report, withdrawal date, participant floor) marked void; point to this plan. Also line 5 ("Nothing here has been piloted. All files are drafts for Raphael to check, approve and pilot") and the Status column of the Files table, which still gives pilot-era statuses (for example "pilot may use either set" and "Plan only").
+2. **Done on D5 (`0d3f811`, 21 Oct), not needed on D3.** *(Was:)* new files `items-reserve-2020-12-14.md` and `items-reserve-2021-09-27.md`: question sheets only, same slot plan. Keys in separate files, kept out of the repository until SE2 answers are committed, then added with their hash checked. If you prefer D3 untouched, these can live in `deliverable-5/solo/` instead.
+3. `ten-need-sheet.md`: add a short section D, "Solo use": the R/U reading of the key, the rule choice, and the date accepted. Also change the status line ("The pilot may still use either set") and the two instructions in section B that say to date the key or choose the rule "before reading any participant's sheet" and "before seeing any sheets" to "before SE2". Also line 62 (the open-decision paragraph, "Raphael to choose Rule 1 or Rule 2 before seeing any sheets") and README open decision 2 (line 53): both become "Rule 2, filled 21 Oct (`8fb989c`), confirmed by Raphael 26 Oct".
+4. `answer-key-and-scoring.md`: the second-scorer check is marked not used (26 Oct, `9a12294`: no AI second scorer for SE2). *(Was: "becomes the optional AI scorer for SE2, disclosed".)*
 5. `session-protocol.md`, `participant-info-and-consent.md`, `proxy-scenario.md`, `pilot-plan.md`: status line "Not used (17 Oct 2026 decision); kept as the A2 plan record". The proxy scenario stays the source of the SE3 persona. `items-week1-2021-02-08.md` and `items-week2-2021-07-19.md`: status line "Not used in the solo evaluation (SE2 reads the reserve weeks); kept as the pattern for the reserve items".
-6. `ethics/report-ethics-points.md`: mark points 1 and 2 as not applicable (no participants), and change the decision paragraph that says testing with classmates is how the unit is run; add the contributor-email question to point 4. `ethics/README.md`: one line in its top note that there are no participants.
+6. `ethics/report-ethics-points.md`: mark points 1 and 2 as not applicable (no participants), and change the decision paragraph that says testing with classmates is how the unit is run; add the contributor-email question to point 4. `ethics/README.md`: one line in its top note that there are no participants. Line 16 of `report-ethics-points.md` links `deliverable-5/recruitment-message.md`, which no longer exists on D5 (it is now `deliverable-5/retired/recruitment-message.md`); repoint the link or drop it with that point.
 7. `study/reserve/` on this branch holds older copies of nine files than `d9fa4bf`: both `report-B-treatment.md`, both `naming.md`, both `fidelity-A.md`, both `fidelity-B.md` and `2021-09-27/export/guids.txt`. The pages SE2 reads are on `deliverable-2-changelens` at `d9fa4bf`. Copy the nine files from `d9fa4bf` (an agent does it; Raphael does not open them), or add a `study/reserve/README.md` line saying the D2 copies are the ones used.
+8. "Being re-scored": README line 41 ("What Raphael must do", item 2) and `items-week1-2021-02-08.md` line 64 both say the changed February B rows "are being re-scored". The re-score is done: D4 `study/week1-2021-02-08/FIDELITY-RESULT.md` gives Version B 39 of 39 supported after the repair. Change both to the past tense with that pointer.
+9. Footer line references: `items-week2-2021-07-19.md` line 58 cites `L33` and `items-week1-2021-02-08.md` line 58 cites `L34` for the footer "Generated by ChangeLens from the project's version history". That footer is at those line numbers in Version A only (checked 26 Oct). Write `A L33` and `A L34`.
+10. Dates "15 Oct" to "14 Oct": `ten-need-sheet.md` lines 3, 39 and 68 and README lines 14 and 43 date D1's final ten to 15 Oct; the D1 commit `92ff8b4` is stamped 14 Oct 19:35 AEDT. **Raphael's decision (Q3); listed only.**
 
 **D4 (`deliverable-4-fidelity-check`)**
 1. Bring `study/reserve/` up to `d9fa4bf`. Nine files on this branch differ from the D2 versions: both `report-B-treatment.md`, both `naming.md`, `fidelity-A.md` and `fidelity-B.md` for both weeks, and `2021-09-27/export/guids.txt` (three lines short, and it is SE1 ground truth for that week). The D2 fidelity templates at `d9fa4bf` are already regenerated, so copying them is enough.
-2. Score the reserve weeks only after SE2 is scored (AI scorer, Raphael hand-checks C verdicts), and add a `FIDELITY-RESULT.md` per reserve week.
+2. Score the reserve weeks only after SE2 is scored (AI scorer, Raphael hand-checks C verdicts), and add a `FIDELITY-RESULT.md` per reserve week. Whether the AI scorer runs on the reserve weeks is Q2 below.
 3. `study/week1-2021-02-08/FIDELITY-RESULT.md`, section "Before this counts": once the hand-check is done, record its result and point to `deliverable-6/data/se1-fidelity-handcheck.csv`.
-4. July has one AI scorer only. Say so in a July result note, since February had two.
-5. Say which tool commit each scored page came from (the current tool regenerates February B differently: 25 not 26 scenes and prefabs).
+4. Add `study/week2-2021-07-19/FIDELITY-RESULT.md` (D4 has a result file for February only, checked 26 Oct). Say there that July had one AI scorer, since February had two.
+5. Say which tool commit each scored page came from. Checked 26 Oct with `git log` on both branches: both Version A pages are from `b96c1fa` (12 Oct); February Version B was last changed by `bf09b4e` (the repair) and `ac9d39c` (the "and N more" counting rule), and July Version B by `ac9d39c`. Add that the current tool, after the 17 Oct parser changes, regenerates February B differently (25 not 26 scenes and prefabs, per the 17 Oct run notes; [17 Oct parser commit, not checked here]).
+6. July note: point to the held rows 16 and 18 patch (`_overseer-21oct/rows-16-18-edits-fix.patch`, outside the repo). It is held until after SE2 because it changes the reserve Version B pages.
+7. July rows 25 and 27 (repair items the fidelity check logged): record either a fix or a Future Work line, per Q1.
+
+**Questions for Raphael (not decided by Claude):**
+- **Q1.** July rows 25 and 27: fix them in the tool on `deliverable-2-changelens`, or record them as Future Work? [fix / Future Work]
+- **Q2.** D4 item 2 and `solo/se1-run-sheet.md` step 7 have an AI scorer score the regenerated reserve-week checklists, and you hand-check its C verdicts. That is the D4 fidelity scorer, a different job from the SE2 second scorer you declined on 26 Oct (`9a12294`). Keep it, or drop the reserve-week part of SE1? [keep / drop]
+- **Q3.** D3 item 10: change "15 Oct" to "14 Oct"? [yes / no]
 
 ## 12. Per-branch change list
 
@@ -385,14 +399,14 @@ Status 17 Oct night (local commits): items 2 and 4 done, and the root README cha
 Status 17 Oct night (local commits): items 1 to 6 done. `node deliverable-6/analysis/test.js` passes 220 checks.
 
 **D7 (`deliverable-7-portfolio-video`)**
-1. `storyboard.md` beat 6: the result slot shows an SE2 table or the time-and-confidence figure, with "one reader, the developer" on screen.
+1. `storyboard.md` beat 6: the result slot shows an SE2 table or the time-and-confidence figure, with "one reader, the developer" on screen. **Superseded 26 Oct (`1855d39`, `db1d401`):** the "one reader" lines were removed from the video docs under the 21 Oct rule.
 2. `README.md` figure list: Figure 5 is the new figure; Tables 1 to 3 renamed to the solo tables.
 3. `feedback-form.md`: the A2 measure names two outside viewers for the video. That is a check of the video, not of ChangeLens, but it does involve other people. Under the 17 Oct decision the default is to drop it and report it as a variance, unless Raphael says otherwise. Nothing in this plan depends on it.
 
 Status 17 Oct night (local commits): items 1 to 3 done. `feedback-form.md` is now `deliverable-7/retired/feedback-form.md`, and the README has an optional self-check in its place.
 
 **D8 (`deliverable-8-dev-diary`)**
-1. A dated diary entry for 17 Oct on the evaluation decision, in Raphael's own words.
+1. ~~A dated diary entry for 17 Oct on the evaluation decision, in Raphael's own words.~~ **Dropped 26 Oct:** under the 21 Oct rule the design is not mentioned in the diary. On `origin/deliverable-8-dev-diary` (checked 26 Oct), `README.md` item 5 and `diary-template.md` line 61 still ask for this entry; remove them on D8.
 2. The Create goal entry ("written against an unfamiliar Unity week, tying each layout decision to a named reader need") is written right after the SE2 first read of a reserve week, the same day, not before SE2.
 3. `hours-entries.csv`: log SE1 to SE4 time against Deliverable 5.
 4. `fact-log-weeks-9-10.md`: add the 17 Oct decision and the reserve re-freeze at `d9fa4bf`.

@@ -64,16 +64,16 @@ Ko et al. studied developers. A producer's needs may fit none of the 21 types, a
 
 | Step | When | Do | File |
 |---|---|---|---|
-| 1. Capture | During each SE2 read (Sun 25 Oct) | One row per need, clock time, `read_id` in `report_condition`, the note as typed. Commit with the answers, before the git log is opened | `deliverable-6/data/se2-needs-log.csv` |
-| 2. Pass 1 | Mon 26 Oct, a separate sitting after both weeks are read | Fill `pass1_code` and `pass1_date` for every row | same |
+| 1. Capture | During each SE2 read (Tue 27 Oct) | One row per need, clock time, `read_id` in `report_condition`, the note as typed. Commit with the answers, before the git log is opened | `deliverable-6/data/se2-needs-log.csv` |
+| 2. Pass 1 | Wed 28 Oct, a separate sitting after both weeks are read | Fill `pass1_code` and `pass1_date` for every row | same |
 | 3. Wait | At least 7 days | Do something else. Note the date in the diary | |
-| 4. Draw | Thu 29 Oct | `node deliverable-5/recode-sample.js draw --in deliverable-6/data/se2-needs-log.csv --out deliverable-6/data/recode-blind.csv`. It picks a seeded random quarter (rounded up) of the pass-1 rows and writes them without the pass-1 codes. `SELF` rows are kept. Write the printed seed and count in your diary | `recode-blind.csv` |
+| 4. Draw | [date per Raphael's decision, at least 7 days after pass 1] | `node deliverable-5/recode-sample.js draw --in deliverable-6/data/se2-needs-log.csv --out deliverable-6/data/recode-blind.csv`. It picks a seeded random quarter (rounded up) of the pass-1 rows and writes them without the pass-1 codes. `SELF` rows are kept. Write the printed seed and count in your diary | `recode-blind.csv` |
 | 5. Pass 2 | Same day as the draw | Code the blind file from the `quote_note` alone, without opening the main sheet | `recode-blind.csv` |
 | 6. Merge | After pass 2 | `node deliverable-5/recode-sample.js merge --in deliverable-6/data/se2-needs-log.csv --blind deliverable-6/data/recode-blind.csv --out deliverable-6/data/se2-needs-log.csv`. Pass-1 codes are not changed. The old sheet is kept as `se2-needs-log.csv.bak`, and nothing is written if a row or pass-1 code would change | main sheet |
 | 7. Agreement | After merge | `node deliverable-5/recode-sample.js agree --in deliverable-6/data/se2-needs-log.csv`. It prints "x of n re-coded segments matched" and the ids that differ. Raw count only, no kappa (plan section 6, Table G) | console output; copy it into the diary |
 | 8. Resolve | After agreement is recorded | For each disagreement, re-read the quote, choose `final_code`, and write the rule in `resolution_rule`. Never overwrite pass 1 or pass 2 | main sheet |
 
-Report: "x of n re-coded segments matched", one coder against himself a week later. With a handful of re-coded lines and 24 code options, a kappa would mean nothing, so do not give one. State that limit.
+Report: "x of n re-coded segments matched", one coder against himself a week later. With a handful of re-coded lines and 24 code options, a kappa would mean nothing, so do not give one. Do not add a limits sentence to the report; the design is stated once, in its Evaluation Method.
 
 Run the commands from a checkout that has both `deliverable-5/` and `deliverable-6/data/` (the D5 and D6 branches side by side or merged).
 

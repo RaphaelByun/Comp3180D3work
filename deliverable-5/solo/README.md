@@ -1,6 +1,6 @@
 # Solo evaluation run kit
 
-Raphael decided on 17 Oct 2026 that there is no study with other people. He evaluates ChangeLens himself. The design, reasons and limits are in `../self-evaluation-plan.md`. This folder is the kit for running it: one run sheet per activity, blank logs, the dated schedule and how to score.
+This folder is the kit for running the evaluation in `../self-evaluation-plan.md`: one run sheet per activity, blank logs, the dated schedule and how to score.
 
 Nothing here has been run. Every blank is for Raphael. No result, time or score is filled in.
 
@@ -28,9 +28,22 @@ The plan keeps the data in `deliverable-6/data/` on `deliverable-6-evaluation-re
 3. **Log your time** in `deliverable-8/hours-entries.csv` (on `deliverable-8-dev-diary`) against Deliverable 5.
 4. **Never fill a cell you did not observe.** A blank stays blank.
 
-## Revised schedule (21 Oct 2026)
+## Revised schedule (26 Oct 2026)
 
-SE2 did not run on 20 and 21 Oct. COMP3850 D4 (due Sat 24 Oct) comes first, so SE2 moved to **Sun 25 Oct, both weeks in one day** (two sittings with a break between). The order of reads and every rule are unchanged. These dates are targets, proposed by Claude on 21 Oct; the dated tables further down are the 17 Oct plan, kept as the record.
+Revised by Claude Code (Opus 5.5), 26 Oct 2026, Raphael away. SE2 did not run on Sun 25 Oct. These dates replace the 21 Oct table below; the order of activities and every rule are unchanged. Decided on 26 Oct (`9a12294`): no success thresholds set in advance, and no AI second scorer. Rule 2 for the ten-need key is confirmed by Raphael (26 Oct). The short form for each day is `_overseer-21oct/SE run sheets v0.4.md`, outside the repo.
+
+| Date | What | Minutes |
+| --- | --- | ---: |
+| Tue 27 Oct | SE2 sitting 1, week RX (A then B); break; sitting 2, week RY (B then A) | 100 |
+| Wed 28 Oct | SE2 scoring against the git log (`how-to-score.md` steps 1 to 4); needs-log pass 1 | 75 |
+| Thu 29 Oct | SE1 February B rows and C verdicts; SE1 July B rows; reserve-week C verdicts when the D4 reserve checklists exist; SE3 cognitive walkthrough | 45 + 45 + 40 |
+| Fri 30 Oct | SE4 heuristic evaluation; then one fix you choose from SE3 or SE4 | 50 + about 60 |
+| Sat 31 Oct | **Scoring and analysis finished, except the Table G pass-1/pass-2 agreement, which follows needs-log pass 2** (`how-to-score.md` step 6; check each table against the CSVs) | 20 |
+| [date per Raphael's decision] | Needs-log pass 2 on the blind quarter, merge, agreement | 15 |
+
+## Revised schedule (21 Oct 2026, superseded 26 Oct)
+
+*Superseded by the 26 Oct table above; kept as the record.* SE2 did not run on 20 and 21 Oct. COMP3850 D4 (due Sat 24 Oct) comes first, so SE2 moved to **Sun 25 Oct, both weeks in one day** (two sittings with a break between). The order of reads and every rule are unchanged. These dates are targets, proposed by Claude on 21 Oct; the dated tables further down are the 17 Oct plan, kept as the record.
 
 | Date | What | Minutes |
 | --- | --- | ---: |
@@ -63,6 +76,6 @@ Dates are targets. Move them if you need to, and keep the order.
 | Thu 29 Oct | Needs-log pass 2 on the blind quarter, merge, agreement | 15 | `../think-aloud-coding-sheet.md` |
 | Fri 30 Oct | **Scoring and analysis finished.** Run the analysis and check each table against the CSVs | 20 | `how-to-score.md` |
 
-About 6 hours 35 minutes in all. The Version A fidelity rows add about 20 minutes. If SE2 slips by a day, drop the Version A rows and the AI second scorer first. A3 is due Sun 8 Nov.
+About 6 hours 35 minutes in all. The Version A fidelity rows add about 20 minutes. If SE2 slips by a day, drop the Version A rows first. A3 is due Sun 8 Nov.
 
 Why this order: SE2 comes first so nothing spoils the reserve weeks. SE3 comes before SE4 so the task-based pass is not shaped by a heuristic list.

@@ -22,7 +22,7 @@ Ground truth: `study/<week>/export/log.txt`, `export/assets.patch`, `export/guid
 4. Commit. Then open the scored files and copy each AI verdict into its column. `ai_rescore_verdict` is only for February B rows 19, 21, 22, 23, 27 and 33.
 5. Fill `agree_with_ai`: `y` if your verdict matches every AI verdict on the row, `n` if not. Where you differ, re-read the diff once and write the reason in `note`.
 6. Do not change `raphael_verdict` after step 4. A changed mind goes in `note`.
-7. Reserve weeks (after SE2 scoring): an AI scorer scores the regenerated checklists. You hand-check every `C` verdict and every row that bears on an SE2 answer you scored `W`.
+7. Reserve weeks (after SE2 scoring): an AI scorer scores the regenerated checklists. You hand-check every `C` verdict and every row that bears on an SE2 answer you scored `W`. Whether this AI scorer runs is an open question for you (plan section 11, Q2).
 
 ## Pass rule (A2)
 
@@ -30,6 +30,6 @@ A week and version passes when no claim is contradicted and at least 90% are sup
 
 | Day | Rows | Minutes |
 | --- | --- | ---: |
-| Mon 26 Oct (after SE2 scoring) | February B (39) and every C verdict | 45 |
-| Tue 27 Oct | July B (28); reserve-week C verdicts | 45 |
+| Thu 29 Oct (after SE2 scoring) | February B (39) and every C verdict | 45 |
+| Thu 29 Oct | July B (28); reserve-week C verdicts when the D4 reserve checklists exist | 45 |
 | If time | February A (15), July A (14) | 20 |

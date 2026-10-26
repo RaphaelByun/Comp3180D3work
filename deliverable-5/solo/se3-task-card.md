@@ -1,8 +1,8 @@
 # SE3 task card: cognitive walkthrough of the Producer Page window
 
-Plan section 3, SE3. Method: the cognitive walkthrough (Wharton et al., 1994). It needs no participants. It asks four set questions about each correct step. It is usually a group method, and here the one evaluator built the tool; state both as limits.
+Plan section 3, SE3. Method: the cognitive walkthrough (Wharton et al., 1994). It needs no participants. It asks four set questions about each correct step. It is usually a group method, and here the one evaluator built the tool; this is recorded in plan section 7, not stated in the report.
 
-Log: `deliverable-6/data/se3-walkthrough.csv` (header in `logs/`). About 40 minutes, Tue 27 Oct (after SE1 July B).
+Log: `deliverable-6/data/se3-walkthrough.csv` (header in `logs/`). About 40 minutes, Thu 29 Oct (after SE1 July B).
 
 ## Persona (write it before judging anything)
 

@@ -11,7 +11,7 @@ Raw counts first, every time. No percentage without its count beside it. No p-va
 3. Fill `key_ru_class` for each need: the best of the R and U columns (D beats P beats N). ChangeLens reads no tracker, so the T column is not used.
 4. Commit. From here on, `key_ru_class` does not change.
 
-## Step 1. SE2 items (Mon 26 Oct, only if items exist)
+## Step 1. SE2 items (Wed 28 Oct, only if items exist)
 
 1. Open the sealed keys. Check each key's SHA-256 against plan section 5. Write in `note` whether it matched.
 2. Score items 1 to 5 as 0, 1 or 2 with `deliverable-3/answer-key-and-scoring.md`.
@@ -19,7 +19,7 @@ Raw counts first, every time. No percentage without its count beside it. No p-va
 4. Tick `specific` (`y` or `n`) on items 4 and 5, as D3 does.
 5. Log in `se2-item-scores.csv`, one row per item per read.
 
-## Step 2. SE2 ten needs (Mon 26 Oct)
+## Step 2. SE2 ten needs (Wed 28 Oct)
 
 Open the git log now: `study/reserve/<week>/export/log.txt`, `export/assets.patch`, `export/guids.txt`, and `git show <hash>` in `prototype-data/SS3D`.
 
@@ -35,19 +35,19 @@ For each need on each read, fill `se2-need-answers.csv`:
 
 **When the log holds nothing.** Several needs (tasks finished, blocked work, risk, milestone, work left, what to tell a publisher) have no answer in a git log. If you check the log and it holds nothing, then "the page does not say" scores `C`. A specific answer scores `W` with cause `overclaim`.
 
-## Step 3. Stand-up drafts (Mon 26 Oct, first reads only)
+## Step 3. Stand-up drafts (Wed 28 Oct, first reads only)
 
 Split each draft into separate claims. Check each against the git log: `S` supported, `C` contradicted, `U` unclear. Write the three counts in `se2-reads.csv` (`standup_S`, `standup_C`, `standup_U`).
 
-## Step 4. Needs log pass 1 (Mon 26 Oct)
+## Step 4. Needs log pass 1 (Wed 28 Oct)
 
-Code every line of `se2-needs-log.csv` with `../think-aloud-coding-sheet.md`. Pass 2 on the blind quarter is Thu 29 Oct (same file, steps 4 to 8). Agreement is "x of n" only.
+Code every line of `se2-needs-log.csv` with `../think-aloud-coding-sheet.md`. Pass 2 on the blind quarter is on [date per Raphael's decision] (same file, steps 4 to 8; its step 3 asks for at least 7 days between passes). Agreement is "x of n" only.
 
-## Step 5. AI second scorer (optional, Mon 26 Oct)
+## Step 5. AI second scorer: not run
 
-An AI agent scores the same item and need answers, blind to your scores, from the keys and the git log. It writes `se2-second-scorer.csv`. Report agreement as answers in agreement out of answers scored. Disclose it in the GenAI statement.
+Not run: no AI second scorer (26 Oct, `9a12294`). Leave `se2-second-scorer.csv` blank, and omit `--scorer2` when you run the analysis.
 
-## Step 6. Table C, key against observed (Fri 30 Oct)
+## Step 6. Table C, key against observed (Sat 31 Oct)
 
 Use first reads only (`RX-A1`, `RY-B1`). The observed class for each need is fixed now:
 
@@ -84,6 +84,6 @@ The A-against-B comparison is the two first reads (`RX-A1` against `RY-B1`). Tha
 | Table F. Heuristic problems | `se4-heuristic-problems.csv`, `se4-task-outcomes.csv`, D1 tables |
 | Table G. What the page left unmet | `se2-needs-log.csv` |
 | Table H. Stand-up and ratings | `se2-reads.csv` |
-| Scoring check | `se2-second-scorer.csv` |
+| Scoring check | Not used (no AI second scorer, 26 Oct) |
 
 `node deliverable-6/analysis/analyse.js` (D6 branch) prints Tables A to H and the scoring check from the CSVs, and `deliverable-6/analysis/figures.js` draws the figure. The commands are in `deliverable-6/README.md`. Check each table against the CSVs by hand.

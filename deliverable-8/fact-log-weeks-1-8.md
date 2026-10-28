@@ -75,7 +75,7 @@ Decisions on record (source: `Week 2/Decisions and Research Plan — 5 Aug 2026.
 | 21 Aug 19:35 | A1 draft v1, slides and script | `Assignemnts/Assignment 1 Presentation/A1 Draft v1 — Slides + Script.md` |
 | 21 Aug 19:43 | Week 4 summary | `Week 4/Week 4 Summary.md` |
 | 21 Aug 20:12 | Unity BuildReport API check | `Assignemnts/Assignment 1 Presentation/A1 Verification — Unity BuildReport API.md` |
-| 21 Aug 20:36 | Notes from a second producer conversation (a team using Trello) | `Assignemnts/Assignment 1 Presentation/1 Trello.txt` |
+| 21 Aug 20:36 | Notes from a second scoping conversation (a member of a team using Trello; role and conversation date not recorded) | `Assignemnts/Assignment 1 Presentation/1 Trello.txt` |
 | 21 Aug 22:30 | Questionnaire 2, written up from those notes | `Assignemnts/Assignment 1 Presentation/Questionare 2 — Trello team.md` |
 | 21 Aug 22:31 | A1 decisions delta | `Assignemnts/Assignment 1 Presentation/A1 Decisions Delta — 21 Aug 2026.md` |
 | 22 Aug 00:56 to 01:38 | Recording guide, compliance report, ratify list, Q&A bank, slide spec, script v2 FINAL | `Assignemnts/Assignment 1 Presentation/` |
@@ -171,6 +171,6 @@ The A1 marker's comment is quoted in the `CLAUDE.md` ledger. It said the slides 
 ## 6. Prompts to answer in your own summary (not answers)
 
 - Why did the topic move from time tracking and VR to a change report for producers?
-- What did the 3 Aug brief change, and what did you take from the two producer conversations?
+- What did the 3 Aug brief change, and what did you take from the two scoping conversations?
 - What did the A1 mark and comment tell you, and what did you change for A2 because of it?
 - What was the main roadblock or breakthrough before A2, and how did you deal with it?

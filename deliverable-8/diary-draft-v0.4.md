@@ -11,6 +11,7 @@
 | v0.3 | 26 Oct 2026 | This file. Counts re-checked (191); Week 11 closed with facts to 25 Oct; Week 12 plan; sharper prompts per week; a neutral conversations line replaces the prac line; v0.1 and v0.2 kept unchanged |
 | v0.3, revised | 26 Oct 2026 | Claude Code (Opus 5.5), Raphael away. Counts re-checked after the 26 Oct commits (203); Week 12 facts line added; 13 Oct date for the two date fixes; one clause of your 17 Oct answer restored from v0.1 in brackets; superseded notes added to v0.1 and v0.2 |
 | v0.4 | 28 Oct 2026 | This file (`diary-draft-v0.4.md`). Claude Code (Opus 5.5). Counts re-checked on 28 Oct (207); Week 12 facts to Wed 28 Oct: the four 23:08 commits, no commits 27–28 Oct, the held-out-week read not run on 27 Oct, the extension trigger, the 28 Oct preparation outside the repo; Week 12 plan replaced by the extension-based dates. Facts only; every thought is still a bracket. v0.3 kept unchanged |
+| v0.4, revised | 28 Oct 2026 | Week 10 interview line made specific (interview-fix patch, confirmed by Raphael 28 Oct) |
 
 **How the counts were made (re-checked Wed 28 Oct 2026):** `git fetch --all`, then `git rev-list --remotes`, unique commits, author date in Sydney time. Up to and including `1d8e545` (26 Oct 23:08) there are **207 unique commits** (204 authored by RaphaelByun, 3 by Claude), all made with Claude Code. By day: 11 Oct 1, 12 Oct 3, 13 Oct 15 (3 of them merges), 14 Oct 9, 17 Oct 155, 21 Oct 8, 26 Oct 16. No commits on 15, 16, 18–20 or 22–25 Oct, and none on 27 or 28 Oct (checked 28 Oct). First-to-last commit times per day are in `commit-windows-v0.1.md`; they are not hours worked.
 
@@ -51,7 +52,7 @@ I did not do any project work over the break. *(Raphael, 17 Oct draft)*
 **What happened (facts):**
 - 13 Oct: two date bugs fixed (`e73f544`, `323eac1`). On a Sydney PC the February week showed 3 commits instead of 8.
 - 13 Oct: Producer Page window added (`323eac1`). The February fidelity check (AI scorers) found contradicted Version B rows 19, 21 and 33. Parser repaired (`bf09b4e`); B re-scored 39 of 39 (`b1a2df6`). Tests 42 → 46. D3–D9 scaffolds committed the same evening.
-- 14 Oct: D1 heuristic pass run by Claude in your browser at your request (61 problems, 16 at severity 3–4; `e078ebd`). The two interviews dropped for six coded published sources. D1 finished by AI (`92ff8b4`).
+- 14 Oct: D1 heuristic pass run by Claude in your browser at your request (61 problems, 16 at severity 3–4; `e078ebd`). The two D1 interviews planned in A2 dropped for six coded published sources (not the two scoping conversations before A1). D1 finished by AI (`92ff8b4`).
 - 17 Oct: no ethics application (your decision; `f569f96` and five sibling commits). Reserve weeks re-frozen at `d9fa4bf`. 155 commits that day from multi-agent Claude Code runs; .NET tests 46 → 85.
 
 **What I made of it** *(Raphael, 17 Oct draft)*: I passed the heuristic pass to Claude because it is a testing task. I know it is meant to be a human test: which tool is easy or hard to use, and whether it is harder for programmers or producers. [Those are the questions to ask, and] I found I got a better list of questions from Claude and could answer them.

@@ -35,7 +35,7 @@
 - 12–13 Oct: froze the two study weeks and fixed two date bugs. Bare dates took the current time of day (`e73f544`), and they were read in the machine's time zone, so the February week showed 3 commits instead of 8 on a Sydney PC (`323eac1`).
 - 13 Oct: added the Producer Page window. The February fidelity check found Version B contradicting the diffs in rows 19, 21 and 33. I repaired the asset-diff parsing (`bf09b4e`), and Version B then scored 39 of 39. Tests went from 42 to 46. All scoring so far was done by AI scorers; my hand-check is still to do.
 - 13 Oct: drafted the instruments, session kit, analysis tool, video plan, diary and reflection scaffolds with Claude.
-- 14 Oct: set the participant floor at five readers. Asked Claude to run the D1 heuristic pass (61 problems), and dropped the two interviews for six coded published sources.
+- 14 Oct: set the participant floor at five readers (dropped again on 17 Oct). Asked Claude to run the D1 heuristic pass (61 problems), and dropped the two D1 interviews planned in A2 for six coded published sources.
 - 17 Oct: decided on no ethics application, because the unit guide sets no ethics requirement. I'll cover ethics in the report instead.
 
 **What I made of it / what I decided:**

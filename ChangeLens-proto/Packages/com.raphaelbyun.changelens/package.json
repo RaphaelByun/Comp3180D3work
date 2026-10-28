@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "unity": "6000.0",
   "description": "Writes a one-page weekly change report for a game producer from a project's git history. Window > ChangeLens Producer Page builds Version A (baseline) and Version B (treatment), which names the objects and components changed inside each scene and prefab. Window > ChangeLens is the A2 prototype that sorts a git log export by file type.",
+  "license": "MIT",
   "author": {
     "name": "Raphael Byun"
   }

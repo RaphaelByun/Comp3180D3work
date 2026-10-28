@@ -44,8 +44,14 @@ At the July and September 2021 commits the files sit in `Documents/` and the REA
 ## How this repository uses it
 
 - The scene and prefab diffs and the file lists are adapted from SS3D's assets and history. They are credited here to the SS3D contributors and shared for non-commercial study use under CC BY-NC-SA 4.0, the licence of the assets they come from.
-- ChangeLens's own code is not derived from SS3D.
+- ChangeLens's own code is not derived from SS3D. It is licensed under MIT (root `LICENSE`, chosen by Raphael on 28 Oct 2026); that licence does not extend to the SS3D-derived material listed above.
 - `log.txt` keeps the contributors' names, email addresses and commit messages as git recorded them in SS3D's public history.
+
+## Notices for the SS3D-derived material
+
+**Copyright and warranty notice.** SS3D assets and history are © Space Station 3D and the SS3D contributors (https://github.com/RE-SS3D/SS3D). They are provided as is, without warranties, under CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/); see Section 5 of that licence for the disclaimer of warranties and limitation of liability.
+
+**Changes made.** The files in `study/`, the package's `Samples~/` and `prototype-data/` are extracts of SS3D's git history, selected by date range and reformatted by ChangeLens. Reports and figures generated from them are adaptations and are shared under CC BY-NC-SA 4.0, for non-commercial study use.
 
 ## Reference (APA 7, for the A3 reference list)
 

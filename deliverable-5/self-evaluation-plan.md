@@ -322,7 +322,7 @@ Neustaedter and Sengers (2012) describe autobiographical design: the designer is
 There are no participants, so `deliverable-3/ethics/report-ethics-points.md` points 1 (testing with classmates) and 2 (participant data) no longer apply. Leave points 1 and 2 out of the report; the one Evaluation Method sentence already states the design, so add no ethics sentence about it. Points 3 to 5 still apply:
 
 - **Point 3, what the tool could be used for.** ChangeLens could be used to monitor or blame developers. The page reports changes to the project, not each person's output. SE4 task T2 (per-person work) records this as a design choice, not a gap.
-- **Point 4, accurate reporting of real people's work.** SS3D is real contributors' work. SE1 checks every page used, including both reserve weeks. Check SS3D's licence (`study/SOURCE-AND-LICENCE.md` on `deliverable-2-changelens`) and state it. The export logs (`study/*/export/log.txt`) hold contributor email addresses; decide whether the repository should keep them before it is shared with markers.
+- **Point 4, accurate reporting of real people's work.** SS3D is real contributors' work. SE1 checks the February and July pages (the reserve-week part of SE1 was dropped by Raphael on 28 Oct 2026). Check SS3D's licence (`study/SOURCE-AND-LICENCE.md` on `deliverable-2-changelens`) and state it. The export logs (`study/*/export/log.txt`) hold contributor email addresses; decide whether the repository should keep them before it is shared with markers.
 - **Point 5, AI use.** Declare in the GenAI statement: the AI fidelity scorers, the AI-drafted ten-need key, the AI-written reserve items and keys, and this plan (the AI second scorer was not run: 26 Oct, `9a12294`).
 
 ## 9. Expected rubric band and why
@@ -368,6 +368,7 @@ Both branches are read-only today. Nothing below has been done on D3 or D4.
 **Questions for Raphael (not decided by Claude):**
 - **Q1.** July rows 25 and 27: fix them in the tool on `deliverable-2-changelens`, or record them as Future Work? [fix / Future Work]
 - **Q2.** D4 item 2 and `solo/se1-run-sheet.md` step 7 have an AI scorer score the regenerated reserve-week checklists, and you hand-check its C verdicts. That is the D4 fidelity scorer, a different job from the SE2 second scorer you declined on 26 Oct (`9a12294`). Keep it, or drop the reserve-week part of SE1? [keep / drop]
+  - **Answered 28 Oct 2026 (Raphael): drop it.** The reserve-week part of SE1 is not run, so D4 item 2 is not needed for SE1. The rest of section 11 still waits on his approval.
 - **Q3.** D3 item 10: change "15 Oct" to "14 Oct"? [yes / no]
 
 ## 12. Per-branch change list

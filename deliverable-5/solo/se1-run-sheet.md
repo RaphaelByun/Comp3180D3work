@@ -10,7 +10,7 @@ Log: `deliverable-6/data/se1-fidelity-handcheck.csv` (header in `logs/`).
 | --- | --- | --- |
 | February, `W1-2021-02-08` | `study/week1-2021-02-08/fidelity-A.md`, `fidelity-B.md` | `fidelity-A-scored-scorer1.md`, `fidelity-A-scored-scorer2.md`, `fidelity-B-scored-scorer1.md`, `fidelity-B-scored-scorer2.md`, `fidelity-B-rescore-repaired-rows.md`, `FIDELITY-RESULT.md` |
 | July, `W2-2021-07-19` | `study/week2-2021-07-19/fidelity-A.md`, `fidelity-B.md` | `fidelity-A-scored.md`, `fidelity-B-scored.md` (one scorer only) |
-| Reserve, `RX-2020-12-14` and `RY-2021-09-27` | Only after SE2 is scored, and only once D4 has regenerated them from `d9fa4bf` | The AI scorer's file, when it exists |
+| Reserve, `RX-2020-12-14` and `RY-2021-09-27` | Not checked. Dropped by Raphael on 28 Oct 2026: SE1 covers the February and July pages only | None |
 
 Ground truth: `study/<week>/export/log.txt`, `export/assets.patch`, `export/guids.txt`, and `git show <hash>` in `prototype-data/SS3D`.
 
@@ -22,7 +22,7 @@ Ground truth: `study/<week>/export/log.txt`, `export/assets.patch`, `export/guid
 4. Commit. Then open the scored files and copy each AI verdict into its column. `ai_rescore_verdict` is only for February B rows 19, 21, 22, 23, 27 and 33.
 5. Fill `agree_with_ai`: `y` if your verdict matches every AI verdict on the row, `n` if not. Where you differ, re-read the diff once and write the reason in `note`.
 6. Do not change `raphael_verdict` after step 4. A changed mind goes in `note`.
-7. Reserve weeks (after SE2 scoring): an AI scorer scores the regenerated checklists. You hand-check every `C` verdict and every row that bears on an SE2 answer you scored `W`. Whether this AI scorer runs is an open question for you (plan section 11, Q2).
+7. Reserve weeks: **not part of SE1.** Dropped by Raphael on 28 Oct 2026 (plan section 11, Q2 answered). No AI scorer runs on the reserve checklists and D4 does not regenerate them for SE1. Where an SE2 answer you scored `W` might be the page's fault, record that in the SE2 `error_cause` (`page-wrong`) from the git log, as `how-to-score.md` already says.
 
 ## Pass rule (A2)
 
@@ -31,5 +31,5 @@ A week and version passes when no claim is contradicted and at least 90% are sup
 | Day | Rows | Minutes |
 | --- | --- | ---: |
 | Thu 29 Oct (after SE2 scoring) | February B (39) and every C verdict | 45 |
-| Thu 29 Oct | July B (28); reserve-week C verdicts when the D4 reserve checklists exist | 45 |
+| Thu 29 Oct | July B (28) | 45 |
 | If time | February A (15), July A (14) | 20 |

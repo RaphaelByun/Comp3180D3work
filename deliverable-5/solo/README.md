@@ -36,7 +36,7 @@ Revised by Claude Code (Opus 5.5), 26 Oct 2026, Raphael away. SE2 did not run on
 | --- | --- | ---: |
 | Tue 27 Oct | SE2 sitting 1, week RX (A then B); break; sitting 2, week RY (B then A) | 100 |
 | Wed 28 Oct | SE2 scoring against the git log (`how-to-score.md` steps 1 to 4); needs-log pass 1 | 75 |
-| Thu 29 Oct | SE1 February B rows and C verdicts; SE1 July B rows; reserve-week C verdicts when the D4 reserve checklists exist; SE3 cognitive walkthrough | 45 + 45 + 40 |
+| Thu 29 Oct | SE1 February B rows and C verdicts; SE1 July B rows; SE3 cognitive walkthrough (reserve-week part of SE1 dropped by Raphael, 28 Oct) | 45 + 45 + 40 |
 | Fri 30 Oct | SE4 heuristic evaluation; then one fix you choose from SE3 or SE4 | 50 + about 60 |
 | Sat 31 Oct | **Scoring and analysis finished, except the Table G pass-1/pass-2 agreement, which follows needs-log pass 2** (`how-to-score.md` step 6; check each table against the CSVs) | 20 |
 | [date per Raphael's decision] | Needs-log pass 2 on the blind quarter, merge, agreement | 15 |

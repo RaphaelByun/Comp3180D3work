@@ -1,6 +1,6 @@
 # Deliverable 8: Development diary
 
-Status (26 Oct 2026, Week 12): format, fact logs, hours log and hours script committed on this branch. **No diary entry has been completed and none has been written for you.** The current draft, with brackets for you, is `diary-draft-v0.3.md`; v0.1 and v0.2 are kept as superseded records.
+Status (28 Oct 2026, Week 12; current draft is now `diary-draft-v0.4.md`, hours rows in `hours-prefill-v0.2.csv`): format, fact logs, hours log and hours script committed on this branch. **No diary entry has been completed and none has been written for you.** The current draft, with brackets for you, is `diary-draft-v0.3.md`; v0.1 and v0.2 are kept as superseded records.
 
 A2 success measure (Deliverables table, row 8, 2 h, 0 in prac): **"A dated entry each week naming a roadblock or breakthrough."** The diary also carries most of the evidence for the R&D Engagement criterion (15% of A3), together with commit cadence.
 
@@ -13,7 +13,10 @@ A2 success measure (Deliverables table, row 8, 2 h, 0 in prac): **"A dated entry
 | `fact-log-weeks-9-10.md` | **Facts for Raphael to write from, not diary entries.** Commit table (Sydney times), what each branch holds, file facts for Weeks 9 and 10 (including the decisions recorded that week), and seven gaps the files cannot fill |
 | `diary-draft-weeks-9-10.md` | Week 9, Week 10 and break drafts from the fact log, with your answers so far. Everything in [brackets] is still yours to write |
 | `diary-draft-v0.2.md` | Superseded by v0.3. 21 Oct update: break to Week 11 so far, facts only with commit hashes, your 17 Oct answers carried over word for word, empty Week 12 and 13 slots |
-| `diary-draft-v0.3.md` | **Current draft (26 Oct).** Break to Week 11 closed with facts, Week 12 facts and plan, Week 13 slot; your 17 Oct answers carried over word for word. Drafted with Claude; completed by you |
+| `diary-draft-v0.4.md` | **Current draft (28 Oct).** v0.3 plus Week 12 facts to 28 Oct and the 207-commit recount. Facts only; brackets are yours |
+| `commit-windows-v0.1.md` | First and last commit time per day (DRAFT). Not hours worked; a memory aid for the hours column |
+| `hours-prefill-v0.2.csv` | v0.1 rows plus the 26 Oct 23:08 commits and 28 Oct work. Same columns and rules as `hours-prefill.csv` |
+| `diary-draft-v0.3.md` | Superseded by v0.4 (26 Oct). Break to Week 11 closed with facts, Week 12 facts and plan, Week 13 slot; your 17 Oct answers carried over word for word. Drafted with Claude; completed by you |
 | `hours-prefill.csv` | Draft rows (date, week, deliverable, what, evidence) from the commit record, with the hours and in-prac cells blank. Not read by `sum-hours.js`. To use a row: fill in its hours (and in-prac) yourself, edit the what text so it is true, then copy it into `hours-entries.csv`. Never copy a row with blank hours; `sum-hours.js` refuses it |
 | `../CONTRIBUTIONS.md` | Draft contribution ledger at the repository root: per deliverable, what Claude did and what you did, with commits; `[to confirm]` cells are yours |
 | `hours-log.csv` | A2 budget per deliverable (hours and in-prac, totals 65 and 15), with empty actual, variance and why columns. Feeds the Deliverable 9 variance table |

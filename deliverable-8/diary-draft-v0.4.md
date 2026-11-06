@@ -109,6 +109,8 @@ I did not do any project work over the break. *(Raphael, 17 Oct draft)*
 
 ## Week 13 (2 to 8 Nov 2026)   |   completed by me on [date]
 
+**Fri 6 Nov, SE2 (Create goal).** Facts: two reads of the reserve week 14 Dec 2020, Version A then Version B (D6 `d01e3b0`, `a03a261`); the second reserve week was not run. In my words: running the Se2 taught me that me testing over and over again might affect the score/ testing for this, I need to make sure that next time i do get people to test.
+
 [Video, report, merge to `main`, opening the repo, submission.]
 
 **Conversations:** [Conversations about the project this week (staff, peers), if any]

@@ -1,0 +1,98 @@
+"# SE1 done by Claude (two Sonnet checkers, 7 Nov 2026) at Raphael request; NOT a hand-check. Blind to the earlier AI-scored files. Verdict S/C/U against export log, assets.patch, guids.txt and git show on the SS3D clone."
+week,version,row,claude_verdict,evidence
+W1-2021-02-08,B,1,S,"log.txt: 8 commits, 3 authors (Rutger, CrazyMalk, Joao), author-local 2021-02-10..14; per-commit files sum 9+13+14+9+10+4+35+10=104"
+W1-2021-02-08,B,2,S,Recount of .cs across 5 commits: 2+1+8+13+1=25; 25/104=24%
+W1-2021-02-08,B,3,S,Prefab/unity files: 9+3+2+9+0+3+8+1=35; 35/104=34%
+W1-2021-02-08,B,4,S,"Art non-meta: 61a96bf 3 (controllers, anim), a7aab33 4 (fbx, anims, controller), 37e22a3 1 (.mat)=8; 7.7%"
+W1-2021-02-08,B,5,S,0059f5d adds 2 .ogg files; 2/104=1.9%
+W1-2021-02-08,B,6,S,"Non-meta data (Roboto, spessman, MKI, LiberationSans)=4; .meta total 5+7+2+1+9+6=30; 0 other"
+W1-2021-02-08,B,7,S,"35 is the largest area (code 25, art 8, audio 2)"
+W1-2021-02-08,B,8,S,"ea23f08 date 2021-02-14, title matches, 9 airlock .prefab modified"
+W1-2021-02-08,B,9,S,"61a96bf: 2 .cs, 3 prefabs, 3 art (2 controllers+anim), 5 .meta =13"
+W1-2021-02-08,B,10,S,"a7aab33: 1 .cs, 2 prefab (A+D), 4 art, 7 .meta =14; title has double space as in log"
+W1-2021-02-08,B,11,S,f68b6a3 date 14 Feb author-local; 9 airlock prefabs
+W1-2021-02-08,B,12,S,"3855af4: 8 .cs (3 M,5 new... counted 8) + 2 .meta =10"
+W1-2021-02-08,B,13,S,a326ba1 author-local 2021-02-14 01:52 -0300; 3 prefabs + 1 png.meta =4
+W1-2021-02-08,B,14,S,"37e22a3 2021-02-12: 35 files; 13 .cs, 8 scenes/prefabs, 1 mat, 4 assets, 9 .meta"
+W1-2021-02-08,B,15,S,"0059f5d 2021-02-10: 1 .cs, 1 prefab, 2 .ogg, 6 .meta =10"
+W1-2021-02-08,B,16,S,Distinct scene/prefab paths changed: 9 airlocks+17 others = 26
+W1-2021-02-08,B,17,S,"ea23f08 patch: all 9 airlock prefabs have hunks inside AudioSource (volume, MaxDistance, rolloff curve)"
+W1-2021-02-08,B,18,S,f68b6a3 patch: all 9 prefabs add Rigidbody (!u!54) and a component-list entry in GameObject
+W1-2021-02-08,B,19,S,"Server Lobby parse: added 14 GOs/Animator x4/RectTransform/CanvasRenderer, removed Soul GO+3 scripts+Transform+prefab instance; Directional Light edited"
+W1-2021-02-08,B,20,S,Server Lobby diff names: 14 added GOs (Image x2) + Placeholder + Soul = 16 (6 shown + 10 more)
+W1-2021-02-08,B,21,S,EmptyMapScene patch has both added and removed PrefabInstance override entries
+W1-2021-02-08,B,22,S,EmptyMapScene m_Name values added/removed are WallCap2/WallCap0 (net-equal moved blocks in raw diff)
+W1-2021-02-08,B,23,S,"Main Menu patch: removed Map Selection/Panel/Text/Image/Button objects, LoadingScreenUI instance, CanvasRenderer, RectTransforms, scripts"
+W1-2021-02-08,B,24,S,"Main Menu removed m_Name: Map Selection, Panel, Text (TMP), Image, Button; instance LoadingScreenUI"
+W1-2021-02-08,B,25,S,a7aab33 'new file' Floor Sign/Wet Floor Sign.prefab
+W1-2021-02-08,B,26,S,"New prefab m_Names: Wet Floor Sign 2, Wet Floor Sign (=prefab name), Attachment"
+W1-2021-02-08,B,27,S,"LoadingScreenUI patch: adds Loading Text/Text (TMP)/Loading Screen GOs, Animator, CanvasRenderer; LoadingScreenManager wallpapers script removed (guid 0ec2 maps to both)"
+W1-2021-02-08,B,28,S,"LoadingScreenUI added m_Name: Loading Text, Text (TMP), Loading Screen"
+W1-2021-02-08,B,29,S,"Container Display patch: Text GO, Canvas Renderer, RectTransform, DraggableWindow removed; Display GO + Mask/ScrollRect/Image/DraggableWindow added"
+W1-2021-02-08,B,30,S,"Container Display m_Names: Panel, Text (removed), Container Section, Display (added)"
+W1-2021-02-08,B,31,S,a7aab33 'deleted file' Custodial/Wet Floor Sign.prefab
+W1-2021-02-08,B,32,S,"Deleted prefab m_Names: Attachment, Wet Floor Sign (=prefab name)"
+W1-2021-02-08,B,33,S,0059f5d patch: AudioSource added; ItemExaminable (guid 59d174b7) component removed; GameObject component list and PrefabInstance overrides edited
+W1-2021-02-08,B,34,S,37e22a3: Assets/Content/Systems/Player/Soul.prefab 'new file mode'
+W1-2021-02-08,B,35,S,"61a96bf: Emergency Light Fixture adds EmergencyLightObject (307b), NetworkIdentity (9b91); Light enabled, Animator controller, component list edited"
+W1-2021-02-08,B,36,S,61a96bf: both prefabs add NetworkIdentity (9b91) and SimpleLight (9636); component list edited
+W1-2021-02-08,B,37,S,"a326ba1: Item Grid Item/Slot Image settings (sprite, color, type, PPU multiplier) changed"
+W1-2021-02-08,B,38,S,37e22a3: Cigarette Vendor m_LocalScale 0.9->1; Field of View Source m_LocalPosition -0.15->0
+W1-2021-02-08,B,39,S,37e22a3: PauseMenu button persistent call method name changed OnRestartRoundButtonPressed->OnEndRoundButtonPressed
+W1-2021-02-08,A,1,S,"log.txt: 8 commits, 3 authors (Rutger, CrazyMalk, Joao), author-local 2021-02-10..14; per-commit files sum 9+13+14+9+10+4+35+10=104"
+W1-2021-02-08,A,2,S,Recount of .cs across 5 commits: 2+1+8+13+1=25; 25/104=24%
+W1-2021-02-08,A,3,S,Prefab/unity files: 9+3+2+9+0+3+8+1=35; 35/104=34%
+W1-2021-02-08,A,4,S,"Art non-meta: 61a96bf 3 (controllers, anim), a7aab33 4 (fbx, anims, controller), 37e22a3 1 (.mat)=8; 7.7%"
+W1-2021-02-08,A,5,S,0059f5d adds 2 .ogg files; 2/104=1.9%
+W1-2021-02-08,A,6,S,"Non-meta data (Roboto, spessman, MKI, LiberationSans)=4; .meta total 5+7+2+1+9+6=30; 0 other"
+W1-2021-02-08,A,7,S,"35 is the largest area (code 25, art 8, audio 2)"
+W1-2021-02-08,A,8,S,"ea23f08 date 2021-02-14, title matches, 9 airlock .prefab modified"
+W1-2021-02-08,A,9,S,"61a96bf: 2 .cs, 3 prefabs, 3 art (2 controllers+anim), 5 .meta =13"
+W1-2021-02-08,A,10,S,"a7aab33: 1 .cs, 2 prefab (A+D), 4 art, 7 .meta =14; title has double space as in log"
+W1-2021-02-08,A,11,S,f68b6a3 date 14 Feb author-local; 9 airlock prefabs
+W1-2021-02-08,A,12,S,"3855af4: 8 .cs (3 M,5 new... counted 8) + 2 .meta =10"
+W1-2021-02-08,A,13,S,a326ba1 author-local 2021-02-14 01:52 -0300; 3 prefabs + 1 png.meta =4
+W1-2021-02-08,A,14,S,"37e22a3 2021-02-12: 35 files; 13 .cs, 8 scenes/prefabs, 1 mat, 4 assets, 9 .meta"
+W1-2021-02-08,A,15,S,"0059f5d 2021-02-10: 1 .cs, 1 prefab, 2 .ogg, 6 .meta =10"
+W2-2021-07-19,B,1,S,"log.txt: 7 commits, 2 authors (James, Ryan089), 39 files, dates 07-20..07-24 author-local"
+W2-2021-07-19,B,2,S,"7 .cs files: 65537cc 2, c36c573 2, f1c0e55 1, 27cd991 1, edc747c 1; 7/39=18%"
+W2-2021-07-19,B,3,S,26 prefab/scene files (1+1+2+2+1+19); 26/39=67%
+W2-2021-07-19,B,4,S,c36c573: Chat.png and SingleColorMaterial.mat = 2 art; 2/39=5%
+W2-2021-07-19,B,5,S,No audio files in any commit; 0
+W2-2021-07-19,B,6,S,"TagManager.asset =1; .meta: Chat.png.meta, ToggleChat.cs.meta, ToggleBodyTargetUI.cs.meta =3; 0 other"
+W2-2021-07-19,B,7,S,"Scenes/prefabs 26 is largest of 39 (code 7, art 2)"
+W2-2021-07-19,B,8,S,8d38914: only ServerLobby.unity
+W2-2021-07-19,B,9,S,98fc1a8: only SpaceCleaner.prefab
+W2-2021-07-19,B,10,S,"65537cc: 2 .cs, 2 prefabs, TagManager.asset; 2021-07-23"
+W2-2021-07-19,B,11,S,"c36c573: 2 cs, Human+ChatWindow prefabs, 2 art, 2 meta; 07-22"
+W2-2021-07-19,B,12,S,"f1c0e55: 1 prefab, ToggleBodyTargetUI.cs + .meta; 07-21"
+W2-2021-07-19,B,13,S,27cd991: CompositeItemSelector.cs only; 07-20 author-local
+W2-2021-07-19,B,14,S,edc747c: Item.cs + 19 prefabs = 20; 07-20 author-local
+W2-2021-07-19,B,15,S,"Distinct: ServerLobby, SpaceCleaner, ChatWindow, InventoryUIBeep, Human + 19 item prefabs = 24"
+W2-2021-07-19,B,16,S,"65537cc ChatWindow.prefab: removed Text, ChatButton objects, RectTransform, CanvasRenderer, ItemDisplay instance"
+W2-2021-07-19,B,17,S,"65537cc ChatWindow.prefab removed m_Name Text, ChatButton, ItemDisplay"
+W2-2021-07-19,B,18,S,"c36c573 ChatWindow.prefab: added objects, CanvasRenderer, CanvasGroup; Canvas m_SortingOrder 0->1"
+W2-2021-07-19,B,19,S,"c36c573 ChatWindow.prefab names: Text, ChatButton, Panel, Chat Window (renamed), ItemDisplay present"
+W2-2021-07-19,B,20,S,"65537cc InventoryUIBeep.prefab: added ChatButton, Text, ItemDisplay instance, RectTransform, CanvasRenderer"
+W2-2021-07-19,B,21,S,"65537cc InventoryUIBeep.prefab added m_Name ChatButton, Text, ItemDisplay"
+W2-2021-07-19,B,22,S,"f1c0e55 InventoryUIBeep.prefab: added objects, CanvasRenderer, CanvasGroup, prefab instance"
+W2-2021-07-19,B,23,S,"f1c0e55 InventoryUIBeep.prefab names Text, ExpandBodyButton, Body Parts, ItemDisplay"
+W2-2021-07-19,B,24,S,8d38914 ServerLobby.unity: Selectable colour settings and rt field changed
+W2-2021-07-19,B,25,S,edc747c: 19 prefabs listed match diff; m_Layer 0->16 (object setup)
+W2-2021-07-19,B,26,S,"edc747c: renamed/changed names Beaker, Lid, Liquid, Attachment, Mug, GameObject, HighPower Cell (+1 more)"
+W2-2021-07-19,B,27,S,"c36c573 Human.prefab: ChatRegister (guid fc055690) m_Enabled 0->1, removed ObstacleMask/ViewRange"
+W2-2021-07-19,B,28,S,98fc1a8 SpaceCleaner.prefab: added looping=0 PrefabInstance override
+W2-2021-07-19,A,1,S,"log.txt: 7 commits, 2 authors (James, Ryan089), 39 files, dates 07-20..07-24 author-local"
+W2-2021-07-19,A,2,S,"7 .cs files: 65537cc 2, c36c573 2, f1c0e55 1, 27cd991 1, edc747c 1; 7/39=18%"
+W2-2021-07-19,A,3,S,26 prefab/scene files (1+1+2+2+1+19); 26/39=67%
+W2-2021-07-19,A,4,S,c36c573: Chat.png and SingleColorMaterial.mat = 2 art; 2/39=5%
+W2-2021-07-19,A,5,S,No audio files in any commit; 0
+W2-2021-07-19,A,6,S,"TagManager.asset =1; .meta: Chat.png.meta, ToggleChat.cs.meta, ToggleBodyTargetUI.cs.meta =3; 0 other"
+W2-2021-07-19,A,7,S,"Scenes/prefabs 26 is largest of 39 (code 7, art 2)"
+W2-2021-07-19,A,8,S,8d38914: only ServerLobby.unity
+W2-2021-07-19,A,9,S,98fc1a8: only SpaceCleaner.prefab
+W2-2021-07-19,A,10,S,"65537cc: 2 .cs, 2 prefabs, TagManager.asset; 2021-07-23"
+W2-2021-07-19,A,11,S,"c36c573: 2 cs, Human+ChatWindow prefabs, 2 art, 2 meta; 07-22"
+W2-2021-07-19,A,12,S,"f1c0e55: 1 prefab, ToggleBodyTargetUI.cs + .meta; 07-21"
+W2-2021-07-19,A,13,S,27cd991: CompositeItemSelector.cs only; 07-20 author-local
+W2-2021-07-19,A,14,S,edc747c: Item.cs + 19 prefabs = 20; 07-20 author-local

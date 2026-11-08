@@ -11,8 +11,10 @@
 //      saved files, so you see exactly what a participant sees.
 //   3. Flip between Version A (baseline) and Version B (treatment, names the
 //      scenes and prefabs) with the toolbar.
-//   4. "Save study files" writes the export plus both reports, the fidelity
-//      checklists and the naming measures into a folder you choose.
+//   4. "Save page" writes the page on screen as one markdown file to share.
+//      "Save study files" writes the export plus both reports, the fidelity
+//      checklists and the naming measures into a folder you choose, and asks
+//      before replacing a folder that already holds them (evaluation fix, 8 Nov).
 //
 // The page is the same markdown the study prints; it is drawn here with a
 // tiny renderer (headings, tables, bullets, bold) rather than a web view.
@@ -88,7 +90,10 @@ namespace ChangeLens.Editor
             if (GUILayout.Button("Generate", GUILayout.Height(24f))) Generate();
             using (new EditorGUI.DisabledScope(_export == null))
             {
-                if (GUILayout.Button("Save study files...", GUILayout.Height(24f))) SaveStudyFiles();
+                if (GUILayout.Button(new GUIContent("Save page...", "Save the page you are looking at as one file to share. No git log, no e-mail addresses."),
+                        GUILayout.Height(24f))) SavePage();
+                if (GUILayout.Button(new GUIContent("Save study files...", "Research use: both pages, the raw git export, fidelity checklists and naming measures."),
+                        GUILayout.Height(24f))) SaveStudyFiles();
             }
             EditorGUILayout.EndHorizontal();
 
@@ -226,14 +231,43 @@ namespace ChangeLens.Editor
                         _baseline.Counts.TotalFileEntries + " file changes.");
         }
 
+        // Evaluation fix (SE3 CW4, SE4 CL-05/06/07, 8 Nov 2026): a producer gets one
+        // shareable file, and an existing saved week is never replaced without asking.
+        private void SavePage()
+        {
+            ReportCondition condition = _version == 1 ? ReportCondition.Treatment : ReportCondition.Baseline;
+            string path = EditorUtility.SaveFilePanel("Save this page to share",
+                string.IsNullOrEmpty(_frozenFolder) ? "" : _frozenFolder,
+                StudyExport.DefaultPageFileName(_title, condition), "md");
+            if (string.IsNullOrEmpty(path)) return;
+            try
+            {
+                Succeed("Page saved: " + StudyExport.WritePage(_export, condition, _title, path));
+            }
+            catch (Exception error)
+            {
+                Fail("Could not save: " + error.Message);
+            }
+        }
+
         private void SaveStudyFiles()
         {
             string folder = EditorUtility.SaveFolderPanel("Save the study files into", _frozenFolder, "");
             if (string.IsNullOrEmpty(folder)) return;
+            List<string> existing = StudyExport.ExistingStudyFiles(folder);
+            if (existing.Count > 0 && !EditorUtility.DisplayDialog("Replace a saved week?",
+                    "This folder already holds saved study files:\n" + string.Join(", ", existing) +
+                    "\n\nSaving here replaces them.", "Replace", "Cancel"))
+            {
+                Succeed("Nothing saved. Pick an empty folder to keep the saved week.");
+                return;
+            }
             try
             {
                 _export.SaveTo(Path.Combine(folder, "export"));
-                Succeed(StudyExport.WriteStudyFiles(_export, folder, _title) + "\nSaved to " + folder);
+                StudyExport.WriteStudyFiles(_export, folder, _title);
+                Succeed("Saved both pages, the git export and the study checklists to " + folder +
+                        "\nTo share with the team, use Save page instead: the export holds contributors' e-mail addresses.");
             }
             catch (Exception error)
             {

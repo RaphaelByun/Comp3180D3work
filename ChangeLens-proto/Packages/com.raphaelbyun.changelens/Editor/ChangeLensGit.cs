@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEditor;
 
 namespace ChangeLens.Editor
@@ -426,6 +427,50 @@ namespace ChangeLens.Editor
 
     public static class StudyExport
     {
+        /// <summary>The files and folder <see cref="WriteStudyFiles"/> (plus the window's export/) write.</summary>
+        public static readonly string[] StudyFileNames =
+        {
+            "export", "report-A-baseline.md", "report-B-treatment.md",
+            "fidelity-A.md", "fidelity-B.md", "naming.md",
+        };
+
+        /// <summary>
+        /// The study files already in <paramref name="folder"/>, so the window can
+        /// ask before replacing a saved week (SE4 CL-05). Empty when nothing would be replaced.
+        /// </summary>
+        public static List<string> ExistingStudyFiles(string folder)
+        {
+            var found = new List<string>();
+            if (string.IsNullOrEmpty(folder) || !Directory.Exists(folder)) return found;
+            foreach (string name in StudyFileNames)
+            {
+                string path = Path.Combine(folder, name);
+                if (File.Exists(path) || Directory.Exists(path)) found.Add(name);
+            }
+            return found;
+        }
+
+        /// <summary>
+        /// Writes only the page a producer reads (one version, one file) so it can be
+        /// shared on its own: no git export, checklists or contributor e-mail
+        /// addresses (SE4 CL-06). Returns the path written.
+        /// </summary>
+        public static string WritePage(WeekExport export, ReportCondition condition, string title, string path)
+        {
+            string dir = Path.GetDirectoryName(path);
+            if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
+            File.WriteAllText(path, export.BuildReport(condition, title).ToMarkdown());
+            return path;
+        }
+
+        /// <summary>A default file name for <see cref="WritePage"/>, e.g. "What changed 2021-07-19 (version B).md".</summary>
+        public static string DefaultPageFileName(string title, ReportCondition condition)
+        {
+            string safe = Regex.Replace(title ?? "", @"[\\/:*?""<>|]", "-").Trim();
+            if (safe.Length == 0) safe = "What changed";
+            return safe + (condition == ReportCondition.Treatment ? " (version B).md" : " (version A).md");
+        }
+
         /// <summary>
         /// Writes the study materials for one frozen week into
         /// <paramref name="folder"/>: report-A-baseline.md, report-B-treatment.md

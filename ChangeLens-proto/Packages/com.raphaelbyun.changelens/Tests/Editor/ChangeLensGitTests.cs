@@ -105,5 +105,68 @@ namespace ChangeLens.Editor.Tests
                 if (System.IO.Directory.Exists(root)) System.IO.Directory.Delete(root, true);
             }
         }
+
+        // Evaluation fix, 8 Nov 2026 (SE4 CL-05/06): ask before replacing a saved
+        // week, and save one shareable page with no git export.
+
+        [Test]
+        public void ExistingStudyFiles_ListsOnlyWhatWouldBeReplaced()
+        {
+            string root = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "cl-save-" + System.Guid.NewGuid().ToString("N"));
+            try
+            {
+                Assert.IsEmpty(StudyExport.ExistingStudyFiles(root), "missing folder");
+                System.IO.Directory.CreateDirectory(root);
+                System.IO.File.WriteAllText(System.IO.Path.Combine(root, "notes.txt"), "mine");
+                Assert.IsEmpty(StudyExport.ExistingStudyFiles(root), "unrelated file");
+                System.IO.File.WriteAllText(System.IO.Path.Combine(root, "report-B-treatment.md"), "x");
+                System.IO.Directory.CreateDirectory(System.IO.Path.Combine(root, "export"));
+                CollectionAssert.AreEqual(new[] { "export", "report-B-treatment.md" }, StudyExport.ExistingStudyFiles(root));
+                Assert.IsEmpty(StudyExport.ExistingStudyFiles(null));
+            }
+            finally
+            {
+                if (System.IO.Directory.Exists(root)) System.IO.Directory.Delete(root, true);
+            }
+        }
+
+        [Test]
+        public void DefaultPageFileName_NamesTheVersionAndDropsUnsafeCharacters()
+        {
+            Assert.AreEqual("week 2021-07-19 (version B).md",
+                StudyExport.DefaultPageFileName("week 2021-07-19", ReportCondition.Treatment));
+            Assert.AreEqual("a-b-c (version A).md", StudyExport.DefaultPageFileName("a/b:c", ReportCondition.Baseline));
+            Assert.AreEqual("What changed (version A).md", StudyExport.DefaultPageFileName("  ", ReportCondition.Baseline));
+        }
+
+        [Test]
+        public void WritePage_WritesOnlyThePageOnScreen()
+        {
+            string study = null;
+            foreach (string start in new[] { TestContext.CurrentContext.TestDirectory, System.IO.Directory.GetCurrentDirectory() })
+            {
+                for (string dir = start; !string.IsNullOrEmpty(dir) && study == null; dir = System.IO.Path.GetDirectoryName(dir))
+                {
+                    string candidate = System.IO.Path.Combine(dir, "study", "week2-2021-07-19");
+                    if (System.IO.Directory.Exists(System.IO.Path.Combine(candidate, "export"))) study = candidate;
+                }
+            }
+            if (study == null) Assert.Inconclusive("study/week2-2021-07-19 not found");
+
+            string root = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "cl-page-" + System.Guid.NewGuid().ToString("N"));
+            try
+            {
+                WeekExport export = WeekExport.FromFolder(System.IO.Path.Combine(study, "export"));
+                string path = System.IO.Path.Combine(root, "page.md");
+                Assert.AreEqual(path, StudyExport.WritePage(export, ReportCondition.Treatment, "t", path));
+                Assert.AreEqual(export.BuildReport(ReportCondition.Treatment, "t").ToMarkdown(), System.IO.File.ReadAllText(path));
+                CollectionAssert.AreEqual(new[] { path }, System.IO.Directory.GetFileSystemEntries(root), "one file, no export folder");
+                StringAssert.DoesNotContain("@", System.IO.File.ReadAllText(path), "no e-mail addresses");
+            }
+            finally
+            {
+                if (System.IO.Directory.Exists(root)) System.IO.Directory.Delete(root, true);
+            }
+        }
     }
 }

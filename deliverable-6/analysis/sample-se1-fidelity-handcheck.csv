@@ -1,0 +1,10 @@
+# FAKE DATA for testing the analysis tool. Invented values. Not a result.
+week,version,row,raphael_verdict,ai_scorer1_verdict,ai_scorer2_verdict,ai_rescore_verdict,agree_with_ai,minutes,note
+W1-2021-02-08,B,1,S,S,S,,y,1,
+W1-2021-02-08,B,2,S,S,S,,y,1,
+W1-2021-02-08,B,3,C,S,C,,n,2,FAKE
+W1-2021-02-08,B,19,S,C,C,S,n,2,FAKE
+W2-2021-07-19,B,1,S,S,,,y,1,
+W2-2021-07-19,B,2,U,S,,,n,1,
+W2-2021-07-19,A,1,S,S,,,y,1,
+W2-2021-07-19,A,2,,S,,,,,FAKE not checked by hand

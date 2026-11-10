@@ -1,0 +1,9 @@
+# FAKE DATA for testing the analysis tool. Invented values. Not a result.
+segment_id,participant,timestamp,report_condition,quote_note,pass1_code,pass1_date,pass2_code,pass2_date,final_code,resolution_rule
+L01,SELF,10:05,RX-A1,FAKE note,a2,2000-01-03,a2,2000-01-10,,
+L02,SELF,10:07,RX-A1,FAKE note,d3,2000-01-03,,,,
+L03,SELF,10:09,RX-A1,FAKE note,d4,2000-01-03,d3,2000-01-10,d3,FAKE rule
+L04,SELF,10:40,RX-B2,FAKE note,a2,2000-01-03,,,,
+L05,SELF,10:05,RY-B1,"FAKE note, with a comma",d3,2000-01-03,,,,
+L06,SELF,10:08,RY-B1,FAKE note,a1,2000-01-03,a1,2000-01-10,,
+L07,SELF,10:35,RY-A2,FAKE note,none,2000-01-03,,,,

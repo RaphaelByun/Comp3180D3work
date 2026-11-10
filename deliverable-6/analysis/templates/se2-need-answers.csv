@@ -1,0 +1,3 @@
+# SE2 ten needs. need_id N01, N03, N07, N08, N09, N12, N17, N19, N25, N26. page_gave_fpn F, P or N. gitlog_result C, PC, W or NA.
+# error_cause for W only: misread, overclaim or page-wrong. key_ru_class from the key accepted before SE2. record_could_answer D, P or N, from the git log by hand.
+read_id,week,version,read_order,need_id,page_gave_fpn,confidence_1to5,seconds,changed_on_second_read,gitlog_result,error_cause,only_in_b,key_ru_class,record_could_answer,scored_date,note

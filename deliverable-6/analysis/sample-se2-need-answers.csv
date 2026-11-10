@@ -1,0 +1,27 @@
+# FAKE DATA for testing the analysis tool. Invented values. Not a result.
+read_id,week,version,read_order,need_id,page_gave_fpn,confidence_1to5,seconds,changed_on_second_read,gitlog_result,error_cause,only_in_b,key_ru_class,record_could_answer,scored_date,note
+RX-A1,RX,A,1,N01,F,4,30,,C,,n,D,D,2000-01-03,FAKE
+RX-A1,RX,A,1,N03,P,3,30,,PC,,n,P,P,2000-01-03,FAKE
+RX-A1,RX,A,1,N07,N,3,30,,C,,n,N,N,2000-01-03,FAKE
+RX-A1,RX,A,1,N08,N,2,30,,C,,n,N,N,2000-01-03,FAKE
+RX-A1,RX,A,1,N09,F,5,30,,W,overclaim,n,P,P,2000-01-03,FAKE
+RX-A1,RX,A,1,N12,P,3,30,,C,,n,D,D,2000-01-03,FAKE
+RX-A1,RX,A,1,N17,N,4,30,,C,,n,N,N,2000-01-03,FAKE
+RX-A1,RX,A,1,N19,F,5,30,,C,,n,D,D,2000-01-03,FAKE
+RX-A1,RX,A,1,N25,P,2,30,,PC,,n,P,P,2000-01-03,FAKE
+RX-A1,RX,A,1,N26,N,1,30,,NA,,n,N,N,2000-01-03,FAKE
+RX-B2,RX,B,2,N01,F,4,30,same,C,,n,D,D,2000-01-03,FAKE
+RX-B2,RX,B,2,N09,N,3,30,changed,C,,n,P,P,2000-01-03,FAKE
+RX-B2,RX,B,2,N12,F,5,30,changed,C,,y,D,D,2000-01-03,FAKE
+RY-B1,RY,B,1,N01,F,5,30,,C,,n,D,D,2000-01-03,FAKE
+RY-B1,RY,B,1,N03,F,4,30,,C,,y,P,P,2000-01-03,FAKE
+RY-B1,RY,B,1,N07,N,3,30,,C,,n,N,N,2000-01-03,FAKE
+RY-B1,RY,B,1,N08,P,4,30,,W,misread,n,N,N,2000-01-03,FAKE
+RY-B1,RY,B,1,N09,P,3,30,,PC,,n,P,P,2000-01-03,FAKE
+RY-B1,RY,B,1,N12,F,5,30,,C,,y,D,D,2000-01-03,FAKE
+RY-B1,RY,B,1,N17,N,3,30,,C,,n,N,N,2000-01-03,FAKE
+RY-B1,RY,B,1,N19,F,3,30,,PC,,n,D,D,2000-01-03,FAKE
+RY-B1,RY,B,1,N25,P,2,30,,PC,,n,P,P,2000-01-03,FAKE
+RY-B1,RY,B,1,N26,N,4,30,,C,,n,N,N,2000-01-03,FAKE
+RY-A2,RY,A,2,N12,N,3,30,lost,C,,n,D,D,2000-01-03,FAKE
+RY-A2,RY,A,2,N03,P,3,30,changed,PC,,n,P,P,2000-01-03,FAKE

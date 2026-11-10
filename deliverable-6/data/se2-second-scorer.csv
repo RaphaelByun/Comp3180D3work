@@ -1,0 +1,2 @@
+# Optional AI second scorer, blind to Raphael's scores. kind: need or item. id: need_id or item number. scorer: the model name.
+read_id,kind,id,score,scorer,scored_date

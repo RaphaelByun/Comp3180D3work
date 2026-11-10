@@ -1,0 +1,15 @@
+# SE2 items (only if the reserve items exist). item 1 to 6. level L1, L2, L3 or U. score 0, 1 or 2 (items 1-5); Pass, Hedged or Over-claim (item 6).
+# specific y/n for items 4 and 5. changed_on_second_read: new, changed, lost, same; blank on a first read.
+read_id,week,version,read_order,item,level,confidence_1to5,seconds,changed_on_second_read,score,specific,scored_date
+RX-A1,RX,A,1,1,L1,5,30,,2,,2026-11-07
+RX-A1,RX,A,1,2,L1,5,20,,1,,2026-11-07
+RX-A1,RX,A,1,3,L2,5,30,,1,,2026-11-07
+RX-A1,RX,A,1,4,L2,5,30,,2,n,2026-11-07
+RX-A1,RX,A,1,5,L3,3,30,,0,n,2026-11-07
+RX-A1,RX,A,1,6,U,5,45,,Over-claim,,2026-11-07
+RX-B2,RX,B,2,1,L1,5,10,changed,1,,2026-11-07
+RX-B2,RX,B,2,2,L1,5,10,changed,0,,2026-11-07
+RX-B2,RX,B,2,3,L2,5,10,changed,2,,2026-11-07
+RX-B2,RX,B,2,4,L2,5,10,changed,1,n,2026-11-07
+RX-B2,RX,B,2,5,L3,5,10,same,0,n,2026-11-07
+RX-B2,RX,B,2,6,U,5,10,same,Over-claim,,2026-11-07

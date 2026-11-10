@@ -1,0 +1,9 @@
+# FAKE DATA for testing the analysis tool. Invented values. Not a result.
+read_id,kind,id,score,scorer,scored_date
+RX-A1,need,N01,C,FAKE-model,2000-01-04
+RX-A1,need,N09,W,FAKE-model,2000-01-04
+RX-A1,need,N03,C,FAKE-model,2000-01-04
+RY-B1,need,N19,PC,FAKE-model,2000-01-04
+RX-A1,item,1,2,FAKE-model,2000-01-04
+RX-A1,item,6,hedged,FAKE-model,2000-01-04
+RY-B1,item,6,Pass,FAKE-model,2000-01-04

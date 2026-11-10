@@ -1,0 +1,2 @@
+# SE3. One row per correct step. Write the correct actions before judging any step. q1 to q4: Y or N. Every N needs a failure story and a severity 0 to 4.
+task_id,step_no,correct_action,q1_right_effect,q2_notice_action,q3_associate_action,q4_see_progress,failure_story,severity_0to4,heuristic_link,fix_idea

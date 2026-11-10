@@ -1,0 +1,6 @@
+# FAKE DATA for testing the analysis tool. Invented values. Not a result.
+id,heuristic,task_location,problem,severity_0to4,screenshot_file,cross_check_yn,se3_link
+CL-01,H6,FAKE,FAKE,3,,Y,CW1 step 1
+CL-02,H9,FAKE,FAKE,2,,N,CW5 step 1
+CL-03,H4,FAKE,FAKE,1,,N,
+CL-04,H6,FAKE,FAKE,2,,N,

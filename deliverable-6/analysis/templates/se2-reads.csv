@@ -1,0 +1,3 @@
+# SE2. One row per read: RX-A1, RX-B2, RY-B1, RY-A2. seen_before: y, n or unsure. Ratings 1 to 5, written before scoring.
+# minutes_standup and the standup_* counts on first reads only.
+read_id,date,week,version,read_order,seen_before,start_time,end_time,minutes_items,minutes_needs,minutes_standup,ease_1to5,useful_1to5,would_send_1to5,rating_why,standup_S,standup_C,standup_U,interruptions,note

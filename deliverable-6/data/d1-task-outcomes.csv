@@ -1,0 +1,33 @@
+# Copied 26 Oct 2026 by Claude Code (Raphael away) from deliverable-1/heuristic-coding-sheet.md section 5 ("Task outcomes" tables)
+# on origin/deliverable-1-ux-study: T1 to T7 for each of the four tools, completed value as written in the sheet.
+# FOR RAPHAEL: Trello T5 "N (not tested)"; Trello T6 "Y / partly"; Jira T3 "Y / partly"; Jira T5 "N (not tested)"; Jira T6 "Y / partly" are not Y, partly or N.
+# They are kept as written (analyse.js warns on them). Choose Y, partly or N for each, or leave them; nothing was chosen for you.
+tool,task,completed
+Trello,T1,Partly
+Trello,T2,Y
+Trello,T3,Partly
+Trello,T4,Y
+Trello,T5,N (not tested)
+Trello,T6,Y / partly
+Trello,T7,Partly
+HacknPlan,T1,Partly
+HacknPlan,T2,Y
+HacknPlan,T3,Partly
+HacknPlan,T4,Partly
+HacknPlan,T5,N
+HacknPlan,T6,N
+HacknPlan,T7,N
+Jira,T1,Partly
+Jira,T2,Y
+Jira,T3,Y / partly
+Jira,T4,Y
+Jira,T5,N (not tested)
+Jira,T6,Y / partly
+Jira,T7,Partly
+GitHub Projects,T1,Partly
+GitHub Projects,T2,Y
+GitHub Projects,T3,Partly
+GitHub Projects,T4,Partly
+GitHub Projects,T5,Y
+GitHub Projects,T6,Partly
+GitHub Projects,T7,Partly

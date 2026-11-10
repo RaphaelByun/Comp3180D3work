@@ -1,0 +1,29 @@
+# SE1. One row per checklist row hand-checked. week: W1-2021-02-08, W2-2021-07-19, RX-2020-12-14, RY-2021-09-27. version: A or B.
+# Verdicts S, C or U; blank where that scorer did not score the row. Write raphael_verdict before opening any scored file.
+week,version,row,raphael_verdict,ai_scorer1_verdict,ai_scorer2_verdict,ai_rescore_verdict,agree_with_ai,minutes,note
+W1-2021-02-08,B,2,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,5,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,7,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,8,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,10,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,19,,,,,,,sample: previously failed (AI rescore row); drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,21,,,,,,,sample: previously failed (AI rescore row); drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,22,,,,,,,sample: previously failed (AI rescore row); drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,23,,,,,,,sample: previously failed (AI rescore row); drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,24,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,27,,,,,,,sample: previously failed (AI rescore row); drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,29,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,30,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,31,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,33,,,,,,,sample: previously failed (AI rescore row); drawn by Claude 7 Nov seed 20261107
+W1-2021-02-08,B,35,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W2-2021-07-19,B,3,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W2-2021-07-19,B,5,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W2-2021-07-19,B,7,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W2-2021-07-19,B,10,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W2-2021-07-19,B,13,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W2-2021-07-19,B,18,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W2-2021-07-19,B,23,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W2-2021-07-19,B,24,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W2-2021-07-19,B,25,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107
+W2-2021-07-19,B,27,,,,,,,sample: random; drawn by Claude 7 Nov seed 20261107

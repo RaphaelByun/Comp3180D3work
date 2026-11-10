@@ -1,5 +1,20 @@
 # Contribution ledger (draft)
 
+## Status at submission (Tue 10 Nov 2026)
+
+This block replaces every "[to confirm]" cell in the table below. Written by Claude Code (Opus 5.5) at Raphael's request, from the commits and his own statements of 6–8 Nov 2026.
+
+**Raphael did:**
+- Chose the topic, research question and audience (producer), and the evaluation design (testing it himself, 17 Oct).
+- Made the project decisions recorded in the commit messages: dropping the interviews, no ethics application, keep Rule 2, stopping the evaluation after one unseen week (6 Nov), and handing the fidelity check, scoring, walkthrough and heuristic pass to Claude (7 Nov).
+- The two evaluation reads on 6 Nov 2026: every answer, confidence rating, stand-up draft and 1–5 rating (`d01e3b0`, `a03a261`).
+- The Week 13 diary entry in his own words and the 6 Nov hours row (`71f2b70`).
+- The own-words answers of 8 Nov 2026 used in the report's Results and Learning Reflection.
+
+**Raphael did not:** write or edit the code or tests; hand-check the D1 findings, the D3 instruments, the D4 or SE1 fidelity scores, or the SE3/SE4 findings; record the portfolio video.
+
+**Claude did everything else** listed in the table below, plus on 7–8 Nov: the fidelity check of all 96 claims, scoring of the two reads, the walkthrough and heuristic pass, the analysis, the "Save page" fix (`3cf2727`), and on 10 Nov the merge into `main` and the e-mail scrub.
+
 > **Draft by Claude (Claude Code, Opus 5.5), 26 Oct 2026, for Raphael to confirm.** Every one of the 203 commits on GitHub up to 26 Oct 2026 19:29 Sydney time (`0bcdcfc`, `7213a22`; re-counted that day) carries a `Co-Authored-By: Claude` trailer (200 authored as RaphaelByun, 3 as Claude), so the author field does not show who did the thinking. The "Raphael did" column holds only what a file or commit message records as his decision or answer; everything else is `[to confirm]`. Raphael confirms or edits every row before submission. Link this file from the root README when the branches are merged to `main`.
 >
 > Revised by Claude Code (Opus 5.5), 26 Oct 2026, Raphael away: counts re-checked; 21 and 26 Oct commits added; his 26 Oct answers recorded; `ff65ae7` marked superseded.

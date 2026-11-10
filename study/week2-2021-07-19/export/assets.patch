@@ -1,5 +1,5 @@
 commit 8d38914ac3a73fcb8fb0964f545f8cff9c291489
-Author: James <jblack144@gmail.com>
+Author: James <contributor-8393b67e@users.invalid>
 Date:   2021-07-24 21:12:15 -0400
 
     Show selected setting (#772)
@@ -86,7 +86,7 @@ index fd8063f..74e52e6 100644
    m_ObjectHideFlags: 0
 
 commit 98fc1a817bc24aff133212f39deb88d00d09f937
-Author: James <jblack144@gmail.com>
+Author: James <contributor-8393b67e@users.invalid>
 Date:   2021-07-24 21:05:35 -0400
 
     Fix space cleaner looping (#771)
@@ -117,7 +117,7 @@ index 69a9dc6..fdefd6b 100644
        propertyPath: m_Name
 
 commit 65537cc1f1a664cb9c1f3bd69342ab69381c1bed
-Author: James <jblack144@gmail.com>
+Author: James <contributor-8393b67e@users.invalid>
 Date:   2021-07-23 19:37:38 -0400
 
     Fix multiple chat buttons (#770)
@@ -915,7 +915,7 @@ index 3af7692..4e2ced0 100644
    m_ObjectHideFlags: 0
 
 commit c36c57302eeb8c520aba4744a5705f3384d607df
-Author: James <jblack144@gmail.com>
+Author: James <contributor-8393b67e@users.invalid>
 Date:   2021-07-22 14:46:17 -0400
 
     Add chat back (#745)
@@ -2733,7 +2733,7 @@ index e7d046e..27d2ed1 100644
 +  m_PrefabAsset: {fileID: 0}
 
 commit f1c0e55f21d450b8887537119e459a6eff52c3b4
-Author: James <jblack144@gmail.com>
+Author: James <contributor-8393b67e@users.invalid>
 Date:   2021-07-21 16:04:51 -0400
 
     Add targeting doll button (#744)
@@ -3198,7 +3198,7 @@ index 44072cc..3af7692 100644
    m_ObjectHideFlags: 0
 
 commit edc747c762e3d88cef9c6d4df998421c91a62c19
-Author: Ryan089 <64360820+Ryan089@users.noreply.github.com>
+Author: Ryan089 <contributor-70a00653@users.invalid>
 Date:   2021-07-20 04:18:49 +1000
 
     Corrects issue where Items are not on the correct layer. (#739)

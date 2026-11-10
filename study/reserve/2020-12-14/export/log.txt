@@ -1,5 +1,5 @@
 commit c9a2e9c027d3d60de1515e01340abc9777faa695
-Author: Seteron <38957910+Seteron@users.noreply.github.com>
+Author: Seteron <contributor-ec9aad5d@users.invalid>
 Date:   2020-12-15 16:55:09 -0600
 
     Fix SSRT (#579)
@@ -9,7 +9,7 @@ Date:   2020-12-15 16:55:09 -0600
 M	Assets/Libraries/SSRT/Shaders/Resources/SSRTLib.cginc
 
 commit 3da514e94d7e313b5f65ea1fa84a697c0daea569
-Author: João Buratto <46575243+joaoburatto@users.noreply.github.com>
+Author: João Buratto <contributor-70855f69@users.invalid>
 Date:   2020-12-15 19:10:16 -0300
 
     Model fixing (Once again) (#577)
@@ -113,7 +113,7 @@ A	Assets/Content/Structures/Wall Mounts/Wood Panel/Wood Panel.prefab
 A	Assets/Content/Structures/Wall Mounts/Wood Panel/Wood Panel.prefab.meta
 
 commit c12b593441908cc208aaa62500c7987f0252c183
-Author: Seteron <38957910+Seteron@users.noreply.github.com>
+Author: Seteron <contributor-ec9aad5d@users.invalid>
 Date:   2020-12-14 18:54:39 -0600
 
     Retime move cycle (#578)

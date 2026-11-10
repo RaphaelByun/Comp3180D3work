@@ -1,5 +1,5 @@
 commit 3da514e94d7e313b5f65ea1fa84a697c0daea569
-Author: João Buratto <46575243+joaoburatto@users.noreply.github.com>
+Author: João Buratto <contributor-70855f69@users.invalid>
 Date:   2020-12-15 19:10:16 -0300
 
     Model fixing (Once again) (#577)
@@ -4210,7 +4210,7 @@ index 0000000..d3c55aa
 +  MaxDistance: 0
 
 commit c12b593441908cc208aaa62500c7987f0252c183
-Author: Seteron <38957910+Seteron@users.noreply.github.com>
+Author: Seteron <contributor-ec9aad5d@users.invalid>
 Date:   2020-12-14 18:54:39 -0600
 
     Retime move cycle (#578)

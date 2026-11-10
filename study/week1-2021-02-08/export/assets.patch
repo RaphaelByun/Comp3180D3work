@@ -1,5 +1,5 @@
 commit ea23f08c38c39ccc4ff9abf6ae496cedc53a8c50
-Author: Rutger Hendriks <rutger_dezweef@hotmail.com>
+Author: Rutger Hendriks <contributor-e056c664@users.invalid>
 Date:   2021-02-14 21:42:42 +0100
 
     Add sound fall off to airlocks (#611)
@@ -834,7 +834,7 @@ index 0bc9a14..1989ec1 100644
        tangentMode: 0
 
 commit 61a96bf1cba77aa508867fdc1d651442977cdff7
-Author: Rutger Hendriks <rutger_dezweef@hotmail.com>
+Author: Rutger Hendriks <contributor-e056c664@users.invalid>
 Date:   2021-02-14 21:36:07 +0100
 
     Add emergency light and light interactions (#610)
@@ -1036,7 +1036,7 @@ index 7d2a833..07f7dfc 100644
    m_ObjectHideFlags: 0
 
 commit a7aab33608fe02e9486adedf3651541faba45057
-Author: CrazyMalk <lucas_o__castro@hotmail.com>
+Author: CrazyMalk <contributor-9c8fe1de@users.invalid>
 Date:   2021-02-14 16:19:13 -0300
 
     Make floor sign openable/closeable  (#609)
@@ -1691,7 +1691,7 @@ index 6296e70..0000000
 -  localScaleSensitivity: 0.01
 
 commit f68b6a3d65cab1ad0543991dfafd5f8f6462b33a
-Author: CrazyMalk <lucas_o__castro@hotmail.com>
+Author: CrazyMalk <contributor-9c8fe1de@users.invalid>
 Date:   2021-02-14 16:01:33 -0300
 
     Add RigidBody to airlocks to fix their interaction (#608)
@@ -2010,7 +2010,7 @@ index ec57d53..0bc9a14 100644
    m_ObjectHideFlags: 0
 
 commit a326ba1168b8b1e7056ad98c5f4316d26899208f
-Author: João Buratto <46575243+joaoburatto@users.noreply.github.com>
+Author: João Buratto <contributor-70855f69@users.invalid>
 Date:   2021-02-14 01:52:17 -0300
 
     Rework the container UI (#605)
@@ -2019,7 +2019,7 @@ Date:   2021-02-14 01:52:17 -0300
     
     * remove spare meta file
     
-    Co-authored-by: CosmicCoincidence <cosmiccoincidence1991@gmail.com>
+    Co-authored-by: CosmicCoincidence <contributor-0077b7b8@users.invalid>
 
 diff --git a/Assets/Content/Graphics/UI/Inventory/HumanoidInventory/Container Display.prefab b/Assets/Content/Graphics/UI/Inventory/HumanoidInventory/Container Display.prefab
 index e9229d3..3731a54 100644
@@ -2527,7 +2527,7 @@ index e29e844..2bf51d6 100644
 +  m_PixelsPerUnitMultiplier: 5.5
 
 commit 37e22a353b5ef85001f975f1887f2c6dce95f348
-Author: João Buratto <46575243+joaoburatto@users.noreply.github.com>
+Author: João Buratto <contributor-70855f69@users.invalid>
 Date:   2021-02-12 18:08:57 -0300
 
     Fix restart bug (#588)
@@ -7783,7 +7783,7 @@ index 7b65e4c..d2e4a1d 100644
    m_Father: {fileID: 3881649556182218966}
 
 commit 0059f5dacbdb569f1d4563ee1ec5eea09e36cf73
-Author: CrazyMalk <lucas_o__castro@hotmail.com>
+Author: CrazyMalk <contributor-9c8fe1de@users.invalid>
 Date:   2021-02-10 18:10:47 -0300
 
     Create PepperSpray class to handle interaction with the pepper spray (#604)

@@ -1,5 +1,5 @@
 commit 8d38914ac3a73fcb8fb0964f545f8cff9c291489
-Author: James <jblack144@gmail.com>
+Author: James <contributor-8393b67e@users.invalid>
 Date:   2021-07-24 21:12:15 -0400
 
     Show selected setting (#772)
@@ -15,7 +15,7 @@ Date:   2021-07-24 21:12:15 -0400
 M	Assets/Content/Scenes/ServerLobby.unity
 
 commit 98fc1a817bc24aff133212f39deb88d00d09f937
-Author: James <jblack144@gmail.com>
+Author: James <contributor-8393b67e@users.invalid>
 Date:   2021-07-24 21:05:35 -0400
 
     Fix space cleaner looping (#771)
@@ -31,7 +31,7 @@ Date:   2021-07-24 21:05:35 -0400
 M	Assets/Content/Items/Functional/Containers/Liquid/SpaceCleaner.prefab
 
 commit 65537cc1f1a664cb9c1f3bd69342ab69381c1bed
-Author: James <jblack144@gmail.com>
+Author: James <contributor-8393b67e@users.invalid>
 Date:   2021-07-23 19:37:38 -0400
 
     Fix multiple chat buttons (#770)
@@ -51,7 +51,7 @@ M	Assets/Engine/Chat/ToggleChat.cs
 M	ProjectSettings/TagManager.asset
 
 commit c36c57302eeb8c520aba4744a5705f3384d607df
-Author: James <jblack144@gmail.com>
+Author: James <contributor-8393b67e@users.invalid>
 Date:   2021-07-22 14:46:17 -0400
 
     Add chat back (#745)
@@ -94,7 +94,7 @@ A	Assets/Engine/Chat/ToggleChat.cs.meta
 M	Assets/Engine/Examine/SingleColorMaterial.mat
 
 commit f1c0e55f21d450b8887537119e459a6eff52c3b4
-Author: James <jblack144@gmail.com>
+Author: James <contributor-8393b67e@users.invalid>
 Date:   2021-07-21 16:04:51 -0400
 
     Add targeting doll button (#744)
@@ -112,7 +112,7 @@ A	Assets/Engine/Inventory/UI/ToggleBodyTargetUI.cs
 A	Assets/Engine/Inventory/UI/ToggleBodyTargetUI.cs.meta
 
 commit 27cd99180486aa1cccf404313b9c7eb53ee2e3da
-Author: Ryan089 <64360820+Ryan089@users.noreply.github.com>
+Author: Ryan089 <contributor-70a00653@users.invalid>
 Date:   2021-07-20 04:34:03 +1000
 
     Amended CompositeItemSelector to render sharedMesh rather than mesh. (#743)
@@ -122,7 +122,7 @@ Date:   2021-07-20 04:34:03 +1000
 M	Assets/Engine/Examine/CompositeItemSelector.cs
 
 commit edc747c762e3d88cef9c6d4df998421c91a62c19
-Author: Ryan089 <64360820+Ryan089@users.noreply.github.com>
+Author: Ryan089 <contributor-70a00653@users.invalid>
 Date:   2021-07-20 04:18:49 +1000
 
     Corrects issue where Items are not on the correct layer. (#739)

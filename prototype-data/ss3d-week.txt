@@ -1,5 +1,5 @@
 commit 5a8c35b59cc7969cf2b0c0c19c4f1f880b9be8f9
-Author: withwater <60080920+withwater@users.noreply.github.com>
+Author: withwater <contributor-128e4ac8@users.invalid>
 Date:   2024-02-25 05:08:27 -0700
 
     Changed folders to PascalCase (#1275) (#1430)
@@ -88,7 +88,7 @@ M	Packages/manifest.json
 M	Packages/packages-lock.json
 
 commit 677019478b5824caf967045d52efb560d0d7e6d1
-Author: Iamteapot <77565416+iamteapot422@users.noreply.github.com>
+Author: Iamteapot <contributor-23ace253@users.invalid>
 Date:   2024-02-25 18:41:01 +0700
 
     Fix item collider (#1417)
@@ -111,13 +111,13 @@ Date:   2024-02-25 18:41:01 +0700
     
     ---------
     
-    Co-authored-by: Mechar418 <77565416+Mechar418@users.noreply.github.com>
-    Co-authored-by: stilnat <nathan.raynal.castang@gmail.com>
+    Co-authored-by: Mechar418 <contributor-1ccd66a5@users.invalid>
+    Co-authored-by: stilnat <contributor-cd088c17@users.invalid>
 
 M	Assets/Scripts/SS3D/Systems/Inventory/Items/Item.cs
 
 commit 6d75c2f40ed91e03e95b7e0e03f0e5239f764801
-Author: Sjerty <56740136+Sjerty@users.noreply.github.com>
+Author: Sjerty <contributor-f3b2a0f7@users.invalid>
 Date:   2024-02-23 19:40:28 +0300
 
     Change Start() to Awake() (#1427)
@@ -125,7 +125,7 @@ Date:   2024-02-23 19:40:28 +0300
 M	Assets/Scripts/SS3D/Systems/Inventory/Containers/ContainerItemDisplay.cs
 
 commit 17356a94bd7402ee27e241020331dfb0e09649b4
-Author: stilnat <nathan.raynal.castang@gmail.com>
+Author: stilnat <contributor-cd088c17@users.invalid>
 Date:   2024-02-21 11:55:14 +0100
 
     fix exception (#1423)
@@ -133,7 +133,7 @@ Date:   2024-02-21 11:55:14 +0100
 M	Assets/Scripts/SS3D/Systems/Selection/SelectionCamera.cs
 
 commit 42dc8898f332cf989a09320ccbcf7d15f44dcf6d
-Author: stilnat <nathan.raynal.castang@gmail.com>
+Author: stilnat <contributor-cd088c17@users.invalid>
 Date:   2024-02-21 01:12:43 +0100
 
     fix disappearing clothes (#1422)

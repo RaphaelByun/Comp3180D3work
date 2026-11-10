@@ -1,5 +1,5 @@
 commit 7e5a33d7074aff89a8a2850219c9bed563531c18
-Author: stilnat <nathan.raynal.castang@gmail.com>
+Author: stilnat <contributor-cd088c17@users.invalid>
 Date:   2021-10-02 17:38:33 +0200
 
     Completing container rework [ready for review] (#824)
@@ -20,7 +20,7 @@ M	Assets/Engine/Inventory/ContainerItemDisplay.cs
 M	Assets/Engine/Inventory/Editor/ContainerDescriptorEditor.cs
 
 commit 0b98c2725368023c27e8f29066a7f9322f4630af
-Author: stilnat <nathan.raynal.castang@gmail.com>
+Author: stilnat <contributor-cd088c17@users.invalid>
 Date:   2021-10-02 11:38:15 +0200
 
     New Container Editor, multiple container on a single game object (#798)

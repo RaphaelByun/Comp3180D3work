@@ -1,0 +1,12 @@
+# A2 budget: 65 hours (50 outside class + 15 in prac). Fill the actual columns yourself from hours-entries.csv. Do not edit the A2 columns.
+deliverable,name,a2_hours,a2_in_prac,actual_hours,actual_in_prac,variance_hours,variance_why
+1,Production-tool UX study and design spec,10,2,,,,
+2,ChangeLens Unity Editor package (both conditions),16,5,,,,
+3,Evaluation protocol and instruments,4,1,,,,
+4,Fidelity check,3,1,,,,
+5,Sessions run and coded,18,4,,,,
+6,"Evaluation report, instruments, data",6,1,,,,
+7,Portfolio video,4,1,,,,
+8,Development diary,2,0,,,,
+9,Reflection report (all four goals),2,0,,,,
+total,,65,15,,,,

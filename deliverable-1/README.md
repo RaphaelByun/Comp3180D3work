@@ -1,5 +1,7 @@
 # Deliverable 1 — Production-tool UX study and design spec
 
+> **Status at submission (Wed 11 Nov 2026).** Complete as an AI-run study. Claude ran the heuristic pass on the four tools on 14 Oct 2026 (61 problems), coded 10 job advertisements, 5 reviews and 6 published producer accounts, and drafted the 25-need catalogue, the top ten and the design spec (`design-spec.md`). The two interviews planned in the proposal were not run. Raphael did not repeat any finding by hand, and the check pack (`CHECK-PACK.md`) was not worked through. Sources are listed in `job-ads-and-reviews.md` and `published-sources.md`. The rest of this file is the working record from October 2026 and is kept as history; where it disagrees with this block, this block is right.
+
 COMP3180, Semester 2 2026. Raphael Byun. Folder prepared 12 October 2026 (Week 10) by Claude Code. The files are committed on branch `deliverable-1-ux-study`.
 
 ## What D1 is

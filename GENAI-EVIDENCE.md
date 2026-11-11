@@ -105,3 +105,24 @@ Earlier logs with an unchecked session mapping: `8aab22de` and `f88102c3` (Sem-2
 | D9 Reflection (`deliverable-9-reflection`) | 13, 17, 26 Oct | `6cb114e`, `e2f491c`, `124bd4b`, `e19aa0e`, `5f2345b`, `48e163c`; `8dabc2e`, `0bcdcfc` | Reflection skeleton, prompts and `variance-table.js`. 26 Oct: skeleton and variance-note wording (`8dabc2e`, `0bcdcfc`). No reflection text. |
 
 No AI second scorer is used for the evaluation scoring (Raphael's decision, 26 Oct 2026, recorded in `9a12294`).
+
+### 28 Oct to 11 Nov 2026 (added Wed 11 Nov 2026)
+
+The tables above stop at 26 Oct. This is what happened after them. The final account of who did what is `CONTRIBUTIONS.md`.
+
+| Date | Commits | What the AI did | What Raphael did |
+| --- | --- | --- | --- |
+| 28 Oct | `9c572e0`, `5d61272`, `e391c9b`, `f9b4144`, `7784f55` | Diary draft v0.4; the interview correction; the MIT licence file and the SS3D notices; the held-out-week part of the fidelity check removed from the plan | Chose the licence, approved the interview correction, and dropped that part of the check |
+| 6 Nov | `d01e3b0`, `a03a261`, `4153123`, `71f2b70` | No AI wrote or changed his answers. His typed answers were copied into the answer sheets afterwards (noted in `deliverable-6/data/se2-reads.csv`) | Read the unseen week twice and wrote every answer, rating and comment; wrote the Week 13 diary entry; logged 4 hours |
+| 7 Nov | `9bd23c0`, `070d8a4`, `bbcb691`, `f9e8908` | Drew the hand-check sample. Then, at Raphael's request: checked all 96 fidelity claims (two Sonnet 5.5 checkers, blind to the earlier scores), scored his two reads against the sealed key (one Opus 5.5 scorer, the only scorer), and ran the cognitive walkthrough and the heuristic pass from the window's code, documentation and output | Asked for each of these. He did not check them by hand |
+| 8 Nov | `3cf2727`, `ee20ce3` | Wrote the "Save page" fix and its three tests; ran the analysis; drafted the report's Method and Results text | Answered thirteen questions about the project in his own words. Those answers are quoted, unchanged, in the report |
+| 10 Nov | nine merges, `541437b`, `addcbc3` | Merged the nine branches into `main`; replaced SS3D contributors' e-mail addresses with pseudonyms; wrote the README index and the ledger's status block; made the repository public; assembled the report from repository facts and his 8 Nov answers | Chose to submit without a video, and asked for the merge, the scrub and the public repository |
+| 11 Nov | the final commit | Re-ran the tests in Unity (88 of 88) and every check listed in the root README; compiled `deliverable-8/DIARY.md`; rewrote `CONTRIBUTIONS.md`, `TRY-CHANGELENS.md` and the status block of each folder README; corrected the report after a fact check and a mock mark by sub-agents | Asked Claude to finish the submission, and again chose to submit without a video |
+
+**Commit trailers.** Up to 28 Oct every commit carries a `Co-Authored-By: Claude` line. The ten commits of 6 to 8 Nov do not. Four of them hold Raphael's own reads, diary entry and hours row; the other six hold Claude's work (`9bd23c0`, `070d8a4`, `bbcb691`, `f9e8908`, `3cf2727`, `ee20ce3`).
+
+**Models (from the local session logs, checked 11 Nov 2026).** Claude Opus 5.5 was the main model from October to 10 Nov, with Sonnet 5.5 sub-agents. The A2 sprint in September, where the prototype began, was led by Claude Fable 5.1 with Opus, Sonnet and Haiku sub-agents. The final session on 11 Nov was Claude Fable 5.2, with Sonnet 5.5 and Opus 5.5 sub-agents.
+
+**The report.** The Final Project Report, including its Statement on Generative AI use, was written by Claude from the facts in this repository. Raphael's own words in it are the quoted passages. The statement says this.
+
+The warning above about not opening session logs from 21 Oct onward no longer applies: the reads were committed on 6 Nov.

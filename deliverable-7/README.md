@@ -1,6 +1,8 @@
 # Deliverable 7: Portfolio video
 
-Status (26 Oct 2026, Week 12): plan only, committed on this branch. Nothing is recorded or uploaded.
+> **Status at submission (Wed 11 Nov 2026).** No portfolio video was recorded. This folder holds the storyboard and shot list only. The rest of this file is the working record from October 2026 and is kept as history; where it disagrees with this block, this block is right.
+
+Earlier status (26 Oct 2026, Week 12): plan only, committed on this branch. Nothing is recorded or uploaded.
 
 **Source of truth for timing and order (26 Oct 2026):** the local script `_prep-19oct/Video script + shot list v0.2.md` on Raphael's PC, outside this repository (there is no v0.3). Where this folder and v0.2 differ on beat order or timing, v0.2 wins. v0.2 runs 4:00; a shorter cut is suggested below as [suggested 3:40, Raphael to confirm].
 

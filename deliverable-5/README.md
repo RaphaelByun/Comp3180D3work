@@ -1,6 +1,8 @@
 # Deliverable 5: Solo evaluation kit
 
-Status (26 Oct 2026): run kit for the evaluation in plan section 3; nothing run yet, no data exists. Decision record: plan section 1.
+> **Status at submission (Wed 11 Nov 2026).** The plan in `self-evaluation-plan.md` was run in part, on 6 to 8 Nov 2026. Raphael read one unseen week (14 Dec 2020) twice on 6 Nov, Version A then Version B; the second unseen week (27 Sep 2021) was not read. At his request Claude then ran the fidelity check of all 96 study-week claims, scored his two reads against the sealed key, and ran the cognitive walkthrough and the heuristic pass (7 Nov). None of these was repeated by hand. The data is in `deliverable-6/data/`. The rest of this file is the working record from October 2026 and is kept as history; where it disagrees with this block, this block is right.
+
+Earlier status (26 Oct 2026): run kit for the evaluation in plan section 3; nothing run yet, no data exists. Decision record: plan section 1.
 
 A2 success measure (Deliverables table, row 5, 18 h, 4 in prac): **"Nine 45-minute sessions including the pilot (7 h); recruiting and briefing (4 h); six think-alouds coded from timestamped notes (7 h)."** Learning goals: Analyse; Evaluate. The solo evaluation replaces it. Report the change as an A2 variance (below).
 

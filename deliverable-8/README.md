@@ -1,6 +1,8 @@
 # Deliverable 8: Development diary
 
-Status (28 Oct 2026, Week 12; current draft is now `diary-draft-v0.4.md`, hours rows in `hours-prefill-v0.2.csv`): format, fact logs, hours log and hours script committed on this branch. **No diary entry has been completed and none has been written for you.** The current draft, with brackets for you, is `diary-draft-v0.3.md`; v0.1 and v0.2 are kept as superseded records.
+> **Status at submission (Wed 11 Nov 2026).** The diary is [`DIARY.md`](DIARY.md). Claude Code compiled it on 11 Nov from the commit history and the dated drafts in this folder; the lines marked "In my words" are Raphael's own (17 Oct and 6 Nov) and are unchanged. The repository began on 11 Oct, so the diary was not kept week by week from Week 1. Hours: 4 of the 65 planned hours were logged (`hours-entries.csv`, totalled into `hours-log.csv`); no log was kept for the rest. The two goal-evidence entries described further down were not written. The rest of this file is the working record from October 2026 and is kept as history; where it disagrees with this block, this block is right.
+
+Earlier status (28 Oct 2026, Week 12; current draft is now `diary-draft-v0.4.md`, hours rows in `hours-prefill-v0.2.csv`): format, fact logs, hours log and hours script committed on this branch. **No diary entry has been completed and none has been written for you.** The current draft, with brackets for you, is `diary-draft-v0.3.md`; v0.1 and v0.2 are kept as superseded records.
 
 A2 success measure (Deliverables table, row 8, 2 h, 0 in prac): **"A dated entry each week naming a roadblock or breakthrough."** The diary also carries most of the evidence for the R&D Engagement criterion (15% of A3), together with commit cadence.
 
@@ -8,6 +10,7 @@ A2 success measure (Deliverables table, row 8, 2 h, 0 in prac): **"A dated entry
 
 | File | What it is |
 |---|---|
+| `DIARY.md` | **The development diary, final form (11 Nov 2026).** One entry per period from the mid-session break to the extension days, each naming a roadblock or breakthrough, with the commit for every fact, the commit record by day, and Raphael's own words where he wrote them |
 | `diary-template.md` | Rules, entry template (roadblock or breakthrough, hours by deliverable, conversations, plan changes, tools, evidence links, next week), headed slots for the break and Weeks 9 to 13, a 10-minute weekly routine, and how to cut it to about 500 words for the report |
 | `fact-log-weeks-1-8.md` | **Facts for Raphael to write from, not diary entries.** Weeks 1 to 8 (to A2): dated artefacts and paths, decisions with their source file, A1 and A2 dates and marks, and nine gaps the files cannot fill. Feeds the "Up to Week 8" summary |
 | `fact-log-weeks-9-10.md` | **Facts for Raphael to write from, not diary entries.** Commit table (Sydney times), what each branch holds, file facts for Weeks 9 and 10 (including the decisions recorded that week), and seven gaps the files cannot fill |
@@ -23,7 +26,7 @@ A2 success measure (Deliverables table, row 8, 2 h, 0 in prac): **"A dated entry
 | `hours-entries.csv` | Header-only running log: date, week, deliverable, hours, in-prac, what, evidence. Add up into `hours-log.csv` weekly with `sum-hours.js` |
 | `sum-hours.js` | `node deliverable-8/sum-hours.js` prints actual hours and in-prac hours per deliverable from `hours-entries.csv`. Add `--write` to put them into `hours-log.csv`; it fills the two actual columns and `variance_hours` (actual minus the A2 hours already in that file), blanks all three for a deliverable with no entries, and never touches the A2 columns, the why column or the total row. In `in_prac`, give hours, or yes (all of them) or no. Tests: `node deliverable-8/test.js` |
 
-## What Raphael must do
+## What Raphael was asked to do (October working notes; mostly not done)
 
 1. Write the Week 9 and Week 10 entries this week in your own words, using the fact log as a prompt, and date them the day you write them. Say if an entry is written late.
 2. Cover the mid-session break honestly. The files show no work between 21 Sep and 4 Oct. If you did some, add evidence; if not, say so.

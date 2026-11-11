@@ -2,16 +2,20 @@
 
 ChangeLens is a Unity Editor tool that turns one week of a game project's version history into a one-page summary for a producer, someone who tracks the team's work without reading code. Version A groups the week's changes by kind of file; Version B also names each scene and prefab that changed. It was built and tested on weeks from SS3D, an open-source Unity game. The plan it follows is my A2 proposal (`A2 — Raphael Byun (v2).pdf`).
 
-**State at submission (Tue 10 Nov 2026).** Every deliverable was developed on its own branch (`deliverable-1-ux-study` … `deliverable-9-reflection`) and all nine were merged into `main` on 10 Nov 2026 for submission. The branches are kept as the development history. The Final Project Report is submitted on iLearn.
+**State at submission (Wed 11 Nov 2026).** Every deliverable was developed on its own branch (`deliverable-1-ux-study` … `deliverable-9-reflection`) and all nine were merged into `main` on 10 Nov 2026 for submission. The branches are kept as the development history. On 11 Nov the tests were re-run on `main` and the diary, contribution ledger and folder READMEs were brought to their final form. The Final Project Report is submitted on iLearn.
 
 ## Start here
 
 - **Portfolio video:** not produced. The script and shot list are in [`deliverable-7/`](deliverable-7/).
 - **Try the tool:** [`TRY-CHANGELENS.md`](TRY-CHANGELENS.md), about 15 minutes in Unity 6000.4.
-- **Run the tests without Unity:** `dotnet test tools/changelens-dotnet/tests/tests.csproj` (88 of 88 pass on the submitted `main`).
+- **Tests:** 88 of 88 pass on `main` (11 Nov 2026), both in Unity 6000.4.10f1 EditMode ([`prototype-logs/a3-tests-2026-11-11.xml`](prototype-logs/a3-tests-2026-11-11.xml)) and without Unity: `dotnet test tools/changelens-dotnet/tests/tests.csproj`.
 - **What the page looks like:** [`figures/a3-producer-page-A.png`](figures/a3-producer-page-A.png), [`figures/a3-producer-page-B.png`](figures/a3-producer-page-B.png).
 - **Evaluation data and analysis:** [`deliverable-6/data/`](deliverable-6/data/), with the computed tables in [`deliverable-6/data/analysis-output.md`](deliverable-6/data/analysis-output.md).
-- **Who did what:** [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md) and [`GENAI-EVIDENCE.md`](GENAI-EVIDENCE.md). Every commit was made with Claude Code.
+- **Evaluation at a glance:** [`figures/a3-results-reads.png`](figures/a3-results-reads.png) (the two reads of the unseen week) and [`figures/a3-results-severity.png`](figures/a3-results-severity.png) (heuristic problems beside the four D1 tools). They are Figures 4 and 5 of the report, drawn by `deliverable-6/analysis/report-figures.py`.
+- **Development diary:** [`deliverable-8/DIARY.md`](deliverable-8/DIARY.md).
+- **Who did what:** [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md) and [`GENAI-EVIDENCE.md`](GENAI-EVIDENCE.md). The code, tests and most documents were written by Claude Code to Raphael's direction; the ledger says exactly what he did and did not do.
+
+Each deliverable folder's README opens with its status at submission. The text below that block is the working record from October and is kept as history.
 
 ## Deliverables
 
@@ -20,11 +24,11 @@ ChangeLens is a Unity Editor tool that turns one week of a game project's versio
 | D1 | Production-tool UX study and design spec | [`deliverable-1/`](deliverable-1/) | Four tools inspected against Nielsen's heuristics (61 problems; AI evaluator), 10 job ads, 5 reviews and 6 published producer accounts coded, 25 producer needs ranked to a top ten, design spec |
 | D2 | ChangeLens Unity Editor package | [`ChangeLens-proto/Packages/com.raphaelbyun.changelens/`](ChangeLens-proto/Packages/com.raphaelbyun.changelens/), [`study/`](study/), [`tools/changelens-dotnet/`](tools/changelens-dotnet/) | Producer Page window (Window > ChangeLens Producer Page), Versions A and B, frozen study-week pages, 88 automated tests, MIT licence for the code. Evaluation fix "Save page" in `3cf2727` |
 | D3 | Evaluation instruments | [`deliverable-3/`](deliverable-3/) | Ten-need sheet, question items, answer key, protocol |
-| D4 | Fidelity check | [`study/week1-2021-02-08/FIDELITY-RESULT.md`](study/week1-2021-02-08/FIDELITY-RESULT.md) | Every page claim checked against its commit by AI scorers |
+| D4 | Fidelity check | [`study/week1-2021-02-08/FIDELITY-RESULT.md`](study/week1-2021-02-08/FIDELITY-RESULT.md), [`deliverable-6/data/se1-claude-check.csv`](deliverable-6/data/se1-claude-check.csv) | Every page claim checked against its commit by AI scorers (12 and 13 Oct), then all 96 claims checked again by a third AI pass (7 Nov). No hand check was done |
 | D5 | Evaluation run kit | [`deliverable-5/`](deliverable-5/) | Self-evaluation plan, run sheets, sealed-key records |
 | D6 | Evaluation data and analysis | [`deliverable-6/`](deliverable-6/) | Read records, scores, walkthrough and heuristic findings, analysis script and output |
 | D7 | Portfolio video | [`deliverable-7/`](deliverable-7/) | Storyboard and shot list only; no video was recorded |
-| D8 | Development diary | [`deliverable-8/`](deliverable-8/) | Diary draft v0.4 (facts from commits, with my own words where marked), hours log, commit windows |
+| D8 | Development diary | [`deliverable-8/DIARY.md`](deliverable-8/DIARY.md) | Diary compiled from the commit record, with my own words where marked; hours log (4 h logged); the dated drafts it was compiled from |
 | D9 | Reflection | [`deliverable-9/`](deliverable-9/) | Skeleton and hour-variance helper; the reflection itself is section 4 of the report |
 
 ## Data notice
@@ -33,58 +37,21 @@ SS3D contributors' e-mail addresses in the committed exports were replaced with 
 
 ## Running the checks
 
-> The counts and branch names below were recorded while each deliverable lived on its own branch; on the submitted `main` (10 Nov 2026) every file is in one tree, the .NET harness passes 88 of 88 and the analysis self-test passes 230 checks.
+All of these were run on the submitted `main` on Wed 11 Nov 2026, from the repository root, and all passed.
 
-From the repository root:
+| Command | What it checks | Result on 11 Nov 2026 |
+| --- | --- | --- |
+| Unity: Window → General → Test Runner → EditMode → Run All | The ChangeLens package in Unity 6000.4.10f1. One test rebuilds every frozen study and reserve week and compares it with the committed pages | 88 of 88 ([`prototype-logs/a3-tests-2026-11-11.xml`](prototype-logs/a3-tests-2026-11-11.xml)) |
+| `dotnet test tools/changelens-dotnet/tests/tests.csproj` | The same tests without Unity | 88 of 88 |
+| `node deliverable-6/analysis/test.js` | The analysis tool. `deliverable-6/README.md` gives the command that rebuilds `analysis-output.md` from the real data | 230 checks |
+| `node deliverable-9/test.js` | The hour-variance table | passed |
+| `node deliverable-8/test.js` | The hours-log totaller (`node deliverable-8/sum-hours.js` prints the totals) | passed |
+| `node deliverable-5/recode-sample.test.js` | The blind re-code helper. It was not used: no needs-log entries were made | 8 tests |
+| `node deliverable-5/solo/logs.test.js` | The run kit's blank log headers | 11 tests |
+| `node tools/export-transcript.test.js` | The session-transcript exporter for the GenAI evidence (usage in `GENAI-EVIDENCE.md`) | 5 tests |
+| `node audit/count-a3.test.js` | The report word counter | 11 tests |
 
-```
-dotnet test tools/changelens-dotnet/tests/tests.csproj
-```
-
-ChangeLens tests without Unity (branch `deliverable-2-changelens`; 85 pass on 17 Oct 2026). In Unity: Window → General → Test Runner → EditMode → Run All (76 passed earlier on 17 Oct 2026, before nine tests were added; `prototype-logs/a3-tests-2026-10-17.xml`). One of them rebuilds every frozen study and reserve week and compares it with the committed pages.
-
-```
-node deliverable-6/analysis/test.js
-node deliverable-6/analysis/analyse.js
-```
-
-The analysis tool's checks, then a demo on its labelled fake sample data (branch `deliverable-6-evaluation-report`; 220 checks pass on 17 Oct 2026, after the tool was rebuilt). `deliverable-6/README.md` gives the command for the real data.
-
-```
-node deliverable-9/test.js
-```
-
-The hour-variance table's tests (branch `deliverable-9-reflection`; "variance-table tests passed" on 17 Oct 2026).
-
-```
-node deliverable-8/test.js
-node deliverable-8/sum-hours.js
-```
-
-The hours log totaller's tests, then the totals (branch `deliverable-8-dev-diary`; "sum-hours tests passed" on 17 Oct 2026). `deliverable-8/README.md` explains the log.
-
-```
-node deliverable-5/recode-sample.test.js
-node deliverable-5/solo/logs.test.js
-node deliverable-5/recode-sample.js draw  --in deliverable-5/think-aloud-coding-sheet.csv --out recode-blind.csv
-node deliverable-5/recode-sample.js merge --in deliverable-5/think-aloud-coding-sheet.csv --blind recode-blind.csv --out deliverable-5/think-aloud-coding-sheet.csv
-```
-
-The blind re-code helper (branch `deliverable-5-sessions`): its tests, then drawing a quarter of the pass-1 coded segments and merging the pass-2 codes back. On 17 Oct 2026 the re-code tests passed (8), the run kit's log-header tests passed (11) and a draw found 0 coded segments, since nothing has been coded yet. The coded file is now the SE2 needs log (`se2-needs-log.csv`), not session notes.
-
-```
-node tools/export-transcript.test.js
-```
-
-The session-transcript exporter for the GenAI evidence (branch `deliverable-2-changelens`; 5 tests pass on 17 Oct 2026). Usage is in `GENAI-EVIDENCE.md`.
-
-```
-node audit/count-a3.test.js
-node audit/count-a3.js <draft.md>
-powershell -File audit\count-a3.ps1 -Docx "<full path to report.docx>" [-Pdf "<full path to report.pdf>"]
-```
-
-The A3 report word counter (branch `deliverable-2-changelens`; 11 tests pass on 26 Oct 2026). It counts the five template sections from Project Deliverables up to Appendices, each against its template guide (300, 500, 1000, 500, 200), and the total against 2500. Cover, contents, Appendices, the GenAI statement and References are shown but not counted. The `.ps1` uses Word and gives the count that matters; the `.js` is a rough count for Markdown drafts. Since 26 Oct the `.js` also recognises headings with a budget note, such as `## 1 Project Deliverables (300)` or `## 2 Development Diary Summary (480): outline`, and `Appendix A:` headings; if any of the five counted sections is not found it prints NOT COUNTED and exits with code 1, so it can no longer report a total of 0 as within the limit. `audit/count-and-pdf.ps1` is the A2 counter and does not fit the A3 layout.
+The word counter for the report is `powershell -File audit\count-a3.ps1 -Docx "<full path to report.docx>"`. It uses Word, counts the five template sections from Project Deliverables up to Appendices, and compares the total with 2500. Cover, contents, Appendices, the GenAI statement and References are shown but not counted.
 
 ## Sources, licences and AI use
 
@@ -107,7 +74,7 @@ Two folders in the table below are only partly in git. The downloaded PDFs in `r
 | `ANSWERS.md` | Raphael's answers to the launch questions (17 Sep). |
 | `PROMPT — A2 final sprint (paste into a fresh session).md` | Resumable mission prompt for a fresh Claude Code session. |
 | `audit/` | `FINDINGS-v1/v2/v3.md` (the three sprint marking rounds), `FINDINGS-round-1` to `-14.md` (the loop rounds; 7-10 ran on 19 Sep, 11-14 overnight 19-20 Sep), `verified-additions-round-1/4/5/6/7/8/9/10/11/12/13/14.md` (facts and measurements checked on 18-20 Sep; the round 11-14 files carry the delta fact-finders' lists, with `factfinder-round-11..14-raw.md` their full reports), `parse-round.py`, `count-and-pdf.ps1` (Word COM body/cover count plus PDF export), `EDIT-PLAN-v2.md`, raw JSON, every `apply-*.py` edit script, and the as-marked copy of each round's text. |
-| `ChangeLens-proto/` | Unity 6000.4.10f1 project; the package is `Packages/com.raphaelbyun.changelens`. 27/27 EditMode tests passed at A2 (85 at the tip of `deliverable-2-changelens` on 17 Oct 2026; 76 in the last Unity run, `prototype-logs/a3-tests-2026-10-17.xml`). Three one-off screenshot helpers sit in the Editor folder and can be deleted. |
+| `ChangeLens-proto/` | Unity 6000.4.10f1 project; the package is `Packages/com.raphaelbyun.changelens`. 27/27 EditMode tests passed at A2 (88 of 88 on `main` on 11 Nov 2026; `prototype-logs/a3-tests-2026-11-11.xml`). Three one-off screenshot helpers sit in the Editor folder and can be deleted. |
 | `prototype/` | `HOW-IT-WORKS.md` (plain-language walkthrough), `CHANGELOG.md` (commands, logs, the five screenshot passes and the batch export / build-report probe). |
 | `prototype-logs/` | Unity create, compile, test and screenshot logs; `tests.xml`. |
 | `prototype-data/` | Blobless SS3D clone and the sample week export used by the prototype. |

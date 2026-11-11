@@ -1,15 +1,21 @@
-# Evaluation data (SE1 to SE4, and the D1 rows for Table F)
+# Evaluation data (6 to 8 Nov 2026)
 
-Set up 21 Oct 2026 by Claude Code so SE2 needs no setup on the day; updated 26 Oct 2026. Nothing here is a result: every SE file is blank apart from its header and `#` comment lines, which the analysis tools skip. The two D1 files hold rows copied from Deliverable 1, not SE results.
+**Status at submission (Wed 11 Nov 2026).** This folder holds the data of the evaluation as it was run. Raphael read one unseen week (14 Dec 2020, coded `RX`) twice on 6 Nov 2026, Version A then Version B. The second unseen week (27 Sep 2021, coded `RY`) was not read, so its two answer sheets are blank. The fidelity check, the scoring, the walkthrough and the heuristic pass were run by Claude on 7 Nov at Raphael's request and were not repeated by hand.
 
-| File | Filled during |
-|---|---|
-| `se2-answers-RX-A.md`, `se2-answers-RX-B.md`, `se2-answers-RY-B.md`, `se2-answers-RY-A.md` | SE2 reads, in the fixed order RX-A1, RX-B2, RY-B1, RY-A2 (`deliverable-5/solo/se2-run-sheet.md`) |
-| `se2-reads.csv`, `se2-need-answers.csv`, `se2-item-scores.csv`, `se2-needs-log.csv` | SE2 reads, then scoring |
-| `se2-second-scorer.csv` | Not used (26 Oct): there is no second scorer. Leave it blank; a header-only file prints nothing |
-| `se1-fidelity-handcheck.csv` | SE1 |
-| `se3-walkthrough.csv` (plus `se3-persona.md`, which you write first) | SE3 |
-| `se4-heuristic-problems.csv`, `se4-task-outcomes.csv` | SE4 |
-| `d1-problems.csv`, `d1-task-outcomes.csv` | Copied 26 Oct from `deliverable-1/heuristic-coding-sheet.md` section 5 on `deliverable-1-ux-study` (61 problems, 28 task outcomes). AI-evaluator drafts, not recoded. You fill `raphael_checked_yn` (y for a finding you repeated by hand) and decide the five task values flagged in the header |
+| File | What it holds | Who |
+|---|---|---|
+| `se2-answers-RX-A.md`, `se2-answers-RX-B.md` | Raphael's answers to the ten needs and six question items for each version, with his confidence ratings, his stand-up draft (first read) and comments | Raphael, 6 Nov |
+| `se2-reads.csv` | One row per read: times, his three 1 to 5 ratings and his reasons | Raphael, 6 Nov; stand-up counts added at scoring |
+| `se2-answers-RY-A.md`, `se2-answers-RY-B.md` | Blank: the second unseen week was not read | |
+| `key-reserve-2020-12-14.md` | The answer key for the unseen week. It was sealed outside the repository on 21 Oct and committed after the reads | AI-written, 21 Oct |
+| `se2-need-answers.csv`, `se2-item-scores.csv` | The scores for his answers against the git record and the sealed key | Claude, 7 Nov (only scorer) |
+| `se2-second-scorer.csv` | Header only: there was no second scorer | |
+| `se2-needs-log.csv` | Header only: no needs were logged during the reads | |
+| `se1-claude-check.csv` | The fidelity check: all 96 claims on the four study-week pages, each checked against its commit | Claude, 7 Nov |
+| `se1-fidelity-handcheck.csv` | The 26-row sample drawn for a hand check. The verdict column is blank: the hand check was not done | Sample drawn 7 Nov |
+| `se3-persona.md`, `se3-walkthrough.csv` | Cognitive walkthrough of five tasks in the Producer Page window (19 steps) | Claude, 7 Nov |
+| `se4-heuristic-problems.csv`, `se4-task-outcomes.csv`, `se4-strengths.md` | Heuristic pass on ChangeLens: 24 problems, task outcomes and strengths | Claude, 7 Nov |
+| `d1-problems.csv`, `d1-task-outcomes.csv` | Rows copied from Deliverable 1's heuristic pass on four tools (61 problems, 28 task outcomes), so ChangeLens can sit beside them in Table F. The `raphael_checked_yn` column is blank: he did not repeat the findings | Claude, 14 and 26 Oct |
+| `analysis-output.md` | Tables B to H, generated from the files above | `../analysis/analyse.js`, 8 Nov |
 
-The headers match `deliverable-5/solo/logs/` and plan section 3. Run the analysis with the command in `../README.md` ("Run it"); add `--d1` and `--d1tasks` for Table F.
+The column headers match `deliverable-5/solo/logs/` and section 3 of the plan (`deliverable-5/self-evaluation-plan.md`). To rebuild the tables, use the command in `../README.md` ("Run it"); add `--d1` and `--d1tasks` for Table F.

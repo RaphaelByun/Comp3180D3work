@@ -4,11 +4,11 @@ A 15-minute hands-on check of the committed tier (Deliverable 2). Everything bel
 
 ## 1. Open the project
 
-1. Clone this repository and switch to the `deliverable-2-changelens` branch (`git switch deliverable-2-changelens`).
+1. Clone this repository. Everything is on the default branch, `main`.
 2. Unity Hub → **Add** → **Add project from disk** → pick `ChangeLens-proto`. It needs Unity **6000.4.10f1**. The first open imports for a minute or two.
 3. In Unity: **Window → ChangeLens Producer Page**. (The older **Window → ChangeLens** is the A2 prototype that only sorts files.)
 
-> **Don't open the reserve weeks yet.** ChangeLens is evaluated by Raphael alone (decided 17 Oct 2026). The two reserve weeks, 14 Dec 2020 and 27 Sep 2021, are the unseen weeks for his timed self-read (SE2 in `deliverable-5/self-evaluation-plan.md` on branch `deliverable-5-sessions`). Until SE2 is scored, don't open anything under `study/reserve/`, don't generate those two weeks from the repository, and don't regenerate or edit the reserve pages. They were frozen at commit `d9fa4bf`. Use the two study weeks below.
+> **The evaluation is finished (6 to 8 Nov 2026).** `study/reserve/` holds the two weeks that were kept unseen for it, 14 Dec 2020 and 27 Sep 2021. Only the first was read. Both can now be opened like any other week. They were frozen at commit `d9fa4bf`.
 
 ## 2. Look at the frozen study weeks
 
@@ -38,8 +38,9 @@ The study weeks are from 2020 and 2021. When they were frozen, the clone's newes
 
 1. Click **From repository**. **Browse** to `prototype-data/SS3D`.
 2. Week starts `2021-02-08`, Days `7`, **Generate**. You should get the same counts as the frozen February week: 8 changes, 104 file changes.
-3. Try any other week, or point it at another Unity repository you have (the Inkform repo works too). Don't pick `2020-12-14` or `2021-09-27`, the two reserve weeks, before SE2 is scored (see the note above section 2).
-4. **Save study files...** writes the frozen export plus both reports, the two fidelity checklists and the naming measures into a folder you choose. Use a scratch folder, not `study/`, unless you mean to replace a study week.
+3. Try any other week, or point it at another Unity repository you have.
+4. **Save page...** saves the version you are looking at as one Markdown file to share. It holds no git log and no e-mail addresses. This button was added on 8 Nov 2026 from the evaluation findings (`3cf2727`).
+5. **Save study files...** is for research use. It writes the frozen export plus both reports, the two fidelity checklists and the naming measures into a folder you choose, and asks before it replaces a week saved there earlier. Use a scratch folder, not `study/`, unless you mean to replace a study week.
 
 Weeks are cut at midnight UTC, so the result is the same whatever time or time zone you run it in. A commit at exactly midnight belongs to the week it starts.
 
@@ -47,14 +48,12 @@ The export follows the main line only. Work done on a branch shows up in the wee
 
 ## 4. Run the tests
 
-- In Unity: **Window → General → Test Runner → EditMode → Run All**. Expect 85 passing. The last Unity run, earlier on 17 Oct 2026, passed 76 (`prototype-logs/a3-tests-2026-10-17.xml`); nine tests were added after it and have run only in the .NET harness so far.
-- Without Unity: `dotnet test tools/changelens-dotnet/tests/tests.csproj` (85 pass on 17 Oct 2026). One test rebuilds every frozen study and reserve week from its `export/` folder and compares the result with the committed pages, so it fails if a code change alters a frozen page. If it fails on a reserve week before SE2, don't read the diff it prints. The February week is checked against the two repaired rows listed above.
+- In Unity: **Window → General → Test Runner → EditMode → Run All**. Expect 88 passing. The last run, on 11 Nov 2026 in Unity 6000.4.10f1, passed 88 of 88 (`prototype-logs/a3-tests-2026-11-11.xml`).
+- Without Unity: `dotnet test tools/changelens-dotnet/tests/tests.csproj` (88 of 88 pass on 11 Nov 2026). One test rebuilds every frozen study and reserve week from its `export/` folder and compares the result with the committed pages, so it fails if a code change alters a frozen page. The February week is checked against the two repaired rows listed above.
 
 ## 5. Things worth trying to break
 
 - A week with no commits (e.g. `2030-01-01`): it should say no commits were found, not crash.
 - A folder that is not a git repository, or a typo in the date.
 - A week with a huge merge or rename; check the "What kind of files" column still adds up to the Files number.
-- Read Version B as if you were a producer: is any line confusing, too long, or wrong? Use a study week, not a reserve week. There is no pilot: Raphael evaluates ChangeLens himself (17 Oct 2026 decision).
-
-Write anything odd in `TRY-CHANGELENS-notes.md`, with the week and the version you were on.
+- Read Version B as if you were a producer: is any line confusing, too long, or wrong? The evaluation's own findings on this are in `deliverable-6/data/` (24 heuristic problems in `se4-heuristic-problems.csv`).

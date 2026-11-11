@@ -1,8 +1,14 @@
 # Changelog
 
-Built from the repository's commit history. Hashes are on the `deliverable-2-changelens` branch.
+Built from the repository's commit history. Hashes are on the `deliverable-2-changelens` branch, which was merged into `main` on 10 November 2026.
 
 ## Unreleased (A3 committed tier)
+
+### 11 November 2026
+- All 88 tests pass in Unity 6000.4.10f1 EditMode on `main` (`prototype-logs/a3-tests-2026-11-11.xml`), and in the .NET harness. This is the first Unity run since 17 October, and the first to compile the "Save page" change below in the Editor.
+
+### 8 November 2026
+- Evaluation fix, from the cognitive walkthrough (task 4) and the heuristic pass (problems CL-05, CL-06 and CL-07 in `deliverable-6/data/se4-heuristic-problems.csv`). A new **Save page...** button writes only the page on screen as one Markdown file, with no git export and no contributor e-mail addresses. **Save study files...** now asks before it replaces a folder that already holds study files, and its message says what was saved. Three tests added, 88 in total. No frozen page changes (`3cf2727`).
 
 ### 17 October 2026
 - A scene or prefab is listed as moved or renamed only when its `.meta` moved at R100 in the same commit, so its guid stayed. Git pairs files on text alone, and prefab YAML is mostly boilerplate: in SS3D it paired `locker.prefab` with a new `officechair.prefab` at 59% (2 Sep 2019), and two different `.meta` files at R074, since they differ only in the guid line (BodyContainer "renamed from VisualObject and rebuilt", 28 Oct 2019). Such pairs are now one "prefab deleted" entry and one "new prefab added" entry, each with its own object names. The frozen study and reserve weeks have only R100 `.meta` renames, so their pages do not change (`58a5b5c`).

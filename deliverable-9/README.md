@@ -1,6 +1,8 @@
 # Deliverable 9: Reflection report (all four goals)
 
-Status (26 Oct 2026, Week 12): skeleton, prompts and a variance-table helper ready and committed on `deliverable-9-reflection`. **No reflection has been written.** The evidence for the Evaluate and Create goals comes from the evaluation kit in `deliverable-5/self-evaluation-plan.md` (on `deliverable-5-sessions`); the evaluation design itself is stated once, in the report's Evaluation Method.
+> **Status at submission (Wed 11 Nov 2026).** The reflection is section 4 of the Final Project Report, submitted on iLearn. It is built from Raphael's own answers of 8 Nov 2026, quoted as written and arranged under each learning goal by Claude. The skeleton in this folder was not filled in. `variance-table.js` is the helper behind the hour-variance table (Appendix A of the report). The rest of this file is the working record from October 2026 and is kept as history; where it disagrees with this block, this block is right.
+
+Earlier status (26 Oct 2026, Week 12): skeleton, prompts and a variance-table helper ready and committed on `deliverable-9-reflection`. **No reflection has been written.** The evidence for the Evaluate and Create goals comes from the evaluation kit in `deliverable-5/self-evaluation-plan.md` (on `deliverable-5-sessions`); the evaluation design itself is stated once, in the report's Evaluation Method.
 
 A2 success measure (Deliverables table, row 9, 2 h, 0 in prac): **"All four goals evidenced; hour variances explained."** This feeds the A3 Learning Reflection (about 500 words, 15% of A3 is Reflection).
 

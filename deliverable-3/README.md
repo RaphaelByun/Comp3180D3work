@@ -1,5 +1,7 @@
 # Deliverable 3: evaluation protocol and instruments
 
+> **Status at submission (Wed 11 Nov 2026).** The ten-need sheet, the answer key and the scoring rules here were used in the evaluation of 6 to 8 Nov 2026 (one reader, one unseen week). The question items used on the day are the held-out-week sheets in `deliverable-5/solo/`; the items in this folder are for the two study weeks. Nothing was piloted. The session protocol, consent form, pilot plan and the `ethics/` folder were written for a reader study with recruited participants, which did not run (decision of 17 Oct 2026, `deliverable-5/self-evaluation-plan.md` section 1). The rest of this file is the working record from October 2026 and is kept as history; where it disagrees with this block, this block is right.
+
 A2 success measure: **"Six matched items per week, answerable from the report alone, plus the ten-need sheet; both piloted in Week 11."** (4 hours, 1 in prac.)
 
 Prepared 13 October 2026 (Week 10). **Nothing here has been piloted.** All files are drafts for Raphael to check, approve and pilot.

@@ -9,7 +9,7 @@ ChangeLens is a Unity Editor tool that turns one week of a game project's versio
 - **Portfolio video:** not produced. The script and shot list are in [`deliverable-7/`](deliverable-7/).
 - **Try the tool:** [`TRY-CHANGELENS.md`](TRY-CHANGELENS.md), about 15 minutes in Unity 6000.4.
 - **Tests:** 88 of 88 pass on `main` (11 Nov 2026), both in Unity 6000.4.10f1 EditMode ([`prototype-logs/a3-tests-2026-11-11.xml`](prototype-logs/a3-tests-2026-11-11.xml)) and without Unity: `dotnet test tools/changelens-dotnet/tests/tests.csproj`.
-- **What the page looks like:** [`figures/a3-producer-page-A.png`](figures/a3-producer-page-A.png), [`figures/a3-producer-page-B.png`](figures/a3-producer-page-B.png).
+- **What the page looks like:** [`figures/a3-producer-page-A.png`](figures/a3-producer-page-A.png), [`figures/a3-producer-page-B.png`](figures/a3-producer-page-B.png) (captured on 11 Nov 2026 from the submitted code).
 - **Evaluation data and analysis:** [`deliverable-6/data/`](deliverable-6/data/), with the computed tables in [`deliverable-6/data/analysis-output.md`](deliverable-6/data/analysis-output.md).
 - **Evaluation at a glance:** [`figures/a3-results-reads.png`](figures/a3-results-reads.png) (the two reads of the unseen week) and [`figures/a3-results-severity.png`](figures/a3-results-severity.png) (heuristic problems beside the four D1 tools). They are Figures 4 and 5 of the report, drawn by `deliverable-6/analysis/report-figures.py`.
 - **Development diary:** [`deliverable-8/DIARY.md`](deliverable-8/DIARY.md).

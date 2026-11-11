@@ -24,7 +24,7 @@ Commits on `main`, not counting merges, by Sydney date. These are commit counts,
 | Sat 7 Nov | 4 | Fidelity check, scoring, walkthrough, heuristic pass |
 | Sun 8 Nov | 2 | Evaluation fix, analysis |
 | Tue 10 Nov | 2 | E-mail scrub, README and ledger (plus nine merges into `main`) |
-| Wed 11 Nov | 1 | Unity test run, this diary, final tidy |
+| Wed 11 Nov | 2 | Unity test run, this diary and final tidy; fresh screenshots |
 
 No commits on any other day. **Hours:** 4 of the 65 planned hours were logged (6 Nov, the two reads; `hours-entries.csv`). No log was kept for the rest.
 
@@ -111,7 +111,7 @@ Written after the fact from dated files; the detail is in `fact-log-weeks-1-8.md
 ## Extension days (9 to 11 Nov 2026)
 
 - 10 Nov: the nine deliverable branches were merged into `main`. SS3D contributors' e-mail addresses in the committed exports were replaced with pseudonyms (`541437b`). README and contribution ledger updated (`addcbc3`). The repository was made public. Claude assembled the Final Project Report from repository facts and Raphael's answers of 8 Nov.
-- 11 Nov: the tests were re-run in Unity 6000.4.10f1 on `main`: 88 of 88 pass (`prototype-logs/a3-tests-2026-11-11.xml`). This was the first Unity run since 17 Oct, and the first to compile the "Save page" fix. This diary, the ledger and the folder READMEs were brought to their final form. The report is submitted on iLearn (due 11 Nov, 23:55).
+- 11 Nov: the tests were re-run in Unity 6000.4.10f1 on `main`: 88 of 88 pass (`prototype-logs/a3-tests-2026-11-11.xml`). This was the first Unity run since 17 Oct, and the first to compile the "Save page" fix. This diary, the ledger and the folder READMEs were brought to their final form (`ce81930`). The three screenshots of the Producer Page window in `figures/` were captured again from the submitted code, so they show the "Save page" button. The report is submitted on iLearn (due 11 Nov, 23:55).
 - No portfolio video was recorded.
 
 ## Entries the proposal asked for that were not written

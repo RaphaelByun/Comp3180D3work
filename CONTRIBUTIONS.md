@@ -17,9 +17,9 @@
 
 ## Commits
 
-`main` holds 222 commits at submission, not counting merges: 219 under Raphael's GitHub account and 3 under Claude's. The author field does not show who did the thinking, so this ledger does.
+`main` holds 223 commits at submission, not counting merges: 220 under Raphael's GitHub account and 3 under Claude's. The author field does not show who did the thinking, so this ledger does.
 
-212 of the 222 carry a `Co-Authored-By: Claude` line. The other ten are the commits of 6 to 8 Nov:
+213 of the 223 carry a `Co-Authored-By: Claude` line. The other ten are the commits of 6 to 8 Nov:
 - four hold Raphael's own work of 6 Nov: his two reads, a start-time correction, and his diary entry and hours row (`d01e3b0`, `a03a261`, `4153123`, `71f2b70`);
 - six hold work Claude did at his request on 7 and 8 Nov, without the line: the hand-check sample, the fidelity check, the scoring, the walkthrough and heuristic pass, the fix and the analysis (`9bd23c0`, `070d8a4`, `bbcb691`, `f9e8908`, `3cf2727`, `ee20ce3`).
 

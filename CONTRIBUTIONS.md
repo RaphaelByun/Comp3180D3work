@@ -10,7 +10,7 @@
 - The two evaluation reads on 6 Nov 2026: every answer, confidence rating, stand-up draft and 1 to 5 rating (`d01e3b0`, `a03a261`).
 - The Week 13 diary entry in his own words and the 6 Nov hours row (`71f2b70`).
 - The own-words answers of 8 Nov 2026 quoted in the report's Method, Results and Learning Reflection.
-- One late diary entry on two learning goals, written on 11 Nov 2026 (end of `deliverable-8/DIARY.md`).
+- Two late diary entries on two learning goals, written on 11 Nov 2026 (end of `deliverable-8/DIARY.md`).
 
 **Raphael did not:** write or edit the code or tests; hand-check the D1 findings, the D3 instruments, the D4 or 7 Nov fidelity scores, the scoring of his reads, or the walkthrough and heuristic findings; record the portfolio video.
 
@@ -18,9 +18,9 @@
 
 ## Commits
 
-`main` holds 224 commits at submission, not counting merges: 221 under Raphael's GitHub account and 3 under Claude's. The author field does not show who did the thinking, so this ledger does.
+`main` holds 225 commits at submission, not counting merges: 222 under Raphael's GitHub account and 3 under Claude's. The author field does not show who did the thinking, so this ledger does.
 
-214 of the 224 carry a `Co-Authored-By: Claude` line. The other ten are the commits of 6 to 8 Nov:
+215 of the 225 carry a `Co-Authored-By: Claude` line. The other ten are the commits of 6 to 8 Nov:
 - four hold Raphael's own work of 6 Nov: his two reads, a start-time correction, and his diary entry and hours row (`d01e3b0`, `a03a261`, `4153123`, `71f2b70`);
 - six hold work Claude did at his request on 7 and 8 Nov, without the line: the hand-check sample, the fidelity check, the scoring, the walkthrough and heuristic pass, the fix and the analysis (`9bd23c0`, `070d8a4`, `bbcb691`, `f9e8908`, `3cf2727`, `ee20ce3`).
 
@@ -35,7 +35,7 @@
 | 5 Evaluation runs | Plan and run kit (`125a9bb`, `8bb1800`, `cdf61f5`); held-out-week items by AI agents (`0d3f811`); plan section 5 filled (`8fb989c`); run-kit and run-sheet updates (`3d0f66d`, `f598b99`, `d882927`, `9a12294`, `fe6fb5c`, `7784f55`) | The 17 Oct evaluation decision and his reasons in his words (`deliverable-5/self-evaluation-plan.md` section 1, `125a9bb`); go-ahead for the items and request to fill section 5 (21 Oct); 26 Oct answers: no thresholds set in advance, no AI second scorer, marking rule kept. **The two reads of 6 Nov 2026** (`d01e3b0`, `a03a261`). Decided to stop after one unseen week |
 | 6 Evaluation data and analysis | Analysis and figure tools, skeleton, appendix plan (`6c1faba`, `01688cb`, `10fca4f`); data files and README edits (`e9ec1de`, `c355b43`, `1403820`, `403576c`, `45d901c`); scoring of the two reads (`bbcb691`), walkthrough and heuristic pass (`f9e8908`), analysis (`ee20ce3`), 7 and 8 Nov | His answers are the read data. He asked Claude to score them and to run the walkthrough and heuristic pass, and did not check those by hand. Claude wrote the report's Results text; the quoted passages in it are his own words of 8 Nov |
 | 7 Portfolio video | Storyboard, shot list (`91536d3`, `8be10b3`, `1855d39`, `db1d401`, `7213a22`); scripts outside the repository | Nothing: no video was recorded |
-| 8 Development diary | Fact logs, template, hours script, drafts v0.1 to v0.4 (`3b75f12`, `84a83e5`, `8d22fac`, `adbbf58`, `bc5cde2`, `45a9005`, `d906704`, `c1df9d2`, `cc37123`, `1d8e545`, `9c572e0`); the final `deliverable-8/DIARY.md`, compiled from them (11 Nov) | His answers of 17 Oct, carried in the drafts (`adbbf58`); the Week 13 entry in his own words and the 6 Nov hours row (`71f2b70`); one late entry on two learning goals (11 Nov). He wrote no other entries and logged no other hours |
+| 8 Development diary | Fact logs, template, hours script, drafts v0.1 to v0.4 (`3b75f12`, `84a83e5`, `8d22fac`, `adbbf58`, `bc5cde2`, `45a9005`, `d906704`, `c1df9d2`, `cc37123`, `1d8e545`, `9c572e0`); the final `deliverable-8/DIARY.md`, compiled from them (11 Nov) | His answers of 17 Oct, carried in the drafts (`adbbf58`); the Week 13 entry in his own words and the 6 Nov hours row (`71f2b70`); two late entries on two learning goals (11 Nov). He wrote no other entries and logged no other hours |
 | 9 Reflection | Skeleton, goal prompts, variance table (`6cb114e`, `5f2345b`, `8dabc2e`, `0bcdcfc`); arranging his answers under each goal in the report | His own-words answers of 8 Nov 2026, quoted in section 4 of the report |
 
 ## Earlier draft notes (history)

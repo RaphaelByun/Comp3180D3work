@@ -2,7 +2,7 @@
 
 **COMP3180 A3, ChangeLens. Raphael Byun (46987282).** Final form, compiled Wed 11 Nov 2026.
 
-**How to read this.** The repository began on 11 Oct 2026 (Week 9), so this diary was not kept week by week from Week 1. Claude Code compiled the facts in each entry from the commit history and dated files, and each fact carries its commit or file. Lines headed **In my words** are Raphael's own and are unchanged: his answers of 17 Oct 2026, as recorded in the first draft (`adbbf58`), and his entry of 6 Nov 2026 (`71f2b70`). A week without such a line has no own-words entry.
+**How to read this.** The repository began on 11 Oct 2026 (Week 9), so this diary was not kept week by week from Week 1. Claude Code compiled the facts in each entry from the commit history and dated files, and each fact carries its commit or file. Lines headed **In my words** are Raphael's own and are unchanged: his answers of 17 Oct 2026, as recorded in the first draft (`adbbf58`), his entry of 6 Nov 2026 (`71f2b70`), and his late entry of 11 Nov 2026 at the end of this file. A week without such a line has no own-words entry.
 
 The dated drafts this file was compiled from are kept beside it, unchanged: `diary-draft-weeks-9-10.md` (17 Oct), `diary-draft-v0.2.md` (21 Oct), `diary-draft-v0.3.md` (26 Oct) and `diary-draft-v0.4.md` (28 Oct). Their bracketed prompts were questions for Raphael that he did not answer, so they are left out here.
 
@@ -24,7 +24,7 @@ Commits on `main`, not counting merges, by Sydney date. These are commit counts,
 | Sat 7 Nov | 4 | Fidelity check, scoring, walkthrough, heuristic pass |
 | Sun 8 Nov | 2 | Evaluation fix, analysis |
 | Tue 10 Nov | 2 | E-mail scrub, README and ledger (plus nine merges into `main`) |
-| Wed 11 Nov | 2 | Unity test run, this diary and final tidy; fresh screenshots |
+| Wed 11 Nov | 3 | Unity test run, this diary and final tidy; fresh screenshots; Raphael's late entry |
 
 No commits on any other day. **Hours:** 4 of the 65 planned hours were logged (6 Nov, the two reads; `hours-entries.csv`). No log was kept for the rest.
 
@@ -112,8 +112,15 @@ Written after the fact from dated files; the detail is in `fact-log-weeks-1-8.md
 
 - 10 Nov: the nine deliverable branches were merged into `main`. SS3D contributors' e-mail addresses in the committed exports were replaced with pseudonyms (`541437b`). README and contribution ledger updated (`addcbc3`). The repository was made public. Claude assembled the Final Project Report from repository facts and Raphael's answers of 8 Nov.
 - 11 Nov: the tests were re-run in Unity 6000.4.10f1 on `main`: 88 of 88 pass (`prototype-logs/a3-tests-2026-11-11.xml`). This was the first Unity run since 17 Oct, and the first to compile the "Save page" fix. This diary, the ledger and the folder READMEs were brought to their final form (`ce81930`). The three screenshots of the Producer Page window in `figures/` were captured again from the submitted code, so they show the "Save page" button. The report is submitted on iLearn (due 11 Nov, 23:55).
+- 11 Nov, evening: Raphael wrote one late diary entry on two of his learning goals. It is at the end of this file.
 - No portfolio video was recorded.
 
-## Entries the proposal asked for that were not written
+## Late entry on two learning goals (Wed 11 Nov 2026)
 
-The proposal's measures for two learning goals were diary entries: one explaining, unaided, why a team's official record misses what is happening (Understand), and one tying each layout decision to a reader need after reading an unfamiliar week (Create). Neither was written. The report's Learning Reflection says so.
+The proposal's measures for two learning goals were diary entries: one explaining, unaided, why a team's official record misses what is happening, naming each of three mechanisms (Understand), and one tying each layout decision to a reader need after reading an unfamiliar week (Create). Neither was written during the project.
+
+On the evening of 11 Nov, the submission day, Raphael wrote the entry below in the Claude Code chat. Claude gave him the questions only. His words are unchanged.
+
+**In my words (11 Nov, written late):** Understanding was all about how producer and coders do not have a easy way to communicate with each other, creating sadly i did not create much but creating a unity tool was really cool, sure it is ment to be a research and develop but my flaw was always developing but having a idea what to develop does help me try to make one through AI. This does help a lot as well
+
+Measured against the proposal: the entry states the problem, but it does not name the three mechanisms and it does not tie the page's layout to reader needs. Both measures remain unmet, and the report's Learning Reflection says so.
